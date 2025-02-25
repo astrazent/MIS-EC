@@ -6,6 +6,29 @@
 				<a href="#"><img style="max-height: 110px;width: 100%" src="<?php echo base_url(); ?>upload/banner.jpg" alt="" class="img-responsive"></a>
 			</div>
 		</div>
+
+		<script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.2/libs/oversea/index.js"></script>
+<!-- <script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7473807055259222032',
+    },
+    componentProps: {
+      title: 'Coze',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_TPwfXcuOp7A3ALlJJiy0G2f3lIGPiwo3KP3mvVYlyntuOWf9H88viMRZUp1bSi8f',
+      onRefreshToken: function () {
+        return 'pat_TPwfXcuOp7A3ALlJJiy0G2f3lIGPiwo3KP3mvVYlyntuOWf9H88viMRZUp1bSi8f'
+      }
+    }
+  });
+</script> -->
+// code chattive
+<script src="https://messenger.svc.chative.io/static/v1.0/channels/s1789b3b1-6aa9-4521-94cc-d722aa27a3d0/messenger.js?mode=livechat" defer="defer"></script>
+//code chattive
+
 		<div class="row">
 			<nav class="navbar navbar-info re-navbar" >
 			  <div class="container-fluid re-container-fluid">
