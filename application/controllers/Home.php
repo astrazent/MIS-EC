@@ -16,17 +16,17 @@ class Home extends MY_Controller {
 		$this->load->model('product_model');
 		$input = array();
 		$input['order'] = array('id', 'DESC');
-		$input['limit'] = array('4','0');
+		$input['limit'] = array('12','0');
 		$new_product = $this->product_model->get_list($input);
 		$this->data['new_product']=$new_product;
 
 		$input['order'] = array('buyed', 'DESC');
-		$input['limit'] = array('4','0');
+		$input['limit'] = array('12','0');
 		$hot_product = $this->product_model->get_list($input);
 		$this->data['hot_product']=$hot_product;
 
 		$input['order'] = array('view', 'DESC');
-		$input['limit'] = array('4','0');
+		$input['limit'] = array('12','0');
 		$view_product = $this->product_model->get_list($input);
 		$this->data['view_product']=$view_product;
 

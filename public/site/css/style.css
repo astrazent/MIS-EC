@@ -201,3 +201,53 @@ address {
       width: 400px;
   }
 }
+
+.panel-body {
+	position: relative;
+	min-height: 300px;
+	padding-bottom: 30px;
+}
+
+.swiper-container {
+	position: relative;
+	overflow: hidden;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    width: 50px !important;
+    height: 50px !important;
+    background-color: white;
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 50% !important;
+		transform: scale(0.5);
+		transition: all 0.3s ease;
+}
+
+.swiper-button-prev:hover, .swiper-button-next:hover {
+	transform: scale(1);
+}
+
+.swiper-button-prev::after, .swiper-button-next::after {
+	font-weight: bold;
+	transform: scale(0.5);
+}
+
+.swiper-button-prev:hover::after, .swiper-button-next:hover::after {
+	transform: scale(0.5);
+}
+
+.swiper-button-prev.swiper-button-disabled {
+	display: none !important;
+}
+
+.swiper-button-next.swiper-button-disabled {
+	display: none !important;
+}
+
+.swiper-button-prev {
+	left: -27px !important;
+}
+
+.swiper-button-next {
+	right: -27px !important;
+}
