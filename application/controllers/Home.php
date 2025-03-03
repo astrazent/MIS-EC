@@ -1,9 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed'); //Dòng này giúp ngăn chặn truy cập trực tiếp  vào file Home.php mà không thông qua CodeIgniter.
 
-class Home extends MY_Controller {
+class Home extends MY_Controller { // Home là một Controller kế thừa từ MY_Controller, có nghĩa là nó mở rộng các chức năng từ MY_Controller (một Controller gốc do bạn tạo ra thay vì CI_Controller).
 
-	public function index()
+	public function index() //Khi người dùng truy cập trang chủ (http://yourdomain.com/), hệ thống sẽ gọi Controller mặc định được cấu hình trong routes.php:
 	{
 		$this->load->model('slider_model');
 		$input = array();
