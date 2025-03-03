@@ -1,6 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_Cart $cart
+ * @property CI_URI $uri
+ * @property CI_Loader $load
+ * @property CI_Input $input
+ * @property CI_Output $output
+ * @property CI_DB_query_builder $db
+ * @property CI_Session $session
+ * @property CI_Email $email
+ * @property CI_Form_validation $form_validation
+ * @property CI_Pagination $pagination
+ * @property Slider_model $slider_model
+ * @property Product_model $product_model
+ * @property User_model $user_model
+ * @property Catalog_model $catalog_model
+ * @property Order_model $order_model
+ * @property Transaction_model $transaction_model
+ * @property CI_DB_query_builder $db
+ * @property Admin_model $admin_model
+ * @property Slider_model $slider_model
+ */
 class MY_Controller extends CI_Controller {
 	var $data = array();
 	function __construct()
