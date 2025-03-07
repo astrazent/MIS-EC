@@ -18,7 +18,7 @@ SET GLOBAL default_storage_engine = InnoDB; -- chuyển CSDL về dạng InnoDB 
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `webshop`
+-- 
 --
 
 -- --------------------------------------------------------

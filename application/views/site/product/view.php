@@ -92,6 +92,7 @@
 																																		}
 																																			?>
 					<p>Số lượt xem: <?php echo $product->view; ?></p>
+					<p>Số lượt đã mua: <?php echo $product->buyed; ?></p>
 					<p> Đánh giá &nbsp;
 						<?php $raty_tb = $product->rate_total / $product->rate_count; ?>
 						<span class='raty_detailt' style='margin:5px' id='<?php echo $product->id; ?>' data-score='<?php echo round($raty_tb, 2); ?>'></span>
