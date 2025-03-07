@@ -1,7 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class MY_Controller extends CI_Controller {
+defined('BASEPATH') or exit('No direct script access allowed');
+class MY_Controller extends CI_Controller
+{
 	var $data = array();
 	function __construct()
 	{
@@ -12,9 +12,9 @@ class MY_Controller extends CI_Controller {
 				$this->load->helper('admin');
 				$this->_checklogin();
 				$login = $this->session->userdata("login");
-				$this->data['login']=$login;
+				$this->data['login'] = $login;
 				break;
-			
+
 			default:
 				$this->load->model('catalog_model');
 				$input = array();
@@ -22,22 +22,27 @@ class MY_Controller extends CI_Controller {
 				$input['order'] = array('sort_order', 'ASC');
 				$catalog = $this->catalog_model->get_list($input);
 				foreach ($catalog as $value) {
-					$input= array();
+					$input = array();
 					$input['where'] = array('parent_id' => $value->id);
 					$input['order'] = array('sort_order', 'ASC');
 					$sub = $this->catalog_model->get_list($input);
-					$value->sub=$sub;
+					$value->sub = $sub;
 				}
-				$this->data['catalog']=$catalog;
-				
-				$user = $this->session->userdata('user');
-				$this->data['user']=$user;
+				$this->data['catalog'] = $catalog;
 
-        		$this->load->library('cart');
-        		$carts = $this->cart->contents();
+				$user = $this->session->userdata('user');
+				$this->data['user'] = $user;
+
+				$this->load->library('cart');
+				$carts = $this->cart->contents();
 				$this->data['carts'] = $carts;
 				$total_items = $this->cart->total_items();
 				$this->data['total_items'] = $total_items;
+
+				// Bật profiler
+				if (ENVIRONMENT == "development") {
+					$this->output->enable_profiler(TRUE); //Log_dev_code
+				}
 				break;
 		}
 	}
@@ -45,12 +50,11 @@ class MY_Controller extends CI_Controller {
 	{
 		$controller = $this->uri->segment(2);
 		$login = $this->session->userdata("login");
-		if(!isset($login) && $controller != 'login') {
+		if (!isset($login) && $controller != 'login') {
 			redirect(admin_url('login'));
 		}
-		if(isset($login) && $controller == 'login') {
+		if (isset($login) && $controller == 'login') {
 			redirect(admin_url('home'));
 		}
-		
-	} 
+	}
 }

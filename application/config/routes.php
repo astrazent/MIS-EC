@@ -60,3 +60,6 @@ $route['(:any)-p(:num)'] = 'product/view/$2';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+//Update
+$route['xac-thuc-mail/(:any)'] = 'validation/index/$1';

@@ -8,8 +8,9 @@
 -- PHP Version: 5.6.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zone = "+07:00";
 
+SET GLOBAL default_storage_engine = InnoDB; -- chuyển CSDL về dạng InnoDB để tạo ràng buộc khoá ngoại
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,15 +26,22 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `admin`
 --
+DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `catalog`;
+DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `slider`;
+DROP TABLE IF EXISTS `transaction`;
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` int(11) NOT NULL,
   `created` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admin`
@@ -51,12 +59,12 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`, `level`, `created`) VALU
 
 CREATE TABLE IF NOT EXISTS `catalog` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_id` int(11) NOT NULL,
   `sort_order` tinyint(4) NOT NULL,
   `created` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `catalog`
@@ -98,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `qty` int(100) NOT NULL DEFAULT '0',
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `status` int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `order`
@@ -126,18 +134,18 @@ INSERT INTO `order` (`id`, `transaction_id`, `product_id`, `qty`, `amount`, `sta
 CREATE TABLE IF NOT EXISTS `product` (
   `id` int(255) NOT NULL,
   `catalog_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(15,2) NOT NULL DEFAULT '0.00',
   `discount` int(11) DEFAULT '0',
-  `image_link` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `image_list` text COLLATE utf8_unicode_ci NOT NULL,
+  `image_link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_list` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `view` int(11) NOT NULL DEFAULT '0',
   `buyed` int(255) NOT NULL,
   `rate_total` int(255) NOT NULL DEFAULT '4',
   `rate_count` int(255) NOT NULL DEFAULT '1',
   `created` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product`
@@ -180,12 +188,12 @@ INSERT INTO `product` (`id`, `catalog_id`, `name`, `content`, `price`, `discount
 
 CREATE TABLE IF NOT EXISTS `slider` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `image_link` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `link` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sort_order` int(11) NOT NULL,
   `created` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `slider`
@@ -206,15 +214,15 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
-  `user_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `user_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `user_phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `user_address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `message` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_phone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
-  `payment` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `payment` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaction`
@@ -240,22 +248,24 @@ INSERT INTO `transaction` (`id`, `status`, `user_id`, `user_name`, `user_email`,
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created` int(11) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created` int(11) NOT NULL,
+  `is_verified` TINYINT(1) NOT NULL DEFAULT 0  -- Cột xác thực tài khoản
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `phone`, `address`, `created`) VALUES
-(6, 'Nguyen An', 'khachhang1@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '01201212222', 'Thủy Nguyên - Hải Phòng', 2147483647),
-(5, 'User', 'user@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '01215345336', 'Hải Phòng', 2147483647),
-(7, 'TEST@gmail.com', 'TEST@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '01215345336', 'Hải Phòng', 2017);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `phone`, `address`, `created`, `is_verified`) VALUES
+(1, 'Nguyễn Văn A', 'nguyenvana@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0987654321', 'Hà Nội', UNIX_TIMESTAMP(), 0),
+(2, 'Trần Thị B', 'tranthib@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0912345678', 'Hồ Chí Minh', UNIX_TIMESTAMP(), 1),
+(3, 'Lê Văn C', 'levanc@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0908765432', 'Đà Nẵng', UNIX_TIMESTAMP(), 0);
 
 --
 -- Indexes for dumped tables

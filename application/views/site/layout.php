@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<?php $this->load->view('site/head',$this->data); ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo public_url('site/'); ?>css/validation.css">
 </head>
 <body>
 	<div class="container">

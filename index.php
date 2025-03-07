@@ -229,6 +229,51 @@ switch (ENVIRONMENT)
 	// Path to the system directory
 	define('BASEPATH', $system_path);
 
+
+	// thiết lập biến môi trường trong file .env, .htaccess
+	$env_file = __DIR__ . '/.env';
+	$htaccess_file = __DIR__ . '/.htaccess';
+
+	if (file_exists($env_file)) {
+		$lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		foreach ($lines as $line) {
+			// Bỏ qua comment
+			if (strpos(trim($line), '#') === 0) {
+				continue;
+			}
+			
+			// Tách key và value
+			list($key, $value) = explode('=', $line, 2);
+			$key = trim($key);
+			$value = trim($value);
+			
+			// Thiết lập biến môi trường
+			putenv("$key=$value");
+			$_ENV[$key] = $value; // Thêm vào $_ENV nếu cần
+			
+			// Lấy biến CI_ENV từ .env
+			if ($key === 'CI_ENV') {
+				$ci_env = $value;
+			}
+		}
+	} else {
+		die('File .env không tồn tại');
+	}
+
+	// Thêm dòng setENV cho .htaccess
+	if ($ci_env !== null) {
+        $htaccess_content = file_exists($htaccess_file) ? file_get_contents($htaccess_file) : '';
+
+        $setEnvLine = "SetEnv CI_ENV $ci_env";
+        if (strpos($htaccess_content, 'SetEnv CI_ENV') === false) {
+            file_put_contents($htaccess_file, "\n$setEnvLine", FILE_APPEND);
+        } else {
+            // Nếu đã tồn tại, thay thế giá trị cũ bằng giá trị mới
+            $htaccess_content = preg_replace('/SetEnv CI_ENV .*/', $setEnvLine, $htaccess_content);
+            file_put_contents($htaccess_file, $htaccess_content);
+        }
+	}
+
 	// Path to the front controller (this file) directory
 	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 

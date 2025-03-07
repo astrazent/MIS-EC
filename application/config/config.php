@@ -223,7 +223,15 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+
+//Log_dev_code [0]
+if (ENVIRONMENT == "development"){
+    $config['log_threshold'] = 1; 
+}
+else{
+    $config['log_threshold'] = 0;
+}
+//end
 
 /*
 |--------------------------------------------------------------------------
