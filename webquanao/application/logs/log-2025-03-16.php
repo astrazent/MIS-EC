@@ -1,0 +1,60 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2025-03-16 01:38:03 --> Severity: Warning --> mysqli::real_connect(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ C:\xampp\htdocs\webquanao\system\database\drivers\mysqli\mysqli_driver.php 201
+ERROR - 2025-03-16 01:38:03 --> Unable to connect to the database
+ERROR - 2025-03-16 01:38:11 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:38:16 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:38:19 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:38:22 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:38:23 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:41:21 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:45:45 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:47:22 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:51:42 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:52:57 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:53:15 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:54:59 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:55:10 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:56:13 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:57:09 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:57:32 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:57:47 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:57:59 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:58:45 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:59:20 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 01:59:34 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:02:09 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:02:11 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:02:54 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:03:10 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:05:11 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:05:28 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:05:43 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:06:27 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:19:07 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:20:44 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:22:15 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:22:36 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:22:53 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:24:04 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:24:37 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:25:17 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:25:25 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:27:12 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:28:00 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:28:45 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:28:52 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:29:39 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:30:07 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:30:30 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:30:42 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:31:05 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:34:22 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:34:28 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:34:29 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:36:45 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:38:00 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:38:17 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:43:56 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-16 02:44:19 --> 404 Page Not Found: Public/js

@@ -1,40 +1,41 @@
 .DS_Store
 
-application/cache/*
-!application/cache/index.html
-!application/cache/.htaccess
+/webquanao/application/cache/*
+/webquanao/!application/cache/index.html
+/webquanao/!application/cache/.htaccess
 
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
+/webquanao/application/logs/*
+/webquanao/!application/logs/index.html
+/webquanao/!application/logs/.htaccess
 
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
+/webquanao/user_guide_src/build/*
+/webquanao/user_guide_src/cilexer/build/*
+/webquanao/user_guide_src/cilexer/dist/*
+/webquanao/user_guide_src/cilexer/pycilexer.egg-info/*
+/webquanao/vendor/
 
 # IDE Files
 #-------------------------
-/nbproject/
-.idea/*
+/webquanao/nbproject/
+/webquanao/.idea/*
 
 ## Sublime Text cache files
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
+/webquanao/*.tmlanguage.cache
+/webquanao/*.tmPreferences.cache
+/webquanao/*.stTheme.cache
+/webquanao/*.sublime-workspace
+/webquanao/*.sublime-project
 
 ## cofig vscode extension
-.vscode/
+/webquanao/.vscode/
 
 ##config env variable
-.env.private
+/webquanao/.env.private
 
 ##library
-/application/third_party/php-jwt/
-/application/third_party/PHPmailer/
+/webquanao/application/third_party/php-jwt/
+/webquanao/application/third_party/PHPmailer/
+/webquanao/sessions/
 
 
 
