@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=webquanao
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    expose:
+      - "3306" # Chỉ sử dụng trong nội bộ Docker
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uroot", "-p123456", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+
+  webquanao:
+    build:
+      context: ./webquanao
+      dockerfile: Dockerfile
+    container_name: webquanao
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webquanao:/var/www/html
+    depends_on:
+      - mariadb
+    environment:
+      - MYSQL_HOST=mariadb  # Đổi thành tên dịch vụ mariadb
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456  # Đảm bảo mật khẩu đúng như trong mariadb
+      - MYSQL_DATABASE=webquanao
+
+  python_ai:
+    build:
+      context: ./python_AI
+      dockerfile: Dockerfile
+    container_name: python_ai
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./python_AI:/app
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb_data:
