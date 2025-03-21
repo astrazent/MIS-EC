@@ -1,9 +1,9 @@
 # Build một docker container
-`docker-compose up --build -d`
+`docker-compose up --build -d` (build: Docker sẽ build lại từ Dockerfile trong thư mục python_AI khi chạy docker-compose up --build)
 
 # Sau khi sửa lại docker file:
 docker-compose down -v
-docker-compose up -d
+docker-compose up --build -d
 
 # Để xoá container
 docker ps -a --> xem danh sách container và lấy id 

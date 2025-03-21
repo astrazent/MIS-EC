@@ -30,7 +30,15 @@ class Home extends MY_Controller { // Home là một Controller kế thừa từ
 		$view_product = $this->product_model->get_list($input);
 		$this->data['view_product']=$view_product;
 
+		
+		// $url = "http://python_ai:5000/"; // URL API
+		// $response = file_get_contents($url);
+		// $data = json_decode($response, true); // Chuyển JSON thành mảng PHP
 
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+		
 		$this->data['temp']='site/home/index.php';
 		$this->load->view('site/layout',$this->data);
 	}

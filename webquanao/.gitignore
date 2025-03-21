@@ -1,4 +1,4 @@
-.DS_Store
+/webquanao/.DS_Store
 
 /webquanao/application/cache/*
 /webquanao/!application/cache/index.html

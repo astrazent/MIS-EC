@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<p>Hỗ trợ thanh toán <img src="http://localhost/myshop/public/images/pay.png" alt="" style="padding-left: 25px;"> </p>
+			<!-- <p>Hỗ trợ thanh toán <img src="http://localhost/myshop/public/images/pay.png" alt="" style="padding-left: 25px;"> </p> -->
 			<div class="fi-left pull-left">
 				<p><small>Tư vẫn miễn phí (24/7)</small></p>
 				<strong>1800 3333</strong>

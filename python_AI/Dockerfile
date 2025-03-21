@@ -1,15 +1,14 @@
-# Sử dụng Python image
+# Sử dụng image Python chính thức
 FROM python:3.9
 
-# Copy mã nguồn vào container
+# Thiết lập thư mục làm việc trong container
 WORKDIR /app
-COPY . /app
+
+# Copy file requirements.txt vào container
+COPY requirements.txt requirements.txt
 
 # Cài đặt các thư viện cần thiết
-# RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose cổng API nếu có
-EXPOSE 5000
-
-# Khởi động ứng dụng Python
+# Chạy ứng dụng Flask
 CMD ["python", "app.py"]

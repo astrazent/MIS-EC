@@ -54,3 +54,20 @@ ERROR - 2025-03-19 15:11:44 --> 404 Page Not Found: Public/js
 ERROR - 2025-03-19 15:11:50 --> 404 Page Not Found: Public/js
 ERROR - 2025-03-19 15:12:00 --> 404 Page Not Found: Public/js
 ERROR - 2025-03-19 15:29:24 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:38:35 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:39:25 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:39:29 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:39:33 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:40:06 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:42:16 --> 404 Page Not Found: Public/js
+ERROR - 2025-03-19 15:54:16 --> Query error: Table 'webquanao.catalog' doesn't exist - Invalid query: SELECT *
+FROM `catalog`
+WHERE `parent_id` = '1'
+ORDER BY `sort_order` ASC
+ERROR - 2025-03-19 16:03:41 --> Query error: Table 'webquanao.catalog' doesn't exist - Invalid query: SELECT *
+FROM `catalog`
+WHERE `parent_id` = '1'
+ORDER BY `sort_order` ASC
+ERROR - 2025-03-19 16:05:38 --> Severity: Warning --> file_get_contents(http://localhost:5000/): failed to open stream: Connection refused /var/www/html/application/controllers/Home.php 35
+ERROR - 2025-03-19 16:05:47 --> Severity: Warning --> file_get_contents(http://localhost:5000/): failed to open stream: Connection refused /var/www/html/application/controllers/Home.php 35
+ERROR - 2025-03-19 16:07:58 --> Severity: Warning --> file_get_contents(http://webquanao:5000/): failed to open stream: Connection refused /var/www/html/application/controllers/Home.php 35

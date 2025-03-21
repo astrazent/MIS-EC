@@ -13,7 +13,7 @@
             margin: 10px auto 20px auto;
         }
     </style>
-
+<!-- tích hợp reCAPTCHA -->
 </head>
 
 <body>
@@ -36,7 +36,7 @@
                         <h4 style="color:red;text-align: center;margin-top: 30px"><?php echo $message_fail; ?></h4>
                     <?php } ?>
                     <div class="panel-body">
-                        <form class="form-horizontal" method="post" action="<?php echo base_url('user/forgotpassword'); ?>">
+                        <form class="form-horizontal" method="post" action="<?php echo base_url('user/changepassword'); ?>" onsubmit="return validateRecaptcha();">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-offset-2 col-sm-2 control-label">Mật khẩu cũ</label>
                                 <div class="col-sm-4">
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
 
-                            <div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6Lc7iPUqAAAAAPO0naUA1QDfotovtuAQ8PgoZKSR"></div>
+                            <div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z"></div>
 
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-2">
@@ -80,32 +80,21 @@
         </div>
         <?php $this->load->view('site/footer', $this->data); ?>
     </div>
-    <script type="text/javascript">
-        var widgetId;
-        var onloadCallback = function() {
-            console.log("check");
-            widgetId = grecaptcha.render('recaptcha-container', {
-                'sitekey': '6Lc7iPUqAAAAAPO0naUA1QDfotovtuAQ8PgoZKSR',
-                'callback': verifyCallback, // Hàm này được gọi khi reCAPTCHA thành công
-                'expired-callback': expiredCallback // Hàm này được gọi khi reCAPTCHA hết hạn
-            });
-
-            // Hàm xử lý khi reCAPTCHA hợp lệ
-            function verifyCallback(response) {
-                if (response) {
-                    console.log("reCAPTCHA hợp lệ! Token:", response);
-                }
+    <!-- recaptcha srcipt -->
+    <script>
+        function validateRecaptcha() {
+            var recaptchaResponse = document.getElementById("g-recaptcha-response").value;
+            if (!recaptchaResponse) {
+                alert("Vui lòng xác nhận reCAPTCHA trước khi gửi!");
+                return false; // Chặn submit form
             }
-
-            // Hàm xử lý khi reCAPTCHA hết hạn
-            function expiredCallback() {
-                console.log("reCAPTCHA hết hạn, vui lòng thử lại!");
-            }
-        };
+            return true; // Cho phép gửi form
+        }
     </script>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
+    <!-- recaptcha srcipt -->
     <script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
 </body>
 

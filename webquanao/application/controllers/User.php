@@ -348,11 +348,18 @@ class User extends MY_Controller
 					'password' => $password,
 					'id' => $id->id
 				);
+				// Kiểm tra recaptcha
+					$captcha = $this->input->post('g-recaptcha-response');
+					if(!$this->verify_library->verify_recaptcha($captcha)){
+						$this->session->set_flashdata('message_fail', 'Xác thực recaptcha thất bại');
+						redirect(base_url('user/changepassword'));
+					}
+
 				// Gửi Email xác thực 
 				$token = $this->verify_library->generate_verification_token($data);
 				if (!$token) {
 					$this->session->set_flashdata('message_fail', 'Không thể tạo token xác thực.');
-					redirect(base_url('user/register'));
+					redirect(base_url('user/changepassword'));
 				}
 				$reset_link = base_url("doi-mat-khau/$token");
 				$expire_time = getenv('JWT_EXPIRE') / 60;
@@ -434,7 +441,6 @@ class User extends MY_Controller
 					Ngoc Lan team
 					"
 				);
-				log_message('error', "check");
 				if (!$validation_email) {
 					$this->session->set_flashdata('message_fail', 'Không thể gửi email.');
 					redirect(base_url('user/changepassword'));
