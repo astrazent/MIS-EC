@@ -38,3 +38,11 @@
 
 	</div>
 </div>
+
+<script>
+var productList = sessionStorage.getItem('product_list');
+if (productList) {
+    console.log(JSON.parse(productList));
+    sessionStorage.removeItem('product_list');
+}
+</script>

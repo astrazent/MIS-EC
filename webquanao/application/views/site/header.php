@@ -1,24 +1,35 @@
-<div class="row" style="margin-top: 8px;height: 110px">
-	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clearpadding">
-		<a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>upload/logo.png" alt="" class="img-responsive"></a>
-	</div>
-	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 clearpadding">
-		<a href="#"><img style="max-height: 110px;width: 100%" src="<?php echo base_url(); ?>upload/banner.jpg" alt="" class="img-responsive"></a>
-	</div>
+<div class="row" style="margin-top: 8px; height: 110px">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 clearpadding">
+        <a href="<?php echo base_url(); ?>">
+            <img src="<?php echo base_url(); ?>upload/logo.png" alt="Logo" class="img-responsive">
+        </a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearpadding text-center search-container">
+        <form action="<?php echo base_url('tim-kiem'); ?>" method="GET" class="navbar-form" enctype="multipart/form-data">
+            <div class="input-group" style="width: 100%;">
+                <input type="text" name="q" class="form-control search-input" placeholder="Tìm kiếm sản phẩm..." required>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+                <span class="input-group-btn">
+                    <label for="image-upload" class="btn btn-secondary" id="image-search-button">
+                        <span class="glyphicon glyphicon-camera"></span>
+                    </label>
+                    <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;">
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 clearpadding banner-container">
+        <a href="#">
+            <img style="max-height: 110px; width: 100%" src="<?php echo base_url(); ?>upload/banner.jpg" alt="Banner" class="img-responsive">
+        </a>
+    </div>
 </div>
 <div class="row">
 	<nav class="navbar navbar-info re-navbar">
-		<div class="container-fluid re-container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">--- Menu ---</a>
-			</div>
 
 		<script src="https://messenger.svc.chative.io/static/v1.0/channels/s7c2f6627-df19-44a5-ad33-10205f74d146/messenger.js?mode=livechat" defer="defer"></script>
 
@@ -76,3 +87,41 @@
 				</div><!-- /.container-fluid -->
 			</nav>
 		</div>
+
+<script>
+var imageUploadElement = document.getElementById('image-upload');
+if (imageUploadElement) {
+    imageUploadElement.addEventListener('change', function() {
+        // Thay đổi giao diện nút thành dấu ba chấm nhấp nháy
+        var searchButton = document.getElementById('image-search-button');
+        searchButton.innerHTML = '<div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>';
+
+        var formData = new FormData();
+        formData.append('image', this.files[0]);
+
+        fetch('<?php echo base_url("image-search"); ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Khôi phục lại giao diện nút sau khi xử lý xong
+            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
+
+            if (data.success) {
+                sessionStorage.setItem('product_list', JSON.stringify(data.product_list));
+                window.location.href = '<?php echo base_url("tim-kiem-ket-qua"); ?>';
+            } else {
+                alert(data.message || 'Tìm kiếm không thành công!');
+            }
+        })
+        .catch(error => {
+            // Khôi phục lại giao diện nút nếu có lỗi
+            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
+
+            console.error('Lỗi:', error);
+            alert('Đã xảy ra lỗi trong quá trình tìm kiếm. Vui lòng thử lại sau!');
+        });
+    });
+}
+</script>

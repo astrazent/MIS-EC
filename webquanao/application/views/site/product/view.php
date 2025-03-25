@@ -2,7 +2,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url(); ?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
-			<li><a href="<?php echo base_url('catalog/' . $catalog_product->id); ?>"><?php echo $catalog_product->name; ?></a></li>
+			<li><a href="<?php echo base_url('product/catalog/' . $catalog_product->id); ?>"><?php echo $catalog_product->name; ?></a></li>
 			<li class="active"><?php echo $product->name; ?></li>
 		</ol>
 
@@ -51,7 +51,7 @@
 		<!--End Raty -->
 
 
-		<div class="panel panel-info " style="margin-bottom: 15px">
+		<div class="panel panel-info ">
 			<div class="panel-heading">
 				<h3 class="panel-title">Xem chi tiết sản phẩm</h3>
 			</div>
@@ -98,7 +98,51 @@
 						<span class='raty_detailt' style='margin:5px' id='<?php echo $product->id; ?>' data-score='<?php echo round($raty_tb, 2); ?>'></span>
 						| Tổng số: <b class='rate_count'><?php echo $product->rate_count; ?></b>
 					</p>
+
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$('.raty_detailt').raty({
+								score: function() {
+									return $(this).attr('data-score');
+								},
+								readOnly: true,
+								half: true,
+								precision: true
+							});
+						});
+					</script>
+
 					<a href="<?php echo base_url('cart/add/' . $product->id); ?>" class="btn btn-info"> Thêm vào giỏ hàng</a>
+					<button class="btn btn-warning" data-toggle="modal" data-target="#ratingModal">Đánh giá</button>
+
+					<!-- Modal đánh giá -->
+					<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form id="ratingForm">
+										<div class="form-group">
+											<label for="ratingStars">Chọn số sao:</label>
+											<div id="ratingStars" class="raty"></div>
+											<input type="hidden" id="ratingScore" name="score">
+										</div>
+										<div class="form-group">
+											<label for="ratingComment">Bình luận:</label>
+											<textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
+										</div>
+										<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>																													
+
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -116,6 +160,56 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="panel panel-info" style="margin-bottom: 15px">
+			<div class="panel-heading">
+				<h3 class="panel-title">Bình luận</h3>
+			</div>
+			<div class="panel-body comment-panel-body">
+				<?php if (!empty($comments)): ?>
+					<ul class="comment-list" id="comment-list">
+						<?php foreach ($comments as $comment): ?>
+							<li class="comment-item">
+								<div class="product-rating">
+									<div class="product-rating__avatar">
+										<div class="avatar">
+											<img src="<?php echo base_url('upload/avatar/default-avatar.jpg'); ?>" 
+												alt="Avatar" class="avatar__img">
+										</div>
+									</div>
+
+									<div class="product-rating__main">
+										<div class="product-rating__author-name">
+											<?php echo $comment->user_name; ?>
+										</div>
+										<div class="product-rating__rating">
+											<?php for ($i = 1; $i <= 5; $i++): ?>
+												<svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" 
+													class="svg-icon icon-rating-solid<?php echo ($i <= $comment->rate) ? ' svg-icon--active' : ''; ?>">
+													<polygon points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4" 
+															stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></polygon>
+												</svg>
+											<?php endfor; ?>
+										</div>
+
+										<div class="product-rating__time">
+											<?php echo date('Y-m-d H:i', $comment->created); ?>
+										</div>
+
+										<div class="product-rating__content">
+											<?php echo nl2br(htmlspecialchars($comment->comment_content)); ?>
+										</div>
+									</div>
+								</div>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				<?php else: ?>
+					<p>Sản phẩm chưa có bình luận nào.</p>
+				<?php endif; ?>
+			</div>
+		</div>
+
 		<div class="panel panel-info">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sản phẩm liên quan</h3>
@@ -180,3 +274,56 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        // Khởi tạo thư viện raty cho modal
+        $('#ratingStars').raty({
+            score: 0, // Điểm mặc định
+            half: false, // Cho phép chọn nửa sao
+            click: function (score, evt) {
+                $('#ratingScore').val(score); // Gán giá trị số sao vào input ẩn
+            }
+        });
+
+        // Xử lý gửi form đánh giá
+        $('#ratingForm').on('submit', function (e) {
+            e.preventDefault(); // Ngăn form reload trang
+            const productId = <?php echo $product->id; ?>;
+            const score = $('#ratingScore').val();
+            const comment = $('#ratingComment').val();
+
+            if (!score) {
+                alert('Vui lòng chọn số sao!');
+                return;
+            }
+
+            $.ajax({
+                url: '<?php echo base_url('product/submit_rating'); ?>',
+                type: 'POST',
+                data: {
+                    id: productId,
+                    score: score,
+                    comment: comment
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response.message);
+                    if (response.success) {
+                        alert('Cảm ơn bạn đã đánh giá sản phẩm.');
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Status:', status);
+                    console.error('Error:', error);
+                    console.error('Response:', xhr.responseText);
+                    alert('Đã xảy ra lỗi, vui lòng thử lại.');
+                }
+            });
+        });
+    });
+</script>

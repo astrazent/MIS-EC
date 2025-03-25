@@ -106,7 +106,7 @@ class MY_Model extends CI_Model
     function query($sql)
     {
         $rows = $this->db->query($sql);
-        return $rows->result;
+        return $rows->result();
     }
 
     /**
