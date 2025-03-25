@@ -67,6 +67,45 @@ class Cart extends MY_Controller {
 		}
 		redirect(base_url('cart'));
 	}
+	public function update_ajax()
+	{
+		header('Content-Type: application/json'); // Thêm header để chỉ định response type
+
+		$id = $this->uri->segment(3);
+		$str = $this->uri->segment(4);
+		$carts = $this->cart->contents();
+		
+		foreach ($carts as $key => $value) {
+			if ($value['id'] == $id) {
+				$data = array();
+				$data['rowid'] = $key;
+				if ($str == 'sum') {
+					$data['qty'] = $value['qty'] + 1;
+				} elseif($str == 'sub' && $value['qty'] > 1) {
+					$data['qty'] = $value['qty'] - 1;
+				}
+				$this->cart->update($data);
+				
+				// Get updated cart info
+				$updated_cart = $this->cart->contents();
+				foreach ($updated_cart as $item) {
+					if ($item['id'] == $id) {
+						$response = array(
+							'status' => 'success',
+							'qty' => $item['qty'],
+							'subtotal' => number_format($item['subtotal']),
+							'total_price' => number_format($this->cart->total()),
+							'total_items' => $this->cart->total_items()
+						);
+						exit(json_encode($response)); // Sử dụng exit() để đảm bảo không có output khác
+					}
+				}
+			}
+		}
+		
+		// Trường hợp không tìm thấy sản phẩm
+		exit(json_encode(array('status' => 'error')));
+	}
 	public function del()
 	{
 		$carts = $this->cart->contents();
