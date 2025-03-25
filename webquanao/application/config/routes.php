@@ -69,6 +69,6 @@ $route['doi-mat-khau'] = 'user/changepassword';
 $route['verify-recaptcha'] = 'validation/verify_recaptcha';
 
 $route['doi-mat-khau/(:any)'] = 'validation/changepassword/$1';
-
+$route['api'] = 'api/index';
 
 $route['testvnpay'] = 'testvnpay/index';

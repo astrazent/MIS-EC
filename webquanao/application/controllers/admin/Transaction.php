@@ -110,21 +110,22 @@ class Transaction extends MY_Controller {
 	public function accept()
 	{
 		$id = $this->uri->segment(4);
-		$data= array();
+		$data = array();
 		$data['status'] = '1';
 		$this->transaction_model->update($id,$data);
 		$this->session->set_flashdata('message_success', 'Xác nhận đơn đặt hàng thành công');
-
-		$input= array();
-		$input['where']= array('transaction_id'=>$id);
+	
+		$input = array();
+		$input['where'] = array('transaction_id' => $id);
 		$order = $this->order_model->get_list($input);
 		
 		foreach ($order as $value) {
 			$product = $this->product_model->get_info($value->product_id);
 			
-			$data= array();
-			$data['buyed'] = $product->buyed + 1;
-			$this->product_model->update($product->id,$data);
+			$data = array();
+			// Cập nhật số lượng buyed bằng cách cộng thêm số lượng qty từ order
+			$data['buyed'] = $product->buyed + $value->qty;
+			$this->product_model->update($product->id, $data);
 		}
 
 		redirect(admin_url('transaction'));
