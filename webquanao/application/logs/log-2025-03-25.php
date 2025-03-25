@@ -10,3 +10,17 @@ ERROR - 2025-03-25 16:13:59 --> 404 Page Not Found: Faviconico/index
 ERROR - 2025-03-25 16:14:10 --> The upload path does not appear to be valid.
 ERROR - 2025-03-25 16:15:04 --> The upload path does not appear to be valid.
 ERROR - 2025-03-25 16:20:59 --> The upload path does not appear to be valid.
+ERROR - 2025-03-25 16:40:24 --> Query error: Table 'sql3769289.comments' doesn't exist - Invalid query: 
+			SELECT comments.*, user.name AS user_name
+			FROM comments
+			LEFT JOIN user ON comments.user_id = user.id
+			WHERE comments.product_id = 27
+			ORDER BY comments.created DESC
+		
+ERROR - 2025-03-25 16:40:39 --> Query error: Table 'sql3769289.comments' doesn't exist - Invalid query: 
+			SELECT comments.*, user.name AS user_name
+			FROM comments
+			LEFT JOIN user ON comments.user_id = user.id
+			WHERE comments.product_id = 27
+			ORDER BY comments.created DESC
+		
