@@ -70,7 +70,7 @@ def image_search():
 @app.route('/')
 def home():
     weather_data = {
-        "city": "Ho Chi Minh",
+        "city": "HN",
         "temperature": 30,
         "humidity": 70,
         "description": "Partly Cloudy"

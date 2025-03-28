@@ -5,9 +5,9 @@
 <link href="<?php echo public_url('admin/'); ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo public_url('admin/'); ?>css/datepicker3.css" rel="stylesheet">
 <link href="<?php echo public_url('admin/'); ?>css/styles.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <script src="<?php echo public_url(); ?>js/jquery-3.1.1.js" type="text/javascript"></script>
 <script src="<?php echo public_url(); ?>js/jquery.js" type="text/javascript"></script>
-
 <!--Icons-->
 <script src="<?php echo public_url('admin/'); ?>js/lumino.glyphs.js"></script>
 <script src="<?php echo public_url(); ?>js/ckeditor/ckeditor.js"></script>

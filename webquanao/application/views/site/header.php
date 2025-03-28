@@ -29,99 +29,104 @@
     </div>
 </div>
 <div class="row">
-	<nav class="navbar navbar-info re-navbar">
+    <nav class="navbar navbar-info re-navbar">
 
-		<script src="https://messenger.svc.chative.io/static/v1.0/channels/s7c2f6627-df19-44a5-ad33-10205f74d146/messenger.js?mode=livechat" defer="defer"></script>
+        <script src="https://messenger.svc.chative.io/static/v1.0/channels/s7c2f6627-df19-44a5-ad33-10205f74d146/messenger.js?mode=livechat" defer="defer"></script>
 
-		<div class="row">
-			<nav class="navbar navbar-info re-navbar">
-				<div class="container-fluid re-container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">--- Menu ---</a>
-					</div>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse re-navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
-							<li class="active"><a href="<?php echo base_url(); ?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME<span class="sr-only">(current)</span></a></li>
+        <div class="row">
+            <nav class="navbar navbar-info re-navbar">
+                <div class="container-fluid re-container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">--- Menu ---</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse re-navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="<?php echo base_url(); ?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME<span class="sr-only">(current)</span></a></li>
 
-							<li><a href="<?php echo base_url('moi'); ?>">Mới</a></li>
-							<li><a href="<?php echo base_url('ban-chay'); ?>">Bán chạy</a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Thời trang<span class="caret"></span></a>
-								<ul class="dropdown-menu" id="re-dropdown-menu">
-									<?php foreach ($catalog as $value) {
-										$name = covert_vi_to_en($value->name);
-										$name = strtolower($name);
-									?>
-										<li><a style="color: #337ab7;padding: 10px 20px;" href="<?php echo base_url($name . '-c' . $value->id); ?>"><?php echo $value->name; ?></a></li>
-									<?php } ?>
-								</ul>
-							</li>
-							<li><a href="<?php echo base_url('khuyen-mai'); ?>">Khuyến mại</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<?php $this->load->view('site/cart/cart_sh'); ?>
+                            <li><a href="<?php echo base_url('moi'); ?>">Mới</a></li>
+                            <li><a href="<?php echo base_url('ban-chay'); ?>">Bán chạy</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Thời trang<span class="caret"></span></a>
+                                <ul class="dropdown-menu" id="re-dropdown-menu">
+                                    <?php foreach ($catalog as $value) {
+                                        $name = covert_vi_to_en($value->name);
+                                        $name = strtolower($name);
+                                    ?>
+                                        <li><a style="color: #337ab7;padding: 10px 20px;" href="<?php echo base_url($name . '-c' . $value->id); ?>"><?php echo $value->name; ?></a></li>
+                                    <?php } ?>
+                                </ul>
+                            </li>
+                            <li><a href="<?php echo base_url('khuyen-mai'); ?>">Khuyến mại</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="<?php echo base_url('shipment'); ?>">
+                                    <span class="glyphicon glyphicon-list-alt"></span> Đơn Mua
+                                </a>
+                            </li>
+                            <?php $this->load->view('site/cart/cart_sh'); ?>
 
-							<?php if (!isset($user)) { ?>
-								<li><a href="<?php echo base_url('dang-nhap'); ?>">Đăng nhập</a></li>
-							<?php } else { ?>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Xin chào: <?php echo $user->name; ?><span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="<?php echo base_url('user'); ?>">Tài khoản</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="<?php echo base_url('user/logout'); ?>">Đăng xuất</a></li>
-									</ul>
-								</li>
-							<?php } ?>
-						</ul>
-					</div><!-- /.navbar-collapse -->
+                            <?php if (!isset($user)) { ?>
+                                <li><a href="<?php echo base_url('dang-nhap'); ?>">Đăng nhập</a></li>
+                            <?php } else { ?>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Xin chào: <?php echo $user->name; ?><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo base_url('user'); ?>">Tài khoản</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="<?php echo base_url('user/logout'); ?>">Đăng xuất</a></li>
+                                    </ul>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
 
-				</div><!-- /.container-fluid -->
-			</nav>
-		</div>
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
 
-<script>
-var imageUploadElement = document.getElementById('image-upload');
-if (imageUploadElement) {
-    imageUploadElement.addEventListener('change', function() {
-        // Thay đổi giao diện nút thành dấu ba chấm nhấp nháy
-        var searchButton = document.getElementById('image-search-button');
-        searchButton.innerHTML = '<div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>';
+        <script>
+            var imageUploadElement = document.getElementById('image-upload');
+            if (imageUploadElement) {
+                imageUploadElement.addEventListener('change', function() {
+                    // Thay đổi giao diện nút thành dấu ba chấm nhấp nháy
+                    var searchButton = document.getElementById('image-search-button');
+                    searchButton.innerHTML = '<div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>';
 
-        var formData = new FormData();
-        formData.append('image', this.files[0]);
+                    var formData = new FormData();
+                    formData.append('image', this.files[0]);
 
-        fetch('<?php echo base_url("image-search"); ?>', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Khôi phục lại giao diện nút sau khi xử lý xong
-            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
+                    fetch('<?php echo base_url("image-search"); ?>', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Khôi phục lại giao diện nút sau khi xử lý xong
+                            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
 
-            if (data.success) {
-                sessionStorage.setItem('product_list', JSON.stringify(data.product_list));
-                window.location.href = '<?php echo base_url("tim-kiem-ket-qua"); ?>';
-            } else {
-                alert(data.message || 'Tìm kiếm không thành công!');
+                            if (data.success) {
+                                sessionStorage.setItem('product_list', JSON.stringify(data.product_list));
+                                window.location.href = '<?php echo base_url("tim-kiem-ket-qua"); ?>';
+                            } else {
+                                alert(data.message || 'Tìm kiếm không thành công!');
+                            }
+                        })
+                        .catch(error => {
+                            // Khôi phục lại giao diện nút nếu có lỗi
+                            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
+
+                            console.error('Lỗi:', error);
+                            alert('Đã xảy ra lỗi trong quá trình tìm kiếm. Vui lòng thử lại sau!');
+                        });
+                });
             }
-        })
-        .catch(error => {
-            // Khôi phục lại giao diện nút nếu có lỗi
-            searchButton.innerHTML = '<span class="glyphicon glyphicon-camera"></span>';
-
-            console.error('Lỗi:', error);
-            alert('Đã xảy ra lỗi trong quá trình tìm kiếm. Vui lòng thử lại sau!');
-        });
-    });
-}
-</script>
+        </script>

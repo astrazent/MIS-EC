@@ -19,33 +19,43 @@ class Transaction extends MY_Controller {
 		$message_fail = $this->session->flashdata('message_fail');
 		$this->data['message_fail'] = $message_fail;
 
+		// Nhận tham số sort & order từ URL
+		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'created';
+		$order = $this->input->get('order') ? $this->input->get('order') : 'desc';
+
+		// Tổng số đơn hàng
 		$total = $this->transaction_model->get_total();
-		$this->data['total']=$total;
+		$this->data['total'] = $total;
 
 		$this->load->library('pagination');
 		$config = array();
 		$base_url = admin_url('transaction/index');
 		$per = 10;
 		$uri = 4;
-		$config = pagination($base_url,$total,$per,$uri);
+		$config = pagination($base_url, $total, $per, $uri);
 
-		
 		$this->pagination->initialize($config);
 
-		$segment = isset($this->uri->segments['4'])?$this->uri->segments['4']:NULL;
+		$segment = isset($this->uri->segments['4']) ? $this->uri->segments['4'] : NULL;
 		$segment = intval($segment);
-		
-		$input['limit'] = array($config['per_page'],$segment);
 
-		$input['order'] = array('id' , 'ASC');
+		$input['limit'] = array($config['per_page'], $segment);
+
+		// Sắp xếp theo cột đã chọn
+		$input['order'] = array($sort, $order);
+		
+		// Lấy danh sách đơn hàng
 		$transaction = $this->transaction_model->get_list($input);
 		$this->data['transaction'] = $transaction;
 
+		// Lưu thông tin sort & order để dùng trong View
+		$this->data['sort'] = $sort;
+		$this->data['order'] = $order;
 
-
-		$this->data['temp']='admin/transaction/index';
-		$this->load->view('admin/main',$this->data);
+		$this->data['temp'] = 'admin/transaction/index';
+		$this->load->view('admin/main', $this->data);
 	}
+
 	public function del()
 	{
 		$id = $this->uri->segment(4);
@@ -110,10 +120,28 @@ class Transaction extends MY_Controller {
 	public function accept()
 	{
 		$id = $this->uri->segment(4);
-		$data= array();
 		$data['status'] = '1';
 		$this->transaction_model->update($id,$data);
 		$this->session->set_flashdata('message_success', 'Xác nhận đơn đặt hàng thành công');
+
+		redirect(admin_url('transaction'));
+	}
+	public function deliver()
+	{
+		$id = $this->uri->segment(4);
+		$data['status'] = '2';
+		$this->transaction_model->update($id,$data);
+		$this->session->set_flashdata('message_success', 'Đơn hàng sẽ được giao cho đơn vị vận chuyển');
+
+		redirect(admin_url('transaction'));
+	}
+	public function done()
+	{
+		$id = $this->uri->segment(4);
+		$data= array();
+		$data['status'] = '3';
+		$this->transaction_model->update($id,$data);
+		$this->session->set_flashdata('message_success', 'Đơn hàng đã hoàn thành');
 
 		$input= array();
 		$input['where']= array('transaction_id'=>$id);

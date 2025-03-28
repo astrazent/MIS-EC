@@ -33,9 +33,10 @@
 /webquanao/.env.private
 
 ##library
-/webquanao/application/third_party/php-jwt/
-/webquanao/application/third_party/PHPmailer/
-/webquanao/sessions/
+/webquanao/application/third_party/php-jwt/*
+/webquanao/application/third_party/PHPmailer/*
+/webquanao/sessions/*
+/webquanao/application/logs/*
 
 
 
