@@ -356,39 +356,39 @@ class Product extends MY_Controller {
 		}
 	}
  
- 	public function image_search() {
- 		if (!isset($_FILES['image'])) {
- 			echo json_encode(['success' => false, 'message' => 'Không có ảnh được tải lên']);
+	public function image_search() {
+		if (!isset($_FILES['image'])) {
+			echo json_encode(['success' => false, 'message' => 'Không có ảnh được tải lên']);
 			exit();
- 			return;
- 		}
- 	
- 		$config['upload_path'] = './upload/search/';
- 		$config['allowed_types'] = 'jpg|jpeg|png';
- 		$config['max_size'] = 2048;
- 		$this->load->library('upload', $config);
- 	
- 		if (!$this->upload->do_upload('image')) {
- 			echo json_encode(['success' => false, 'message' => $this->upload->display_errors()]);
+			return;
+		}
+	
+		$config['upload_path'] = './upload/search/';
+		$config['allowed_types'] = 'jpg|jpeg|png';
+		$config['max_size'] = 2048;
+		$this->load->library('upload', $config);
+	
+		if (!$this->upload->do_upload('image')) {
+			echo json_encode(['success' => false, 'message' => $this->upload->display_errors()]);
 			exit();
- 			return;
- 		}
- 	
- 		$upload_data = $this->upload->data();
- 		$image_path = FCPATH . 'upload/search/' . $upload_data['file_name'];
-
+			return;
+		}
+	
+		$upload_data = $this->upload->data();
+		$image_path = FCPATH . 'upload/search/' . $upload_data['file_name'];
+	
 		// Kiểm tra file tồn tại
 		if (!file_exists($image_path)) {
 			echo json_encode(['success' => false, 'message' => 'File ảnh không tồn tại.']);
 			exit();
 		}
-
+	
 		// URL của dịch vụ AI
 		$ai_service_url = 'http://python_ai:5000/api/image_search';
-
+	
 		// Đọc nội dung file ảnh
 		$cfile = new CURLFile($image_path, mime_content_type($image_path), basename($image_path));
-
+	
 		// Cấu hình cURL
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $ai_service_url);
@@ -396,16 +396,16 @@ class Product extends MY_Controller {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: multipart/form-data"]);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, ['image' => $cfile]);
-
+	
 		$response = curl_exec($ch);
 		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
-
+	
 		if ($http_code !== 200) {
 			echo json_encode(['success' => false, 'message' => 'Lỗi kết nối AI server.', 'http_code' => $http_code]);
 			exit();
 		}
-
+	
 		$response_data = json_decode($response, true);
 		if (!$response_data || !isset($response_data['image_names'])) {
 			echo json_encode(['success' => false, 'message' => 'Dịch vụ AI không trả về kết quả hợp lệ.']);
@@ -413,43 +413,56 @@ class Product extends MY_Controller {
 		}
 	
 		$image_names = $response_data['image_names'];
- 	
- 		// Truy vấn bảng product
- 		$this->db->distinct();
- 		$this->db->select('*');
- 		$this->db->group_start();
- 		$this->db->where_in('image_link', $image_names);
- 	
- 		foreach ($image_names as $image_name) {
- 			$this->db->or_like('image_list', $image_name);
- 		}
- 		$this->db->group_end();
- 	
- 		$query = $this->db->get('product');
- 		$product_list = $query->result_array();
- 		
- 		$product_list = array_map(function($item) {
- 			return (object) $item;
- 		}, $product_list);
-
+	
+		// Truy vấn bảng product
+		$this->db->distinct();
+		$this->db->select('*');
+		$this->db->group_start();
+		$this->db->where_in('image_link', $image_names);
+	
+		foreach ($image_names as $image_name) {
+			$this->db->or_like('image_list', $image_name);
+		}
+		$this->db->group_end();
+	
+		$query = $this->db->get('product');
+		$product_list = $query->result_array();
+	
+		// Sắp xếp product_list theo thứ tự của image_names và loại bỏ các sản phẩm trùng lặp
+		$sorted_product_list = [];
+		$added_products = [];
+		foreach ($image_names as $image_name) {
+			foreach ($product_list as $product) {
+				if (($product['image_link'] == $image_name || strpos($product['image_list'], $image_name) !== false) && !in_array($product['id'], $added_products)) {
+					$sorted_product_list[] = $product;
+					$added_products[] = $product['id'];
+					break;
+				}
+			}
+		}
+	
+		$product_list = array_map(function($item) {
+			return (object) $item;
+		}, $sorted_product_list);
+	
 		// Xóa file ảnh sau khi xử lý xong
 		if (file_exists($image_path)) {
 			unlink($image_path);
 		}
-
- 		if (empty($product_list)) {
- 			echo json_encode(['success' => false, 'message' => 'Không tìm thấy sản phẩm nào.']);
+	
+		if (empty($product_list)) {
+			echo json_encode(['success' => false, 'message' => 'Không tìm thấy sản phẩm nào.']);
 			exit();
- 			return;
- 		}
- 	
- 		// Lưu danh sách sản phẩm vào session
- 		$this->session->set_userdata('search_results', $product_list);
- 	
- 		// Trả về phản hồi JSON thành công
- 		echo json_encode(['success' => true, 'product_list' => $product_list]);
+			return;
+		}
+	
+		// Lưu danh sách sản phẩm vào session
+		$this->session->set_userdata('search_results', $product_list);
+	
+		// Trả về phản hồi JSON thành công
+		echo json_encode(['success' => true, 'product_list' => $product_list]);
 		exit();
- 	}
+	}
  
  	public function tim_kiem_ket_qua() {
  		// Lấy danh sách sản phẩm từ session
