@@ -20,7 +20,7 @@ $product_categories = [
                 <a href="<?php echo base_url($link); ?>" class='product_title'><?php echo $category['title']; ?></a>
                 <img src="<?php echo base_url(); ?>upload/icon/<?php echo $category['icon']; ?>" alt="">
             </h3>
-        </div>
+        </div>		
         <div class="panel-body">
             <div class="swiper-container <?php echo $swiper_id; ?>">
                 <div class="swiper-wrapper">
@@ -76,7 +76,6 @@ $product_categories = [
             "sản-phẩm-bán-chạy",
             "sản-phẩm-xem-nhiều"
         ];
-
         swiperCategories.forEach(function(category) {
             new Swiper("." + category, {
 				spaceBetween: 30,

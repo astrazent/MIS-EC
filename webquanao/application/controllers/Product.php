@@ -9,6 +9,7 @@ class Product extends MY_Controller {
 		$this->load->model('catalog_model');
 		$this->load->model('comment_model');
  		$this->load->model('user_model');
+		$this->load->model('discount_model');
 	}
 
 	public function index()
@@ -19,7 +20,7 @@ class Product extends MY_Controller {
 	public function view()
 	{
 		$id = $this->uri->rsegment(3);
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		if (empty($product)) {
 			$this->session->set_flashdata('message_fail', 'Sản phẩm không tồn tại');
 			redirect(base_url());
@@ -45,13 +46,13 @@ class Product extends MY_Controller {
 		$input = array();
 		$input['where'] = array('catalog_id' => $product->catalog_id);
 		$input['limit'] = array('4','0');
-		$productsub = $this->product_model->get_list($input);
+		$productsub = $this->product_model->get_products_with_discount($input);
 		$this->data['productsub']=$productsub;
 		
 		$input = array();
 		$input['order'] = array('buyed', 'DESC');
 		$input['limit'] = array('4','0');
-		$productview = $this->product_model->get_list($input);
+		$productview = $this->product_model->get_products_with_discount($input);
 		$this->data['productview']=$productview;
 		
 		// Lấy danh sách bình luận theo sản phẩm
@@ -122,7 +123,7 @@ class Product extends MY_Controller {
 		    $this->db->where_in('catalog_id', $cat_list_id);
 		}
 
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$this->data['product_list'] = $product_list;
 
 		$this->data['temp']='site/product/catalog';
@@ -148,7 +149,7 @@ class Product extends MY_Controller {
 
 		$input['limit'] = array($config['per_page'],$segment);
 
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$this->data['product_list'] = $product_list;
 		$this->data['temp']='site/product/hot';
 		$this->load->view('site/layoutsub',$this->data);
@@ -173,7 +174,7 @@ class Product extends MY_Controller {
 
 		$input['limit'] = array($config['per_page'],$segment);
 
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$this->data['product_list'] = $product_list;
 		$this->data['temp']='site/product/views';
 		$this->load->view('site/layoutsub',$this->data);
@@ -198,7 +199,7 @@ class Product extends MY_Controller {
 
 		$input['limit'] = array($config['per_page'],$segment);
 
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$this->data['product_list'] = $product_list;
 		$this->data['temp']='site/product/new';
 		$this->load->view('site/layoutsub',$this->data);
@@ -223,7 +224,7 @@ class Product extends MY_Controller {
 
 		$input['limit'] = array($config['per_page'],$segment);
 
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$this->data['product_list'] = $product_list;
 		$this->data['temp']='site/product/discount';
 		$this->load->view('site/layoutsub',$this->data);
@@ -262,7 +263,7 @@ class Product extends MY_Controller {
 			'catalog_id' => $catalog_id);
 		}
 		$input['order'] = array('price','ASC');
-		$product_list = $this->product_model->get_list($input);
+		$product_list = $this->product_model->get_products_with_discount($input);
 		$total =  count($product_list);
 		$this->data['total'] = $total;
 		$this->data['product_list'] = $product_list;
@@ -274,7 +275,7 @@ class Product extends MY_Controller {
 
 		
 		$id = $this->input->post('id');
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		if (!$product) {
 			exit();
 		}
@@ -307,7 +308,7 @@ class Product extends MY_Controller {
 		$score = $this->input->post('score');
 		$comment = $this->input->post('comment');
 
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		if (!$product) {
 			if ($this->input->is_ajax_request()) {
 				header('Content-Type: application/json');
@@ -355,7 +356,7 @@ class Product extends MY_Controller {
 			}
 		}
 	}
- 
+
 	public function image_search() {
 		if (!isset($_FILES['image'])) {
 			echo json_encode(['success' => false, 'message' => 'Không có ảnh được tải lên']);
