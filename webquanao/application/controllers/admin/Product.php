@@ -72,7 +72,7 @@ class Product extends MY_Controller {
 
 		$this->db->select('product.id as id,product.name as name,price,discount,image_link,view,buyed,catalog.name as namecatalog');
 		$this->db->join('catalog','catalog.id = product.catalog_id');
-		$product = $this->product_model->get_list($input);
+		$product = $this->product_model->get_product_with_discount($input);
 		$this->data['product']= $product;
 
 		
@@ -125,7 +125,7 @@ class Product extends MY_Controller {
 	{
 		$this->data['catalog'] = $this->list_catalog();
 		$id = $this->uri->segment(4);
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		
 		if (empty($product)) {
 			$this->session->set_flashdata('message_fail', 'Sản phẩm không tồn tại');
@@ -187,7 +187,7 @@ class Product extends MY_Controller {
 	public function del()
 	{
 		$id = isset($_POST['id'])?$_POST['id']:'NULL';
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		
 		$this->data['product'] = $product;
 		if ($this->product_model->delete($id)) {
