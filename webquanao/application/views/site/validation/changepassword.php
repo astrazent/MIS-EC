@@ -26,11 +26,23 @@
 						<div class="ngoclan-verification-card">
 							<img src="<?php echo base_url(); ?>public/upload/validation/cancel.png" alt="Icon thất bại" class="img-responsive ngoclan-verification-icon">
 							<h1 class="ngoclan-verification-title">Đổi mật khẩu thất bại!</h1>
-                            <?php if ($this->data['update_fail']): ?>
-                                <p class="ngoclan-verification-message">Có lỗi trong quá trình đổi mật khẩu, vui lòng thử lại sau</p>
-                                <?php else: ?>
-                                    <p class="ngoclan-verification-message">Link xác thực không hợp lệ hoặc đã hết hạn.</p>
-                            <?php endif; ?>
+							<?php if (isset($this->data['message'])): ?>
+								<?php if ($this->data['message'] === 'invalid_token'): ?>
+									<p class="ngoclan-verification-message">Token không hợp lệ. Vui lòng kiểm tra lại liên kết của bạn.</p>
+
+								<?php elseif ($this->data['message'] === 'expired_token'): ?>
+									<p class="ngoclan-verification-message">Token đã hết hạn. Vui lòng yêu cầu liên kết mới để đặt lại mật khẩu.</p>
+
+								<?php elseif ($this->data['message'] === 'password_exist'): ?>
+									<p class="ngoclan-verification-message">Mật khẩu mới trùng với mật khẩu đã được đặt trong 3 tháng trở lại đây.</p>
+
+								<?php elseif ($this->data['message'] === 'user_do_not_exist'): ?>
+									<p class="ngoclan-verification-message">Người dùng không tồn tại.</p>
+
+								<?php elseif ($this->data['message'] === 'update_fail'): ?>
+									<p class="ngoclan-verification-message">Có lỗi trong quá trình đổi mật khẩu, vui lòng thử lại sau.</p>
+								<?php endif; ?>
+							<?php endif; ?>
 							<a href="<?php echo base_url(); ?>" class="ngoclan-verification-button">Về trang chủ</a>
 						</div>
 					</div>

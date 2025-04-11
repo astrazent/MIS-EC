@@ -26,13 +26,13 @@ SET GLOBAL default_storage_engine = InnoDB; -- chuyển CSDL về dạng InnoDB 
 --
 -- Table structure for table `admin`
 --
-DROP TABLE IF EXISTS `admin`;
-DROP TABLE IF EXISTS `catalog`;
-DROP TABLE IF EXISTS `order`;
-DROP TABLE IF EXISTS `product`;
-DROP TABLE IF EXISTS `slider`;
-DROP TABLE IF EXISTS `transaction`;
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `admin`; 
+DROP TABLE IF EXISTS `catalog`;     
+DROP TABLE IF EXISTS `order`;       
+DROP TABLE IF EXISTS `transaction`; 
+DROP TABLE IF EXISTS `product`;     
+DROP TABLE IF EXISTS `slider`;      
+DROP TABLE IF EXISTS `user`;        
 
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(11) NOT NULL,
@@ -218,6 +218,9 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `user_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_phone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_ward` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payment` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -254,6 +257,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` DATETIME NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

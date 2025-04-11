@@ -79,12 +79,34 @@ class Validation extends MY_Controller
         }
 
         $password = $payload['data']['password'];
+        $id = $payload['data']['id'];
 
         $data = array(
-            'password' => md5($password)
+            'password' => md5($password),
+            'is_verified' => 0
         );
 
-        if (!$this->user_model->update($payload['data']['id'], $data)) {
+        // Lấy thông tin user với điều kiện email
+        $user = $this->user_model->get_info_rule(['id' => $id], 'password');
+        if (!$user) {
+            // Nếu mật khẩu mới trùng mật khẩu cũ
+            $this->data['status'] = false;
+            $this->data['message'] = 'user_do_not_exist';
+            $this->load->view('site/validation/changepassword', $this->data);
+            return;
+        }
+
+        // So sánh mật khẩu hệ thống với mật khẩu đã mã hóa trong DB
+        if ($user->password === md5($password)) {
+            // Nếu mật khẩu mới trùng mật khẩu cũ
+            $this->data['status'] = false;
+            $this->data['message'] = 'password_exist';
+            $this->load->view('site/validation/changepassword', $this->data);
+            return;
+        }
+
+        // Cập nhật mật khẩu
+        if (!$this->user_model->update($id, $data)) {
             $this->data['status'] = false;
             $this->data['message'] = 'update_fail';
             $this->load->view('site/validation/changepassword', $this->data);

@@ -15,6 +15,11 @@ class User extends MY_Controller
 
 	public function index()
 	{
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			redirect(base_url());
+		}
+		
 		$this->data['temp'] = 'site/user/index.php';
 		$this->load->view('site/layoutsub', $this->data);
 	}
@@ -28,98 +33,204 @@ class User extends MY_Controller
 	}
 	public function register()
 	{
-		$message_success = $this->session->flashdata('message_success');
-		$this->data['message_success'] = $message_success;
-
-		$message_fail = $this->session->flashdata('message_fail');
-		$this->data['message_fail'] = $message_fail;
-
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert" style="padding:5px;border-bottom:0px;">', '</div>');
-		if ($this->input->post()) {
-			$this->form_validation->set_rules('name', 'Họ tên', 'required');
-			$this->form_validation->set_rules('email', 'Email đăng nhập', 'required|valid_email|callback_check_email'); //Hàm callback gọi check_email()
-			$this->form_validation->set_rules('password', 'Mật khẩu', 'required');
-			$this->form_validation->set_rules('re_password', 'Mật khẩu nhập lại', 'matches[password]');
-			$this->form_validation->set_rules('address', 'Địa chỉ', 'required');
-			$this->form_validation->set_rules('phone', 'Điện thoại', 'required');
-			if ($this->form_validation->run()) {
-				$password = $this->input->post('password');
-				$email = $this->input->post('email');
-				$name = $this->input->post('name');
-				$data = array();
-				$data = array(
-					'name' => $name,
-					'email' => $email,
-					'password' => md5($password),
-					'address' => $this->input->post('address'),
-					'phone' => $this->input->post('phone'),
-					'created' => date('Y-m-d H:i:s')
-				);
-				// Gửi Email xác thực 
-				$token = $this->verify_library->generate_verification_token($data);
-				if (!$token) {
-					$this->session->set_flashdata('message_fail', 'Không thể tạo token xác thực.');
-					redirect(base_url('user/register'));
-				}
-				$verification_link = base_url("xac-thuc-mail/$token");
-				$validation_email = $this->validate_email(
-					$email,
-					$name,
-					'Xác thực Email - Quần áo Ngọc Lan',
-					"
-						<!DOCTYPE html>
-						<html>
-						<head>
-							<meta charset='UTF-8'>
-							<title>Xác thực Email - Quần Áo Ngọc Lan</title>
-							<style>
-								p {
-									font-size: 20px;
-								}
-							</style>
-						</head>
-						<body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; text-align: center;'>
-							<h2>Chào bạn, $name</h2>
-							<p>Bạn đã đăng ký tài khoản trên <strong>Quần Áo Ngọc Lan</strong>. Vui lòng xác thực email của bạn bằng cách nhấn vào nút bên dưới:</p>
-							<p>
-								<a href='" . $verification_link . "' 
-								style='display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #28a745; text-decoration: none; border-radius: 5px;'>
-									Xác Thực Email
-								</a>
-							</p>
-							<p>Nếu bạn không thực hiện yêu cầu trên, vui lòng bỏ qua email này.</p>
-							<p>Trân trọng,<br>Đội ngũ Quần Áo Ngọc Lan</p>
-						</body>
-						</html>
-						",
-					"
-						Chào bạn,
-
-						Bạn đã đăng ký tài khoản trên Quần Áo Ngọc Lan. Vui lòng xác thực email của bạn bằng cách nhấp vào liên kết bên dưới:
-
-						👉 " . $verification_link . "
-
-						Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
-
-						Trân trọng,
-						Đội ngũ Quần Áo Ngọc Lan
-						"
-				);
-				if (!$validation_email) {
-					$this->session->set_flashdata('message_fail', 'Không thể gửi email.');
-					redirect(base_url('user/register'));
-				}
-				$this->session->set_flashdata('message_success', "Vui lòng xác nhận email tại $email");
-			} else {
-				$this->session->set_flashdata('message_fail', 'Thêm người dùng thất bại!');
-			}
-			redirect(base_url('user/register'));
+		// nếu user tồn tại thì chuyển về home
+		$user = $this->session->userdata('user');
+		if (isset($user)) {
+			redirect(base_url());
 		}
-		$this->load->view('site/user/register', $this->data);
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
+			// Kiểm tra nếu không có dữ liệu
+			if (!$data) {
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			// Kiểm tra tính hợp lệ của dữ liệu
+			$errors = [];
+
+			if (empty($data['name'])) {
+				$errors['name'] = "Họ và tên không được để trống";
+			}
+
+			if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+				$errors['email'] = "Email không hợp lệ";
+			}
+			if (!$this->check_email($data['email'])) {
+				$errors['email'] = "Email đã tồn tại";
+			}
+			if ($data['password'] < 8) {
+				echo "Mật khẩu phải từ 8 kí tự trở lên";
+			}
+
+			if (!preg_match('/^[0-9]{8,11}$/', $data['phone'])) {
+				$errors['phone'] = "Số điện thoại không hợp lệ (8-11 chữ số)";
+			}
+
+			if (empty($data['address'])) {
+				$errors['address'] = "Địa chỉ không được để trống";
+			}
+
+			if (empty($data['city'])) {
+				$errors['city'] = "Vui lòng chọn Tỉnh/Thành";
+			}
+
+			if (empty($data['district'])) {
+				$errors['district'] = "Vui lòng chọn Quận/Huyện";
+			}
+
+			if (empty($data['ward'])) {
+				$errors['ward'] = "Vui lòng chọn Phường/Xã";
+			}
+
+			// Kiểm tra recaptcha
+			$captcha = $data['recaptcha'];
+			log_message('error', $data['recaptcha']);
+			if (!$this->verify_library->verify_recaptcha($captcha)) {
+				$errors['recaptcha'] = "xác thực recaptcha thất bại";
+			}
+
+			// Nếu có lỗi, trả về danh sách lỗi
+			if (!empty($errors)) {
+				echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$data_saved = array();
+			$time = date('Y-m-d H:i:s');
+			$name = $data['name'];
+			$email = $data['email'];
+			$data_saved = array(
+				'name' => $name,
+				'email' => $email,
+				'password' => md5($data['password']),
+				'address' => $data['address'],
+				'city' => $data['city'],
+				'district' => $data['district'],
+				'ward' => $data['ward'],
+				'phone' => $data['ward'],
+				'created' => $time
+			);
+
+			// Gửi Email xác thực 
+			$token = $this->verify_library->generate_verification_token($data_saved);
+			if (!$token) {
+				echo json_encode(["status" => "error", "message" => "Không thể tạo token xác thực", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			$verification_link = base_url("xac-thuc-mail/$token");
+			$validation_email = $this->validate_email(
+				$email,
+				$name,
+				'Xác thực Email - Quần áo Ngọc Lan',
+				"
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<meta charset='UTF-8'>
+					<title>Xác thực Email - Quần Áo Ngọc Lan</title>
+					<style>
+						p {
+							font-size: 20px;
+						}
+					</style>
+				</head>
+				<body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; text-align: center;'>
+					<h2>Chào bạn, $name </h2>
+					<p>Bạn đã đăng ký tài khoản trên <strong>Quần Áo Ngọc Lan</strong>. Vui lòng xác thực email của bạn bằng cách nhấn vào nút bên dưới:</p>
+					<p>
+						<a href='" . $verification_link . "' 
+						style='display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;'>
+							Xác Thực Email
+						</a>
+					</p>
+					<p>Nếu bạn không thực hiện yêu cầu trên, vui lòng bỏ qua email này.</p>
+					<p>Trân trọng,<br>Đội ngũ Quần Áo Ngọc Lan</p>
+				</body>
+				</html>
+				",
+				"
+				Chào bạn,
+
+				Bạn đã đăng ký tài khoản trên Quần Áo Ngọc Lan. Vui lòng xác thực email của bạn bằng cách nhấp vào liên kết bên dưới:
+
+				👉 " . $verification_link . "
+
+				Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
+
+				Trân trọng,
+				Đội ngũ Quần Áo Ngọc Lan
+				"
+			);
+			if (!$validation_email) {
+				echo json_encode(["status" => "error", "message" => "Gửi email thất bại", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			echo json_encode(["status" => "success", "message" => "Vui lòng xác nhận email tại $email"],  JSON_UNESCAPED_UNICODE);
+			return;
+		}
+		$this->load->view('site/user/register');
 	}
-	function check_email()
+	function check_validation_mail()
 	{
-		$email = $this->input->post('email');
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
+
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
+			$where = array('email' => $data['email']);
+			if ($this->user_model->check_exists($where)) {
+				echo json_encode(["status" => "success", "message" => "Xác nhận thành công"],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			echo json_encode(["status" => "error", "message" => "Xác nhận thất bại"],  JSON_UNESCAPED_UNICODE);
+			return;
+		}
+	}
+	function check_forgot_password_mail()
+	{
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			echo json_encode(["status" => "error", "message" => "Người dùng không tồn tại!"],  JSON_UNESCAPED_UNICODE);
+			return;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
+
+			//Kiểm tra xem email đã được kích hoạt chưa
+			$verified = $this->user_model->get_info_rule(['id' => $user->id], 'is_verified');
+			if ($verified->is_verified == '1') {
+				echo json_encode(["status" => "error", "message" => "Email chưa được xác thực"],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			// Lấy password ứng với user hiện tại
+			$user_info = $this->user_model->get_info_rule(['id' => $user->id], 'password');
+			$password = md5($user_info->password);
+
+			// Kiểm tra xem mật khẩu đã được cập nhật chưa 
+			if (md5($data['password']) === $password) {
+				$temp = array(
+					'is_verified' => 1
+				);
+				if (!$this->user_model->update($user->id, $temp)) {
+					echo json_encode(["status" => "error", "message" => "cập nhật is_verified thất bại"],  JSON_UNESCAPED_UNICODE);
+					return;
+				}
+				echo json_encode(["status" => "success", "message" => "Xác nhận thành công"],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			echo json_encode(["status" => "error", "message" => "Xác nhận thất bại"],  JSON_UNESCAPED_UNICODE);
+			return;
+		}
+	}
+	function check_email($email)
+	{
 		$where = array('email' => $email);
 		if ($this->user_model->check_exists($where)) {
 			$this->form_validation->set_message(__FUNCTION__, 'Tên đăng nhập đã tồn tại');
@@ -129,45 +240,51 @@ class User extends MY_Controller
 	}
 	public function login()
 	{
-		$this->form_validation->set_error_delimiters('<p class="text-center" style="padding:5px;border-bottom:0px;">', '</p>');
-		$user = $this->session->userdata('user');
-		if (isset($user)) {
+		// nếu user tồn tại, redirect về home
+		if ($this->session->userdata('user')) {
 			redirect(base_url());
 		}
-		$message_success = $this->session->flashdata('message_success');
-		$this->data['message_success'] = $message_success;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
 
-		$message_fail = $this->session->flashdata('message_fail');
-		$this->data['message_fail'] = $message_fail;
-		if ($this->input->post()) {
-			$this->form_validation->set_rules('email', 'Email đăng nhập', 'required|valid_email');
-			$this->form_validation->set_rules('password', 'Mật khẩu', 'required');
-			$this->form_validation->set_rules('login', 'login', 'callback_check_login');
-			if ($this->form_validation->run()) {
-				$user = $this->get_info_user();
-				$this->session->set_userdata('user', $user);
-				redirect(base_url('user/login'));
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			// Kiểm tra nếu không có dữ liệu
+			if (!$data) {
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				return;
 			}
+
+			// Kiểm tra recaptcha
+			$captcha = $data['recaptcha'];
+			if (!$this->verify_library->verify_recaptcha($captcha)) {
+				echo json_encode(["status" => "error", "message" => "xác thực recaptcha thất bại"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			//Kiểm tra tài khoản và mật khẩu
+			$email = $data['email'];
+			$password = $data['password'];
+
+			log_message('error', $email);
+			log_message('error', $password);
+			$user = array();
+			$where = array('email' => $email, 'password' => md5($password));
+			$user = $this->user_model->get_info_rule($where);
+
+			if (!$user) {
+				echo json_encode(["status" => "error", "message" => "Tài khoản hoặc mật khẩu không đúng"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$this->session->set_userdata('user', $user);
+
+
+			echo json_encode(["status" => "success", "message" => "Đăng nhập thành công"], JSON_UNESCAPED_UNICODE);
+			return;
 		}
-		$this->load->view('site/user/login', $this->data);
-	}
-	public function check_login()
-	{
-		$user = $this->get_info_user();
-		if ($user) {
-			return true;
-		}
-		$this->form_validation->set_message(__FUNCTION__, 'Sai email hoặc mật khẩu');
-		return false;
-	}
-	public function get_info_user()
-	{
-		$user = array();
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
-		$where = array('email' => $email, 'password' => md5($password));
-		$user = $this->user_model->get_info_rule($where);
-		return $user;
+		$this->load->view('site/user/login');
 	}
 	public function logout()
 	{
@@ -176,9 +293,8 @@ class User extends MY_Controller
 		}
 		redirect(base_url());
 	}
-	public function get_info_forgot_user()
+	public function get_info_forgot_user($email)
 	{
-		$email = $this->input->post('email');
 		$where = array('email' => $email);
 		$id = $this->user_model->get_info_rule($where, 'id');
 
@@ -190,45 +306,55 @@ class User extends MY_Controller
 	}
 	public function forgotpassword()
 	{
-		$message_success = $this->session->flashdata('message_success');
-		$this->data['message_success'] = $message_success;
+		// nếu user tồn tại thì tự động điền email
+		$user = $this->session->userdata('user');
+		if (isset($user)) {
+			$this->data['auto_fill'] = $user->email;
+		}
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
 
-		$message_fail = $this->session->flashdata('message_fail');
-		$this->data['message_fail'] = $message_fail;
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
 
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert" style="padding:5px;border-bottom:0px;">', '</div>');
+			// Kiểm tra nếu không có dữ liệu
+			if (!$data) {
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
 
-		if ($this->input->post()) {
-			$this->form_validation->set_rules('email', 'Email đăng nhập', 'required|valid_email');
-			$this->form_validation->set_rules('password', 'Mật khẩu mới', 'required');
-			$this->form_validation->set_rules('repassword', 'Nhập lại mật khẩu', 'required|matches[password]');
-			if ($this->form_validation->run()) {
-				$id = $this->get_info_forgot_user();
-				if (!$id) {
-					$this->session->set_flashdata('message_fail', "Tài khoản email không tồn tại!");
-					redirect(base_url('user/forgotpassword'));
-				}
-				$email = $this->input->post('email');
+			// Kiểm tra recaptcha
+			$captcha = $data['recaptcha'];
+			if (!$this->verify_library->verify_recaptcha($captcha)) {
+				$errors['recaptcha'] = "xác thực recaptcha thất bại";
+			}
 
-				$password = $this->input->post('password');
-				$data = array(
-					'password' => md5($password),
-					'id' => $id
-				);
-				// Gửi Email xác thực 
-				$token = $this->verify_library->generate_verification_token($data);
-				if (!$token) {
-					$this->session->set_flashdata('message_fail', 'Không thể tạo token xác thực.');
-					redirect(base_url('user/register'));
-				}
-				$reset_link = base_url("doi-mat-khau/$token");
-				$expire_time = getenv('JWT_EXPIRE') / 60;
+			//Kiểm tra mail có tồn tại không
+			$email = $data['email'];
 
-				$validation_email = $this->validate_email(
-					$email,
-					$email,
-					'Xác thực Email - Quần áo Ngọc Lan',
-					'
+			if ($this->check_email($email)) {
+				echo json_encode(["status" => "error", "message" => "Email không tồn tại"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$data = array(
+				'password' => md5($data['password']),
+				'id' => $this->get_info_forgot_user($email)
+			);
+			// Gửi Email xác thực 
+			$token = $this->verify_library->generate_verification_token($data);
+			if (!$token) {
+				echo json_encode(["status" => "error", "message" => "Không thể tạo token xác thực"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			$reset_link = base_url("doi-mat-khau/$token");
+			$expire_time = getenv('JWT_EXPIRE') / 60;
+
+			$validation_email = $this->validate_email(
+				$email,
+				$email,
+				'Xác thực Email - Quần áo Ngọc Lan',
+				'
 					<!DOCTYPE html>
 					<html>
 					<head>
@@ -275,24 +401,24 @@ class User extends MY_Controller
 							<p>Nếu bạn không yêu cầu thay đổi mật khẩu, hãy bỏ qua email này.</p>
 							<p>Để đặt lại mật khẩu, vui lòng nhấn vào nút bên dưới:</p>
 							<a href="' . $reset_link . '" class="button">Đổi mật khẩu</a>
-							<p>Liên kết này sẽ hết hạn sau '. $expire_time .' phút.</p>
+							<p>Liên kết này sẽ hết hạn sau ' . $expire_time . ' phút.</p>
 						</div>
 
 					</body>
 					</html>
 					',
-					"
+				"
 					Tiêu đề: Xác nhận thay đổi mật khẩu
 
 					Nội dung:
 
-					Xin chào ". $email .",
+					Xin chào " . $email . ",
 
 					Chúng tôi nhận được yêu cầu thay đổi mật khẩu cho tài khoản của bạn. Nếu bạn đã yêu cầu điều này, vui lòng nhấn vào liên kết dưới đây để đặt lại mật khẩu:
 
-					👉 ". $reset_link ."
+					👉 " . $reset_link . "
 
-					Lưu ý: Liên kết này sẽ hết hạn sau ". $expire_time ." phút. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
+					Lưu ý: Liên kết này sẽ hết hạn sau " . $expire_time . " phút. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
 
 					Nếu bạn gặp bất kỳ vấn đề nào, hãy liên hệ với chúng tôi qua email: support@ngoclan.com.
 
@@ -300,18 +426,52 @@ class User extends MY_Controller
 					Đội ngũ hỗ trợ
 					Ngoc Lan team
 					"
-				);
+			);
 
-				if (!$validation_email) {
-					$this->session->set_flashdata('message_fail', 'Không thể gửi email.');
-					redirect(base_url('user/forgotpassword'));
-				}
-
-				$this->session->set_flashdata('message_success', "Vui lòng xác thực mail tại $email");
-				redirect(base_url('user/forgotpassword'));
+			if (!$validation_email) {
+				echo json_encode(["status" => "error", "message" => "Không thể gửi email"], JSON_UNESCAPED_UNICODE);
+				return;
 			}
+			echo json_encode(["status" => "success", "message" => "Vui lòng xác thực mail tại $email"], JSON_UNESCAPED_UNICODE);
+			return;
 		}
 		$this->load->view('site/user/forgot', $this->data);
+	}
+	public function update_info()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			if (!isset($data['id']) || !isset($data['value'])) {
+				echo json_encode(['status' => 'error', 'message' => 'Thiếu dữ liệu']);
+				return;
+			}
+
+			$this->db->where('id', $data['id']);
+			$this->db->update('users', ['name' => $data['value']]);
+
+			echo json_encode(['status' => 'success', 'message' => 'Cập nhật thành công']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Phương thức không hợp lệ']);
+		}
+	}
+	public function delete_info()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			if (!isset($data['id']) || !isset($data['value'])) {
+				echo json_encode(['status' => 'error', 'message' => 'Thiếu dữ liệu']);
+				return;
+			}
+
+			$this->db->where('id', $data['id']);
+			$this->db->update('users', ['name' => $data['value']]);
+
+			echo json_encode(['status' => 'success', 'message' => 'Cập nhật thành công']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Phương thức không hợp lệ']);
+		}
 	}
 
 	public function changepassword()
@@ -321,54 +481,44 @@ class User extends MY_Controller
 		if (!isset($user)) {
 			redirect(base_url());
 		}
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
 
-		$message_success = $this->session->flashdata('message_success');
-		$this->data['message_success'] = $message_success;
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
 
-		$message_fail = $this->session->flashdata('message_fail');
-		$this->data['message_fail'] = $message_fail;
+			// Kiểm tra nếu không có dữ liệu
+			if (!$data) {
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
 
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert" style="padding:5px;border-bottom:0px;">', '</div>');
+			// Kiểm tra recaptcha
+			$captcha = $data['recaptcha'];
+			if (!$this->verify_library->verify_recaptcha($captcha)) {
+				$errors['recaptcha'] = "xác thực recaptcha thất bại";
+			}
 
-		if ($this->input->post()) {
-			$this->form_validation->set_rules('oldpassword', 'Mật khẩu cũ', 'required|callback_check_password');
-			$this->form_validation->set_rules('password', 'Mật khẩu mới', 'required');
-			$this->form_validation->set_rules('repassword', 'Nhập lại mật khẩu mới', 'required|matches[password]');
-			if ($this->form_validation->run()) {
+			$email = $user->email;
 
-				// Lấy id của user
-				$email = $user->email;
-				$where = array('email' => $email);
-				$id = $this->user_model->get_info_rule($where, 'id');
+			$data = array(
+				'password' => md5($data['password']),
+				'id' => $this->get_info_forgot_user($email)
+			);
+			// Gửi Email xác thực 
+			$token = $this->verify_library->generate_verification_token($data);
+			if (!$token) {
+				echo json_encode(["status" => "error", "message" => "Không thể tạo token xác thực"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			$reset_link = base_url("doi-mat-khau/$token");
+			$expire_time = getenv('JWT_EXPIRE') / 60;
 
-				//Lấy mật khẩu mới
-				$password = $this->input->post('password');
-
-				$data = array(
-					'password' => $password,
-					'id' => $id->id
-				);
-				// Kiểm tra recaptcha
-					$captcha = $this->input->post('g-recaptcha-response');
-					if(!$this->verify_library->verify_recaptcha($captcha)){
-						$this->session->set_flashdata('message_fail', 'Xác thực recaptcha thất bại');
-						redirect(base_url('user/changepassword'));
-					}
-
-				// Gửi Email xác thực 
-				$token = $this->verify_library->generate_verification_token($data);
-				if (!$token) {
-					$this->session->set_flashdata('message_fail', 'Không thể tạo token xác thực.');
-					redirect(base_url('user/changepassword'));
-				}
-				$reset_link = base_url("doi-mat-khau/$token");
-				$expire_time = getenv('JWT_EXPIRE') / 60;
-
-				$validation_email = $this->validate_email(
-					$email,
-					$email,
-					'Xác thực Email - Quần áo Ngọc Lan',
-					'
+			$validation_email = $this->validate_email(
+				$email,
+				$email,
+				'Xác thực Email - Quần áo Ngọc Lan',
+				'
 					<!DOCTYPE html>
 					<html>
 					<head>
@@ -415,24 +565,24 @@ class User extends MY_Controller
 							<p>Nếu bạn không yêu cầu thay đổi mật khẩu, hãy bỏ qua email này.</p>
 							<p>Để đặt lại mật khẩu, vui lòng nhấn vào nút bên dưới:</p>
 							<a href="' . $reset_link . '" class="button">Đổi mật khẩu</a>
-							<p>Liên kết này sẽ hết hạn sau '. $expire_time .' phút.</p>
+							<p>Liên kết này sẽ hết hạn sau ' . $expire_time . ' phút.</p>
 						</div>
 
 					</body>
 					</html>
 					',
-					"
+				"
 					Tiêu đề: Xác nhận thay đổi mật khẩu
 
 					Nội dung:
 
-					Xin chào ". $email .",
+					Xin chào " . $email . ",
 
 					Chúng tôi nhận được yêu cầu thay đổi mật khẩu cho tài khoản của bạn. Nếu bạn đã yêu cầu điều này, vui lòng nhấn vào liên kết dưới đây để đặt lại mật khẩu:
 
-					👉 ". $reset_link ."
+					👉 " . $reset_link . "
 
-					Lưu ý: Liên kết này sẽ hết hạn sau ". $expire_time ." phút. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
+					Lưu ý: Liên kết này sẽ hết hạn sau " . $expire_time . " phút. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
 
 					Nếu bạn gặp bất kỳ vấn đề nào, hãy liên hệ với chúng tôi qua email: support@ngoclan.com.
 
@@ -440,20 +590,20 @@ class User extends MY_Controller
 					Đội ngũ hỗ trợ
 					Ngoc Lan team
 					"
-				);
-				if (!$validation_email) {
-					$this->session->set_flashdata('message_fail', 'Không thể gửi email.');
-					redirect(base_url('user/changepassword'));
-				}
-				$this->session->set_flashdata('message_success', "Vui lòng xác thực mail tại $email");
-				redirect(base_url('user/changepassword'));
+			);
+
+			if (!$validation_email) {
+				echo json_encode(["status" => "error", "message" => "Không thể gửi email"], JSON_UNESCAPED_UNICODE);
+				return;
 			}
+			echo json_encode(["status" => "success", "message" => "Vui lòng xác thực mail tại $email"], JSON_UNESCAPED_UNICODE);
+			return;
 		}
 
 		$this->load->view('site/user/alter', $this->data);
 	}
 	function check_password()
-	{	
+	{
 		$password = $this->input->post('oldpassword');
 		$where = array('password' => md5($password));
 		if (!$this->user_model->check_exists($where)) {

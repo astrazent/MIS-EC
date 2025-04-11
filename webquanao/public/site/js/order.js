@@ -2,14 +2,72 @@
 var citis = document.getElementById("city");
 var districts = document.getElementById("district");
 var wards = document.getElementById("ward");
+// Lấy thẻ chứa thông tin người dùng
+var userInfoElement = document.getElementById("userInfo");
+var userData = JSON.parse(userInfoElement.getAttribute("data-user"));
+
+// Điền thông tin vào các trường input
+document.getElementById("name").value = userData.name;
+document.getElementById("email").value = userData.email;
+document.getElementById("phone").value = userData.phone;
+document.getElementById("address").value = userData.address;
+
 var Parameter = {
-	url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+	url: "http://localhost:8080/api/read-json",
 	method: "GET",
 	responseType: "application/json",
 };
+function selectOptionByText(selectId, textToFind) {
+	let select = document.getElementById(selectId);
+	for (let i = 0; i < select.options.length; i++) {
+		if (select.options[i].text === textToFind) {
+			select.selectedIndex = i;
+			break;
+		}
+	}
+}
 var promise = axios(Parameter);
 promise.then(function (result) {
 	renderCity(result.data);
+
+	// Điền thông tin sau khi dữ liệu được load
+	let cityElement = document.getElementById("city");
+
+	for (let i = 0; i < cityElement.options.length; i++) {
+		if (cityElement.options[i].text === userData.city) {
+			cityElement.selectedIndex = i;
+			break;
+		}
+	}
+
+	// Gửi sự kiện onchange
+	let eventCity = new Event("change");
+	cityElement.dispatchEvent(eventCity);
+
+	let districtElement = document.getElementById("district");
+	for (let i = 0; i < districtElement.options.length; i++) {
+		if (districtElement.options[i].text === userData.district) {
+			districtElement.selectedIndex = i;
+			break;
+		}
+	}
+
+	// Gửi sự kiện onchange
+	let eventDistrict = new Event("change");
+	districtElement.dispatchEvent(eventDistrict);
+
+	// ====== Dành cho WARD ======
+	let wardElement = document.getElementById("ward");
+	for (let i = 0; i < wardElement.options.length; i++) {
+		if (wardElement.options[i].text === userData.ward) {
+			wardElement.selectedIndex = i;
+			break;
+		}
+	}
+
+	// Gửi sự kiện onchange
+	let eventWard = new Event("change");
+	wardElement.dispatchEvent(eventWard);
 });
 
 function renderCity(data) {
@@ -179,11 +237,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			} else {
 				paymentError.classList.add("hidden"); // Ẩn cảnh báo nếu đã chọn
 			}
-            
-            // Là tuỳ chọn
-            let message = document.getElementById("message").value;
 
-                // Nếu có lỗi, không gửi API
+			// Là tuỳ chọn
+			let message = document.getElementById("message").value;
+
+			// Nếu có lỗi, không gửi API
 			if (!isValid) return;
 
 			// Tạo object chứa dữ liệu cần gửi
@@ -195,11 +253,15 @@ document.addEventListener("DOMContentLoaded", function () {
 				city: citySelect.value,
 				district: districtSelect.value,
 				ward: wardSelect.value,
-                message: message,
+				message: message,
 				payment: selectedPayment.value,
 			};
 
-			if (selectedPayment.value == "cash" || selectedPayment.value == "vietqr" || selectedPayment.value == "pos") {
+			if (
+				selectedPayment.value == "cash" ||
+				selectedPayment.value == "vietqr" ||
+				selectedPayment.value == "pos"
+			) {
 				// Gửi dữ liệu lên server qua fetch API (Fake API endpoint)
 				fetch("http://localhost:8080/order/complete", {
 					method: "POST",
@@ -215,7 +277,9 @@ document.addEventListener("DOMContentLoaded", function () {
 					})
 					.then((data) => {
 						// Hiển thị popup đặt hàng thành công
-						if (data.status == "success") {
+						if (data.status == "null_user") {
+							window.location.href = "/dang-nhap";
+						} else if (data.status == "success") {
 							Swal.fire({
 								icon: "success",
 								title: "Đặt hàng thành công!",
@@ -258,6 +322,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				})
 					.then((response) => response.json())
 					.then((data) => {
+						if (data.status == "error") {
+							window.location.href = "/dang-nhap";
+						}
 						if (data.payment_url) {
 							// Chuyển hướng người dùng đến VNPAY
 							window.location.href = data.payment_url;

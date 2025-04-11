@@ -67,39 +67,35 @@ class Cart extends MY_Controller {
 		}
 		redirect(base_url('cart'));
 	}
-	public function update_ajax()
+	public function update_ajax($id)
 	{
 		header('Content-Type: application/json'); // Thêm header để chỉ định response type
-
-		$id = $this->uri->segment(3);
-		$str = $this->uri->segment(4);
-		$carts = $this->cart->contents();
 		
+		$carts = $this->cart->contents();
+		$qty = $this->input->post('qty');
+		$response = array(
+			'status' => 'error',
+			'message' => 'Không tìm thấy sản phẩm trong giỏ hàng'
+		);
 		foreach ($carts as $key => $value) {
 			if ($value['id'] == $id) {
 				$data = array();
 				$data['rowid'] = $key;
-				if ($str == 'sum') {
-					$data['qty'] = $value['qty'] + 1;
-				} elseif($str == 'sub' && $value['qty'] > 1) {
-					$data['qty'] = $value['qty'] - 1;
-				}
+				$data['qty'] = $qty;
+
 				$this->cart->update($data);
-				
 				// Get updated cart info
 				$updated_cart = $this->cart->contents();
 				foreach ($updated_cart as $item) {
 					if ($item['id'] == $id) {
 						$response = array(
 							'status' => 'success',
-							'qty' => $item['qty'],
-							'subtotal' => number_format($item['subtotal']),
-							'total_price' => number_format($this->cart->total()),
-							'total_items' => $this->cart->total_items()
+							'message' => 'Cập nhật cart thành công!',
 						);
-						exit(json_encode($response)); // Sử dụng exit() để đảm bảo không có output khác
+						break; 
 					}
 				}
+				exit(json_encode($response)); // Sử dụng exit() để đảm bảo không có output khác
 			}
 		}
 		

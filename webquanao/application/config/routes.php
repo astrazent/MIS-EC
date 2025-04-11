@@ -64,7 +64,7 @@ $route['translate_uri_dashes'] = FALSE;
 //Update
 $route['xac-thuc-mail/(:any)'] = 'validation/index/$1';
 $route['image-search'] = 'product/image_search';
- $route['tim-kiem-ket-qua'] = 'product/tim_kiem_ket_qua';
+$route['tim-kiem-ket-qua'] = 'product/tim_kiem_ket_qua';
 $route['quen-mat-khau'] = 'user/forgotpassword';
 $route['doi-mat-khau'] = 'user/changepassword';
 
@@ -75,3 +75,10 @@ $route['doi-mat-khau/(:any)'] = 'validation/changepassword/$1';
 $route['vnpay/payment'] = 'order/payment';
 $route['vnpay/callback'] = 'order/callback';
 $route['hook/sepay-payment'] = 'order/sepay';
+
+//update-delete-infomation-user
+$route['update-info'] = 'user/udpate_info';
+$route['delete-info'] = 'user/delete_info';
+
+//Read address info file
+$route['api/read-json'] = 'DiaGioiHanhChinhVN';

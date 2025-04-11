@@ -21,7 +21,6 @@
 		</ol>
 		<div class="bg-white p-6 rounded shadow text-3xl mb-20">
 			<h2 class="text-4xl font-semibold mb-10">Thông tin giao hàng</h2>
-			<p class="mb-10 text-2xl">Quý khách đã có tài khoản? <a href="#" class="text-blue-600">Đăng nhập</a></p>
 
 			<div class="mb-10">
 				<label class="block text-gray-700 mb-4" for="name">Họ và tên</label>
@@ -45,7 +44,7 @@
 
 			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
 				<div>
-					<label class="block text-gray-700 mb-4" for="city">Tỉnh/Thành</label>
+					<label class="block text-gray-700 mb-4" for="city">Tỉnh/Thành phố</label>
 					<select id="city" name="city" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded">
 						<option value="" selected></option>
 					</select>
@@ -149,7 +148,7 @@
 		</div>
 	</div>
 </div>
-
+<div id="userInfo" style="display:none;" data-user='<?php echo json_encode($user); ?>'>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 

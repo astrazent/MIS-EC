@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// set time for project
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 /*
 |--------------------------------------------------------------------------
 | Base Site URL

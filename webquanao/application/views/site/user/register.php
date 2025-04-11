@@ -3,6 +3,62 @@
 
 <head>
 	<?php $this->load->view('site/head', $this->data); ?>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer>
+	</script>
+
+	<style>
+		.g-recaptcha>div:first-child {
+			margin: 10px auto 20px auto;
+		}
+	</style>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+	<style>
+		.my-custom-button {
+			background-color: #31B0D5 !important;
+			/* Màu cam đỏ */
+			color: white !important;
+			/* Chữ màu trắng */
+			border-radius: 5px !important;
+			/* Bo góc */
+			padding: 10px 20px !important;
+			font-size: 16px !important;
+		}
+
+		.swal2-timer-progress-bar {
+			height: 6px;
+			/* Chiều cao của thanh tiến trình */
+			background-color: #007bff;
+			/* Màu sắc của thanh tiến trình */
+			border-radius: 3px;
+			/* Bo tròn góc thanh tiến trình */
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+			/* Thêm bóng cho thanh tiến trình */
+		}
+
+		.custom-toast {
+			width: 90% !important;
+			max-width: none !important;
+			font-size: 1.1rem !important;
+			padding: 1rem 1.5rem !important;
+			left: 50% !important;
+			transform: translateX(-50%) !important;
+		}
+
+		.swal2-success-toast {
+			background-color: #d4edda !important;
+			color: #155724 !important;
+			border: 1px solid #c3e6cb;
+		}
+
+		.swal2-error-toast {
+			background-color: #f8d7da !important;
+			color: #721c24 !important;
+			border: 1px solid #f5c6cb;
+		}
+	</style>
 </head>
 
 <body>
@@ -15,85 +71,80 @@
 					<li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
 					<li class="active">Đăng kí</li>
 				</ol>
-				<div class="panel panel-info ">
+				<div class="panel panel-info flex justify-center"> <!-- Thêm flex và justify-center để căn giữa -->
+					<div class="bg-white p-6 text-3xl mb-20 w-4/5"> <!-- Thêm w-4/5 để chiếm 80% chiều rộng -->
+						<h2 class="text-4xl font-semibold mb-10">Đăng kí tài khoản</h2>
 
-					<?php if (isset($message_success) && !empty($message_success)) { ?>
-						<h4 style="color:green;text-align: center;margin-top: 30px"><?php echo $message_success; ?></h4>
+						<div class="mb-10">
+							<label class="block text-gray-700 mb-4" for="name">Họ và tên</label>
+							<input type="text" id="name" autocomplete="new-name" name="name" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="">
+						</div>
 
-					<?php } ?>
-					<?php if (isset($message_fail) && !empty($message_fail)) { ?>
-						<h4 style="color:red;text-align: center;margin-top: 30px"><?php echo $message_fail; ?></h4>
-					<?php } ?>
-					<div class="panel-body">
-						<form class="form-horizontal" method="post" action="<?php echo base_url('user/register'); ?>">
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-offset-2 col-sm-2 control-label">Họ tên</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="" name="name" value="<?php echo set_value('name'); ?>">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('name'); ?>
-								</div>
+						<div class="mb-10">
+							<label class="block text-gray-700 mb-4" for="email">Email</label>
+							<input type="email" id="email" autocomplete="new-email" name="email" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" placeholder="example@gmail.com" value="">
+						</div>
+						<form>
+							<div class="mb-10">
+								<label class="block text-gray-700 mb-4" for="email">Mật khẩu</label>
+								<input type="password" id="password" autocomplete="new-password" name="password" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="">
 							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class=" col-sm-offset-2 col-sm-2 control-label">Email</label>
-								<div class="col-sm-4">
-									<input type="email" class="form-control" id="inputEmail3" placeholder="" name="email" value="<?php echo set_value('email'); ?>">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('email'); ?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-offset-2 col-sm-2 control-label">Mật khẩu</label>
-								<div class="col-sm-4">
-									<input type="password" class="form-control" id="inputEmail3" placeholder="" name="password">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('password'); ?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class=" col-sm-offset-2 col-sm-2 control-label">Nhập lại mật khẩu</label>
-								<div class="col-sm-4">
-									<input type="password" class="form-control" id="inputEmail3" placeholder="" name="re_password">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('re_password'); ?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-offset-2 col-sm-2 control-label">Địa chỉ</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="" name="address" value="<?php echo set_value('address'); ?>">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('address'); ?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-offset-2 col-sm-2 control-label">Số điện thoại</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="" name="phone" value="<?php echo set_value('phone'); ?>">
-								</div>
-								<div class="col-sm-3">
-									<?php echo form_error('phone'); ?>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-7">
-									<button type="submit" class="btn btn-success">Đăng ký</button>
-								</div>
+							<div class="mb-10">
+								<label class="block text-gray-700 mb-4" for="email">Nhập lại mật khẩu</label>
+								<input type="password" id="re-password" autocomplete="new-password" name="re-password" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="">
 							</div>
 						</form>
-					</div>
 
+						<div class="mb-10">
+							<label class="block text-gray-700 mb-4" for="phone">Số điện thoại</label>
+							<input type="text" id="phone" autocomplete="new-phone" name="phone" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="">
+						</div>
+
+						<div class="mb-10">
+							<label class="block text-gray-700 mb-4" for="address">Địa chỉ</label>
+							<input type="text" id="address" autocomplete="new-address" name="address" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" placeholder="VD: 208-E5" value="">
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+							<div>
+								<label class="block text-gray-700 mb-4" for="city">Tỉnh/Thành phố</label>
+								<select id="city" autocomplete="new-city" name="city" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded">
+									<option value="" selected></option>
+								</select>
+							</div>
+
+							<div>
+								<label class="block text-gray-700 mb-4" for="district">Quận/Huyện</label>
+								<select id="district" autocomplete="new-district" name="district" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded">
+									<option value="" selected></option>
+								</select>
+							</div>
+							<div>
+								<label class="block text-gray-700 mb-4" for="district">Phường/Xã</label>
+								<select id="ward" autocomplete="new-ward" name="ward" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded">
+									<option value="" selected></option>
+								</select>
+							</div>
+						</div>
+						<div>
+							<div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
+						</div>
+						<button class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300"
+							style="background-color: rgb(61, 177, 212);" id="submitBtn"
+							onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
+							onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
+							Đăng ký
+						</button>
+					</div>
 				</div>
 			</div>
+			<?php $this->load->view('site/footer', $this->data); ?>
 		</div>
-		<?php $this->load->view('site/footer', $this->data); ?>
-	</div>
-	<script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+			async defer>
+		</script>
+		<script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
+		<script src="<?php echo public_url('site/'); ?>js/register.js"></script>
 </body>
 
 </html>
