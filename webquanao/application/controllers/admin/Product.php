@@ -70,12 +70,9 @@ class Product extends MY_Controller {
 		
 		$input['limit'] = array($config['per_page'],$segment);
 
-		$this->db->select('product.id as id,product.name as name,price,discount,image_link,view,buyed,catalog.name as namecatalog');
-		$this->db->join('catalog','catalog.id = product.catalog_id');
-		$product = $this->product_model->get_product_with_discount($input);
+		$product = $this->product_model->get_products_with_discount_catalog();
 		$this->data['product']= $product;
 
-		
 		$this->data['temp']='admin/product/index';
 		$this->load->view('admin/main',$this->data);
 	}
@@ -105,15 +102,63 @@ class Product extends MY_Controller {
 					'image_list' => $image_list,
 					'content' => $this->input->post('content'),
 					'catalog_id' => $this->input->post('catalog_id'),
+					'origin_price' => $this->input->post('origin_price'),
 					'price' => $this->input->post('price'),
-					'discount' => $this->input->post('discount'),
 					'created' => now()
 					);
-				if ($this->product_model->create($data)) {
-					$this->session->set_flashdata('message_success', 'Thêm sản phẩm thành công');
-				}else{
-					$this->session->set_flashdata('message_fail', 'Thêm sản phẩm thất bại');
-				}
+					if ($this->product_model->create($data)) {
+						// Gửi danh sách hình ảnh lên server AI
+						$ai_service_url = 'http://python_ai:5000/api/add_images';
+					
+						// Chuẩn bị dữ liệu để gửi
+						$images = array();
+						if (!empty($image_link)) {
+							$images[] = $image_link; // Thêm ảnh chính
+						}
+						if (!empty($image_list)) {
+							$image_list_array = json_decode($image_list, true); // Giải mã JSON thành mảng
+							$images = array_merge($images, $image_list_array); // Gộp danh sách ảnh
+						}
+					
+						// Gửi dữ liệu qua cURL
+						$curl = curl_init();
+						$post_data = array();
+
+						// Thêm từng ảnh vào $post_data với key riêng biệt
+						foreach ($images as $index => $image) {
+							$file_path = FCPATH . '/upload/product/' . $image;
+							if (file_exists($file_path)) {
+								$post_data['images[' . $index . ']'] = new CURLFile($file_path, mime_content_type($file_path), basename($file_path));
+							} else {
+								error_log("File không tồn tại: " . $file_path);
+							}
+						}
+
+						curl_setopt_array($curl, array(
+							CURLOPT_URL => $ai_service_url,
+							CURLOPT_RETURNTRANSFER => true,
+							CURLOPT_POST => true,
+							CURLOPT_POSTFIELDS => $post_data, // Dữ liệu POST
+						));
+
+						$response = curl_exec($curl);
+						$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+						curl_close($curl);
+					
+						// Kiểm tra phản hồi từ server AI
+						if ($http_code == 200) {
+							$response_data = json_decode($response, true);
+							if (isset($response_data['success']) && $response_data['success']) {
+								$this->session->set_flashdata('message_success', 'Thêm sản phẩm thành công và gửi ảnh lên AI thành công');
+							} else {
+								$this->session->set_flashdata('message_fail', 'Thêm sản phẩm thành công nhưng gửi ảnh lên AI thất bại');
+							}
+						} else {
+							$this->session->set_flashdata('message_fail', 'Thêm sản phẩm thành công nhưng không thể kết nối đến AI');
+						}
+					} else {
+						$this->session->set_flashdata('message_fail', 'Thêm sản phẩm thất bại');
+					}
 				redirect(admin_url('product'));
 			}
 		}
@@ -138,14 +183,16 @@ class Product extends MY_Controller {
 			$this->form_validation->set_rules('price','Giá sản phẩm','required');
 			if ($this->form_validation->run()) {
 				$price = $this->input->post('price');
-				$discount = $this->input->post('discount');
+				$origin_price = $this->input->post('origin_price');
+				// $discount = $this->input->post('discount');
 				$data = array();
 				$data = array(
 					'name' => $this->input->post('name'),
 					'content' => $this->input->post('content'),
 					'catalog_id' => $this->input->post('catalog_id'),
 					'price' => str_replace(',','',$price),
-					'discount' => str_replace(',','',$discount)
+					'origin_price' => str_replace(',','',$origin_price),
+					// 'discount' => str_replace(',','',$discount)
 					);
 				$path = './upload/product/';
 				$image_link = '';

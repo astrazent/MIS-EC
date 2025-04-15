@@ -64,7 +64,8 @@ $route['translate_uri_dashes'] = FALSE;
 //Update
 $route['xac-thuc-mail/(:any)'] = 'validation/index/$1';
 $route['image-search'] = 'product/image_search';
- $route['tim-kiem-ket-qua'] = 'product/tim_kiem_ket_qua';
+$route['text-search'] = 'product/text_search';
+$route['tim-kiem-ket-qua'] = 'product/tim_kiem_ket_qua';
 $route['quen-mat-khau'] = 'user/forgotpassword';
 $route['doi-mat-khau'] = 'user/changepassword';
 

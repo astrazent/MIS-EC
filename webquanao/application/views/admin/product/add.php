@@ -58,18 +58,18 @@
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="inputEmail3" class="col-sm-2 control-label">Giá tiền</label>
+				    <label for="inputEmail3" class="col-sm-2 control-label">Giá gốc</label>
 				    <div class="col-sm-5">
-				      <input type="text" name='price' class="form-control" id="inputEmail3" placeholder="" value="<?php echo set_value('price'); ?>">
+				      <input type="text" name='origin_price' class="form-control" id="inputEmail3" placeholder="" value="<?php echo set_value('origin_price'); ?>">
 				    </div>
 				    <div class="col-sm-4">
 				    	<?php echo form_error('price'); ?>
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label for="inputEmail3" class="col-sm-2 control-label">Giảm giá</label>
+				    <label for="inputEmail3" class="col-sm-2 control-label">Giá giảm trực tiếp</label>
 				    <div class="col-sm-5">
-				      <input type="text" name='discount' class="form-control" id="inputEmail3" placeholder="" value="<?php echo set_value('discount'); ?>">
+				      <input type="text" name='price' class="form-control" id="inputEmail3" placeholder="" value="<?php echo set_value('price'); ?>">
 				    </div>
 				  </div>
 				  <div class="form-group">

@@ -5,22 +5,30 @@
         </a>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearpadding text-center search-container">
-        <form action="<?php echo base_url('tim-kiem'); ?>" method="GET" class="navbar-form" enctype="multipart/form-data">
-            <div class="input-group" style="width: 100%;">
-                <input type="text" name="q" class="form-control search-input" placeholder="Tìm kiếm sản phẩm..." required>
+        <div class="row">
+            <!-- Form tìm kiếm bằng text -->
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <form action="<?php echo base_url('text-search'); ?>" method="POST" class="navbar-form">
+                    <div class="input-group" style="width: 100%;">
+                        <input type="text" name="key" class="form-control search-input" placeholder="Tìm kiếm sản phẩm..." required>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <!-- Nút tìm kiếm bằng hình ảnh -->
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-                <span class="input-group-btn">
-                    <label for="image-upload" class="btn btn-secondary" id="image-search-button">
+                    <label for="image-upload" class="btn btn-secondary" id="image-search-button" style="width: 100%; margin-top: 8px; margin-left: -20px;">
                         <span class="glyphicon glyphicon-camera"></span>
                     </label>
                     <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;">
                 </span>
             </div>
-        </form>
+        </div>
     </div>
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 clearpadding banner-container">
         <a href="#">

@@ -21,11 +21,11 @@
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
 								</div>
-								<?php if ($value->discount > 0) {
+								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
 									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
 								<?php } else { ?>
-									<p><span class='price text-right'><?php echo number_format($value->price); ?> VNĐ</span></p>
+									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
 								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Số lượt xem"></span> <?php echo $value->view; ?> <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Số lượng đặt mua"><?php echo $value->buyed; ?></p>
 								<a href="<?php echo base_url('cart/add/' . $value->id); ?>"><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></a>

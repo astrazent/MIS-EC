@@ -40,14 +40,14 @@ $product_categories = [
                                         <img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="">
                                     </a>
                                 </div>
-                                <?php if ($value->discount > 0) { 
+                                <?php if ($value->discount > 0 || $value->price < $value->origin_price) { 
                                     $new_price = $value->price - $value->discount; ?>
                                     <p>
                                         <span class='price'><?php echo number_format($new_price); ?> VNĐ</span>
-                                        <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del>
+                                        <del class="product-discount"><?php echo number_format($value->origin_price); ?> VNĐ</del>
                                     </p>
                                 <?php } else { ?>
-                                    <p><span class='price'><?php echo number_format($value->price); ?> VNĐ</span></p>
+                                    <p><span class='price'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
                                 <?php } ?>
                                 <p>
                                     <span class="glyphicon glyphicon-eye-open"></span> <?php echo $value->view; ?>

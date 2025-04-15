@@ -253,14 +253,33 @@ class Product extends MY_Controller {
 				$list_id[] = $value->id;
 			}
 			$this->db->where_in('catalog_id', $list_id);
-			$input['where'] = array(
-			'price <=' => $price_to,
-			'price >=' => $price_from);
+			$input['where'] = "product.price - (
+				CASE
+					WHEN discount.status = 1 
+						AND product.price >= discount.min_price 
+						AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+						CASE
+							WHEN discount.measure = 0 THEN discount.value
+							WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+							ELSE 0
+						END
+					ELSE 0
+				END
+			) BETWEEN $price_from AND $price_to";
 		}else{
-			$input['where'] = array(
-			'price <=' => $price_to,
-			'price >=' => $price_from,
-			'catalog_id' => $catalog_id);
+			$input['where'] = "product.price - (
+				CASE
+					WHEN discount.status = 1 
+						AND product.price >= discount.min_price 
+						AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+						CASE
+							WHEN discount.measure = 0 THEN discount.value
+							WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+							ELSE 0
+						END
+					ELSE 0
+				END
+			) BETWEEN $price_from AND $price_to AND catalog_id = $catalog_id";
 		}
 		$input['order'] = array('price','ASC');
 		$product_list = $this->product_model->get_products_with_discount($input);
@@ -357,6 +376,66 @@ class Product extends MY_Controller {
 		}
 	}
 
+	public function text_search()
+	{
+		$keyword = $this->input->post('key');
+		if (empty($keyword)) {
+			echo json_encode(['success' => false, 'message' => 'Vui lòng nhập từ khóa tìm kiếm.']);
+			exit();
+		}
+		
+		$keyword_parts = explode(' ', strtolower($keyword));
+
+		$catalogs = $this->catalog_model->get_list();
+		$catalog_ids = [];
+
+		foreach ($catalogs as $catalog) {
+			foreach ($keyword_parts as $keyword_part) {
+
+				// echo '<pre>';
+				// print_r($keyword_part);
+				// print_r('----------------');
+				// print_r(mb_strtolower($catalog->name));
+				// print_r('----------------');
+				// print_r(stripos(mb_strtolower($catalog->name), $keyword_part));
+				// echo '</pre>';
+
+				if (stripos(mb_strtolower($catalog->name), $keyword_part) !== false) {
+					$catalog_ids[] = $catalog->id;
+					break;
+				}
+			}
+		}
+
+		// echo '<pre>';
+		// print_r($catalog_ids);
+		// echo '</pre>';
+		// exit();
+
+		if (!empty($catalog_ids)) {
+			$input = array();
+			$input['where_in'] = array(
+				'catalog_id' => $catalog_ids
+			);
+			$input['order'] = array('price', 'ASC');
+			$products = $this->product_model->get_products_with_discount($input);
+			
+			// echo '<pre>';
+			// print_r($products);
+			// echo '</pre>';
+			// exit();
+		} else {
+			$products = $this->product_model->get_products_with_discount();
+		}
+
+		$product_list = $this->product_model->fuzzy_search($keyword, $products);
+
+		$this->session->unset_userdata('search_results');
+		$this->session->set_userdata('search_results', $product_list);
+
+		redirect(base_url('tim-kiem-ket-qua'));
+	}
+
 	public function image_search() {
 		if (!isset($_FILES['image'])) {
 			echo json_encode(['success' => false, 'message' => 'Không có ảnh được tải lên']);
@@ -415,36 +494,7 @@ class Product extends MY_Controller {
 	
 		$image_names = $response_data['image_names'];
 	
-		// Truy vấn bảng product
-		$this->db->distinct();
-		$this->db->select('*');
-		$this->db->group_start();
-		$this->db->where_in('image_link', $image_names);
-	
-		foreach ($image_names as $image_name) {
-			$this->db->or_like('image_list', $image_name);
-		}
-		$this->db->group_end();
-	
-		$query = $this->db->get('product');
-		$product_list = $query->result_array();
-	
-		// Sắp xếp product_list theo thứ tự của image_names và loại bỏ các sản phẩm trùng lặp
-		$sorted_product_list = [];
-		$added_products = [];
-		foreach ($image_names as $image_name) {
-			foreach ($product_list as $product) {
-				if (($product['image_link'] == $image_name || strpos($product['image_list'], $image_name) !== false) && !in_array($product['id'], $added_products)) {
-					$sorted_product_list[] = $product;
-					$added_products[] = $product['id'];
-					break;
-				}
-			}
-		}
-	
-		$product_list = array_map(function($item) {
-			return (object) $item;
-		}, $sorted_product_list);
+		$product_list = $this->product_model->get_products_by_images_with_discount($image_names);
 	
 		// Xóa file ảnh sau khi xử lý xong
 		if (file_exists($image_path)) {
@@ -458,6 +508,7 @@ class Product extends MY_Controller {
 		}
 	
 		// Lưu danh sách sản phẩm vào session
+		$this->session->unset_userdata('search_results');
 		$this->session->set_userdata('search_results', $product_list);
 	
 		// Trả về phản hồi JSON thành công
@@ -481,5 +532,6 @@ class Product extends MY_Controller {
  		$this->data['total'] = $total;
  		$this->data['temp'] = 'site/product/search';
  		$this->load->view('site/layoutsub', $this->data);
+		
  	}
 }

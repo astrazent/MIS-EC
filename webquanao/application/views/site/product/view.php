@@ -83,18 +83,20 @@
 					<h1 style="font-size: 25px;text-transform:uppercase;color: red;font-weight:bold;"><?php $product->name; ?></h1>
 					<p><?php echo $product->content; ?></p>
 					<?php
-					if ($product->discount > 0) {
+					if ($product->discount > 0 || $product->price < $product->origin_price) {
 						$price_new = $product->price - $product->discount;
-					?><p>Giá cũ: <strong><del><?php echo number_format($product->price) ?> VNĐ</del></strong></p>
+					?><p>Giá cũ: <strong><del><?php echo number_format($product->origin_price) ?> VNĐ</del></strong></p>
 						<p>Giá khuyến mại: <span style="font-weight: bold;color: green"><?php echo number_format($price_new); ?> VNĐ</span></p>
 					<?php } else { ?>
-						<p>Giá: <span style="font-weight: bold;color: green"><?php echo number_format($product->price); ?> VNĐ</span></p> <?php
+						<p>Giá: <span style="font-weight: bold;color: green"><?php echo number_format($product->origin_price); ?> VNĐ</span></p> <?php
 																																		}
 																																			?>
 					<p>Số lượt xem: <?php echo $product->view; ?></p>
 					<p>Số lượt đã mua: <?php echo $product->buyed; ?></p>
 					<p> Đánh giá &nbsp;
-						<?php $raty_tb = $product->rate_total / $product->rate_count; ?>
+						<?php 
+							$raty_tb = ($product->rate_count > 0) ? ($product->rate_total / $product->rate_count) : 0;
+						?>
 						<span class='raty_detailt' style='margin:5px' id='<?php echo $product->id; ?>' data-score='<?php echo round($raty_tb, 2); ?>'></span>
 						| Tổng số: <b class='rate_count'><?php echo $product->rate_count; ?></b>
 					</p>
@@ -226,11 +228,11 @@
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
 								</div>
-								<?php if ($value->discount > 0) {
+								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
 									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
 								<?php } else { ?>
-									<p><span class='price text-right'><?php echo number_format($value->price); ?> VNĐ</span></p>
+									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
 								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Số lượt xem"></span> <?php echo $value->view; ?> <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Số lượng đặt mua"><?php echo $value->buyed; ?></p>
 								<a href="<?php echo base_url('cart/add/' . $value->id); ?>"><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></a>
@@ -257,11 +259,11 @@
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
 								</div>
-								<?php if ($value->discount > 0) {
+								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
 									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
 								<?php } else { ?>
-									<p><span class='price text-right'><?php echo number_format($value->price); ?> VNĐ</span></p>
+									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
 								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Số lượt xem"></span> <?php echo $value->view; ?> <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Số lượng đặt mua"><?php echo $value->buyed; ?></p>
 								<a href="<?php echo base_url('cart/add/' . $value->id); ?>"><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></a>
