@@ -146,6 +146,40 @@ class User extends MY_Controller
 			if ($this->form_validation->run()) {
 				$user = $this->get_info_user();
 				$this->session->set_userdata('user', $user);
+				
+				// Load cart library and cart model
+				$this->load->model('cart_model');
+				$this->load->library('cart');
+				
+				// First, destroy the current session cart completely (could be from another user)
+				$this->cart->destroy();
+				
+				// Get database cart for this specific user
+				$db_cart_items = $this->cart_model->get_items_by_user($user->id);
+				
+				// Load cart items from database
+				if (!empty($db_cart_items)) {
+                    foreach ($db_cart_items as $item) {
+                        $data = array(
+                            'id' => $item->product_id,
+                            'qty' => $item->qty,
+                            'price' => $item->price,
+                            'name' => $item->name,
+                            'rowid' => $item->rowid
+                        );
+                        
+                        if (!empty($item->options)) {
+                            $data['options'] = unserialize($item->options);
+                        }
+                        
+                        if (!empty($item->image_link)) {
+                            $data['image_link'] = $item->image_link;
+                        }
+                        
+                        $this->cart->insert($data);
+                    }
+                }
+				
 				redirect(base_url('user/login'));
 			}
 		}
@@ -172,7 +206,24 @@ class User extends MY_Controller
 	public function logout()
 	{
 		if ($this->session->userdata('user')) {
+			// Before logout, ensure cart items are saved in the database
+			$user = $this->session->userdata('user');
+			$this->load->model('cart_model');
+			$this->load->library('cart');
+			
+			// Save session cart to database before logout
+			$session_cart = $this->cart->contents();
+			if (!empty($session_cart)) {
+			    foreach ($session_cart as $rowid => $item) {
+			        $this->cart_model->save_item($user->id, $item);
+			    }
+			}
+			
+			// Now unset the user data
 			$this->session->unset_userdata('user');
+			
+			// Clear the cart completely
+			$this->cart->destroy();
 		}
 		redirect(base_url());
 	}

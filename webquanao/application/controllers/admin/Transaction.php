@@ -129,30 +129,114 @@ class Transaction extends MY_Controller {
 	public function deliver()
 	{
 		$id = $this->uri->segment(4);
-		$data['status'] = '2';
-		$this->transaction_model->update($id,$data);
-		$this->session->set_flashdata('message_success', 'Đơn hàng sẽ được giao cho đơn vị vận chuyển');
+		log_message('info', "Starting deliver process for transaction ID: {$id}");
 
+		// Get transaction details
+		$transaction = $this->transaction_model->get_info($id);
+		if (!$transaction) {
+			log_message('error', "Deliver failed: Transaction {$id} not found.");
+			$this->session->set_flashdata('message_fail', 'Đơn hàng không tồn tại');
+			redirect(admin_url('transaction'));
+			return;
+		}
+		
+		// Check current status - only allow delivering if status is 1 (confirmed)
+		if ($transaction->status != '1') {
+			log_message('warn', "Deliver failed: Transaction {$id} status is {$transaction->status}, not 1.");
+			$this->session->set_flashdata('message_fail', 'Chỉ có thể vận chuyển đơn hàng đã xác nhận (Trạng thái hiện tại: ' . $transaction->status . ')');
+			redirect(admin_url('transaction'));
+			return;
+		}
+
+		// Generate a tracking ID
+		$tracking_id = 'TRACK-' . date('YmdHis') . '-' . $id;
+		
+		// Start database transaction
+		$this->db->trans_start();
+		
+		// Update transaction status to "delivering" (2)
+		$data = array();
+		$data['status'] = '2';
+		$data['shipping_info'] = $tracking_id;
+		$update_success = $this->transaction_model->update($id, $data);
+		
+		// Save tracking information to shipping_tracking table
+		$shipping_data = array(
+			'tracking_id' => $tracking_id,
+			'transaction_id' => $transaction->id,
+			'customer_name' => $transaction->user_name,
+			'shipping_address' => $transaction->user_address,
+			'status' => 'processing',
+			'created_at' => date('Y-m-d H:i:s'),
+			'estimated_delivery' => date('Y-m-d', strtotime('+3 days')),
+			'callback_url' => site_url('api/shipping/webhook')
+		);
+		
+		$this->db->insert('shipping_tracking', $shipping_data);
+		
+		// Complete transaction
+		$this->db->trans_complete();
+
+		if ($update_success && $this->db->trans_status() !== FALSE) {
+			log_message('info', "Transaction {$id} status updated to 2 and tracking info saved successfully.");
+			$this->session->set_flashdata('message_success', 'Đơn hàng đã được chuyển cho đơn vị vận chuyển với mã theo dõi: ' . $tracking_id);
+		} else {
+			log_message('error', "Failed to update transaction {$id} status in database.");
+			$this->session->set_flashdata('message_fail', 'Không thể cập nhật trạng thái đơn hàng.');
+		}
+		
 		redirect(admin_url('transaction'));
 	}
 	public function done()
 	{
 		$id = $this->uri->segment(4);
-		$data= array();
-		$data['status'] = '3';
-		$this->transaction_model->update($id,$data);
-		$this->session->set_flashdata('message_success', 'Đơn hàng đã hoàn thành');
-
-		$input= array();
-		$input['where']= array('transaction_id'=>$id);
-		$order = $this->order_model->get_list($input);
 		
-		foreach ($order as $value) {
+		// Get transaction details
+		$transaction = $this->transaction_model->get_info($id);
+		if (!$transaction) {
+			$this->session->set_flashdata('message_fail', 'Đơn hàng không tồn tại');
+			redirect(admin_url('transaction'));
+			return;
+		}
+
+		// Start database transaction
+		$this->db->trans_start();
+
+		// Update transaction status
+		$data = array();
+		$data['status'] = '3';
+		$update_success = $this->transaction_model->update($id, $data);
+
+		// Update shipping_tracking status if exists
+		if (!empty($transaction->shipping_info)) {
+			$this->db->where('tracking_id', $transaction->shipping_info);
+			$this->db->update('shipping_tracking', array(
+				'status' => 'delivered',
+				'updated_at' => date('Y-m-d H:i:s')
+			));
+		}
+
+		// Update product purchase counts
+		$input = array();
+		$input['where'] = array('transaction_id' => $id);
+		$orders = $this->order_model->get_list($input);
+		
+		foreach ($orders as $value) {
 			$product = $this->product_model->get_info($value->product_id);
-			
-			$data= array();
-			$data['buyed'] = $product->buyed + 1;
-			$this->product_model->update($product->id,$data);
+			if ($product) {
+				$data = array();
+				$data['buyed'] = $product->buyed + 1;
+				$this->product_model->update($product->id, $data);
+			}
+		}
+
+		// Complete transaction
+		$this->db->trans_complete();
+
+		if ($update_success && $this->db->trans_status() !== FALSE) {
+			$this->session->set_flashdata('message_success', 'Đơn hàng đã hoàn thành');
+		} else {
+			$this->session->set_flashdata('message_fail', 'Không thể cập nhật trạng thái đơn hàng');
 		}
 
 		redirect(admin_url('transaction'));

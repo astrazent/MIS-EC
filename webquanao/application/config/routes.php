@@ -64,15 +64,30 @@ $route['translate_uri_dashes'] = FALSE;
 //Update
 $route['xac-thuc-mail/(:any)'] = 'validation/index/$1';
 $route['image-search'] = 'product/image_search';
+<<<<<<< HEAD
 $route['text-search'] = 'product/text_search';
+=======
+>>>>>>> 546f46d43dd5b5d7be051019e1dabb539d9e0b6c
 $route['tim-kiem-ket-qua'] = 'product/tim_kiem_ket_qua';
 $route['quen-mat-khau'] = 'user/forgotpassword';
 $route['doi-mat-khau'] = 'user/changepassword';
-
 $route['verify-recaptcha'] = 'validation/verify_recaptcha';
-
 $route['doi-mat-khau/(:any)'] = 'validation/changepassword/$1';
 
+// Payment routes
 $route['vnpay/payment'] = 'order/payment';
 $route['vnpay/callback'] = 'order/callback';
 $route['hook/sepay-payment'] = 'order/sepay';
+
+// Shipping API routes
+$route['api/shipping2/register'] = 'api/Shipping2/register';
+$route['api/shipping2/status/(:any)'] = 'api/Shipping2/status/$1';
+$route['api/shipping2/update_status/(:any)'] = 'api/Shipping2/update_status/$1';
+$route['api/shipping2/webhook'] = 'api/Shipping2/webhook';
+$route['api/shipping2/confirm_delivery/(:any)'] = 'api/Shipping2/confirm_delivery/$1';
+
+// Webhook endpoint
+$route['api/shipping/webhook'] = 'api/Shipping/webhook';
+
+// Admin shipping routes
+$route['admin/shipping/confirm_delivery/(:any)'] = 'admin/shipping/confirm_delivery/$1';

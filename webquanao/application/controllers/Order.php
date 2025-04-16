@@ -12,6 +12,11 @@ class Order extends MY_Controller
 		$this->config->load('vnpay'); // Load cấu hình VNPAY
 	}
 
+	// Helper function to check if the request is AJAX
+	private function input_is_ajax_request() {
+		return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+	}
+
 	public function index()
 	{
 		$carts = $this->cart->contents();
@@ -26,6 +31,10 @@ class Order extends MY_Controller
 			$total_amount = $total_amount + $value['subtotal'];
 		}
 		$this->data['total_amount'] = $total_amount;
+
+		// Make sure user data is explicitly set
+		$user = $this->session->userdata('user');
+		$this->data['user'] = $user;
 
 		$this->data['temp'] = 'site/order/index.php';
 		$this->load->view('site/layoutsub', $this->data);
@@ -312,12 +321,21 @@ class Order extends MY_Controller
 	public function complete()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			header('Content-Type: application/json;');
 			$carts = $this->cart->contents();
 
 			if (empty($carts)) {
-				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
-				return;
+				if ($this->input_is_ajax_request()) {
+					// For AJAX requests
+					header('Content-Type: application/json; charset=utf-8');
+					http_response_code(400);
+					echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
+					return;
+				} else {
+					// For form submissions
+					$this->session->set_flashdata('error', 'Giỏ hàng trống');
+					redirect(base_url('/'));
+					return;
+				}
 			}
 
 			$user_id = 0;
@@ -331,12 +349,24 @@ class Order extends MY_Controller
 				$total_amount = $total_amount + $value['subtotal'];
 			}
 
-			// Nhận dữ liệu JSON từ request
-			$data = json_decode(file_get_contents("php://input"), true);
-
+			// Get data from either JSON or form POST
+			if ($this->input_is_ajax_request()) {
+				// JSON data
+				$data = json_decode(file_get_contents("php://input"), true);
+			} else {
+				// Form POST data
+				$data = $this->input->post();
+			}
+			
 			// Kiểm tra nếu không có dữ liệu
 			if (!$data) {
-				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				if ($this->input_is_ajax_request()) {
+					header('Content-Type: application/json; charset=utf-8');
+					echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
+				} else {
+					$this->session->set_flashdata('error', 'Không nhận được dữ liệu đơn hàng');
+					redirect(base_url('order'));
+				}
 				return;
 			}
 
@@ -373,7 +403,16 @@ class Order extends MY_Controller
 
 			// Nếu có lỗi, trả về danh sách lỗi
 			if (!empty($errors)) {
-				echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
+				if ($this->input_is_ajax_request()) {
+					// For AJAX requests
+					header('Content-Type: application/json; charset=utf-8');
+					http_response_code(400);
+					echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
+				} else {
+					// For form submissions
+					$this->session->set_flashdata('errors', $errors);
+					redirect(base_url('order'));
+				}
 				return;
 			}
 
@@ -398,7 +437,16 @@ class Order extends MY_Controller
 			// Kiểm tra nếu không lấy được ID thì rollback
 			if (!$transaction_id) {
 				$this->db->trans_rollback();
-				echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+				if ($this->input_is_ajax_request()) {
+					// For AJAX requests
+					header('Content-Type: application/json; charset=utf-8');
+					http_response_code(500);
+					echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+				} else {
+					// For form submissions
+					$this->session->set_flashdata('error', 'Đặt hàng thất bại. Vui lòng thử lại sau.');
+					redirect(base_url('order'));
+				}
 				return;
 			}
 
@@ -415,7 +463,16 @@ class Order extends MY_Controller
 
 				if (!$order_info) {
 					$this->db->trans_rollback();
-					echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+					if ($this->input_is_ajax_request()) {
+						// For AJAX requests
+						header('Content-Type: application/json; charset=utf-8');
+						http_response_code(500);
+						echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+					} else {
+						// For form submissions
+						$this->session->set_flashdata('error', 'Đặt hàng thất bại. Vui lòng thử lại sau.');
+						redirect(base_url('order'));
+					}
 					return;
 				}
 			}
@@ -425,27 +482,28 @@ class Order extends MY_Controller
 			// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 			$this->db->trans_complete();
 
-			// Trả về JSON phản hồi
+			// Create success message based on payment type
+			$message = "Cảm ơn quý khách đã mua hàng tại NgocLanShop";
 			if($data['payment'] == 'cash'){
-				echo json_encode([
-					"status" => "success",
-					"message" =>  "Đơn vị giao hàng sẽ giao tới nhà bạn trong thời gian tới",
-				], JSON_UNESCAPED_UNICODE);
+				$message = "Đơn vị giao hàng sẽ giao tới nhà bạn trong thời gian tới";
 			} elseif($data['payment'] == 'vietqr'){
-				echo json_encode([
-					"status" => "success",
-					"message" =>  "Chúng tôi sẽ kiểm tra thông tin chuyển khoản và chuyển tới nhà bạn trong thời gian tới ",
-				], JSON_UNESCAPED_UNICODE);
+				$message = "Chúng tôi sẽ kiểm tra thông tin chuyển khoản và chuyển tới nhà bạn trong thời gian tới";
 			} elseif($data['payment'] == 'pos') {
+				$message = "Chúng tôi sẽ mang máy pos và hàng tới nhà bạn trong thời gian tới";
+			}
+			
+			// Respond appropriately based on request type
+			if ($this->input_is_ajax_request()) {
+				// For AJAX requests
+				header('Content-Type: application/json; charset=utf-8');
 				echo json_encode([
 					"status" => "success",
-					"message" =>  "Chúng tôi sẽ mang máy pos và hàng tới nhà bạn trong thời gian tới",
+					"message" => $message,
 				], JSON_UNESCAPED_UNICODE);
-			} else{
-				echo json_encode([
-					"status" => "success",
-					"message" =>  "Cảm ơn quý khách đã mua hàng tại NgocLanShop",
-				], JSON_UNESCAPED_UNICODE);
+			} else {
+				// For form submissions
+				$this->session->set_flashdata('success', $message);
+				redirect(base_url('/'));
 			}
 		}
 	}
@@ -453,5 +511,17 @@ class Order extends MY_Controller
 	public function sepay(){
 
 		redirect(base_url('/'));
+	}
+
+	// Handle OPTIONS requests for CORS compatibility
+	public function options()
+	{
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+		header('Access-Control-Allow-Headers: Content-Type');
+		header('Access-Control-Max-Age: 1728000');
+		header('Content-Length: 0');
+		header('Content-Type: text/plain');
+		exit(0);
 	}
 }
