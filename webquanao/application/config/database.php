@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'mariadb',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '123456',
+	'password' => '',
 	'database' => 'webquanao',
 	// 'hostname' => 'sql3.freesqldatabase.com',
 	// 'username' => 'sql3769289',
