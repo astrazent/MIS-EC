@@ -140,8 +140,22 @@ class Shipment extends MY_Controller
                 $purchased_product_ids = array_unique($purchased_product_ids);
                 
                 // Get popular products excluding what the user has already purchased
-                $this->db->select('product.id, product.name, product.price, product.discount, product.image_link');
-                $this->db->from('product');
+                $this->db->select('product.*', false);
+				$this->db->select('
+					CASE
+						WHEN discount.status = 1 
+							AND product.price >= discount.min_price 
+							AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+							CASE
+								WHEN discount.measure = 0 THEN discount.value
+								WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+								ELSE 0
+							END
+						ELSE 0
+					END AS discount
+				', false);
+				$this->db->from('product');
+				$this->db->join('discount', 'product.discount_id = discount.id', 'left');
                 $this->db->where_not_in('product.id', $purchased_product_ids);
                 $this->db->order_by('product.buyed', 'DESC');
                 $this->db->limit(5);
@@ -168,8 +182,22 @@ class Shipment extends MY_Controller
                 }
             } else {
                 // If no purchase history, just show popular products
-                $this->db->select('product.id, product.name, product.price, product.discount, product.image_link');
-                $this->db->from('product');
+                $this->db->select('product.*', false);
+				$this->db->select('
+					CASE
+						WHEN discount.status = 1 
+							AND product.price >= discount.min_price 
+							AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+							CASE
+								WHEN discount.measure = 0 THEN discount.value
+								WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+								ELSE 0
+							END
+						ELSE 0
+					END AS discount
+				', false);
+				$this->db->from('product');
+				$this->db->join('discount', 'product.discount_id = discount.id', 'left');
                 $this->db->order_by('product.buyed', 'DESC');
                 $this->db->limit(5);
                 
