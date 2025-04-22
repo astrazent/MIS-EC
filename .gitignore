@@ -2,4 +2,4 @@ webquanao/.env
 python_AI/app/logs
 python_AI/app/data
 webquanao/application/logs
-webquanao/sessions
+webquanao/sessions/*

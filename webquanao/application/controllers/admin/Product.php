@@ -149,7 +149,7 @@ class Product extends MY_Controller {
 						if ($http_code == 200) {
 							$response_data = json_decode($response, true);
 							if (isset($response_data['success']) && $response_data['success']) {
-								$this->session->set_flashdata('message_success', 'Thêm sản phẩm thành công và gửi ảnh lên AI thành công');
+								$this->session->set_flashdata('message_success', 'Thêm sản phẩm thành công');
 							} else {
 								$this->session->set_flashdata('message_fail', 'Thêm sản phẩm thành công nhưng gửi ảnh lên AI thất bại');
 							}
@@ -269,5 +269,31 @@ class Product extends MY_Controller {
 			$value->sub = $subs;
 		}
 		return $catalog;
+	}
+	public function apply_event()
+	{
+		$product_ids = $this->input->post('product_ids');
+		$event_id = $this->input->post('event_id');
+
+		if (empty($product_ids)) {
+			echo json_encode(['success' => false, 'message' => 'Không có sản phẩm nào được chọn.']);
+			return;
+		}
+
+		// Đặt thông tin cột discount_id của mỗi sản phẩm thành ID của sự kiện
+		$this->db->where_in('id', $product_ids);
+		$this->db->update('product', ['discount_id' => $event_id]);
+		$affected_rows = $this->db->affected_rows();
+		if ($affected_rows > 0) {
+			// Nếu có sản phẩm nào được cập nhật thành công
+			$this->session->set_flashdata('message_success', 'Áp dụng sự kiện thành công cho ' . $affected_rows . ' sản phẩm.');
+		} else {
+			// Nếu không có sản phẩm nào được cập nhật
+			$this->session->set_flashdata('message_fail', 'Sản phẩm đang áp dụng sự kiện.');
+		}		
+
+		// Trả về phản hồi JSON
+		echo json_encode(['success' => true, 'message' => 'Áp dụng sự kiện thành công cho ' . $affected_rows . ' sản phẩm.']);
+
 	}
 }

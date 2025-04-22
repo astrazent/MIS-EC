@@ -37,6 +37,12 @@ class Product_model extends MY_Model {
 			}
 		}
 
+		if (isset($input['where_not_in']) && is_array($input['where_not_in'])) {
+			foreach ($input['where_not_in'] as $column => $values) {
+				$this->db->where_not_in($column, $values);
+			}
+		}
+
         if (isset($input['order']) && is_array($input['order'])) {
             $this->db->order_by($input['order'][0], $input['order'][1]);
         }

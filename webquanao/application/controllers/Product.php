@@ -10,6 +10,7 @@ class Product extends MY_Controller {
 		$this->load->model('comment_model');
  		$this->load->model('user_model');
 		$this->load->model('discount_model');
+		$this->load->model('order_model');
 	}
 
 	public function index()
@@ -326,6 +327,7 @@ class Product extends MY_Controller {
 		$id = $this->input->post('id');
 		$score = $this->input->post('score');
 		$comment = $this->input->post('comment');
+		$transaction_id = $this->input->post('order_id');
 
 		$product = $this->product_model->get_product_with_discount($id);
 		if (!$product) {
@@ -339,6 +341,12 @@ class Product extends MY_Controller {
 			}
 			return;
 		}
+
+		// Cập nhật status của bảng Order theo transaction_id và product_id
+		$this->db->where('transaction_id', $transaction_id);
+		$this->db->where('product_id', $id);
+		$this->db->update('order', ['status' => 1]);
+		
 
 		// Cập nhật điểm đánh giá và số lượng đánh giá
 		$data = array();
@@ -354,7 +362,7 @@ class Product extends MY_Controller {
 			'user_id' => $user->id, // ID người dùng (nếu có)
 			'comment_content' => $comment,
 			'rate' => $score,
-			'created' => time()
+			'created' => now()
 		);
 
 		if ($this->comment_model->create($comment_data)) {

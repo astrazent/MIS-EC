@@ -115,35 +115,6 @@
 					</script>
 
 					<a href="<?php echo base_url('cart/add/' . $product->id); ?>" class="btn btn-info"> Thêm vào giỏ hàng</a>
-					<button class="btn btn-warning" data-toggle="modal" data-target="#ratingModal">Đánh giá</button>
-
-					<!-- Modal đánh giá -->
-					<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<form id="ratingForm">
-										<div class="form-group">
-											<label for="ratingStars">Chọn số sao:</label>
-											<div id="ratingStars" class="raty"></div>
-											<input type="hidden" id="ratingScore" name="score">
-										</div>
-										<div class="form-group">
-											<label for="ratingComment">Bình luận:</label>
-											<textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
-										</div>
-										<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>																													
 
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -230,7 +201,7 @@
 								</div>
 								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
-									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
+									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->origin_price); ?> VNĐ</del></p>
 								<?php } else { ?>
 									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
@@ -277,55 +248,3 @@
 	</div>
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        // Khởi tạo thư viện raty cho modal
-        $('#ratingStars').raty({
-            score: 0, // Điểm mặc định
-            half: false, // Cho phép chọn nửa sao
-            click: function (score, evt) {
-                $('#ratingScore').val(score); // Gán giá trị số sao vào input ẩn
-            }
-        });
-
-        // Xử lý gửi form đánh giá
-        $('#ratingForm').on('submit', function (e) {
-            e.preventDefault(); // Ngăn form reload trang
-            const productId = <?php echo $product->id; ?>;
-            const score = $('#ratingScore').val();
-            const comment = $('#ratingComment').val();
-
-            if (!score) {
-                alert('Vui lòng chọn số sao!');
-                return;
-            }
-
-            $.ajax({
-                url: '<?php echo base_url('product/submit_rating'); ?>',
-                type: 'POST',
-                data: {
-                    id: productId,
-                    score: score,
-                    comment: comment
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response.message);
-                    if (response.success) {
-                        alert('Cảm ơn bạn đã đánh giá sản phẩm.');
-                        location.reload();
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Status:', status);
-                    console.error('Error:', error);
-                    console.error('Response:', xhr.responseText);
-                    alert('Đã xảy ra lỗi, vui lòng thử lại.');
-                }
-            });
-        });
-    });
-</script>
