@@ -1,0 +1,33 @@
+# Build một docker container
+`docker-compose up --build -d` (build: Docker sẽ build lại từ Dockerfile trong thư mục python_AI khi chạy docker-compose up --build)
+
+# Sau khi sửa lại docker file:
+docker-compose down -v
+docker-compose up --build -d
+
+# Để xoá container
+docker ps -a --> xem danh sách container và lấy id 
+
+- Xoá 1 container:
+docker stop <container_id_or_name> --> dừng 1 container
+docker rm <container_id_or_name> --> xoá một container
+
+- Xoá tất cả container:
+docker container prune
+
+- Xoá tất cả volume không còn được container nào sử dụng:
+docker volume prune
+
+- Xoá cache build 
+docker builder prune -af
+
+- Xoá tất cả mọi thứ:
+docker system prune -af (nhưng lưu ý là tất cả phải dừng)
+
+
+
+
+
+
+
+

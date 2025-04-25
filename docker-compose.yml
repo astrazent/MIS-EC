@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+    webquanao:
+        build:
+            context: ./webquanao
+            dockerfile: Dockerfile
+        container_name: webquanao
+        restart: always
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./webquanao:/var/www/html
+        depends_on:
+            - redis
+            - openai
+        environment:
+            - MYSQL_HOST=sql3.freesqldatabase.com
+            - MYSQL_USER=sql3769289
+            - MYSQL_PASSWORD=laUmWFHXPe
+            - MYSQL_DATABASE=sql3769289
+        networks:
+            - webquanao_network
+
+    openai:
+        build:
+            context: ./openAI
+            dockerfile: Dockerfile
+        container_name: openai
+        restart: always
+        ports:
+            - "5001:5001"
+        volumes:
+            - ./openAI:/app
+        environment:
+            - DEEPSEEK_API_KEY=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
+        networks:
+            - webquanao_network
+
+    python_ai:
+        build:
+            context: ./python_AI
+            dockerfile: Dockerfile
+        container_name: python_ai
+        restart: always
+        ports:
+            - "5002:5000"
+        volumes:
+            - ./python_AI:/app
+        networks:
+            - webquanao_network
+
+    redis:
+        image: redis:latest
+        container_name: redis
+        restart: always
+        ports:
+            - "6379:6379"
+        networks:
+            - webquanao_network
+
+networks:
+    webquanao_network:
+        name: webquanao_network  
+        driver: bridge
+
