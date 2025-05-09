@@ -58,6 +58,51 @@
 			color: #721c24 !important;
 			border: 1px solid #f5c6cb;
 		}
+
+		/* Loại bỏ conflict tailwind */
+		.collapse {
+			visibility: unset !important;
+		}
+
+		a {
+			color: #337ab7 !important;
+			text-decoration: none !important;
+		}
+
+		a:hover {
+			text-decoration: none !important;
+		}
+
+		.navbar-info .navbar-nav>.active>a,
+		.navbar-info .navbar-nav>.active>a:hover,
+		.navbar-info .navbar-nav>.active>a:focus {
+			color: #fff !important;
+			background-color: #4c66a4 !important;
+		}
+
+		.navbar-info .navbar-nav>li>a:hover,
+		.navbar-info .navbar-nav>li>a:focus {
+			color: #fff !important;
+			background-color: #337ab7 !important;
+			border-top-left-radius: 4px !important;
+			border-top-right-radius: 4px !important;
+		}
+
+		a.product_title:hover {
+			color: #337ab7 !important;
+		}
+
+		.dropdown-menu>li>a {
+			color: #333 !important;
+		}
+
+		@media (min-width: 1200px) {
+			.container {
+				width: 1170px !important;
+			}
+		}
+
+		/* Loại bỏ conflict tailwind */
 	</style>
 </head>
 
@@ -69,11 +114,11 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding" style="margin-top: 15px;">
 				<ol class="breadcrumb">
 					<li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-					<li class="active">Đăng kí</li>
+					<li class="active">Đăng ký</li>
 				</ol>
 				<div class="panel panel-info flex justify-center"> <!-- Thêm flex và justify-center để căn giữa -->
-					<div class="bg-white p-6 text-3xl mb-20 w-4/5"> <!-- Thêm w-4/5 để chiếm 80% chiều rộng -->
-						<h2 class="text-4xl font-semibold mb-10">Đăng kí tài khoản</h2>
+					<div class="bg-white p-6 text-3xl w-4/5"> <!-- Thêm w-4/5 để chiếm 80% chiều rộng -->
+						<h2 class="text-4xl font-semibold mb-10 mt-[55px]">Đăng ký tài khoản</h2>
 
 						<div class="mb-10">
 							<label class="block text-gray-700 mb-4" for="name">Họ và tên</label>
@@ -129,7 +174,7 @@
 						<div>
 							<div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
 						</div>
-						<button class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300"
+						<button class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300 mb-[100px]"
 							style="background-color: rgb(61, 177, 212);" id="submitBtn"
 							onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
 							onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
@@ -138,6 +183,7 @@
 					</div>
 				</div>
 			</div>
+			<div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
 			<?php $this->load->view('site/footer', $this->data); ?>
 		</div>
 		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"

@@ -77,8 +77,13 @@ $route['vnpay/callback'] = 'order/callback';
 $route['hook/sepay-payment'] = 'order/sepay';
 
 //update-delete-infomation-user
-$route['update-info'] = 'user/udpate_info';
+$route['update-info'] = 'user/update_info';
 $route['delete-info'] = 'user/delete_info';
 
 //Read address info file
 $route['api/read-json'] = 'DiaGioiHanhChinhVN';
+
+// Check password
+$route['check-password'] = 'user/checkpassword';
+
+$route['kt'] = 'test/check';

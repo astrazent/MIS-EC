@@ -62,6 +62,51 @@
             color: #721c24 !important;
             border: 1px solid #f5c6cb;
         }
+
+        /* Loại bỏ conflict tailwind */
+        .collapse {
+            visibility: unset !important;
+        }
+
+        a {
+            color: #337ab7 !important;
+            text-decoration: none !important;
+        }
+
+        a:hover {
+            text-decoration: none !important;
+        }
+
+        .navbar-info .navbar-nav>.active>a,
+        .navbar-info .navbar-nav>.active>a:hover,
+        .navbar-info .navbar-nav>.active>a:focus {
+            color: #fff !important;
+            background-color: #4c66a4 !important;
+        }
+
+        .navbar-info .navbar-nav>li>a:hover,
+        .navbar-info .navbar-nav>li>a:focus {
+            color: #fff !important;
+            background-color: #337ab7 !important;
+            border-top-left-radius: 4px !important;
+            border-top-right-radius: 4px !important;
+        }
+
+        a.product_title:hover {
+            color: #337ab7 !important;
+        }
+
+        .dropdown-menu>li>a {
+            color: #333 !important;
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                width: 1170px !important;
+            }
+        }
+
+        /* Loại bỏ conflict tailwind */
     </style>
     <!-- tích hợp reCAPTCHA -->
 </head>
@@ -78,9 +123,9 @@
 
             <div class="flex flex-col items-center">
                 <form>
-                    <div class="mb-10">
+                    <div class="mb-10 mt-[70px]">
                         <label class="block text-gray-700 mb-4 text-2xl" for="password">Mật khẩu cũ</label>
-                        <input type="password" id="password" name="password"
+                        <input type="password" id="old-password" name="old-password"
                             class="w-[400px] p-3 border border-gray-300 rounded text-lg">
                     </div>
                     <div class="mb-10">
@@ -97,23 +142,15 @@
                 <div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
 
                 <button id="submitBtn"
-                    class="w-[400px] text-white text-2xl font-semibold py-3 rounded-lg transition mb-10 duration-300"
+                    class="w-[400px] text-white text-2xl font-semibold py-3 rounded-lg transition mb-10 duration-300 mb-[100px]"
                     style="background-color: rgb(61, 177, 212);"
                     onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
                     onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
                     Đổi mật khẩu
                 </button>
-
-                <?php if (!isset($auto_fill)): ?>
-                    <div class="text-center text-2xl text-blue-600 space-x-4 mb-[100px]">
-                        <a href="/dang-ky" class="hover:underline">Đăng ký</a>
-                        <span>|</span>
-                        <a href="/quen-mat-khau" class="hover:underline">Đăng nhập</a>
-                    </div>
-                <?php endif; ?>
-
             </div>
         </div>
+        <div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
         <?php $this->load->view('site/footer', $this->data); ?>
     </div>
     <script src="<?php echo public_url('site/'); ?>js/alter.js"></script>

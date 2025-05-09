@@ -62,6 +62,64 @@
 			color: #721c24 !important;
 			border: 1px solid #f5c6cb;
 		}
+
+		/* Loại bỏ conflict tailwind */
+		.collapse {
+			visibility: unset !important;
+		}
+
+		a {
+			color: #337ab7 !important;
+			text-decoration: none !important;
+		}
+
+		a:hover {
+			text-decoration: none !important;
+		}
+
+		.navbar-info .navbar-nav>.active>a,
+		.navbar-info .navbar-nav>.active>a:hover,
+		.navbar-info .navbar-nav>.active>a:focus {
+			color: #fff !important;
+			background-color: #4c66a4 !important;
+		}
+
+		.navbar-info .navbar-nav>li>a:hover,
+		.navbar-info .navbar-nav>li>a:focus {
+			color: #fff !important;
+			background-color: #337ab7 !important;
+			border-top-left-radius: 4px !important;
+			border-top-right-radius: 4px !important;
+		}
+
+		a.product_title:hover {
+			color: #337ab7 !important;
+		}
+
+		.dropdown-menu>li>a {
+			color: #333 !important;
+		}
+
+		@media (min-width: 1200px) {
+			.container {
+				width: 1170px !important;
+			}
+		}
+
+		/* custom cho đăng ký | đổi mật khẩu */
+		a:hover,
+		a:focus {
+			color: #23527c !important;
+			text-decoration: underline !important;
+		}
+
+		.text-blue-600 a {
+			--tw-text-opacity: 1 !important;
+			color: rgb(37 99 235 / var(--tw-text-opacity, 1)) !important;
+		}
+
+
+		/* Loại bỏ conflict tailwind */
 	</style>
 	<!-- tích hợp reCAPTCHA -->
 </head>
@@ -75,7 +133,6 @@
 				<li><a href="<?php echo base_url(); ?>#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
 				<li class="active">Quên mật khẩu</li>
 			</ol>
-
 			<div class="flex flex-col items-center">
 				<div class="mb-10 mt-[70px]">
 					<label class="block text-gray-700 mb-4 text-2xl" for="email">Email</label>
@@ -114,12 +171,15 @@
 					<div class="text-center text-2xl text-blue-600 space-x-4 mb-[100px]">
 						<a href="/dang-ky" class="hover:underline">Đăng ký</a>
 						<span>|</span>
-						<a href="/quen-mat-khau" class="hover:underline">Đăng nhập</a>
+						<a href="/dang-nhap" class="hover:underline">Đăng nhập</a>
+					</div>
+				<?php else: ?>
+					<div class="text-center text-2xl text-green-600 space-x-4 mb-[75px]">
 					</div>
 				<?php endif; ?>
-
 			</div>
 		</div>
+		<div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
 		<?php $this->load->view('site/footer', $this->data); ?>
 	</div>
 	<script src="<?php echo public_url('site/'); ?>js/forgot.js"></script>

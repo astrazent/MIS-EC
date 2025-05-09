@@ -96,49 +96,313 @@ function clearError(input) {
 		errorMsg.remove();
 	}
 }
-function editContent(button, id) {
-	// Tìm button delete gần nhất trước button edit này
-	const closestDeleteBtn = button.previousElementSibling;
-	let dontFetch = false;
 
-	// Kiểm tra nếu đó thực sự là button delete
-	if (closestDeleteBtn && closestDeleteBtn.classList.contains("btn-delete")) {
-		// Tìm thẻ icon trash trong button delete
-		const trashIcon = closestDeleteBtn.querySelector("i.fa-trash");
+let history = "del";
+let history2 = "del";
+let history3 = "del";
+let history4 = "del";
 
-		if (trashIcon) {
-			// Tạo icon mới
-			const xmarkIcon = document.createElement("i");
-			xmarkIcon.className = "fa-solid fa-xmark";
-
-			// Thay thế icon
-			trashIcon.replaceWith(xmarkIcon);
+function clickVisibleXmarkButtons() {
+	document.querySelectorAll("button").forEach((button) => {
+		const icon = button.querySelector("i.fa-xmark");
+		if (icon) {
+			const style = window.getComputedStyle(button);
+			if (style.display === "block") {
+				button.click();
+			}
 		}
-	}
+	});
+}
+function showToast(type, message) {
+	Swal.fire({
+		toast: true,
+		position: "top",
+		icon: type,
+		title: message,
+		showConfirmButton: false,
+		showCloseButton: true,
+		timer: 2500,
+		timerProgressBar: true,
+		customClass: {
+			popup: `custom-toast ${
+				type === "success" ? "swal2-success-toast" : "swal2-error-toast"
+			}`,
+		},
+		didOpen: (toast) => {
+			toast.addEventListener("mouseenter", Swal.stopTimer);
+			toast.addEventListener("mouseleave", Swal.resumeTimer);
+		},
+	});
+}
+function editContent(button, id) {
+	//đóng tất cả các dòng đang sửa còn lại
+	clickVisibleXmarkButtons();
+	if (id == "name") {
+		let comp = true;
+		// Tìm button delete gần nhất trước button edit này
+		const closestDeleteBtn = button.previousElementSibling;
 
-	var contentDiv = document.getElementById(id);
-	var currentText;
-	if (id === "address-number") {
-		currentText = document
-			.getElementById("address")
-			.innerText.split(",")[0]
-			.trim();
-	} else {
+		// Kiểm tra nếu đó thực sự là button delete
+		if (closestDeleteBtn && closestDeleteBtn.classList.contains("btn-delete")) {
+			// Tìm thẻ icon trash trong button delete
+			const trashIcon = closestDeleteBtn.querySelector("i.fa-trash");
+
+			if (trashIcon) {
+				// Tạo icon mới
+				const xmarkIcon = document.createElement("i");
+				xmarkIcon.className = "fa-solid fa-xmark";
+
+				// Thay thế icon
+				trashIcon.replaceWith(xmarkIcon);
+			}
+		}
+		var contentDiv = document.getElementById(id);
+		var currentText;
 		currentText =
-			contentDiv.textContent == undefined ? "" : contentDiv.textContent;
-	}
+			contentDiv.textContent == "(Trống)" ? "" : contentDiv.textContent;
+		history = currentText === "" ? "(Trống)" : currentText;
+		var inputField = document.createElement("input");
+		inputField.type = "text";
+		inputField.value = currentText;
+		inputField.style.width = "95%";
+		inputField.classList.add("field", "border", "border-gray-300");
 
-	var inputField = document.createElement("input");
-	inputField.type = "text";
-	inputField.value = currentText;
-	inputField.style.width = "95%";
-	inputField.classList.add("field", "border", "border-gray-300");
+		contentDiv.innerHTML = "";
+		contentDiv.appendChild(inputField);
 
-	contentDiv.innerHTML = "";
-	contentDiv.appendChild(inputField);
+		// Đổi icon thành check
+		button.innerHTML = '<i class="fa-solid fa-check"></i>';
 
-	let hiscontent = inputField.value;
-	if (id === "email") {
+		// Xử lý khi bấm lưu
+		button.onclick = async function () {
+			if (!comp) return;
+			comp = false;
+			const newText = inputField.value;
+			let field = document.querySelector(".field");
+			let isValid = true;
+
+			// Kiểm tra trường điền
+			if (newText === "") {
+				showError(field, "Vui lòng điền đầy đủ thông tin");
+				isValid = false;
+			} else {
+				clearError(field);
+			}
+
+			// Nếu có lỗi, không gửi API
+			if (!isValid) {
+				comp = true;
+				return;
+			}
+
+			const dataToSend = {
+				id: id,
+				value: newText,
+			};
+
+			// ✏️ Xử lý các trường khác
+			contentDiv.innerHTML = newText;
+
+			// Gửi dữ liệu cập nhật lên server
+			await fetch("http://localhost:8080/update-info", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(dataToSend),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					showToast("success", "Cập nhật tên thành công");
+				})
+				.catch((error) => {
+					contentDiv.innerHTML = history;
+					history = "del";
+					comp = true;
+					showToast("error", "Cập nhật tên thất bại");
+					console.error("Lỗi khi cập nhật:", error);
+				});
+
+			// Đổi lại icon thành bút
+			button.innerHTML = '<i class="fa-solid fa-pen"></i>';
+
+			// Đổi lại icon cancel
+			// Kiểm tra nếu đó thực sự là button delete
+			if (
+				closestDeleteBtn &&
+				closestDeleteBtn.classList.contains("btn-delete")
+			) {
+				// Tìm thẻ icon xmark trong button delete
+				const xmarkIcon = closestDeleteBtn.querySelector("i.fa-xmark");
+
+				if (xmarkIcon) {
+					// Tạo icon trash mới
+					const trashIcon = document.createElement("i");
+					trashIcon.className = "fa-solid fa-trash";
+
+					// Thay thế icon
+					xmarkIcon.replaceWith(trashIcon);
+				}
+			}
+
+			history = "del";
+			comp = true;
+
+			button.onclick = function () {
+				editContent(button, id);
+			};
+		};
+	} else if (id == "phone") {
+		let comp = true;
+		// Tìm button delete gần nhất trước button edit này
+		const closestDeleteBtn = button.previousElementSibling;
+
+		// Kiểm tra nếu đó thực sự là button delete
+		if (closestDeleteBtn && closestDeleteBtn.classList.contains("btn-delete")) {
+			// Tìm thẻ icon trash trong button delete
+			const trashIcon = closestDeleteBtn.querySelector("i.fa-trash");
+
+			if (trashIcon) {
+				// Tạo icon mới
+				const xmarkIcon = document.createElement("i");
+				xmarkIcon.className = "fa-solid fa-xmark";
+
+				// Thay thế icon
+				trashIcon.replaceWith(xmarkIcon);
+			}
+		}
+		var contentDiv = document.getElementById(id);
+		var currentText;
+		currentText =
+			contentDiv.textContent == "(Trống)" ? "" : contentDiv.textContent;
+		history2 = currentText === "" ? "(Trống)" : currentText;
+		var inputField = document.createElement("input");
+		inputField.type = "text";
+		inputField.value = currentText;
+		inputField.style.width = "95%";
+		inputField.classList.add("field", "border", "border-gray-300");
+
+		contentDiv.innerHTML = "";
+		contentDiv.appendChild(inputField);
+
+		// Đổi icon thành check
+		button.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+		// Xử lý khi bấm lưu
+		button.onclick = async function () {
+			if (!comp) return;
+			comp = false;
+			const newText = inputField.value;
+			let field = document.querySelector(".field");
+			let isValid = true;
+
+			// Kiểm tra trường điền
+			if (newText === "") {
+				showError(field, "Vui lòng điền đầy đủ thông tin");
+				isValid = false;
+			} else {
+				clearError(field);
+			}
+
+			// Kiểm tra Số điện thoại
+			let phoneRegex = /^[0-9]{8,11}$/;
+			if (!phoneRegex.test(field.value.trim())) {
+				showError(field, "Số điện thoại không hợp lệ (8-11 chữ số)");
+				isValid = false;
+			} else {
+				clearError(field);
+			}
+
+			// Nếu có lỗi, không gửi API
+			if (!isValid) {
+				comp = true;
+				return;
+			}
+
+			const dataToSend = {
+				id: id,
+				value: newText,
+			};
+
+			// ✏️ Xử lý các trường khác
+			contentDiv.innerHTML = newText;
+
+			// Gửi dữ liệu cập nhật lên server
+			await fetch("http://localhost:8080/update-info", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(dataToSend),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					showToast("success", "Cập nhật số điện thoại thành công");
+				})
+				.catch((error) => {
+					contentDiv.innerHTML = history2;
+					history2 = "del";
+					comp = true;
+					showToast("error", "Cập nhật số điện thoại thất bại");
+					console.error("Lỗi khi cập nhật:", error);
+				});
+
+			// Đổi lại icon thành bút
+			button.innerHTML = '<i class="fa-solid fa-pen"></i>';
+
+			// Đổi lại icon cancel
+			// Kiểm tra nếu đó thực sự là button delete
+			if (
+				closestDeleteBtn &&
+				closestDeleteBtn.classList.contains("btn-delete")
+			) {
+				// Tìm thẻ icon xmark trong button delete
+				const xmarkIcon = closestDeleteBtn.querySelector("i.fa-xmark");
+
+				if (xmarkIcon) {
+					// Tạo icon trash mới
+					const trashIcon = document.createElement("i");
+					trashIcon.className = "fa-solid fa-trash";
+
+					// Thay thế icon
+					xmarkIcon.replaceWith(trashIcon);
+				}
+			}
+			history2 = "del";
+			comp = true;
+
+			button.onclick = function () {
+				editContent(button, id);
+			};
+		};
+	} else if (id == "email") {
+		let comp = true;
+		// Giả sử biến `button` là nút được bấm
+		const penIcon = button.querySelector("i.fa-solid.fa-pen");
+		if (penIcon) {
+			// Tìm phần tử btn-cancel gần nhất (có thể là anh/chị/em hoặc tổ tiên)
+			const cancelBtn = button
+				.closest(".info-buttons")
+				.querySelector(".btn-cancel");
+			if (cancelBtn) {
+				cancelBtn.style.display = "block";
+			}
+		}
+
+		var contentDiv = document.getElementById(id);
+		var currentText;
+		currentText =
+			contentDiv.textContent == "(Trống)" ? "" : contentDiv.textContent;
+		history3 = currentText;
+		var inputField = document.createElement("input");
+		inputField.type = "text";
+		inputField.value = currentText;
+		inputField.style.width = "95%";
+		inputField.classList.add("field", "border", "border-gray-300");
+
+		contentDiv.innerHTML = "";
+		contentDiv.appendChild(inputField);
+
 		var contentDiv2 = document.getElementById("password");
 		var inputField2 = document.createElement("input");
 		inputField2.type = "password";
@@ -152,56 +416,188 @@ function editContent(button, id) {
 		// Hiển thị trường password nếu là email
 		const infoPassword = document.querySelector(".password");
 		infoPassword.style.display = "block";
-	}
 
-	if (id === "address-number") {
+		// Đổi icon thành check
+		button.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+		// Xử lý khi bấm lưu
+		button.onclick = async function () {
+			let dontFetch = false;
+			if (!comp) return;
+			comp = false;
+			const newText = inputField.value;
+			const newText2 = inputField2.value;
+			let emailField = document.querySelector("#email .field");
+			let passwordField = document.querySelector("#password .field");
+			let isValid = true;
+
+			// Kiểm tra trường điền
+			if (newText === "") {
+				showError(emailField, "Vui lòng điền đầy đủ thông tin");
+				isValid = false;
+			} else {
+				clearError(emailField);
+			}
+
+			if (newText2 === "") {
+				showError(passwordField, "Vui lòng điền đầy đủ thông tin");
+				isValid = false;
+			} else {
+				clearError(passwordField);
+			}
+
+			const dataToSend = {
+				id: id,
+				value: newText,
+			};
+
+			// Kiểm tra Email
+			let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(emailField.value.trim())) {
+				showError(emailField, "Email không hợp lệ");
+				isValid = false;
+			} else {
+				clearError(emailField);
+			}
+
+			// Nếu có lỗi, không gửi API
+			if (!isValid) {
+				comp = true;
+				return;
+			}
+
+			// Kiểm tra mật khẩu trước
+			let passwordData = {
+				password: inputField2.value.trim(),
+			};
+			try {
+				const res = await fetch("http://localhost:8080/check-password", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(passwordData),
+				});
+
+				const text = await res.text();
+				console.log("Raw response text:", text);
+
+				const data = JSON.parse(text);
+
+				if (data.status === "success") {
+					console.log("Xác nhận mật khẩu thành công:", data);
+					contentDiv.innerHTML = newText;
+
+					// Ẩn trường password nếu là email
+					const infoPassword = document.querySelector(".password");
+					if (infoPassword) infoPassword.style.display = "none";
+				} else {
+					showToast("error", "Mật khẩu sai");
+					contentDiv.innerHTML = history3;
+					history3 = "del";
+					comp = true;
+					dontFetch = true;
+				}
+			} catch (error) {
+				contentDiv.innerHTML = history3;
+				dontFetch = true;
+				console.error("Lỗi khi cập nhật:", error);
+			}
+
+			if (!dontFetch) {
+				// Gửi dữ liệu cập nhật lên server
+				await fetch("http://localhost:8080/update-info", {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(dataToSend),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						dontFetch = false;
+						showToast("success", "Cập nhật email thành công");
+					})
+					.catch((error) => {
+						contentDiv.innerHTML = history3;
+						history3 = "del";
+						comp = true;
+						dontFetch = false;
+						showToast("error", "Cập nhật email thất bại");
+						console.error("Lỗi khi cập nhật:", error);
+					});
+			}
+
+			// Đổi lại icon thành bút
+			button.innerHTML = '<i class="fa-solid fa-pen"></i>';
+
+			// Ẩn icon cancel
+			// Tìm phần tử btn-cancel gần nhất trong vùng chứa nút
+			const cancelBtn = button
+				.closest(".info-buttons")
+				.querySelector(".btn-cancel");
+
+			if (cancelBtn) {
+				cancelBtn.style.display = "none";
+			}
+
+			history3 = "del";
+			comp = true;
+
+			// Ẩn trường password
+			document.querySelector(".password").style.display = "none";
+
+			button.onclick = function () {
+				editContent(button, id);
+			};
+		};
+	} else if (id == "address-number") {
+		let comp = true;
+		// Giả sử biến `button` là nút được bấm
+		const penIcon = button.querySelector("i.fa-solid.fa-pen");
+		if (penIcon) {
+			// Tìm phần tử btn-cancel gần nhất (có thể là anh/chị/em hoặc tổ tiên)
+			const cancelBtn = button
+				.closest(".info-buttons")
+				.querySelector(".btn-cancel");
+			if (cancelBtn) {
+				cancelBtn.style.display = "block";
+			}
+		}
+
+		var contentDiv = document.getElementById(id);
+		var currentText;
+		currentText = document
+			.getElementById("address")
+			.innerText.split(",")[0]
+			.trim();
+		history4 = document.getElementById("address").innerText.trim();
+		var inputField = document.createElement("input");
+		inputField.type = "text";
+		inputField.value = currentText;
+		inputField.style.width = "95%";
+		inputField.classList.add("field", "border", "border-gray-300");
+		contentDiv.innerHTML = "";
+		contentDiv.appendChild(inputField);
+
 		// Hiển thị các trường phụ nếu là address
 		const infoRow = document.querySelector(".address-info");
 		const infoDetail = document.querySelector(".address-number");
 		infoRow.style.display = "flex";
 		infoDetail.style.display = "block";
-	}
 
-	// Đổi icon thành check
-	button.innerHTML = '<i class="fa-solid fa-check"></i>';
+		// Đổi icon thành check
+		button.innerHTML = '<i class="fa-solid fa-check"></i>';
 
-	// Xử lý khi bấm lưu
-	button.onclick = function () {
-		const newText = inputField.value;
-		let field = document.querySelector(".field");
-		let isValid = true;
+		// Xử lý khi bấm lưu
+		button.onclick = async function () {
+			if (!comp) return;
+			comp = false;
+			const newText = inputField.value;
+			let field = document.querySelector(".field");
+			let isValid = true;
 
-		// Kiểm tra trường điền
-		if (newText === "") {
-			showError(field, "Vui lòng điền đầy đủ thông tin");
-			isValid = false;
-		} else {
-			clearError(field);
-		}
-
-		// Nếu có lỗi, không gửi API
-		if (!isValid) return;
-
-		const dataToSend = {
-			id: id,
-			value: newText,
-		};
-
-		if (id === "email") {
-			// Kiểm tra Email
-			let emailInput = document.querySelector("#email .field");
-			let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!emailRegex.test(emailInput.value.trim())) {
-				showError(emailInput, "Email không hợp lệ");
-				isValid = false;
-			} else {
-				clearError(emailInput);
-			}
-
-			//Kiểm tra trường điền mật khẩu 
-			console.log(field);
-			console.log(field.nextElementSibling);
-			return;
+			// Kiểm tra trường điền
 			if (newText === "") {
 				showError(field, "Vui lòng điền đầy đủ thông tin");
 				isValid = false;
@@ -210,10 +606,16 @@ function editContent(button, id) {
 			}
 
 			// Nếu có lỗi, không gửi API
-			if (!isValid) return;
-		}
+			if (!isValid) {
+				comp = true;
+				return;
+			}
 
-		if (id === "address-number") {
+			const dataToSend = {
+				id: id,
+				value: newText,
+			};
+
 			// 🏠 Xử lý riêng cho địa chỉ
 			const citySelect = document.getElementById("city");
 			const districtSelect = document.getElementById("district");
@@ -267,41 +669,9 @@ function editContent(button, id) {
 			infoRows.forEach(function (row) {
 				row.style.display = "none";
 			});
-		} else if (id === "email") {
-			// Kiểm tra mật khẩu trước
-			let passwordData = {
-				password: inputField2.value.trim(),
-			};
-			fetch("http://localhost:8080/check-password", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(passwordData),
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					if (data.status == "success") {
-						console.log("Xác nhận mật khẩu thành công:", data);
-						contentDiv.innerHTML = newText;
-						// Hiển thị trường password nếu là email
-						const infoPassword = document.querySelector(".password");
-						infoPassword.style.display = "none";
-					} else {
-						console.log("Xác nhận mật khẩu thất bại:", data);
-						contentDiv.innerHTML = hiscontent;
-						dontFetch = true;
-					}
-				})
-				.catch((error) => console.error("Lỗi khi cập nhật:", error));
-		} else {
-			// ✏️ Xử lý các trường khác
-			contentDiv.innerHTML = newText;
-		}
 
-		if (!dontFetch) {
 			// Gửi dữ liệu cập nhật lên server
-			fetch("http://localhost:8080/update-info", {
+			await fetch("http://localhost:8080/update-info", {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -309,41 +679,98 @@ function editContent(button, id) {
 				body: JSON.stringify(dataToSend),
 			})
 				.then((response) => response.json())
-				.then((data) => console.log("Cập nhật thành công:", data))
-				.catch((error) => console.error("Lỗi khi cập nhật:", error));
-		}
+				.then((data) => {
+					showToast("success", "Cập nhật địa chỉ thành công");
+				})
+				.catch((error) => {
+					contentDiv.innerHTML = history4;
+					history4 = "del";
+					comp = true;
+					showToast("error", "Cập nhật địa chỉ thất bại");
+					console.error("Lỗi khi cập nhật:", error);
+				});
 
-		// Đổi lại icon thành bút
-		button.innerHTML = '<i class="fa-solid fa-pen"></i>';
+			// Đổi lại icon thành bút
+			button.innerHTML = '<i class="fa-solid fa-pen"></i>';
 
-		// Đổi lại icon cancel
-		// Kiểm tra nếu đó thực sự là button delete
-		if (closestDeleteBtn && closestDeleteBtn.classList.contains("btn-delete")) {
-			// Tìm thẻ icon xmark trong button delete
-			const xmarkIcon = closestDeleteBtn.querySelector("i.fa-xmark");
+			// Ẩn icon cancel
+			// Tìm phần tử btn-cancel gần nhất trong vùng chứa nút
+			const cancelBtn = button
+				.closest(".info-buttons")
+				.querySelector(".btn-cancel");
 
-			if (xmarkIcon) {
-				// Tạo icon trash mới
-				const trashIcon = document.createElement("i");
-				trashIcon.className = "fa-solid fa-trash";
-
-				// Thay thế icon
-				xmarkIcon.replaceWith(trashIcon);
+			if (cancelBtn) {
+				cancelBtn.style.display = "none";
 			}
-		}
 
-		button.onclick = function () {
-			editContent(button, id);
+			history4 = "del";
+			comp = true;
+
+			button.onclick = function () {
+				editContent(button, id);
+			};
 		};
-	};
+	}
 }
+
+// Xử lý xác nhận huỷ của email và address
+document.addEventListener("DOMContentLoaded", function () {
+	document.querySelectorAll(".btn-cancel").forEach((button) => {
+		button.addEventListener("click", function () {
+			// phục vụ cho email và address
+			const isVisible = window.getComputedStyle(button).display === "block";
+
+			if (isVisible) {
+				// Chuyển edit về trạng thái ban đầu
+				const container = button.closest(".info-buttons"); // Thay '.container' bằng class cha chung
+				const editButton = container.querySelector(".btn-edit");
+				const infoLabel = editButton.parentElement.parentElement;
+				const idInfo = infoLabel.querySelector(".content").id;
+				let textInput = "";
+				if (idInfo == "email" && history3 != "del") {
+					textInput = history3;
+				} else if (idInfo == "address" && history4 != "del") {
+					textInput = history4;
+				}
+				editButton.innerHTML = '<i class="fa-solid fa-pen"></i>';
+
+				var contentDiv = document.getElementById(idInfo);
+				contentDiv.innerHTML = textInput;
+
+				// ẩn trường password nếu button thuộc về email
+				if (idInfo == "email") {
+					document.querySelector(".password").style.display = "none";
+
+					// Hủy sự kiện click, tạo sự kiện mới cho edit
+					editButton.onclick = null;
+					editButton.onclick = function () {
+						editContent(this, "email");
+					};
+				} else if (idInfo == "address") {
+					document.querySelectorAll(".address-edit").forEach((el) => {
+						el.style.display = "none";
+					});
+
+					// Hủy sự kiện click, tạo sự kiện mới cho edit
+					editButton.onclick = null;
+					editButton.onclick = function () {
+						editContent(this, "address-number");
+					};
+				}
+
+				// Ẩn icon
+				button.style.display = "none";
+				return;
+			}
+		});
+	});
+});
 
 // Xử lý xác nhận xóa (chỉ xóa nội dung của phần tử có class 'content')
 document.addEventListener("DOMContentLoaded", function () {
 	document.querySelectorAll(".btn-delete").forEach((button) => {
 		button.addEventListener("click", function () {
 			const icon = button.querySelector("i.fa-xmark");
-
 			if (icon) {
 				if (
 					icon.classList.contains("fa-solid") &&
@@ -353,8 +780,14 @@ document.addEventListener("DOMContentLoaded", function () {
 					const container = button.closest(".info-buttons"); // Thay '.container' bằng class cha chung
 					const editButton = container.querySelector(".btn-edit");
 					const infoLabel = editButton.parentElement.parentElement;
-					const textInput = infoLabel.querySelector('input[type="text"]').value;
 					const idInfo = infoLabel.querySelector(".content").id;
+					let textInput = "";
+					if (idInfo == "name" && history != "del") {
+						textInput = history;
+					} else if (idInfo == "phone" && history2 != "del") {
+						textInput = history2;
+					}
+
 					editButton.innerHTML = '<i class="fa-solid fa-pen"></i>';
 
 					var contentDiv = document.getElementById(idInfo);
@@ -391,7 +824,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button class="btn btn-confirm" style="background-color: #4CAF50; color: white;">
                         <i class="fa-solid fa-check"></i>
                     </button>
-                    <button class="btn btn-cancel" style="background-color: #f44336; color: white;">
+                    <button class="btn btn-cancel-2" style="background-color: #f44336; color: white;">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 `;
@@ -409,7 +842,7 @@ document.addEventListener("DOMContentLoaded", function () {
 								"Content-Type": "application/json",
 							},
 							body: JSON.stringify({
-								id: row.dataset.id,
+								id: row.querySelector(".content").id,
 							}),
 						})
 							.then((response) => response.json())
@@ -430,7 +863,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 				// Khi bấm hủy xóa
 				newConfirmRow
-					.querySelector(".btn-cancel")
+					.querySelector(".btn-cancel-2")
 					.addEventListener("click", function () {
 						newConfirmRow.remove();
 					});

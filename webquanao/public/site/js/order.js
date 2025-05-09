@@ -100,6 +100,161 @@ function renderCity(data) {
 	};
 }
 
+// Bắt sự kiện chọn phường xã để tính tiền vận chuyển
+// Lấy toạ độ
+function matchWords(inputStr, targetStr) {
+	const inputWords = inputStr.toLowerCase().split(/\s+/);
+	const targetWords = targetStr.toLowerCase().split(/\s+/);
+
+	return inputWords.every((word) => targetWords.includes(word));
+}
+
+function checkMatchInList(inputStr, list) {
+	for (let i = 0; i < list.length; i++) {
+		if (matchWords(inputStr, list[i].properties.region)) {
+			return list[i].geometry.coordinates; // Dừng duyệt nếu match
+		}
+	}
+	return null; // Không có phần tử nào match
+}
+
+function getLastTwoWords(str) {
+	const words = str.trim().split(/\s+/);
+	return words.slice(-2).join(" ");
+}
+
+async function getCoordinates(city, district, ward) {
+	const el = document.getElementById("openroute");
+	const apiKey = el.getAttribute("data-key");
+	const location = `${ward}, ${district}, ${city}, Vietnam`;
+
+	const url = `https://api.openrouteservice.org/geocode/search?api_key=${apiKey}&text=${encodeURIComponent(
+		location
+	)}`;
+
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		let coordinates = null;
+		if (data.features && data.features.length > 0) {
+			coordinates = checkMatchInList(getLastTwoWords(city), data.features);
+			let longitude;
+			let latitude;
+			if (coordinates != null) {
+				longitude = coordinates[0]; // Kinh độ
+				latitude = coordinates[1]; // Vĩ độ
+			} else {
+				return false;
+			}
+			return { longitude, latitude };
+		} else {
+			throw new Error("Không tìm thấy tọa độ cho địa điểm này.");
+		}
+	} catch (error) {
+		console.error("Lỗi khi lấy tọa độ:", error);
+	}
+}
+
+function toRadians(degrees) {
+	return (degrees * Math.PI) / 180;
+}
+
+function haversine(coord1, coord2) {
+	const R = 6371; // Bán kính Trái Đất (km)
+
+	const [lon1, lat1] = coord1;
+	const [lon2, lat2] = coord2;
+
+	const φ1 = toRadians(lat1);
+	const φ2 = toRadians(lat2);
+	const Δφ = toRadians(lat2 - lat1);
+	const Δλ = toRadians(lon2 - lon1);
+
+	const a =
+		Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	const distance = R * c;
+	return distance * 1000; // Trả về đơn vị m
+}
+
+async function getDistance(fromCoords, toCoords) {
+	const url = "https://api.openrouteservice.org/v2/directions/driving-car";
+	const el = document.getElementById("openroute");
+	const apiKey = el.getAttribute("data-key");
+	const body = {
+		coordinates: [fromCoords, toCoords],
+	};
+
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			Authorization: apiKey,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(body),
+	});
+
+	const data = await response.json();
+	if (data.routes && data.routes.length > 0) {
+		const distance = data.routes[0].summary.distance; // đơn vị: mét
+		const duration = data.routes[0].summary.duration; // đơn vị: giây
+		return { distance, duration };
+	} else if (data.error.message != null) {
+		const distance = haversine(fromCoords, toCoords); // đơn vị: mét
+		const duration = undefined; // đơn vị: giây
+		return { distance, duration };
+	} else {
+		throw new Error("Không thể tính khoảng cách.");
+	}
+}
+
+wards.addEventListener("change", function () {
+	cityText = citis.options[citis.selectedIndex].text;
+	districtText = district.options[district.selectedIndex].text;
+	wardText = ward.options[ward.selectedIndex].text;
+
+	if (!cityText || !districtText || !wardText) {
+		return;
+	}
+
+	// HV bưu chính viễn thông - ngọc trực
+	let from = [105.7684188, 20.9847744];
+	let to = [];
+	if (this.value) {
+		getCoordinates(cityText, districtText, wardText)
+			.then((tocoords) => {
+				if (tocoords) {
+					to.push(tocoords.longitude);
+					to.push(tocoords.latitude);
+					return getDistance(from, to);
+				} else {
+					document.querySelector(".shipping-detail").style.display = "block";
+
+					document.querySelector(".distance").textContent = `Chưa xác định`;
+					document.querySelector(".fee").textContent = `Thông báo sau`;
+					return Promise.reject("Không tìm thấy tọa độ đích.");
+				}
+			})
+			.then((result) => {
+				// 1. Hiển thị div với class 'shipping-detail' dưới dạng block
+				document.querySelector(".shipping-detail").style.display = "block";
+
+				// 2. Thay đổi nội dung của distance và fee
+				document.querySelector(".distance").textContent = `${(
+					result.distance / 1000
+				).toFixed(2)} km`;
+				document.querySelector(".fee").textContent = `${Math.round(
+					(result.distance / 1000) * 2000
+				)} VND`;
+			})
+			.catch((err) => {
+				console.error("Lỗi:", err);
+			});
+	}
+});
+
 // Hiệu ứng hiển thị chi tiết phương thức thanh toán
 function highlightPayment(selectedInput) {
 	// Xóa in đậm của tất cả tiêu đề thanh toán

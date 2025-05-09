@@ -78,32 +78,30 @@ class Validation extends MY_Controller
             return;
         }
 
+        // Dùng để đánh dấu thời điểm đổi mật khẩu phục vụ changepassword
         $password = $payload['data']['password'];
         $id = $payload['data']['id'];
 
+        $is_verified = $this->user_model->get_info_rule(['id' => $id], 'is_verified');
+        $is_verified = $is_verified->is_verified;
+        if($is_verified == 1){
+            $this->data['status'] = false;
+            $this->data['message'] = 'already_use';
+            $this->load->view('site/validation/changepassword', $this->data);
+            return;
+        }
+
+        if ($id !== null) {
+            $temp = array(
+                'is_verified' => 1,
+                'date_modified' => date('Y-m-d H:i:s') // Lấy thời gian hiện tại
+            );
+            $this->user_model->update($id, $temp);
+        }
+
         $data = array(
-            'password' => md5($password),
-            'is_verified' => 0
+            'password' => md5($password)
         );
-
-        // Lấy thông tin user với điều kiện email
-        $user = $this->user_model->get_info_rule(['id' => $id], 'password');
-        if (!$user) {
-            // Nếu mật khẩu mới trùng mật khẩu cũ
-            $this->data['status'] = false;
-            $this->data['message'] = 'user_do_not_exist';
-            $this->load->view('site/validation/changepassword', $this->data);
-            return;
-        }
-
-        // So sánh mật khẩu hệ thống với mật khẩu đã mã hóa trong DB
-        if ($user->password === md5($password)) {
-            // Nếu mật khẩu mới trùng mật khẩu cũ
-            $this->data['status'] = false;
-            $this->data['message'] = 'password_exist';
-            $this->load->view('site/validation/changepassword', $this->data);
-            return;
-        }
 
         // Cập nhật mật khẩu
         if (!$this->user_model->update($id, $data)) {

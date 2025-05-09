@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-	<?php $this->load->view('site/head', $this->data); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo public_url('site/'); ?>css/validation.css">
 </head>
 
@@ -33,11 +32,8 @@
 								<?php elseif ($this->data['message'] === 'expired_token'): ?>
 									<p class="ngoclan-verification-message">Token đã hết hạn. Vui lòng yêu cầu liên kết mới để đặt lại mật khẩu.</p>
 
-								<?php elseif ($this->data['message'] === 'password_exist'): ?>
-									<p class="ngoclan-verification-message">Mật khẩu mới trùng với mật khẩu đã được đặt trong 3 tháng trở lại đây.</p>
-
-								<?php elseif ($this->data['message'] === 'user_do_not_exist'): ?>
-									<p class="ngoclan-verification-message">Người dùng không tồn tại.</p>
+								<?php elseif ($this->data['message'] === 'already_use'): ?>
+									<p class="ngoclan-verification-message">Yêu cầu đã được thực hiện trước đó rồi.</p>
 
 								<?php elseif ($this->data['message'] === 'update_fail'): ?>
 									<p class="ngoclan-verification-message">Có lỗi trong quá trình đổi mật khẩu, vui lòng thử lại sau.</p>

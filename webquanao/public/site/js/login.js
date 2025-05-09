@@ -4,10 +4,6 @@ let isValid = true;
 
 function showError(input, message) {
 	clearError(input);
-	// Reset reCAPTCHA for the next submission
-	grecaptcha.reset();
-	recaptchaToken = "";
-
 	let errorMsg = document.createElement("p");
 	errorMsg.className = "text-red-500 text-xl mt-1";
 	errorMsg.innerText = message;
@@ -42,7 +38,7 @@ function validateRecaptcha() {
 					: "Vui lòng xác nhận reCAPTCHA trước khi gửi.",
 			showConfirmButton: false,
 			showCloseButton: true,
-			timer: 4000,
+			timer: 2500,
 			timerProgressBar: true,
 			customClass: {
 				popup: `custom-toast ${
@@ -66,8 +62,12 @@ document.getElementById("submitBtn").addEventListener("click", function () {
 
 	// Kiểm tra Email
 	let emailInput = document.getElementById("email");
+	let emailValue = emailInput.value.trim();
 	let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	if (!emailRegex.test(emailInput.value.trim())) {
+	if (emailInput.value === "") {
+		showError(emailInput, "Email không được để trống");
+		isValid = false;
+	} else if (!emailRegex.test(emailValue)) {
 		showError(emailInput, "Email không hợp lệ");
 		isValid = false;
 	} else {
@@ -116,10 +116,6 @@ document.getElementById("submitBtn").addEventListener("click", function () {
 			});
 		})
 		.then((data) => {
-			// Reset reCAPTCHA for the next submission
-			grecaptcha.reset();
-			recaptchaToken = "";
-
 			if (data.status == "success") {
 				window.location.href = "/";
 			} else {
@@ -132,10 +128,17 @@ document.getElementById("submitBtn").addEventListener("click", function () {
 					},
 					confirmButtonText: "Thử lại",
 				});
+
+				// Reset reCAPTCHA for the next submission
+				grecaptcha.reset();
+				recaptchaToken = "";
 			}
 		})
 		.catch((err) => {
 			console.error("Lỗi:", err);
 			alert("Có lỗi xảy ra: " + err.message);
+			// Reset reCAPTCHA for the next submission
+			grecaptcha.reset();
+			recaptchaToken = "";
 		});
 });

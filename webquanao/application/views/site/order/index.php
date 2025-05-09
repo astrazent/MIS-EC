@@ -12,6 +12,95 @@
 		padding: 10px 20px !important;
 		font-size: 16px !important;
 	}
+
+	.shipping-detail {
+		display: none;
+		background-color: #f8f8f8;
+		border: 1px solid #ddd;
+		padding: 15px;
+		border-radius: 8px;
+		width: 100%;
+		margin-top: 20px;
+		font-family: Arial, sans-serif;
+		color: #333;
+		font-size: 85%;
+		/* Giảm kích thước font xuống 85% */
+	}
+
+	.shipping-item {
+		display: flex;
+		justify-content: space-between;
+		/* Căn đều giữa các phần tử */
+		margin-bottom: 10px;
+		/* Khoảng cách giữa các dòng */
+	}
+
+	.shipping-item span {
+		display: inline-block;
+	}
+
+	.shipping-item .distance,
+	.shipping-item .fee {
+		text-align: right;
+		/* Căn lề phải cho giá trị */
+		font-weight: bold;
+		color: #d9534f;
+		background-color: #f9f2f4;
+		/* nền nhẹ */
+		padding: 4px 8px;
+		border-radius: 4px;
+		margin-left: 10px;
+	}
+
+	.shipping-item strong {
+		font-weight: bold;
+	}
+
+
+	/* Loại bỏ conflict tailwind */
+	.collapse {
+		visibility: unset !important;
+	}
+
+	a {
+		color: #337ab7 !important;
+		text-decoration: none !important;
+	}
+
+	a:hover {
+		text-decoration: none !important;
+	}
+
+	.navbar-info .navbar-nav>.active>a,
+	.navbar-info .navbar-nav>.active>a:hover,
+	.navbar-info .navbar-nav>.active>a:focus {
+		color: #fff !important;
+		background-color: #4c66a4 !important;
+	}
+
+	.navbar-info .navbar-nav>li>a:hover,
+	.navbar-info .navbar-nav>li>a:focus {
+		color: #fff !important;
+		background-color: #337ab7 !important;
+		border-top-left-radius: 4px !important;
+		border-top-right-radius: 4px !important;
+	}
+
+	a.product_title:hover {
+		color: #337ab7 !important;
+	}
+
+	.dropdown-menu>li>a {
+		color: #333 !important;
+	}
+
+	@media (min-width: 1200px) {
+		.container {
+			width: 1170px !important;
+		}
+	}
+
+	/* Loại bỏ conflict tailwind */
 </style>
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
@@ -71,7 +160,17 @@
 
 			<h3 class="text-3xl font-semibold mb-4">Phí vận chuyển</h3>
 			<div class="p-4 bg-gray-100 border border-gray-300 mb-10 rounded">
-				<p class="text-gray-700" style="font-size:85% !important;">Các tỉnh thành không thuộc khu vực miễn phí giao hàng & lắp đặt, phí giao hàng sẽ được Ngọc Lan liên hệ báo sau.</p>
+				<p class="text-gray-700" style="font-size:85% !important;">Các tỉnh thành thuộc khu vực miễn phí giao hàng & lắp đặt sẽ được Ngọc Lan liên hệ báo sau.</p>
+				<div class="shipping-detail">
+					<div class="shipping-item">
+						<span><strong>Khoảng cách:</strong></span>
+						<span class="distance">20 km</span>
+					</div>
+					<div class="shipping-item">
+						<span><strong>Phí vận chuyển:</strong></span>
+						<span class="fee">50.000 VND</span>
+					</div>
+				</div>
 			</div>
 
 			<h2 class="text-3xl font-semibold mb-4">Phương thức thanh toán</h2>
@@ -149,7 +248,8 @@
 	</div>
 </div>
 <div id="userInfo" style="display:none;" data-user='<?php echo json_encode($user); ?>'>
+	<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;">Hello World</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 
-<script src="<?php echo public_url('site/'); ?>js/order.js"></script>
+	<script src="<?php echo public_url('site/'); ?>js/order.js"></script>

@@ -71,6 +71,63 @@
 		color: #721c24 !important;
 		border: 1px solid #f5c6cb;
 	}
+
+	/* Loại bỏ conflict tailwind */
+	.collapse {
+		visibility: unset !important;
+	}
+
+	a {
+		color: #337ab7 !important;
+		text-decoration: none !important;
+	}
+
+	a:hover {
+		text-decoration: none !important;
+	}
+
+	.navbar-info .navbar-nav>.active>a,
+	.navbar-info .navbar-nav>.active>a:hover,
+	.navbar-info .navbar-nav>.active>a:focus {
+		color: #fff !important;
+		background-color: #4c66a4 !important;
+	}
+
+	.navbar-info .navbar-nav>li>a:hover,
+	.navbar-info .navbar-nav>li>a:focus {
+		color: #fff !important;
+		background-color: #337ab7 !important;
+		border-top-left-radius: 4px !important;
+		border-top-right-radius: 4px !important;
+	}
+
+	a.product_title:hover {
+		color: #337ab7 !important;
+	}
+
+	.dropdown-menu>li>a {
+		color: #333 !important;
+	}
+
+	@media (min-width: 1200px) {
+		.container {
+			width: 1170px !important;
+		}
+	}
+
+	/* custom cho đăng ký | đổi mật khẩu */
+	a:hover,
+	a:focus {
+		color: #23527c !important;
+		text-decoration: underline !important;
+	}
+
+	.text-blue-600 a {
+		--tw-text-opacity: 1 !important;
+		color: rgb(37 99 235 / var(--tw-text-opacity, 1)) !important;
+	}
+
+	/* Loại bỏ conflict tailwind */
 </style>
 
 <body>

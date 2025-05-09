@@ -79,8 +79,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` INT(11) NOT NULL,
-  `is_verified` TINYINT(1) NOT NULL DEFAULT 1,
+  `created` DATETIME NOT NULL,
+  `is_verified` TINYINT(1) NOT NULL DEFAULT 0,
+  `date_modified` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -197,8 +198,8 @@ INSERT INTO `catalog` (`name`, `description`, `parent_id`, `sort_order`, `create
 ('Mẹ và bé', '', 9, 4, '2017-04-22 09:26:34');
 
 INSERT INTO `discount` (`name`, `description`, `measure`, `value`, `min_price`, `start_date`, `end_date`, `status`) VALUES
-('Giảm giá 100k', 'Giảm giá 100k cho đơn hàng từ 200.000đ', 0, 10, 200000, '2025-04-22 05:35:21', '2025-04-30 05:35:21', 1),
-('Giảm giá 20%', 'Giảm giá 20% cho đơn hàng từ 1.000.000đ', 1, 20, 1000000, '2025-04-22 05:35:21', '2025-04-30 05:35:21', 1);
+('Giảm giá 100k', 'Giảm giá 100k cho đơn hàng từ 100.000đ', 1, 10, 100000, '2025-04-10 05:35:21', '2025-04-30 05:35:21', 1),
+('Giảm giá 20%', 'Giảm giá 20% cho đơn hàng từ 100.000đ', 1, 20, 100000, '2025-04-10 05:35:21', '2025-04-30 05:35:21', 1);
 
 INSERT INTO `product` (`catalog_id`, `name`, `content`, `price`, `discount_id`, `image_link`, `image_list`, `view`, `buyed`, `rate_total`, `rate_count`, `stock`, `status`, `created`) VALUES
 (16, 'Viền Cổ Hoa', '<p><a href="https://www.sendo.vn/ao-so-mi-nu.htm">&Aacute;o Sơ Mi Nữ</a>&nbsp;Viền Cổ Hoa 3D Thiết Kế Cổ Tr&ograve;n Viền Sọc Đen, Kết N&uacute;t Cổ Sau Lưng, Tay X&ograve;e Duy&ecirc;n D&aacute;ng, Kết Hoa 3D Th&ecirc;m Phần Nữ T&iacute;nh Cho Ph&aacute;i Đẹp, Chất Liệu Voan Mềm Mại, Tho&aacute;ng M&aacute;t</p>\r\n\r\n<p><strong>Chất Liệu:</strong>&nbsp;Voan Mềm Mại, Tho&aacute;ng M&aacute;t</p>\r\n\r\n<p><strong>M&agrave;u Sắc:</strong>&nbsp;T&iacute;m, Hồng</p>\r\n\r\n<p><strong>Kiểu D&aacute;ng:</strong>&nbsp;Thiết Kế Cổ Tr&ograve;n Viền Sọc Đen, Kết N&uacute;t Cổ Sau Lưng, Tay X&ograve;e Duy&ecirc;n D&aacute;ng, Kết Hoa 3D Th&ecirc;m Phần Nữ T&iacute;nh Cho Ph&aacute;i Đẹp</p>\r\n\r\n<p><strong>K&iacute;ch Thước:</strong>&nbsp;Size S - D&agrave;i &Aacute;o: 60, Rộng Vai: 28 - 32, V&ograve;ng Ngực: 74 - 84 ( Ph&ugrave; Hợp Với Bạn Nữ Dưới 50kg)&nbsp;</p>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Size M - D&agrave;i &Aacute;o: 62, Rộng Vai: 29 - 33, V&ograve;ng Ngực: 76 - 86&nbsp;( Ph&ugrave; Hợp Với Bạn Nữ Dưới 55kg)</p>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Size L - D&agrave;i &Aacute;o: 63, Rộng Vai: 31 - 35, V&ograve;ng Ngực: 84 -&nbsp;94( Ph&ugrave; Hợp Với Bạn Nữ Dưới 60kg)</p>\r\n', '179000.00', 1, 'ao-so-mi-nu-vien-co-hoa-31.jpg', '["ao-so-mi-nu-vien-co-hoa-3d1.jpg","ao-so-mi-nu-vien-co-hoa-3dl1.jpg","ao-so-mi-nu-vien-co-hoa-3dla1.jpg"]', 24, 1, 14, 3, 100, 1, 1493983674),
@@ -229,24 +230,18 @@ INSERT INTO `product` (`catalog_id`, `name`, `content`, `price`, `discount_id`, 
 (13, 'Quần kaki Nam Lịch Lãm - D36', '<p>Quần kaki nam lịch l&atilde;m</p>\r\n\r\n<p>Chất liệu vải kaki loại 1 d&agrave;y mịn</p>\r\n\r\n<p>C&oacute; đủ size 28,29,30,31,32</p>\r\n\r\n<p>Với 3 t&ocirc;ng m&agrave;u trầm đen,xanh đen rất dễ phối với &aacute;o thun,&aacute;o sơ mi,...tạo phong c&aacute;ch thanh lịch cho c&aacute;c bạn nam khi diện đến c&ocirc;ng sở, đi chơi,du lịch,...</p>\r\n', '169000.00', 1, 'quan-kaki-nam-lich-lam-1m4G3-NvjQo7_simg_d0daf0_800x1200_max.jpg', '["quan-kaki-nam-lich-lam-1m4G3-tyzFof_simg_d0daf0_800x1200_max.png","quan-kaki-nam-lich-lam-1m4G3-uSjiJP_simg_d0daf0_800x1200_max.jpg"]', 16, 1, 18, 4, 100, 1, 1493983674),
 (13, 'QUẦN KAKI THUN JOGGER', '<p>Kiểu d&aacute;ng trẻ trung, t&ocirc;ng m&agrave;u, họa tiết lạ mắt dễ d&agrave;ng mix c&ugrave;ng &aacute;o thun tạo phong c&aacute;ch trẻ trung cho bạn trẻ.</p>\r\n\r\n<p>Thiết kế t&uacute;i 2 b&ecirc;n tiện dụng, bo lưng thun gi&uacute;p bạn thoải m&aacute;i khi vận động.</p>\r\n\r\n<p>Form d&aacute;ng d&agrave;i, chất liệu bố, d&agrave;y dặn, thấm h&uacute;t mồ h&ocirc;i bạn trai c&oacute; thể thoải m&aacute;i hoạt động</p>\r\n\r\n<p>Size : M, L</p>\r\n', '300000.00', 2, 'cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-7ec3c2_simg_d0daf0_800x1200_max.jpg', '["cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-3e0554_simg_d0daf0_800x1200_max.jpg","cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-63841e_simg_d0daf0_800x1200_max.jpg","cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-fd6df6_simg_d0daf0_800x1200_max.jpg"]', 23, 1, 4, 1, 100, 1, 1493983674);
 
-<<<<<<< HEAD
+
 INSERT INTO `user` -- mật khẩu: 12345678
-(`name`, `email`, `password`, `phone`, `address`, `city`, `district`, `ward`, `created`, `is_verified`) VALUES
-('Nguyễn Văn A', 'nguyenvana@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0987654321', 'Hà Nội', 'Hà Nội', 'Ba Đình', 'Kim Mã', UNIX_TIMESTAMP(), 1),
-('Trần Thị B', 'tranthib@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0912345678', 'Hồ Chí Minh', 'Hồ Chí Minh', 'Quận 1', 'Bến Nghé', UNIX_TIMESTAMP(), 1),
-('Lê Văn C', 'levanc@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0908765432', 'Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Thạch Thang', UNIX_TIMESTAMP(), 1);
-=======
-INSERT INTO `user` (`name`, `email`, `password`, `phone`, `address`, `created`, `is_verified`) VALUES
-('Nguyễn Văn A', 'nguyenvana@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0987654321', 'Hà Nội', UNIX_TIMESTAMP(), 0),
-('Trần Thị B', 'tranthib@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0912345678', 'Hồ Chí Minh', UNIX_TIMESTAMP(), 1),
-('Lê Văn C', 'levanc@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0908765432', 'Đà Nẵng', UNIX_TIMESTAMP(), 0);
->>>>>>> origin/lap
+(`name`, `email`, `password`, `phone`, `address`, `city`, `district`, `ward`, `created`, `is_verified`, `date_modified`) VALUES
+('Nguyễn Văn A', 'nguyenvana@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0987654321', 'Hà Nội', 'Hà Nội', 'Ba Đình', 'Kim Mã', NOW(), 1, NOW()),
+('Trần Thị B', 'tranthib@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0912345678', 'Hồ Chí Minh', 'Hồ Chí Minh', 'Quận 1', 'Bến Nghé', NOW(), 0, NULL),
+('Lê Văn C', 'levanc@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0908765432', 'Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Thạch Thang', NOW(), 1, NOW());
+
 
 INSERT INTO `coupon` (`code`, `description`, `type`, `measure`, `value`, `min_price`, `max_value`, `start_date`, `end_date`, `usage_limit`, `used_count`, `status`, `created`) VALUES
 ('DISCOUNT10', 'Giảm giá 10k cho đơn giá trị từ 50k', 1, 1, 10000, 50000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 100, 0, 1, UNIX_TIMESTAMP()),
 ('SUMMER20', 'Giảm giá 20% cho đơn hàng từ 100k', 1, 2, 20, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 30, 0, 1, UNIX_TIMESTAMP());
 
-<<<<<<< HEAD
 INSERT INTO `transaction` 
 (`status`, `user_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_district`, `user_ward`, `message`, `amount`, `payment`, `created`) VALUES
 (1, 1, 'An Nhiên', 'annhien@gmail.com', '0166666666', 'Hoàng Mai - Hà Nội', 'Hà Nội', 'Hoàng Mai', 'Định Công', 'Vui lòng trao hàng đến địa chỉ trên...', '350000.00', '', 1493983674),
@@ -261,20 +256,6 @@ INSERT INTO `transaction`
 (0, 3, 'Nguyen An', 'khachhang1@gmail.com', '01201212222', 'Thủy Nguyên - Hải Phòng', 'Hải Phòng', 'Thủy Nguyên', 'Quảng Thanh', 'SHIP TO', '169000.00', '', 1494407353);
 
 
-=======
-INSERT INTO `transaction` (`status`, `user_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `message`, `amount`, `payment`, `created`) VALUES
-(1, 1, 'An Nhiên', 'annhien@gmail.com', '0166666666', 'Hoàng Mai - Hà Nội', 'Vui lòng trao hàng đến địa chỉ trên...', '350000.00', '', 1493983674),
-(1, 2, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'GUi hang den dia chi tren', '360000.00', '', 1493983674),
-(1, 1, 'Bình Nguyễn', 'binh@gmail.com', '0987654321', 'Hà Nội ', 'Gửi đến địa chỉ trên', '370000.00', '', 1494083674),
-(0, 3, 'Tô Nam', 'tonam@yahoo.com.vn', '098989876', 'Thủy Nguyên - Hải Phòng', 'Ship đến địa chỉ vào sáng ngày 23/5', '469000.00', '', 1494283674),
-(1, 1, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'Ship vào sáng mai.', '70000.00', '', 1494183674),
-(0, 2, 'Linh', 'ling@yahoo.com', '098798787', 'hai Phong', 'ship', '69000.00', '', 1494342674),
-(1, 3, 'Nhi', 'nhi@test.com', '0987654321', 'Long Biên - Hà Nội', 'Gửi hàng đến địa chỉ trên vào ngày mai', '200000.00', '', 1493983674),
-(0, 1, 'VIP User', 'test@gmail.com', '1234567890', 'Hải Phòng', 'Ship free', '450000.00', '', 1493983674),
-(0, 2, 'test', 'test@gmail.com', '1234567890', 'Hải Phòng', 'TESE', '300000.00', '', 1494383674),
-(0, 3, 'Nguyen An', 'khachhang1@gmail.com', '01201212222', 'Thủy Nguyên - Hải Phòng', 'SHIP TO', '169000.00', '', 1494407353);
-
->>>>>>> origin/lap
 INSERT INTO `order` (`transaction_id`, `product_id`, `qty`, `amount`, `status`) VALUES
 (3, 12, 1, '360000.00', 0),
 (4, 7, 1, '350000.00', 0),
@@ -302,8 +283,4 @@ INSERT INTO `comments` (`user_id`, `product_id`, `rate`, `comment_content`, `cre
 (3, 3, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
 (1, 4, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
 (2, 4, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
-<<<<<<< HEAD
 (3, 4, 3, 'Sản phẩm không đẹp lắm.', 1493983674);
-=======
-(3, 4, 3, 'Sản phẩm không đẹp lắm.', 1493983674);
->>>>>>> origin/lap

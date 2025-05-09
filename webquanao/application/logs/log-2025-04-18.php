@@ -176,3 +176,8 @@ ERROR - 2025-04-18 14:36:56 --> phannguyen2300@gmail.com
 ERROR - 2025-04-18 14:36:56 --> 12345678
 ERROR - 2025-04-18 14:37:32 --> 404 Page Not Found: Api/update-info
 ERROR - 2025-04-18 14:37:51 --> 404 Page Not Found: Api/update-info
+ERROR - 2025-04-18 15:18:44 --> 404 Page Not Found: Faviconico/index
+ERROR - 2025-04-18 15:26:00 --> Array
+(
+)
+
