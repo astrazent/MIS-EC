@@ -47,8 +47,18 @@ if ($curl_error) {
 if ($response) {
     $json_test = json_decode($response, true);
     if (json_last_error() === JSON_ERROR_NONE) {
-        // Nếu là JSON hợp lệ, trả về nguyên bản
-        echo $response;
+        // Kiểm tra nếu có thông báo lỗi về API key
+        if (isset($json_test['success']) && $json_test['success'] === false && 
+            isset($json_test['message']) && strpos($json_test['message'], 'API key') !== false) {
+            // Thay thế thông báo lỗi API key bằng thông báo thân thiện hơn
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Xin lỗi, không thể phân tích dữ liệu lúc này. Dịch vụ AI không khả dụng hoặc API key không hợp lệ. Vui lòng liên hệ quản trị viên để kiểm tra cấu hình API.'
+            ]);
+        } else {
+            // Nếu là JSON hợp lệ khác, trả về nguyên bản
+            echo $response;
+        }
     } else {
         // Nếu không phải JSON, bọc nó trong một JSON hợp lệ
         echo json_encode([

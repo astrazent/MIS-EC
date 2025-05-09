@@ -32,7 +32,7 @@ services:
         volumes:
             - ./openAI:/app
         environment:
-            - DEEPSEEK_API_KEY=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
+            - DEEPSEEK_API_KEY=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
         networks:
             - webquanao_network
 
@@ -60,6 +60,5 @@ services:
 
 networks:
     webquanao_network:
-        name: webquanao_network  
+        name: webquanao_network
         driver: bridge
-

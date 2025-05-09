@@ -202,39 +202,7 @@
 			</div>
 		</div>
 		
-		<!-- Phần tổng hợp đánh giá bằng AI -->
-		<div class="panel panel-info" style="margin-bottom: 15px">
-			<div class="panel-heading">
-				<h3 class="panel-title"><i class="glyphicon glyphicon-stats"></i> Tổng hợp đánh giá bằng AI</h3>
-			</div>
-			<div class="panel-body">
-				<div id="ai-summary-loading" style="display: none;" class="text-center">
-					<p><i class="glyphicon glyphicon-refresh" style="animation: spin 2s linear infinite;"></i> Đang tổng hợp đánh giá...</p>
-					<p class="text-muted">Quá trình này có thể mất vài giây, vui lòng đợi...</p>
-				</div>
-				<div id="ai-summary-content" style="display: none;" class="ai-summary-container">
-					<div class="ai-summary-header">
-						<i class="glyphicon glyphicon-check"></i>
-						<h4>Phân tích đánh giá từ khách hàng</h4>
-					</div>
-					<div class="ai-summary-content">
-						<!-- Nội dung tổng hợp sẽ được hiển thị ở đây -->
-					</div>
-				</div>
-				<div id="ai-summary-error" style="display: none;" class="alert alert-danger">
-					<i class="glyphicon glyphicon-exclamation-sign"></i> Không thể tổng hợp đánh giá. <span id="ai-summary-error-message"></span>
-				</div>
-				<div id="ai-summary-empty" style="display: none;" class="alert alert-info">
-					<i class="glyphicon glyphicon-info-sign"></i> Chưa đủ đánh giá để tổng hợp. Hãy là người đầu tiên đánh giá sản phẩm này!
-				</div>
-				<div class="text-center">
-					<button id="generate-ai-summary" class="btn btn-primary">
-						<i class="glyphicon glyphicon-flash"></i> Tổng hợp đánh giá bằng AI
-					</button>
-				</div>
-			</div>
-		</div>
-
+		
 		<!-- Phần bình luận -->
 		<div class="panel panel-info" style="margin-bottom: 15px">
 			<div class="panel-heading">
@@ -285,6 +253,41 @@
 			</div>
 		</div>
 
+<!-- Phần tổng hợp đánh giá bằng AI -->
+<div class="panel panel-info" style="margin-bottom: 15px">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="glyphicon glyphicon-stats"></i> Tổng hợp đánh giá bằng AI</h3>
+			</div>
+			<div class="panel-body">
+				<div id="ai-summary-container" style="display: none;">
+						<div id="ai-summary-loading" style="display: none;" class="text-center">
+							<p><i class="glyphicon glyphicon-refresh" style="animation: spin 2s linear infinite;"></i> Đang tổng hợp đánh giá...</p>
+							<p class="text-muted">Quá trình này có thể mất vài giây, vui lòng đợi...</p>
+						</div>
+						<div id="ai-summary-content" style="display: none;" class="ai-summary-container">
+							<div class="ai-summary-header">
+								<i class="glyphicon glyphicon-check"></i>
+								<h4>Phân tích đánh giá từ khách hàng</h4>
+							</div>
+							<div class="ai-summary-content">
+								<!-- Nội dung tổng hợp sẽ được hiển thị ở đây -->
+							</div>
+						</div>
+						<div id="ai-summary-error" style="display: none;" class="alert alert-danger">
+							<i class="glyphicon glyphicon-exclamation-sign"></i> Không thể tổng hợp đánh giá. <span id="ai-summary-error-message"></span>
+						</div>
+						<div id="ai-summary-empty" style="display: none;" class="alert alert-info">
+							<i class="glyphicon glyphicon-info-sign"></i> Chưa đủ đánh giá để tổng hợp. Hãy là người đầu tiên đánh giá sản phẩm này!
+						</div>
+				</div>
+				<div class="text-center">
+						<button id="generate-ai-summary" class="btn btn-primary">
+							<i class="glyphicon glyphicon-flash"></i> Tổng hợp đánh giá bằng AI
+						</button>
+				</div>
+			</div>
+		</div>
+
 		<div class="panel panel-info">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sản phẩm liên quan</h3>
@@ -316,6 +319,7 @@
 
 			</div>
 		</div>
+
 		<div class="panel panel-info">
 			<div class="panel-heading">
 				<h3 class="panel-title">Có thể bạn thích</h3>
@@ -402,55 +406,58 @@
         });
 
         // Xử lý nút tổng hợp đánh giá bằng AI
-        $('#generate-ai-summary').on('click', function() {
-            const productId = <?php echo $product->id; ?>;
-            
-            // Hiển thị trạng thái đang tải
-            $('#ai-summary-loading').show();
-            $('#ai-summary-content').hide();
-            $('#ai-summary-error').hide();
-            $('#ai-summary-empty').hide();
-            $(this).prop('disabled', true);
-            
-            // Gọi API để lấy tổng hợp đánh giá
-            $.ajax({
-                url: '<?php echo base_url('product/get_review_summary'); ?>',
-                type: 'POST',
-                data: {
-                    product_id: productId
-                },
-                dataType: 'json',
-                success: function(response) {
-                    $('#ai-summary-loading').hide();
-                    $(this).prop('disabled', false);
-                    
-                    if (response.success) {
-                        // Hiển thị kết quả tổng hợp
-                        $('.ai-summary-content').html(formatSummary(response.summary));
-                        $('#ai-summary-content').show();
-                        // Ẩn nút sau khi đã tổng hợp thành công
-                        $('#generate-ai-summary').hide();
-                    } else {
-                        // Hiển thị thông báo lỗi hoặc không có đánh giá
-                        if (response.message.includes('chưa có bình luận')) {
-                            $('#ai-summary-empty').show();
-                        } else {
-                            $('#ai-summary-error-message').text(response.message);
-                            $('#ai-summary-error').show();
-                        }
-                        $('#generate-ai-summary').prop('disabled', false);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#ai-summary-loading').hide();
-                    $('#ai-summary-error-message').text('Đã xảy ra lỗi khi kết nối đến máy chủ.');
-                    $('#ai-summary-error').show();
-                    $('#generate-ai-summary').prop('disabled', false);
-                    console.error('Error:', error);
-                    console.error('Response:', xhr.responseText);
-                }
-            });
-        });
+			$('#generate-ai-summary').on('click', function() {
+				const productId = <?php echo $product->id; ?>;
+				
+				// Hiển thị container tổng hợp
+				$('#ai-summary-container').show();
+				
+				// Hiển thị trạng thái đang tải
+				$('#ai-summary-loading').show();
+				$('#ai-summary-content').hide();
+				$('#ai-summary-error').hide();
+				$('#ai-summary-empty').hide();
+				$(this).prop('disabled', true);
+				
+				// Gọi API để lấy tổng hợp đánh giá
+				$.ajax({
+					url: '<?php echo base_url('product/get_review_summary'); ?>',
+					type: 'POST',
+					data: {
+							product_id: productId
+					},
+					dataType: 'json',
+					success: function(response) {
+							$('#ai-summary-loading').hide();
+							$('#generate-ai-summary').prop('disabled', false);
+							
+							if (response.success) {
+								// Hiển thị kết quả tổng hợp
+								$('.ai-summary-content').html(formatSummary(response.summary));
+								$('#ai-summary-content').show();
+								// Ẩn nút sau khi đã tổng hợp thành công
+								$('#generate-ai-summary').hide();
+							} else {
+								// Hiển thị thông báo lỗi hoặc không có đánh giá
+								if (response.message.includes('chưa có bình luận')) {
+									$('#ai-summary-empty').show();
+								} else {
+									$('#ai-summary-error-message').text(response.message);
+									$('#ai-summary-error').show();
+								}
+								$('#generate-ai-summary').prop('disabled', false);
+							}
+					},
+					error: function(xhr, status, error) {
+							$('#ai-summary-loading').hide();
+							$('#ai-summary-error-message').text('Đã xảy ra lỗi khi kết nối đến máy chủ.');
+							$('#ai-summary-error').show();
+							$('#generate-ai-summary').prop('disabled', false);
+							console.error('Error:', error);
+							console.error('Response:', xhr.responseText);
+					}
+				});
+			});
         
         // Hàm định dạng nội dung tổng hợp để hiển thị đẹp hơn
         function formatSummary(summary) {

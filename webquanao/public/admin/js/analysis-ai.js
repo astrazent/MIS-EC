@@ -1,11 +1,20 @@
 /**
  * Script xử lý chức năng phân tích AI trên trang quản trị
  */
+
+// Thêm thư viện Markdown.js
+if (typeof window.marked === "undefined") {
+	const script = document.createElement("script");
+	script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+	script.async = false;
+	document.head.appendChild(script);
+}
+
 $(document).ready(function () {
-	// Xử lý sự kiện click cho tất cả các nút phân tích AI
+	// Xử lý sự kiện click cho nút phân tích AI chính
 	$(".btn-analyze-ai").on("click", function () {
-		// Tìm panel kết quả gần nhất
-		var resultPanel = $(this).closest(".row").find(".analysis-result-panel");
+		// Sử dụng panel kết quả đầu tiên trên trang
+		var resultPanel = $(".analysis-result-panel").first();
 
 		// Hiển thị loading
 		resultPanel.show();
@@ -15,43 +24,66 @@ $(document).ready(function () {
 		// Thay đổi tiêu đề phân tích
 		resultPanel
 			.find(".panel-title")
-			.text("Phân tích tình hình kinh doanh và đề xuất chiến lược");
+			.text("Phân tích số liệu kinh doanh");
 
-		// Thu thập dữ liệu từ panel gần nhất để phân tích
+		// Khởi tạo dữ liệu phân tích
 		var productData = {
-			recent_sales: true, // Yêu cầu phân tích doanh số gần đây
-			customer_behavior: true, // Yêu cầu phân tích hành vi khách hàng
-			market_trends: true, // Yêu cầu phân tích xu hướng thị trường
+			data_analysis: true, // Yêu cầu phân tích dữ liệu
+			brief_strategy: true, // Yêu cầu đề xuất chiến lược ngắn gọn
+			panel_title: "Phân tích số liệu", // Tiêu đề phân tích
+			panel_data: [], // Mảng chứa dữ liệu từ tất cả các panel
 		};
 
-		// Thu thập dữ liệu từ các bảng gần nhất
-		var nearestPanel = $(this).closest(".row").prev().find(".panel");
-		if (nearestPanel.length > 0) {
-			// Lấy tiêu đề panel để xác định loại dữ liệu
-			var panelTitle = nearestPanel.find(".panel-heading").text().trim();
-			productData.panel_title = panelTitle;
+		// Thu thập dữ liệu từ tất cả các panel có bảng dữ liệu
+		$(".panel").each(function () {
+			var panelElement = $(this);
+			var panelTitle = panelElement.find(".panel-heading").text().trim();
 
-			// Thu thập dữ liệu từ bảng nếu có
-			var tableData = [];
-			nearestPanel.find("table tbody tr").each(function () {
-				var rowData = {};
-				$(this)
-					.find("td")
-					.each(function (index) {
-						var headerText = $(this)
-							.closest("table")
-							.find("th")
-							.eq(index)
-							.text()
-							.trim();
-						rowData[headerText] = $(this).text().trim();
-					});
-				tableData.push(rowData);
-			});
+			// Chỉ xử lý các panel có bảng dữ liệu
+			if (panelElement.find("table").length > 0) {
+				var panelData = {
+					title: panelTitle,
+					table_data: [],
+				};
 
-			if (tableData.length > 0) {
-				productData.table_data = tableData;
+				// Thu thập dữ liệu từ bảng
+				panelElement.find("table tbody tr").each(function () {
+					var rowData = {};
+					$(this)
+						.find("td")
+						.each(function (index) {
+							var headerText = $(this)
+								.closest("table")
+								.find("th")
+								.eq(index)
+								.text()
+								.trim();
+							rowData[headerText] = $(this).text().trim();
+						});
+					panelData.table_data.push(rowData);
+				});
+
+				// Thêm dữ liệu panel vào mảng tổng hợp
+				if (panelData.table_data.length > 0) {
+					// Đã tổng hợp tất cả panel vào productData.panel_data
+					productData.panel_data.push(panelData);
+				}
 			}
+		});
+
+		// Thu thập thêm dữ liệu từ các widget thống kê (nếu có)
+		var statsData = {};
+		$(".panel-widget").each(function () {
+			var widgetTitle = $(this).find(".text-muted").text().trim();
+			var widgetValue = $(this).find(".large").text().trim();
+			if (widgetTitle && widgetValue) {
+				statsData[widgetTitle] = widgetValue;
+			}
+		});
+
+		// Thêm dữ liệu thống kê vào dữ liệu phân tích
+		if (Object.keys(statsData).length > 0) {
+			productData.stats_data = statsData;
 		}
 
 		// Gọi API thông qua proxy PHP thay vì trực tiếp đến container openAI
@@ -78,17 +110,30 @@ $(document).ready(function () {
 				resultPanel.find(".analysis-result").show();
 
 				if (response.status === "success") {
-					// Hiển thị kết quả phân tích từ API
-					resultPanel.find(".analysis-result").html(response.data.analysis);
+					// Chuyển đổi kết quả phân tích từ text sang Markdown nếu thư viện đã được tải
+					let analysisContent = response.data.analysis;
+					if (typeof window.marked !== "undefined") {
+						// Sử dụng marked để chuyển đổi Markdown thành HTML
+						analysisContent = window.marked.parse(analysisContent);
+					}
+					// Hiển thị kết quả phân tích đã được định dạng
+					resultPanel.find(".analysis-result").html(analysisContent);
 				} else {
-					// Hiển thị thông báo lỗi
+					// Hiển thị thông báo lỗi với định dạng tốt hơn
+					let errorMessage = response.message || "Không thể phân tích dữ liệu";
+
+					// Nếu lỗi liên quan đến API key, hiển thị thông báo thân thiện hơn
+					if (
+						errorMessage.includes("API key") ||
+						errorMessage.includes("không khả dụng")
+					) {
+						errorMessage =
+							"Xin lỗi, không thể phân tích dữ liệu lúc này. Dịch vụ AI không khả dụng hoặc cần cấu hình lại. Vui lòng liên hệ quản trị viên.";
+					}
+
 					resultPanel
 						.find(".analysis-result")
-						.html(
-							"<div class='alert alert-danger'>Lỗi: " +
-								(response.message || "Không thể phân tích dữ liệu") +
-								"</div>"
-						);
+						.html("<div class='alert alert-danger'>" + errorMessage + "</div>");
 				}
 			})
 			.catch((error) => {

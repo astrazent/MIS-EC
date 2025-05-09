@@ -508,3 +508,765 @@
 2025-04-25 07:28:31,124 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
 2025-04-25 07:29:02,897 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
 2025-04-25 07:29:02,899 - werkzeug - INFO - 172.18.0.5 - - [25/Apr/2025 07:29:02] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-26 08:13:21,876 - root - INFO - Kết nối đến OpenRouter API
+2025-04-26 08:13:21,877 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:13:22,529 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-26 08:13:22,530 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-26 08:13:22,530 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-26 08:13:22,531 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-26 08:13:22,665 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.2:5001
+2025-04-26 08:13:22,666 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-26 08:13:22,668 - werkzeug - INFO -  * Restarting with stat
+2025-04-26 08:13:25,357 - root - INFO - Kết nối đến OpenRouter API
+2025-04-26 08:13:25,358 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:13:25,482 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-26 08:13:25,483 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-26 08:13:25,484 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-26 08:13:25,485 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-26 08:13:25,505 - werkzeug - WARNING -  * Debugger is active!
+2025-04-26 08:13:25,508 - werkzeug - INFO -  * Debugger PIN: 139-682-858
+2025-04-26 08:15:59,477 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 08:15:59,478 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 08:15:59,710 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 08:15:59,926 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:16:39,028 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 08:16:39,032 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 08:16:39] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-26 08:17:22,826 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 08:17:22,839 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 08:17:23,068 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 08:17:23,317 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:17:47,464 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 08:17:47,496 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 08:17:47] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-26 08:46:31,275 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 08:46:31,277 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 08:46:31,531 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 08:46:31,877 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:46:36,561 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 08:46:36,585 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 08:46:36] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-04-26 08:48:19,108 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 08:48:19,147 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 08:48:19,655 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 08:48:20,618 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 08:48:29,058 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 08:48:29,080 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 08:48:29] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-04-26 09:05:30,677 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 09:05:30,714 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 09:05:30,898 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 09:05:41,962 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 09:06:23,031 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 09:06:23,044 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 09:06:23] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-26 09:07:04,865 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 09:07:04,871 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 09:07:05,003 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 09:07:05,216 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 09:07:35,153 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 09:07:35,161 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 09:07:35] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-26 09:10:40,629 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-26 09:10:40,630 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-26 09:10:40,792 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-26 09:10:41,309 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-26 09:11:17,457 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-26 09:11:17,459 - werkzeug - INFO - 172.18.0.5 - - [26/Apr/2025 09:11:17] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 04:32:39,265 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 04:32:39,269 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 04:32:40,554 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 04:32:40,556 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 04:32:40,560 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 04:32:40,561 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 04:32:40,749 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-04-27 04:32:40,758 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-27 04:32:40,786 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 04:32:48,197 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 04:32:48,199 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 04:32:48,440 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 04:32:48,446 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 04:32:48,459 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 04:32:48,470 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 04:32:48,540 - werkzeug - WARNING -  * Debugger is active!
+2025-04-27 04:32:48,551 - werkzeug - INFO -  * Debugger PIN: 287-142-728
+2025-04-27 04:41:42,871 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-27 04:41:42,873 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 04:41:43,074 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 04:41:43,326 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 04:42:12,608 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-27 04:42:12,609 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 04:42:12,761 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 04:42:13,005 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 04:42:16,579 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 04:42:16,594 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 04:42:16] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 04:42:33,456 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 04:42:33,458 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 04:42:33] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 04:54:03,881 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-04-27 04:54:04,942 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 04:54:20,657 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 04:54:20,746 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 04:54:21,968 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 04:54:21,985 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 04:54:22,051 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 04:54:22,172 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 04:54:22,817 - werkzeug - WARNING -  * Debugger is active!
+2025-04-27 04:54:23,048 - werkzeug - INFO -  * Debugger PIN: 287-142-728
+2025-04-27 05:02:24,798 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-27 05:02:24,801 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:02:24,930 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:02:25,198 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:02:47,298 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:02:47,302 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:02:47] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:13:29,865 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-04-27 05:13:29,867 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:13:30,013 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:13:30,296 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:13:54,748 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:13:54,755 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:13:54] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:30:10,447 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-04-27 05:30:11,261 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 05:30:35,818 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:30:35,819 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:30:36,461 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:30:36,462 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:30:36,463 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:30:36,464 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:30:36,497 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-04-27 05:30:36,502 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-27 05:30:36,505 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 05:30:41,957 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:30:41,966 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:30:42,577 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:30:42,579 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:30:42,585 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:30:42,586 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:30:42,709 - werkzeug - WARNING -  * Debugger is active!
+2025-04-27 05:30:42,725 - werkzeug - INFO -  * Debugger PIN: 404-920-056
+2025-04-27 05:32:28,970 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-04-27 05:32:29,739 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 05:32:33,487 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:32:33,488 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:32:34,105 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:32:34,107 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:32:34,111 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:32:34,143 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:32:34,233 - werkzeug - WARNING -  * Debugger is active!
+2025-04-27 05:32:34,234 - werkzeug - INFO -  * Debugger PIN: 404-920-056
+2025-04-27 05:34:03,030 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:34:03,030 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:03,622 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:34:03,627 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:34:03,632 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:34:03,637 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:34:03,641 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:34:03,791 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:34:04,021 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:06,147 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:34:06,148 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:06,305 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:34:06,306 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:34:06,308 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:34:06,310 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:34:06,311 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:34:06,524 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:34:06,853 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:09,314 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:34:09,315 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:09,467 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:34:09,468 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:34:09,472 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:34:09,477 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:34:09,479 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:34:09,618 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:34:09,839 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:11,071 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:34:11,072 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:11,183 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:34:11,184 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:34:11,185 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:34:11,186 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:34:11,188 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:34:11,315 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:34:11,588 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:16,863 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:34:16,894 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:34:16] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:34:21,670 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:34:21,691 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:34:21] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:34:25,886 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:34:25,887 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:34:25] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:34:40,418 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:34:40,471 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:34:40] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:34:50,824 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:34:50,827 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:34:51,278 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:34:51,304 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:34:51,328 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:34:51,338 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:34:51,343 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:34:51,517 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:34:51,990 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:35:03,940 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:35:03,968 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:35:04,746 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:35:04,749 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:35:04,752 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:35:04,757 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:35:04,760 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:35:04,938 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:35:04,949 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:35:04] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:35:04,985 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:35:05,286 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:35:18,623 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:35:18,639 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:35:18] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:35:46,111 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:35:46,113 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:35:46,722 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:35:46,723 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:35:46,724 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:35:46,726 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:35:46,728 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:35:46,857 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:35:47,155 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:36:00,209 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:36:00,211 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:36:00] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:37:05,612 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:37:05,613 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:37:06,203 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:37:06,204 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:37:06,206 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:37:06,208 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:37:06,209 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-04-27 05:37:06,337 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-04-27 05:37:06,570 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:37:27,410 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-04-27 05:37:27,412 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:37:27] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:44:24,430 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-04-27 05:44:25,353 - werkzeug - INFO -  * Restarting with stat
+2025-04-27 05:44:32,964 - root - INFO - Kết nối đến OpenRouter API
+2025-04-27 05:44:32,965 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-04-27 05:44:33,868 - root - INFO - API key hợp lệ và đang hoạt động
+2025-04-27 05:44:33,875 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-04-27 05:44:33,881 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-04-27 05:44:33,883 - root - INFO - Sử dụng chế độ không có Vision API
+2025-04-27 05:44:34,050 - werkzeug - WARNING -  * Debugger is active!
+2025-04-27 05:44:34,056 - werkzeug - INFO -  * Debugger PIN: 404-920-056
+2025-04-27 05:44:53,489 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:44:53] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:09,724 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:09] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:12,258 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:12] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:25,153 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:25] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:35,888 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:35] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:36,759 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:36] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:40,062 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:40] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:40,684 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:40] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:41,214 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:41] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:41,544 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:41] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:41,998 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:41] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:42,269 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:42] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:42,866 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:42] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:43,699 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:43] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:45:58,122 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:45:58] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:59:00,051 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:59:00] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-04-27 05:59:04,464 - werkzeug - INFO - 172.18.0.2 - - [27/Apr/2025 05:59:04] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 03:56:14,070 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 03:56:14,072 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 03:56:14,521 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 03:56:14,523 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 03:56:14,525 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 03:56:14,526 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 03:56:14,624 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-08 03:56:14,625 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 03:56:14,634 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 03:56:18,569 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 03:56:18,569 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 03:56:18,780 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 03:56:18,804 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 03:56:18,808 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 03:56:18,822 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 03:56:18,993 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 03:56:19,057 - werkzeug - INFO -  * Debugger PIN: 757-375-148
+2025-05-08 04:00:14,314 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:00:14] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 04:00:39,905 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:00:39] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 04:00:41,829 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:00:41] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 04:01:48,850 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-08 04:01:48,865 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-08 04:01:49,135 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-08 04:01:49,359 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 04:01:54,998 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-08 04:01:55,001 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:01:55] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-08 04:02:14,316 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:02:14] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 04:33:22,561 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:33:22] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 04:40:50,797 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 04:40:50] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:23:50,999 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:23:51,000 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:23:52,904 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:23:52,905 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:23:52,906 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:23:52,908 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:23:53,116 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-08 06:23:53,164 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 06:23:53,210 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:23:59,252 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:23:59,256 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:23:59,467 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:23:59,476 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:23:59,490 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:23:59,501 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:23:59,790 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:23:59,815 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:24:42,509 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:24:42] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:24:45,618 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:24:45] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:24:46,728 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:24:46] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:24:47,611 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:24:47] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:24:48,720 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:24:48] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:26:11,389 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:26:12,144 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:26:15,490 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:26:15,491 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:26:17,092 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:26:17,093 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:26:17,094 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:26:17,095 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:26:17,126 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:26:17,129 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:27:58,727 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:27:58] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-08 06:29:00,605 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:29:01,318 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:29:05,771 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:29:05,772 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:29:06,911 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:29:06,912 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:29:06,915 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:29:06,916 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:29:06,942 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:29:06,945 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:29:10,152 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:29:10,517 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:29:12,619 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:29:12,620 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:29:12,725 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:29:12,726 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:29:12,729 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:29:12,757 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:29:12,810 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:29:12,811 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:39:48,420 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:39:48,934 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:39:54,062 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:39:54,062 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:39:54,557 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:39:54,559 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:39:54,560 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:39:54,562 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:39:54,594 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:39:54,596 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:39:54,620 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:39:54,622 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:39:54,776 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:39:54,778 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:39:54,780 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:39:54,781 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:39:54,783 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:39:54,786 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:39:54] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:41:23,101 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:41:23,606 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:41:26,163 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:41:26,164 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:41:26,682 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:41:26,691 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:41:26,719 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:41:26,721 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:41:26,784 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:41:26,786 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:41:26,820 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:41:26,820 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:41:27,035 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:41:27,036 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:41:27,037 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:41:27,039 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:41:27,040 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:41:27,043 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:41:27] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:41:29,320 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:41:29,321 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:41:29,530 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:41:29,539 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:41:29,541 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:41:29,553 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:41:29,559 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:41:29,565 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:41:29] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:41:49,312 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:41:49,319 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:41:49,760 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:41:49,762 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:41:49,769 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:41:49,771 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:41:49,775 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:41:49,779 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:41:49] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:41:52,281 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:41:52,285 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:41:52,487 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:41:52,489 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:41:52,492 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:41:52,495 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:41:52,519 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:41:52,535 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:41:52] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:43:08,724 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:43:09,293 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:43:14,447 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:14,448 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:14,879 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:14,880 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:14,881 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:14,883 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:14,914 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:43:14,916 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:43:21,285 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:43:21,653 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:43:23,942 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:23,943 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:24,101 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:24,102 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:24,103 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:24,106 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:24,168 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:43:24,172 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:43:24,202 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:24,202 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:24,368 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:24,371 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:24,372 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:24,376 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:24,378 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:43:24,381 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:43:24] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:43:25,385 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:25,386 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:25,531 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:25,532 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:25,533 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:25,535 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:25,537 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:43:25,539 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:43:25] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:43:26,349 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:26,349 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:26,761 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:26,762 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:26,764 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:26,765 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:26,766 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:43:26,768 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:43:26] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:43:27,628 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:43:27,628 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:43:27,786 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:43:27,790 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:43:27,801 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:43:27,806 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:43:27,822 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:43:27,833 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:43:27] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:45:57,577 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:45:58,011 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:46:01,843 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:46:01,852 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:46:02,382 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:46:02,383 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:46:02,384 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:46:02,385 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:46:02,422 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:46:02,424 - werkzeug - INFO -  * Debugger PIN: 675-806-505
+2025-05-08 06:46:03,649 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:46:04,118 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:46:14,958 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:46:14,959 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:46:15,391 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:46:15,394 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:46:15,400 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:46:15,408 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:46:15,482 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-08 06:46:15,483 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 06:46:15,487 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:46:17,890 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:46:17,891 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:46:18,069 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:46:18,087 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:46:18,094 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:46:18,101 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:46:18,159 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:46:18,187 - werkzeug - INFO -  * Debugger PIN: 578-575-953
+2025-05-08 06:52:22,756 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:52:23,597 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:52:27,162 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:52:27,162 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:52:28,817 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:52:28,823 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:52:28,835 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:52:28,856 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:52:28,922 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:52:28,925 - werkzeug - INFO -  * Debugger PIN: 578-575-953
+2025-05-08 06:52:30,600 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:52:31,419 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:52:33,565 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:52:33,565 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:52:33,694 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:52:33,695 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:52:33,699 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:52:33,700 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:52:33,729 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:52:33,733 - werkzeug - INFO -  * Debugger PIN: 578-575-953
+2025-05-08 06:52:33,761 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:52:33,768 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:52:33,893 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:52:33,895 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:52:33,899 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:52:33,903 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:52:33,904 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:52:33,907 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:52:33] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:52:35,278 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:52:35,279 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:52:35,351 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:52:35,352 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:52:35,357 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:52:35,360 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:52:35,361 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:52:35,367 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:52:35] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:52:36,226 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:52:36,226 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:52:36,286 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:52:36,287 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:52:36,287 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:52:36,289 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:52:36,291 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:52:36,294 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:52:36] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:53:04,317 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:53:04,318 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:53:04,713 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:53:04,717 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:53:04,718 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:53:04,719 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:53:04,721 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:53:04,723 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:53:04] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:53:36,354 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:53:36,355 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:53:37,613 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:53:37,615 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:53:37,619 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:53:37,622 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:53:37,669 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-08 06:53:37,672 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 06:53:37,679 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:53:40,356 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:53:40,367 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:53:40,449 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:53:40,450 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:53:40,451 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:53:40,452 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:53:40,478 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:53:40,480 - werkzeug - INFO -  * Debugger PIN: 132-574-897
+2025-05-08 06:53:56,137 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:53:56,138 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:53:57,073 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:53:57,074 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:53:57,076 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:53:57,078 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:53:57,081 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:53:57,094 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:53:57] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:54:11,434 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:54:11,435 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:54:11,856 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:54:11,857 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:54:11,859 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:54:11,860 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:54:11,864 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:54:11,868 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:54:11] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:54:13,817 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:54:13,818 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:54:14,723 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:54:14,725 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:54:14,726 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:54:14,737 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:54:14,741 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 06:54:14,743 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 06:54:14] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 06:56:35,914 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 06:56:36,294 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:58:32,380 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:58:32,381 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:58:33,132 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:58:33,136 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:58:33,137 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:58:33,141 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:58:33,201 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-08 06:58:33,202 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 06:58:33,207 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 06:58:35,851 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 06:58:35,852 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 06:58:36,201 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 06:58:36,202 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 06:58:36,204 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 06:58:36,210 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 06:58:36,262 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 06:58:36,264 - werkzeug - INFO -  * Debugger PIN: 139-681-886
+2025-05-08 15:46:45,959 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:46:45,961 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:46:46,424 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:46:46,431 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:46:46,443 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:46:46,447 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:46:46,552 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-08 15:46:46,552 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-08 15:46:46,559 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 15:46:52,268 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:46:52,269 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:46:52,567 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:46:52,576 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:46:52,580 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:46:52,605 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:46:52,692 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 15:46:52,712 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 15:48:30,388 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:48:30,390 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:48:30,920 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:48:30,936 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:48:30,938 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:48:30,951 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:48:30,957 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 15:48:30,970 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 15:48:30] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 15:49:33,486 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 15:49:36,483 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 15:49:41,410 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:49:41,424 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:49:42,080 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:49:42,081 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:49:42,082 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:49:42,083 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:49:42,114 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 15:49:42,118 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 15:49:42,149 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 15:49:42] "[33mPOST /api/market/analyze HTTP/1.1[0m" 404 -
+2025-05-08 15:51:27,044 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 15:51:28,116 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 15:51:32,334 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:51:32,334 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:51:32,943 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:51:32,944 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:51:32,945 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:51:32,946 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:51:32,974 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 15:51:32,976 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 15:51:49,478 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 15:51:49,479 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 15:51:49,708 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 15:51:49,709 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 15:51:49,710 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 15:51:49,711 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 15:51:49,712 - root - ERROR - Lỗi khi phân tích thị trường: name 'best_selling' is not defined
+2025-05-08 15:51:49,715 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 15:51:49] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 16:01:47,392 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 16:01:47,986 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 16:01:52,177 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:01:52,200 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:01:52,816 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:01:52,845 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:01:52,848 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:01:52,852 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:01:52,906 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 16:01:52,909 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 16:01:55,247 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 16:01:56,094 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 16:01:58,799 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:01:58,799 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:01:58,932 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:01:58,933 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:01:58,934 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:01:58,936 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:01:58,971 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 16:01:58,973 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 16:02:19,905 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:02:19,906 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:02:20,050 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:02:20,051 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:02:20,054 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:02:20,055 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:02:20,056 - root - ERROR - Lỗi khi phân tích thị trường: _format_product_list() missing 1 required positional argument: 'products'
+2025-05-08 16:02:20,059 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 16:02:20] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-08 16:06:09,352 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 16:06:09,912 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 16:06:14,922 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:06:14,922 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:06:15,542 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:06:15,543 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:06:15,552 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:06:15,553 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:06:15,710 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 16:06:15,711 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 16:06:18,840 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-08 16:06:19,455 - werkzeug - INFO -  * Restarting with stat
+2025-05-08 16:06:23,815 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:06:23,818 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:06:24,058 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:06:24,061 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:06:24,069 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:06:24,073 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:06:24,284 - werkzeug - WARNING -  * Debugger is active!
+2025-05-08 16:06:24,292 - werkzeug - INFO -  * Debugger PIN: 842-717-035
+2025-05-08 16:06:24,684 - root - INFO - Kết nối đến OpenRouter API
+2025-05-08 16:06:24,687 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:06:25,033 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-08 16:06:25,037 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-08 16:06:25,038 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-08 16:06:25,040 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-08 16:06:25,275 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-08 16:06:25,294 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-08 16:06:25,489 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-08 16:06:25,778 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-08 16:07:22,884 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-08 16:07:22,887 - werkzeug - INFO - 172.18.0.5 - - [08/May/2025 16:07:22] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-09 03:53:26,059 - root - INFO - Kết nối đến OpenRouter API
+2025-05-09 03:53:26,065 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-09 03:53:26,977 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-09 03:53:26,978 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-09 03:53:26,979 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-09 03:53:26,981 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-09 03:53:27,073 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-09 03:53:27,082 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-09 03:53:27,097 - werkzeug - INFO -  * Restarting with stat
+2025-05-09 03:53:34,399 - root - INFO - Kết nối đến OpenRouter API
+2025-05-09 03:53:34,402 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-09 03:53:34,855 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-09 03:53:34,858 - root - INFO - Khởi tạo OpenRouter API thành công
+2025-05-09 03:53:34,861 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-09 03:53:34,863 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-09 03:53:34,915 - werkzeug - WARNING -  * Debugger is active!
+2025-05-09 03:53:34,925 - werkzeug - INFO -  * Debugger PIN: 977-910-514
+2025-05-09 04:02:47,020 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-09 04:02:47,023 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-09 04:02:47,259 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-09 04:02:47,630 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-09 04:02:58,739 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-09 04:02:58,799 - werkzeug - INFO - 172.18.0.5 - - [09/May/2025 04:02:58] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-09 04:14:23,468 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-09 04:14:23,477 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-09 04:14:23,891 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-09 04:14:24,998 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-09 04:14:42,993 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-09 04:14:42,996 - werkzeug - INFO - 172.18.0.5 - - [09/May/2025 04:14:42] "POST /api/product/review-summary HTTP/1.1" 200 -

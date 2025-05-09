@@ -41,7 +41,7 @@ class ProductDescriber:
             self.api_key = os.environ.get('DEEPSEEK_API_KEY')
             if not self.api_key:
                 logging.warning('DEEPSEEK_API_KEY không được cấu hình trong biến môi trường, sử dụng giá trị mặc định')
-                self.api_key = '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'
+                self.api_key = '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'
             
             # Sử dụng biến môi trường để cấu hình mô hình, mặc định là deepseek-chat
             self.model_name = os.environ.get('DEEPSEEK_MODEL', 'deepseek/deepseek-chat-v3-0324:free')
@@ -292,7 +292,7 @@ class ProductDescriber:
             logging.warning("API chưa được khởi tạo, đang thử khởi tạo lại...")
             try:
                 # Thử lấy API key từ biến môi trường, nếu không có thì dùng giá trị mặc định
-                self.api_key = os.environ.get('DEEPSEEK_API_KEY', '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')
+                self.api_key = os.environ.get('DEEPSEEK_API_KEY', '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')
                 logging.info(f"Đang kiểm tra API key: {self.api_key[:10]}...")
                 
                 # Kiểm tra kết nối internet trước khi xác thực API key
@@ -556,12 +556,32 @@ def analyze_market_data(self, product_data):
     Tham số:
     - product_data: Dữ liệu về các sản phẩm và yêu cầu phân tích
     """
+     # LẤY DỮ LIỆU TỪ DICTIONARY
+    best_selling = product_data.get('best_selling', [])
+    worst_selling = product_data.get('worst_selling', [])
+    best_rated = product_data.get('best_rated', [])
+    worst_rated = product_data.get('worst_rated', [])
+    most_carted = product_data.get('most_carted', [])
+    stats = product_data.get('stats', {})
+    
     # Kiểm tra xem có dữ liệu sản phẩm chi tiết không
     has_detailed_data = ('best_selling' in product_data or 'worst_selling' in product_data or 
                         'best_rated' in product_data or 'worst_rated' in product_data or 
                         'most_carted' in product_data)
     
     # Tạo prompt phân tích thị trường
+    summary = "PHÂN TÍCH DỮ LIỆU KINH DOANH\n\n"
+    summary += "📈 5 SẢN PHẨM BÁN CHẠY NHẤT:\n" + self._format_product_list(best_selling) + "\n"
+    summary += "📉 5 SẢN PHẨM BÁN ÍT NHẤT:\n" + self._format_product_list(worst_selling) + "\n"
+    summary += "🌟 5 SẢN PHẨM ĐƯỢC ĐÁNH GIÁ TỐT NHẤT:\n" + self._format_product_list(best_rated) + "\n"
+    summary += "💔 5 SẢN PHẨM ĐƯỢC ĐÁNH GIÁ KÉM NHẤT:\n" + self._format_product_list(worst_rated) + "\n"
+    summary += "🛒 5 SẢN PHẨM ĐƯỢC CHO VÀO GIỎ NHIỀU NHẤT:\n" + self._format_product_list(most_carted) + "\n"
+    
+    summary += "📊 THỐNG KÊ TỔNG HỢP:\n"
+    summary += f"- Đơn hàng mới: {stats.get('orders', 0)}\n"
+    summary += f"- Bình luận: {stats.get('comments', 0)}\n"
+    summary += f"- Khách hàng mới: {stats.get('new_customers', 0)}\n"
+    summary += f"- Tổng lượt xem: {stats.get('total_views', 0)}\n"
     if has_detailed_data:
         # Nếu có dữ liệu chi tiết, sử dụng prompt chi tiết
         prompt = f"""Hãy phân tích dữ liệu thị trường dựa trên thông tin sau và đưa ra nhận định, gợi ý chiến lược kinh doanh:
@@ -609,6 +629,8 @@ Yêu cầu:
             prompt += "\n\n- Phân tích hành vi khách hàng và đề xuất cách tăng tỷ lệ chuyển đổi"
         if product_data.get('market_trends'):
             prompt += "\n\n- Phân tích chi tiết xu hướng thị trường và cách nắm bắt cơ hội mới"
+        if product_data.get('strategy_focus'):
+            prompt += "\n\n- Đề xuất chiến lược cụ thể để nắm bắt cơ hội mới và tăng trưởng dài hạn"
     
     # Kiểm tra kết nối internet trước khi gọi API
     try:
@@ -620,7 +642,11 @@ Yêu cầu:
     # Đảm bảo API đã được khởi tạo
     if not self._ensure_ai_client():
         logging.error('Không thể kết nối đến dịch vụ AI: API không thể khởi tạo')
-        return "Xin lỗi, không thể phân tích dữ liệu lúc này. Dịch vụ AI không khả dụng hoặc API key không hợp lệ."
+        return {
+            "success": False,
+            "error": True,
+            "message": "Xin lỗi, không thể phân tích dữ liệu lúc này. Dịch vụ AI không khả dụng hoặc API key không hợp lệ."
+        }
         
     # Thử kết nối tối đa 3 lần
     max_retries = 3
@@ -852,54 +878,100 @@ Yêu cầu:
             "message": f"Lỗi xử lý yêu cầu: {str(e)}"
         }), 500
 
+
 # Route phân tích thị trường và đề xuất chiến lược kinh doanh
 @app.route('/api/market/analyze', methods=['POST'])
 def analyze_market():
     try:
-        # Lấy dữ liệu từ request
         data = request.get_json()
+        # Lấy dữ liệu thực tế từ panel_data và stats_data
+        panel_data = data.get('panel_data', [])
+        stats_data = data.get('stats_data', {})
         
-        # Kiểm tra dữ liệu đầu vào
-        if not data:
-            return jsonify({
-                "status": "error",
-                "message": "Không tìm thấy dữ liệu sản phẩm"
-            }), 400
+        # Khởi tạo đối tượng ProductDescriber để sử dụng phương thức phân tích
+        describer = ProductDescriber()
         
-        # Phân tích dữ liệu thị trường
-        analysis = describer.analyze_market_data(data)
+        # Chuẩn bị dữ liệu cho phân tích thị trường
+        market_data = {
+            'data_analysis': data.get('data_analysis', True),
+            'brief_strategy': data.get('brief_strategy', True)
+        }
+        
+        # Khởi tạo các biến trước khi sử dụng
+        best_selling_products = []
+        worst_selling_products = []
+        best_rated_products = []
+        worst_rated_products = []
+        most_carted_products = []
+        
+        # Duyệt qua từng panel để phân loại dữ liệu
+        for panel in panel_data:
+            title = panel.get('title', '').lower()
+            table_data = panel.get('table_data', [])
+            
+            # Phân loại dữ liệu dựa trên tiêu đề panel
+            if 'bán chạy' in title or 'best selling' in title:
+                best_selling_products = table_data[:5]  # Lấy tối đa 5 sản phẩm
+            elif 'bán ít' in title or 'worst selling' in title:
+                worst_selling_products = table_data[:5]
+            elif 'đánh giá cao' in title or 'best rated' in title:
+                best_rated_products = table_data[:5]
+            elif 'đánh giá thấp' in title or 'worst rated' in title:
+                worst_rated_products = table_data[:5]
+            elif 'giỏ hàng' in title or 'cart' in title:
+                most_carted_products = table_data[:5]
+        
+        # Thêm dữ liệu đã phân loại vào market_data
+        if best_selling_products:
+            market_data['best_selling'] = best_selling_products
+        if worst_selling_products:
+            market_data['worst_selling'] = worst_selling_products
+        if best_rated_products:
+            market_data['best_rated'] = best_rated_products
+        if worst_rated_products:
+            market_data['worst_rated'] = worst_rated_products
+        if most_carted_products:
+            market_data['most_carted'] = most_carted_products
+        
+        # Thêm dữ liệu thống kê nếu có
+        if stats_data:
+            market_data['stats'] = stats_data
+        
+        # Gọi phương thức phân tích thị trường
+        analysis_result = describer.analyze_market_data(market_data)
         
         # Kiểm tra kết quả phân tích
-        if isinstance(analysis, dict):
-            if "error" in analysis or "success" in analysis and analysis["success"] == False:
-                # Nếu là dictionary chứa lỗi
-                return jsonify({
-                    "status": "error",
-                    "message": analysis.get("message", "Không thể phân tích dữ liệu")
-                }), 500
-            elif "success" in analysis and "analysis" in analysis:
-                # Nếu là dictionary chứa kết quả thành công
+        if isinstance(analysis_result, dict):
+            if analysis_result.get('success', False):
+                # Nếu phân tích thành công, trả về kết quả
                 return jsonify({
                     "status": "success",
                     "data": {
-                        "analysis": analysis["analysis"]
+                        "analysis": analysis_result.get('analysis', 'Không có dữ liệu phân tích')
                     }
                 })
-        
-        # Trường hợp phản hồi là chuỗi văn bản (để tương thích ngược)
-        return jsonify({
-            "status": "success",
-            "data": {
-                "analysis": analysis
-            }
-        })
+            else:
+                # Nếu có lỗi trong quá trình phân tích
+                error_message = analysis_result.get('message', 'Lỗi không xác định khi phân tích dữ liệu')
+                return jsonify({
+                    "status": "error",
+                    "message": error_message
+                }), 500
+        else:
+            # Nếu kết quả là chuỗi (thường là thông báo lỗi)
+            return jsonify({
+                "status": "success",
+                "data": {
+                    "analysis": analysis_result
+                }
+            })
     except Exception as e:
-        logging.error(f'Lỗi xử lý yêu cầu phân tích thị trường: {str(e)}')
+        logging.error(f"Lỗi khi phân tích thị trường: {str(e)}")
         return jsonify({
             "status": "error",
-            "message": f"Lỗi xử lý yêu cầu: {str(e)}"
+            "message": f"Lỗi phân tích dữ liệu: {str(e)}"
         }), 500
-
+        
 # Chạy ứng dụng
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)

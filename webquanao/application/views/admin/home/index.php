@@ -13,28 +13,7 @@
 			</div>
 		</div><!--/.row-->
 
-		<!-- Nút Phân tích AI và kết quả -->
-		<div class="row">
-			<div class="col-lg-12">
-				<button id="btnAnalyzeAI-1" class="btn-analyze-ai btn btn-primary btn-lg" style="margin-bottom: 20px;">
-					<i class="fa fa-bar-chart"></i> Phân tích AI
-				</button>
-
-				<!-- Ô hiển thị kết quả phân tích -->
-				<div class="panel panel-default analysis-result-panel" style="display: none;">
-					<div class="panel-heading">
-						<h3 class="panel-title">Phân tích tình hình kinh doanh và đề xuất chiến lược</h3>
-					</div>
-					<div class="panel-body">
-						<div class="loading-analysis" style="text-align: center; display: none;">
-							<i class="fa fa-spinner fa-spin fa-3x"></i>
-							<p>Đang phân tích dữ liệu...</p>
-						</div>
-						<div class="analysis-result" style="white-space: pre-line;"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 		
 		<div class="row">
@@ -92,29 +71,6 @@
 			</div>
 		</div><!--/.row-->
 
-		<!-- Nút Phân tích AI và kết quả -->
-		<div class="row">
-			<div class="col-lg-12">
-				<button id="btnAnalyzeAI-1" class="btn-analyze-ai btn btn-primary btn-lg" style="margin-bottom: 20px;">
-					<i class="fa fa-bar-chart"></i> Phân tích AI
-				</button>
-
-				<!-- Ô hiển thị kết quả phân tích -->
-				<div class="panel panel-default analysis-result-panel" style="display: none;">
-					<div class="panel-heading">
-						<h3 class="panel-title">Phân tích tình hình kinh doanh và đề xuất chiến lược</h3>
-					</div>
-					<div class="panel-body">
-						<div class="loading-analysis" style="text-align: center; display: none;">
-							<i class="fa fa-spinner fa-spin fa-3x"></i>
-							<p>Đang phân tích dữ liệu...</p>
-						</div>
-						<div class="analysis-result" style="white-space: pre-line;"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		
 		<div class="row">
 			<div class="col-lg-12">
@@ -128,6 +84,7 @@
 				</div>
 			</div>
 		</div><!--/.row-->
+
 
 		<!-- Thống kê sản phẩm -->
 		<div class="row">
@@ -310,30 +267,6 @@
 			</div>
 		</div><!--/.row-->
 
-		<!-- Nút Phân tích AI và kết quả -->
-		<div class="row">
-			<div class="col-lg-12">
-				<button id="btnAnalyzeAI-1" class="btn-analyze-ai btn btn-primary btn-lg" style="margin-bottom: 20px;">
-					<i class="fa fa-bar-chart"></i> Phân tích AI
-				</button>
-
-				<!-- Ô hiển thị kết quả phân tích -->
-				<div class="panel panel-default analysis-result-panel" style="display: none;">
-					<div class="panel-heading">
-						<h3 class="panel-title">Phân tích tình hình kinh doanh và đề xuất chiến lược</h3>
-					</div>
-					<div class="panel-body">
-						<div class="loading-analysis" style="text-align: center; display: none;">
-							<i class="fa fa-spinner fa-spin fa-3x"></i>
-							<p>Đang phân tích dữ liệu...</p>
-						</div>
-						<div class="analysis-result" style="white-space: pre-line;"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Đã xóa modal hiển thị kết quả phân tích -->
 		
 		<div class="row">
 			<div class="col-xs-6 col-md-3">
@@ -373,5 +306,53 @@
 				</div>
 			</div>
 		</div><!--/.row-->
-								
+
+		<!-- Nút Phân tích AI và kết quả (Đã tối ưu) -->
+		<div class="row">
+			<div class="col-lg-12">
+				<button id="btnAnalyzeAI-1" class="btn-analyze-ai btn btn-primary btn-lg" style="margin-bottom: 20px;">
+					<i class="fa fa-bar-chart"></i> Phân tích số liệu kinh doanh
+				</button>
+
+				<!-- Ô hiển thị kết quả phân tích -->
+				<div class="panel panel-default analysis-result-panel" style="display: none;">
+					<div class="panel-heading">
+						<h3 class="panel-title">Phân tích ngắn gọn số liệu kinh doanh</h3>
+					</div>
+					<div class="panel-body">
+						<div class="loading-analysis" style="text-align: center; display: none;">
+							<i class="fa fa-spinner fa-spin fa-3x"></i>
+							<p>Đang phân tích dữ liệu...</p>
+						</div>
+						<div class="analysis-result markdown-content" style="white-space: normal;"></div>
+					</div>
+				</div>
+				
+				<!-- CSS cho định dạng Markdown (đã tối ưu) -->
+				<style>
+					.markdown-content h1, .markdown-content h2, .markdown-content h3 { 
+						margin-top: 15px; 
+						margin-bottom: 10px; 
+						font-weight: 600; 
+					}
+					.markdown-content h1 { font-size: 20px; }
+					.markdown-content h2 { font-size: 18px; }
+					.markdown-content h3 { font-size: 16px; }
+					.markdown-content ul, .markdown-content ol { margin-left: 15px; margin-bottom: 10px; }
+					.markdown-content p { margin-bottom: 10px; }
+					.markdown-content table {
+						width: 100%;
+						max-width: 100%;
+						margin-bottom: 15px;
+						border-collapse: collapse;
+					}
+					.markdown-content table th, .markdown-content table td {
+						padding: 6px;
+						line-height: 1.3;
+						border: 1px solid #ddd;
+					}
+					.markdown-content table th { background-color: #f5f5f5; }
+				</style>
+			</div>
+		</div>
 		
