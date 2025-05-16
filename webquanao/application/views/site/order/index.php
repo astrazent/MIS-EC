@@ -56,6 +56,9 @@
 		font-weight: bold;
 	}
 
+	.shipping {
+		display: none;
+	}
 
 	/* Loại bỏ conflict tailwind */
 	.collapse {
@@ -233,9 +236,28 @@
 				</div>
 			</div>
 
-			<div class="flex justify-between items-center mt-10 mb-10 text-3xl font-semibold">
-				<span>Tổng hóa đơn:</span>
-				<span id="totalPrice" class="text-red-600"><?php echo $this->data['total_amount'] ?> VND</span>
+			<div class="mt-10 mb-10 text-3xl font-semibold space-y-4">
+
+				<!-- Thông tin hóa đơn -->
+				<div class="flex justify-between items-center">
+					<span>Tiền hàng:</span>
+					<span class="text-gray-800"><?php echo number_format($this->data['total_amount'], 0, ',', '.') ?> VND</span>
+				</div>
+
+				<!-- Phí ship -->
+				<div class="flex justify-between items-center shipping">
+					<span>Phí vận chuyển:</span>
+					<span class="text-gray-800" id="shippingFee"></span>
+				</div>
+
+				<!-- Tổng cộng (cuối cùng) -->
+				<div class="flex justify-between items-center border-t pt-4 text-red-600">
+					<span>Tổng thanh toán:</span>
+					<span id="totalPrice" data-price='<?php echo $this->data['total_amount'] ?>'>
+						<?php echo number_format($this->data['total_amount'], 0, ',', '.') ?> VND
+					</span>
+				</div>
+
 			</div>
 
 			<button class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300"
@@ -248,7 +270,7 @@
 	</div>
 </div>
 <div id="userInfo" style="display:none;" data-user='<?php echo json_encode($user); ?>'>
-	<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;">Hello World</div>
+	<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;"></div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 

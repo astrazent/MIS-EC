@@ -83,6 +83,8 @@ function renderCity(data) {
 			for (const k of result[0].Districts) {
 				district.options[district.options.length] = new Option(k.Name, k.Id);
 			}
+		} else {
+			resetShipping();
 		}
 	};
 	district.onchange = function () {
@@ -96,6 +98,8 @@ function renderCity(data) {
 			for (const w of dataWards) {
 				wards.options[wards.options.length] = new Option(w.Name, w.Id);
 			}
+		} else {
+			resetShipping();
 		}
 	};
 }
@@ -178,6 +182,10 @@ function haversine(coord1, coord2) {
 	const distance = R * c;
 	return distance * 1000; // Trả về đơn vị m
 }
+function resetShipping() {
+	document.querySelector(".shipping-detail").style.display = "none";
+	document.querySelector(".shipping").style.display = "none";
+}
 
 async function getDistance(fromCoords, toCoords) {
 	const url = "https://api.openrouteservice.org/v2/directions/driving-car";
@@ -210,12 +218,22 @@ async function getDistance(fromCoords, toCoords) {
 	}
 }
 
+// đổi đơn vị tiền
+function formatCurrency(number) {
+    if (isNaN(number)) {
+        return '0 VND';
+    }
+
+    return Number(number).toLocaleString('vi-VN') + ' VND';
+}
+
 wards.addEventListener("change", function () {
 	cityText = citis.options[citis.selectedIndex].text;
 	districtText = district.options[district.selectedIndex].text;
 	wardText = ward.options[ward.selectedIndex].text;
 
 	if (!cityText || !districtText || !wardText) {
+		resetShipping();
 		return;
 	}
 
@@ -231,7 +249,6 @@ wards.addEventListener("change", function () {
 					return getDistance(from, to);
 				} else {
 					document.querySelector(".shipping-detail").style.display = "block";
-
 					document.querySelector(".distance").textContent = `Chưa xác định`;
 					document.querySelector(".fee").textContent = `Thông báo sau`;
 					return Promise.reject("Không tìm thấy tọa độ đích.");
@@ -240,14 +257,18 @@ wards.addEventListener("change", function () {
 			.then((result) => {
 				// 1. Hiển thị div với class 'shipping-detail' dưới dạng block
 				document.querySelector(".shipping-detail").style.display = "block";
-
 				// 2. Thay đổi nội dung của distance và fee
-				document.querySelector(".distance").textContent = `${(
-					result.distance / 1000
-				).toFixed(2)} km`;
-				document.querySelector(".fee").textContent = `${Math.round(
-					(result.distance / 1000) * 2000
-				)} VND`;
+				const shipfee = Math.round(result.distance / 1000) * 2000
+				const itemprice = document.getElementById('totalPrice').dataset.price;
+				const total = Math.round(Number(shipfee) + Number(itemprice));
+				console.log(total);
+				document.querySelector(".distance").textContent = `${Math.round(result.distance / 1000)} km`;
+				document.querySelector(".fee").textContent = `${formatCurrency(shipfee)}`;
+
+				// Hiển thị dòng phí ship
+				document.querySelector(".shipping").style.display = "flex";
+				document.getElementById("shippingFee").textContent = `${formatCurrency(shipfee)}`;
+				document.getElementById('totalPrice').textContent = `${formatCurrency(total)}`;
 			})
 			.catch((err) => {
 				console.error("Lỗi:", err);
