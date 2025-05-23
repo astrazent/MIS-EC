@@ -167,11 +167,11 @@
 				<div class="shipping-detail">
 					<div class="shipping-item">
 						<span><strong>Khoảng cách:</strong></span>
-						<span class="distance">20 km</span>
+						<span class="distance"></span>
 					</div>
 					<div class="shipping-item">
 						<span><strong>Phí vận chuyển:</strong></span>
-						<span class="fee">50.000 VND</span>
+						<span class="fee"></span>
 					</div>
 				</div>
 			</div>
