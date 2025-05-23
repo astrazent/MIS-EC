@@ -7,7 +7,6 @@ class Cart extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->library('cart');
         $this->load->model('product_model');
         $this->load->model('cart_model');
     }
@@ -35,9 +34,8 @@ class Cart extends MY_Controller
             ];
         }
         $this->data['carts'] = $formatted_cart;
-        // log_message('error', print_r($ok, true));
 
-        $this->data['total_items'] = $this->cart_model->get_sum('qty');
+        $this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
 
         $this->data['temp'] = 'site/cart/index';
         $this->load->view('site/layoutsub', $this->data);
@@ -64,7 +62,6 @@ class Cart extends MY_Controller
         $data['name'] = $product->name;
         $data['image_link'] = $product->image_link;
         $data['rowid'] = md5(mt_rand(1, 1000));
-        log_message('error', print_r($data, true));
         $this->cart_model->create($data);
         redirect(base_url('cart'));
     }

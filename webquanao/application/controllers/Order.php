@@ -148,12 +148,17 @@ class Order extends MY_Controller
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Content-Type: application/json;');
 
-			if (!$this->session->userdata('user')) {
+			$user = $this->session->userdata('user');
+			if (!isset($user)) {
+				redirect(base_url('/dang-nhap'));
+			}
+
+			if (!$user) {
 				echo json_encode(["status" => "error", "message" => "Người dùng không tồn tại"], JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
-			$carts = $this->cart->contents();
+			$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 			if (empty($carts)) {
 				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
@@ -161,7 +166,7 @@ class Order extends MY_Controller
 			}
 			$total_amount = 0;
 			foreach ($carts as $value) {
-				$total_amount = $total_amount + $value['subtotal'];
+				$total_amount = $total_amount + ($value->qty * $value->price);
 			}
 
 			// Nhận dữ liệu JSON từ request
@@ -257,14 +262,18 @@ class Order extends MY_Controller
 
 	public function saveOrder()
 	{
-		$carts = $this->cart->contents();
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			redirect(base_url('/dang-nhap'));
+		}
+
+		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 		if (empty($carts)) {
 			log_message('error', "Giỏ hàng trống");
 			return false;
 		}
 
-		$user_id = 0;
 		if ($this->session->userdata('user')) {
 			$user = $this->session->userdata('user');
 			$user_id = $user->id;
@@ -272,7 +281,7 @@ class Order extends MY_Controller
 
 		$total_amount = 0;
 		foreach ($carts as $value) {
-			$total_amount = $total_amount + $value['subtotal'];
+			$total_amount = $total_amount + ($value->qty * $value->price);
 		}
 
 		$formData = $this->session->userdata('formData');
@@ -347,9 +356,9 @@ class Order extends MY_Controller
 			$data_saved = array();
 			$data_saved = array(
 				'transaction_id' => $transaction_id,
-				'product_id' => $items['id'],
-				'qty' => $items['qty'],
-				'amount' => $items['subtotal']
+				'product_id' => $items->product_id,
+				'qty' => $items->qty,
+				'amount' => $items->qty * $items->price
 			);
 			$order_info = $this->order_model->create($data_saved);
 
@@ -370,7 +379,7 @@ class Order extends MY_Controller
 			return;
 		}
 
-		$this->cart->destroy();
+		$this->cart_model->del_rule(['user_id' => $user->id]);
 
 		// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 		$this->db->trans_complete();
@@ -442,26 +451,24 @@ class Order extends MY_Controller
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Content-Type: application/json;');
-			$carts = $this->cart->contents();
-
-			$user_id = 0;
-			if (!$this->session->userdata('user')) {
+			$user = $this->session->userdata('user');
+			if (!$user) {
 				echo json_encode(["status" => "null_user", "message" => "Người dùng không tồn tại!"], JSON_UNESCAPED_UNICODE);
 				return;
 			}
+			$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 			if (empty($carts)) {
 				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
-
 			$user = $this->session->userdata('user');
 			$user_id = $user->id;
 
 			$total_amount = 0;
 			foreach ($carts as $value) {
-				$total_amount = $total_amount + $value['subtotal'];
+				$total_amount = $total_amount + ($value->qty * $value->price);
 			}
 
 			// Nhận dữ liệu JSON từ request
@@ -545,14 +552,14 @@ class Order extends MY_Controller
 				$data_saved = array();
 				$data_saved = array(
 					'transaction_id' => $transaction_id,
-					'product_id' => $items['id'],
-					'qty' => $items['qty'],
-					'amount' => $items['subtotal']
+					'product_id' => $items->product_id,
+					'qty' => $items->qty,
+					'amount' => $items->qty * $items->price
 				);
 				$order_info = $this->order_model->create($data_saved);
 
 				// Cộng dồn giá trị sản phẩm vào tổng giá trị đơn hàng
-				$total_amount += $items['subtotal'];
+				$total_amount += ($items->qty * $items->price);
 
 				if (!$order_info) {
 					$this->db->trans_rollback();
