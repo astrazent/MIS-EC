@@ -3,3 +3,8 @@ python_AI/app/logs
 python_AI/app/data
 webquanao/application/logs
 webquanao/sessions/*
+webquanao/.env.private
+.todo
+.todo-example
+someUssualBug.txt
+dockerCommonUse.txt

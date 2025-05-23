@@ -12,6 +12,98 @@
 		padding: 10px 20px !important;
 		font-size: 16px !important;
 	}
+
+	.shipping-detail {
+		display: none;
+		background-color: #f8f8f8;
+		border: 1px solid #ddd;
+		padding: 15px;
+		border-radius: 8px;
+		width: 100%;
+		margin-top: 20px;
+		font-family: Arial, sans-serif;
+		color: #333;
+		font-size: 85%;
+		/* Giảm kích thước font xuống 85% */
+	}
+
+	.shipping-item {
+		display: flex;
+		justify-content: space-between;
+		/* Căn đều giữa các phần tử */
+		margin-bottom: 10px;
+		/* Khoảng cách giữa các dòng */
+	}
+
+	.shipping-item span {
+		display: inline-block;
+	}
+
+	.shipping-item .distance,
+	.shipping-item .fee {
+		text-align: right;
+		/* Căn lề phải cho giá trị */
+		font-weight: bold;
+		color: #d9534f;
+		background-color: #f9f2f4;
+		/* nền nhẹ */
+		padding: 4px 8px;
+		border-radius: 4px;
+		margin-left: 10px;
+	}
+
+	.shipping-item strong {
+		font-weight: bold;
+	}
+
+	.shipping {
+		display: none;
+	}
+
+	/* Loại bỏ conflict tailwind */
+	.collapse {
+		visibility: unset !important;
+	}
+
+	a {
+		color: #337ab7 !important;
+		text-decoration: none !important;
+	}
+
+	a:hover {
+		text-decoration: none !important;
+	}
+
+	.navbar-info .navbar-nav>.active>a,
+	.navbar-info .navbar-nav>.active>a:hover,
+	.navbar-info .navbar-nav>.active>a:focus {
+		color: #fff !important;
+		background-color: #4c66a4 !important;
+	}
+
+	.navbar-info .navbar-nav>li>a:hover,
+	.navbar-info .navbar-nav>li>a:focus {
+		color: #fff !important;
+		background-color: #337ab7 !important;
+		border-top-left-radius: 4px !important;
+		border-top-right-radius: 4px !important;
+	}
+
+	a.product_title:hover {
+		color: #337ab7 !important;
+	}
+
+	.dropdown-menu>li>a {
+		color: #333 !important;
+	}
+
+	@media (min-width: 1200px) {
+		.container {
+			width: 1170px !important;
+		}
+	}
+
+	/* Loại bỏ conflict tailwind */
 </style>
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
@@ -21,17 +113,12 @@
 		</ol>
 		<div class="bg-white p-6 rounded shadow text-3xl mb-20">
 			<h2 class="text-4xl font-semibold mb-10">Thông tin giao hàng</h2>
-			<?php if (!isset($user)): ?>
-			<p class="mb-10 text-2xl">Quý khách đã có tài khoản? <a href="<?php echo base_url('dang-nhap'); ?>" class="text-blue-600">Đăng nhập</a></p>
-			<?php else: ?>
-			<p class="mb-10 text-2xl">Xin chào, <strong><?php echo $user->name; ?></strong>!</p>
-			<?php endif; ?>
-			
-			<?php if ($this->session->flashdata('error')): ?>
-			<div class="p-4 mb-4 bg-red-100 text-red-700 border border-red-300 rounded">
-				<?php echo $this->session->flashdata('error'); ?>
+
+			<div class="mb-10">
+				<label class="block text-gray-700 mb-4" for="name">Họ và tên</label>
+				<input type="text" id="name" name="name" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="">
 			</div>
-			<?php endif; ?>
+			
 			
 			<?php if ($this->session->flashdata('success')): ?>
 			<div class="p-4 mb-4 bg-green-100 text-green-700 border border-green-300 rounded">
@@ -52,10 +139,17 @@
 			</div>
 			<?php endif; ?>
 
-			<form method="POST" action="<?php echo base_url('order/complete'); ?>" id="orderForm">
-				<div class="mb-10">
-					<label class="block text-gray-700 mb-4" for="name">Họ và tên</label>
-					<input type="text" id="name" name="name" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" value="<?php echo isset($user) ? $user->name : ''; ?>" required>
+			<div class="mb-10">
+				<label class="block text-gray-700 mb-4" for="address">Địa chỉ</label>
+				<input type="text" id="address" name="address" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" placeholder="VD: 208-E5" value="">
+			</div>
+
+			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+				<div>
+					<label class="block text-gray-700 mb-4" for="city">Tỉnh/Thành phố</label>
+					<select id="city" name="city" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded">
+						<option value="" selected></option>
+					</select>
 				</div>
 
 				<div class="mb-10">
@@ -73,13 +167,20 @@
 					<input type="text" id="address" name="address" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" placeholder="VD: 208-E5" value="<?php echo isset($user) ? $user->address : ''; ?>" required>
 				</div>
 
-				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-					<div>
-						<label class="block text-gray-700 mb-4" for="city">Tỉnh/Thành</label>
-						<select id="city" name="city" style="font-size:85% !important;" class="w-full p-2 border border-gray-300 rounded" required>
-							<option value="" selected></option>
-						</select>
+			<h3 class="text-3xl font-semibold mb-4">Phí vận chuyển</h3>
+			<div class="p-4 bg-gray-100 border border-gray-300 mb-10 rounded">
+				<p class="text-gray-700" style="font-size:85% !important;">Các tỉnh thành thuộc khu vực miễn phí giao hàng & lắp đặt sẽ được Ngọc Lan liên hệ báo sau.</p>
+				<div class="shipping-detail">
+					<div class="shipping-item">
+						<span><strong>Khoảng cách:</strong></span>
+						<span class="distance"></span>
 					</div>
+					<div class="shipping-item">
+						<span><strong>Phí vận chuyển:</strong></span>
+						<span class="fee"></span>
+					</div>
+				</div>
+			</div>
 
 					<div>
 						<label class="block text-gray-700 mb-4" for="district">Quận/Huyện</label>
@@ -165,10 +266,29 @@
 					</div>
 				</div>
 
-				<div class="flex justify-between items-center mt-10 mb-10 text-3xl font-semibold">
-					<span>Tổng hóa đơn:</span>
-					<span id="totalPrice" class="text-red-600"><?php echo $this->data['total_amount'] ?> VND</span>
+			<div class="mt-10 mb-10 text-3xl font-semibold space-y-4">
+
+				<!-- Thông tin hóa đơn -->
+				<div class="flex justify-between items-center">
+					<span>Tiền hàng:</span>
+					<span class="text-gray-800"><?php echo number_format($this->data['total_amount'], 0, ',', '.') ?> VND</span>
 				</div>
+
+				<!-- Phí ship -->
+				<div class="flex justify-between items-center shipping">
+					<span>Phí vận chuyển:</span>
+					<span class="text-gray-800" id="shippingFee"></span>
+				</div>
+
+				<!-- Tổng cộng (cuối cùng) -->
+				<div class="flex justify-between items-center border-t pt-4 text-red-600">
+					<span>Tổng thanh toán:</span>
+					<span id="totalPrice" data-price='<?php echo $this->data['total_amount'] ?>'>
+						<?php echo number_format($this->data['total_amount'], 0, ',', '.') ?> VND
+					</span>
+				</div>
+
+			</div>
 
 				<button type="submit" class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300"
 					style="background-color: rgb(61, 177, 212);" id="submitBtn"
@@ -180,15 +300,9 @@
 		</div>
 	</div>
 </div>
+<div id="userInfo" style="display:none;" data-user='<?php echo json_encode($user); ?>'>
+	<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;"></div>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
-
-<script>
-// Define base URL from PHP for use in JavaScript
-var baseUrl = "<?php echo base_url(); ?>";
-var completeEndpoint = "<?php echo base_url('order/complete'); ?>";
-var paymentEndpoint = "<?php echo base_url('order/payment'); ?>";
-</script>
-
-<script src="<?php echo public_url('site/'); ?>js/order.js"></script>
+	<script src="<?php echo public_url('site/'); ?>js/order.js"></script>
