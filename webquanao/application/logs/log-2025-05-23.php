@@ -172,3 +172,58 @@ ERROR - 2025-05-23 22:09:54 --> Array
 
 ERROR - 2025-05-23 22:09:56 --> 404 Page Not Found: Well-known/appspecific
 ERROR - 2025-05-23 22:09:59 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-23 22:50:54 --> Array
+(
+    [user_id] => 3
+    [product_id] => 26
+    [qty] => 1
+    [price] => 169000.00
+    [name] => Quần kaki Nam Lịch Lãm - D36
+    [image_link] => quan-kaki-nam-lich-lam-1m4G3-NvjQo7_simg_d0daf0_800x1200_max.jpg
+    [rowid] => f90f2aca5c640289d0a29417bcb63a37
+)
+
+ERROR - 2025-05-23 22:53:23 --> Array
+(
+    [user_id] => 1
+    [product_id] => 18
+    [qty] => 1
+    [price] => 380000.00
+    [name] => COMBO ĐẦM KÈM ÁO KHOÁC CHOÀNG
+    [image_link] => combo-dam-kem-ao-khoac-choang-thoi-trang-th08603-gs195-1m4G3-1SqJve.jpg
+    [rowid] => 3b5dca501ee1e6d8cd7b905f4e1bf723
+)
+
+ERROR - 2025-05-23 22:54:41 --> Array
+(
+    [user_id] => 1
+    [product_id] => 26
+    [qty] => 1
+    [price] => 169000.00
+    [name] => Quần kaki Nam Lịch Lãm - D36
+    [image_link] => quan-kaki-nam-lich-lam-1m4G3-NvjQo7_simg_d0daf0_800x1200_max.jpg
+    [rowid] => 1afa34a7f984eeabdbb0a7d494132ee5
+)
+
+ERROR - 2025-05-23 22:55:18 --> Array
+(
+    [user_id] => 1
+    [product_id] => 27
+    [qty] => 1
+    [price] => 300000.00
+    [name] => QUẦN KAKI THUN JOGGER
+    [image_link] => cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-7ec3c2_simg_d0daf0_800x1200_max.jpg
+    [rowid] => 0deb1c54814305ca9ad266f53bc82511
+)
+
+ERROR - 2025-05-23 23:03:01 --> Array
+(
+    [user_id] => 1
+    [product_id] => 26
+    [qty] => 1
+    [price] => 169000.00
+    [name] => Quần kaki Nam Lịch Lãm - D36
+    [image_link] => quan-kaki-nam-lich-lam-1m4G3-NvjQo7_simg_d0daf0_800x1200_max.jpg
+    [rowid] => 217eedd1ba8c592db97d0dbe54c7adfc
+)
+

@@ -298,24 +298,7 @@ class User extends MY_Controller
 	public function logout()
 	{
 		if ($this->session->userdata('user')) {
-			// Before logout, ensure cart items are saved in the database
-			$user = $this->session->userdata('user');
-			$this->load->model('cart_model');
-			$this->load->library('cart');
-			
-			// Save session cart to database before logout
-			$session_cart = $this->cart->contents();
-			if (!empty($session_cart)) {
-			    foreach ($session_cart as $rowid => $item) {
-			        $this->cart_model->save_item($user->id, $item);
-			    }
-			}
-			
-			// Now unset the user data
 			$this->session->unset_userdata('user');
-			
-			// Clear the cart completely
-			$this->cart->destroy();
 		}
 		redirect(base_url());
 	}

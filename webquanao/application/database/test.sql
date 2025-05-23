@@ -312,22 +312,32 @@ INSERT INTO `slider` (`name`, `image_link`, `link`, `sort_order`, `created`) VAL
 INSERT INTO `comments` (`id`, `user_id`, `product_id`, `rate`, `comment_content`, `created`) VALUES
 (1, 1, 1, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
 (2, 2, 1, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
-(3, 3, 1, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
+(3, 3, 1, 3, 'Sản phẩm không đẹp lắm.', 1493983674);
 
 INSERT INTO `cart` (`user_id`, `product_id`, `rowid`, `name`, `price`, `qty`, `options`, `image_link`, `created_at`, `updated_at`) VALUES
-(9, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 10:34:06', '2025-04-16 10:34:06'),
-(8, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 15:00:11', '2025-04-16 15:00:11'),
-(9, 7, '8f14e45fceea167a5a36dedd4bea2543', 'Đầm ren tay dài tiểu thư', 350000.00, 1, '', 'Dam_ren_den_tay_dai_tieu_thu_(3).jpg', '2025-04-16 15:02:16', '2025-04-16 15:02:16'),
-(9, 12, 'c20ad4d76fe97759aa27a0c99bff6710', 'Đầm maxi phối ren cao cấp', 360000.00, 1, '', 'dam-maxi-phoi-ren-cao-cap-1m4G3-QXVTv3_simg_d0daf0_800x1200_max.jpg', '2025-04-16 15:02:33', '2025-04-16 15:02:33');
+(1, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 10:34:06', '2025-04-16 10:34:06'),
+(2, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 15:00:11', '2025-04-16 15:00:11'),
+(3, 7, '8f14e45fceea167a5a36dedd4bea2543', 'Đầm ren tay dài tiểu thư', 350000.00, 1, '', 'Dam_ren_den_tay_dai_tieu_thu_(3).jpg', '2025-04-16 15:02:16', '2025-04-16 15:02:16'),
+(1, 12, 'c20ad4d76fe97759aa27a0c99bff6710', 'Đầm maxi phối ren cao cấp', 360000.00, 1, '', 'dam-maxi-phoi-ren-cao-cap-1m4G3-QXVTv3_simg_d0daf0_800x1200_max.jpg', '2025-04-16 15:02:33', '2025-04-16 15:02:33');
+
+INSERT INTO `shipping_fee_rules` 
+(`min_distance_km`, `max_distance_km`, `min_order_amount`, `max_order_amount`, `shipping_fee`, `unit`, `note`)
+VALUES
+(0, 5, NULL, NULL, 0, 'VND', 'Miễn phí ship nếu khoảng cách dưới 5km'),
+(NULL, NULL, 500000, NULL, 0, 'VND', 'Miễn phí ship nếu đơn hàng trên 500k'),
+(5.01, 10, NULL, NULL, 20000, 'VND', 'Phí 20k nếu khoảng cách từ 5-10km'),
+(10.01, 20, 200000, NULL, 15000, 'VND', 'Phí 15k nếu >10km, <20km và >200k'),
+(10.01, 20, NULL, 200000, 30000, 'VND', 'Phí 30k nếu >10km, <20km và <=200k'),
+(20, NULL, NULL, NULL, 1500, 'MUL', 'Phí là 1500/km nếu khoảng cách từ 20km trở lên');
 
 INSERT INTO `shipping_tracking` (`id`, `transaction_id`, `status`, `shipping_fee_rule_id`, `created_at`, `updated_at`, `estimated_delivery`, `callback_url`) VALUES
-(1, 521, 'delivered', 1, '2025-04-16 12:55:17', '2025-04-16 13:15:34', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(2, 520, 'delivered', 1, '2025-04-16 13:16:24', '2025-04-16 13:16:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(3, 510, 'delivered', 2, '2025-04-16 13:20:33', '2025-04-16 13:20:36', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(4, 558, 'delivered', 2, '2025-04-16 13:20:44', '2025-04-16 13:20:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(5, 555, 'delivered', 1, '2025-04-16 13:41:42', '2025-04-16 14:23:25', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(6, 554, 'delivered', 3, '2025-04-16 14:23:40', '2025-04-16 14:24:12', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(7, 556, 'delivered', 2, '2025-04-16 14:24:32', '2025-04-16 14:32:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(8, 553, 'delivered', 2, '2025-04-16 14:32:58', '2025-04-16 14:33:04', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(9, 522, 'delivered', 1, '2025-04-16 17:00:44', '2025-04-16 17:01:23', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(10, 524, 'delivered', 1, '2025-04-16 17:08:30', '2025-04-16 17:09:14', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook');
+(1, 1, 'delivered', 1, '2025-04-16 12:55:17', '2025-04-16 13:15:34', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(2, 2, 'delivered', 1, '2025-04-16 13:16:24', '2025-04-16 13:16:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(3, 3, 'delivered', 2, '2025-04-16 13:20:33', '2025-04-16 13:20:36', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(4, 4, 'delivered', 2, '2025-04-16 13:20:44', '2025-04-16 13:20:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(5, 5, 'delivered', 1, '2025-04-16 13:41:42', '2025-04-16 14:23:25', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(6, 6, 'delivered', 3, '2025-04-16 14:23:40', '2025-04-16 14:24:12', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(7, 7, 'delivered', 2, '2025-04-16 14:24:32', '2025-04-16 14:32:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(8, 8, 'delivered', 2, '2025-04-16 14:32:58', '2025-04-16 14:33:04', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(9, 9, 'delivered', 1, '2025-04-16 17:00:44', '2025-04-16 17:01:23', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(10, 10, 'delivered', 1, '2025-04-16 17:08:30', '2025-04-16 17:09:14', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook');

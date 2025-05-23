@@ -24,11 +24,6 @@ class Order extends MY_Controller
 		}
 	}
 
-	// Helper function to check if the request is AJAX
-	private function input_is_ajax_request() {
-		return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
-	}
-
 	public function index()
 	{
 		$user = $this->session->userdata('user');
@@ -49,10 +44,6 @@ class Order extends MY_Controller
 		}
 
 		$this->data['total_amount'] = $total_amount;
-
-		// Make sure user data is explicitly set
-		$user = $this->session->userdata('user');
-		$this->data['user'] = $user;
 
 		$this->data['temp'] = 'site/order/index.php';
 		$this->load->view('site/layoutsub', $this->data);
@@ -450,6 +441,7 @@ class Order extends MY_Controller
 	public function complete()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json;');
 			$carts = $this->cart->contents();
 
 			$user_id = 0;
@@ -459,18 +451,8 @@ class Order extends MY_Controller
 			}
 
 			if (empty($carts)) {
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(400);
-					echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
-					return;
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('error', 'Giỏ hàng trống');
-					redirect(base_url('/'));
-					return;
-				}
+				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
+				return;
 			}
 
 
@@ -486,13 +468,7 @@ class Order extends MY_Controller
 			$data = json_decode(file_get_contents("php://input"), true);
 			// Kiểm tra nếu không có dữ liệu
 			if (!$data) {
-				if ($this->input_is_ajax_request()) {
-					header('Content-Type: application/json; charset=utf-8');
-					echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
-				} else {
-					$this->session->set_flashdata('error', 'Không nhận được dữ liệu đơn hàng');
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
@@ -529,16 +505,7 @@ class Order extends MY_Controller
 
 			// Nếu có lỗi, trả về danh sách lỗi
 			if (!empty($errors)) {
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(400);
-					echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('errors', $errors);
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
@@ -567,16 +534,7 @@ class Order extends MY_Controller
 			// Kiểm tra nếu không lấy được ID thì rollback
 			if (!$transaction_id) {
 				$this->db->trans_rollback();
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(500);
-					echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('error', 'Đặt hàng thất bại. Vui lòng thử lại sau.');
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
@@ -677,17 +635,5 @@ class Order extends MY_Controller
 	public function sepay()
 	{
 		redirect(base_url('/'));
-	}
-
-	// Handle OPTIONS requests for CORS compatibility
-	public function options()
-	{
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-		header('Access-Control-Allow-Headers: Content-Type');
-		header('Access-Control-Max-Age: 1728000');
-		header('Content-Length: 0');
-		header('Content-Type: text/plain');
-		exit(0);
 	}
 }
