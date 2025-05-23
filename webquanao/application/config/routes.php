@@ -86,4 +86,5 @@ $route['api/read-json'] = 'DiaGioiHanhChinhVN';
 // Check password
 $route['check-password'] = 'user/checkpassword';
 
-$route['kt'] = 'test/check';
+//shipping fee rule
+$route['shipping-fee'] = 'order/shipping_fee_rule';

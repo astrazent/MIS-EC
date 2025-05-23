@@ -166,6 +166,7 @@
 					})
 					.then(response => response.text()) // Đọc response dưới dạng text trước
 					.then(text => {
+						console.log(text);
 						let data = JSON.parse(text); // Thử parse JSON
 						if (data.status === "success") {
 							allow = true;

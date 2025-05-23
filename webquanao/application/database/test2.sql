@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `catalog`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `slider`;
 DROP TABLE IF EXISTS `shipping_tracking`;
+DROP TABLE IF EXISTS `shipping_fee_rules`;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -167,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `slider` (
 
 
 CREATE TABLE IF NOT EXISTS `cart` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `rowid` varchar(32) NOT NULL,
@@ -177,24 +178,35 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `options` text DEFAULT NULL,
   `image_link` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `shipping_fee_rules` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `min_distance_km` DECIMAL(5,2) DEFAULT 0,    
+  `max_distance_km` DECIMAL(5,2) DEFAULT NULL,   
+  `min_order_amount` DECIMAL(10,2) DEFAULT 0,  
+  `max_order_amount` DECIMAL(10,2) DEFAULT NULL, 
+  `shipping_fee` DECIMAL(10,2) NOT NULL,   
+  `unit` TEXT,   
+  `note` TEXT      
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `shipping_tracking` (
-  `id` int(11) NOT NULL,
-  `tracking_id` varchar(50) NOT NULL,
-  `transaction_id` int(11) NOT NULL,
-  `customer_name` varchar(255) NOT NULL,
-  `shipping_address` text NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'processing',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `estimated_delivery` date DEFAULT NULL,
-  `callback_url` varchar(255) DEFAULT NULL,
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`transaction_id`) REFERENCES `transaction`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `transaction_id` INT(11) NOT NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'processing',
+  `shipping_fee_rule_id` INT(11) DEFAULT NULL,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME DEFAULT NULL,
+  `estimated_delivery` DATE DEFAULT NULL,
+  `callback_url` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`transaction_id`) REFERENCES `transaction`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`shipping_fee_rule_id`) REFERENCES `shipping_fee_rules`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 INSERT INTO `admin` (`name`, `email`, `password`, `level`, `created`) VALUES
 ('Goo', 'admin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, 2147483647),
@@ -1973,14 +1985,24 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `rowid`, `name`, `price`, `qt
 (3, 9, 7, '8f14e45fceea167a5a36dedd4bea2543', 'Đầm ren tay dài tiểu thư', 350000.00, 1, '', 'Dam_ren_den_tay_dai_tieu_thu_(3).jpg', '2025-04-16 15:02:16', '2025-04-16 15:02:16'),
 (4, 9, 12, 'c20ad4d76fe97759aa27a0c99bff6710', 'Đầm maxi phối ren cao cấp', 360000.00, 1, '', 'dam-maxi-phoi-ren-cao-cap-1m4G3-QXVTv3_simg_d0daf0_800x1200_max.jpg', '2025-04-16 15:02:33', '2025-04-16 15:02:33');
 
-INSERT INTO `shipping_tracking` (`id`, `tracking_id`, `transaction_id`, `customer_name`, `shipping_address`, `status`, `created_at`, `updated_at`, `estimated_delivery`, `callback_url`) VALUES
-(1, 'TRACK-20250416125517-21', 521, 'Cus1', 'Phan Đình Giót', 'delivered', '2025-04-16 12:55:17', '2025-04-16 13:15:34', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(2, 'TRACK-20250416131624-20', 520, 'Cus1', 'Phan Đình Giót', 'delivered', '2025-04-16 13:16:24', '2025-04-16 13:16:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(3, 'TRACK-20250416132033-10', 510, 'VIP User', 'Hải Phòng', 'delivered', '2025-04-16 13:20:33', '2025-04-16 13:20:36', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(4, 'TRACK-20250416132044-8', 558, 'Linh', 'hai Phong', 'delivered', '2025-04-16 13:20:44', '2025-04-16 13:20:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(5, 'TRACK-20250416134142-5', 555, 'Bình Nguyễn', 'Hà Nội ', 'delivered', '2025-04-16 13:41:42', '2025-04-16 14:23:25', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(6, 'TRACK-20250416142340-4', 554, 'An Nhiên', 'Hoàng Mai - Hà Nội', 'delivered', '2025-04-16 14:23:40', '2025-04-16 14:24:12', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(7, 'TRACK-20250416142432-6', 556, 'Tô Nam', 'Thủy Nguyên - Hải Phòng', 'delivered', '2025-04-16 14:24:32', '2025-04-16 14:32:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(8, 'TRACK-20250416143258-3', 553, 'GoO', 'Hải Phòng', 'delivered', '2025-04-16 14:32:58', '2025-04-16 14:33:04', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(9, 'TRACK-20250416170044-22', 522, 'haninhquang2003@gmail.com', 'Phan Đình Giót', 'delivered', '2025-04-16 17:00:44', '2025-04-16 17:01:23', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
-(10, 'TRACK-20250416170830-24', 524, 'Cus1', 'Phan Đình Giót', 'delivered', '2025-04-16 17:08:30', '2025-04-16 17:09:14', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook');
+INSERT INTO `shipping_fee_rules` 
+(`min_distance_km`, `max_distance_km`, `min_order_amount`, `max_order_amount`, `shipping_fee`, `unit`, `note`)
+VALUES
+(0, 5, NULL, NULL, 0, 'VND', 'Miễn phí ship nếu khoảng cách dưới 5km'),
+(NULL, NULL, 500000, NULL, 0, 'VND', 'Miễn phí ship nếu đơn hàng trên 500k'),
+(5.01, 10, NULL, NULL, 20000, 'VND', 'Phí 20k nếu khoảng cách từ 5-10km'),
+(10.01, 20, 200000, NULL, 15000, 'VND', 'Phí 15k nếu >10km, <20km và >200k'),
+(10.01, 20, NULL, 200000, 30000, 'VND', 'Phí 30k nếu >10km, <20km và <=200k'),
+(20, NULL, NULL, NULL, 1500, 'MUL', 'Phí là 1500/km nếu khoảng cách từ 20km trở lên');
+
+INSERT INTO `shipping_tracking` (`id`, `transaction_id`, `status`, `shipping_fee_rule_id`, `created_at`, `updated_at`, `estimated_delivery`, `callback_url`) VALUES
+(1, 521, 'delivered', 1, '2025-04-16 12:55:17', '2025-04-16 13:15:34', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(2, 520, 'delivered', 1, '2025-04-16 13:16:24', '2025-04-16 13:16:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(3, 510, 'delivered', 2, '2025-04-16 13:20:33', '2025-04-16 13:20:36', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(4, 558, 'delivered', 2, '2025-04-16 13:20:44', '2025-04-16 13:20:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(5, 555, 'delivered', 1, '2025-04-16 13:41:42', '2025-04-16 14:23:25', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(6, 554, 'delivered', 3, '2025-04-16 14:23:40', '2025-04-16 14:24:12', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(7, 556, 'delivered', 2, '2025-04-16 14:24:32', '2025-04-16 14:32:47', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(8, 553, 'delivered', 2, '2025-04-16 14:32:58', '2025-04-16 14:33:04', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(9, 522, 'delivered', 1, '2025-04-16 17:00:44', '2025-04-16 17:01:23', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
+(10, 524, 'delivered', 1, '2025-04-16 17:08:30', '2025-04-16 17:09:14', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook');

@@ -11,6 +11,8 @@ class Order extends MY_Controller
 		$this->load->helper('form');
 		$this->config->load('vnpay'); // Load cấu hình VNPAY
 		$this->load->helper('email');
+		$this->load->model('cart_model');
+		$this->load->model('shipping_rule_model');
 	}
 
 	public function validate_email($to_mail, $to_name, $subject, $body, $altBody)
@@ -24,19 +26,23 @@ class Order extends MY_Controller
 
 	public function index()
 	{
-		$carts = $this->cart->contents();
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			redirect(base_url('/dang-nhap'));
+		}
+		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 		if (empty($carts)) {
 			redirect(base_url('/'));
 			return;
 		}
 
-		$user = $this->session->userdata('user');
 		$this->data['user'] = $user;
 		$total_amount = 0;
 		foreach ($carts as $value) {
-			$total_amount = $total_amount + $value['subtotal'];
+			$total_amount = $total_amount + ($value->price * $value->qty);
 		}
+
 		$this->data['total_amount'] = $total_amount;
 
 		$this->data['temp'] = 'site/order/index.php';
@@ -599,6 +605,30 @@ class Order extends MY_Controller
 					"message" =>  "Cảm ơn quý khách đã mua hàng tại NgocLanShop",
 				], JSON_UNESCAPED_UNICODE);
 			}
+		}
+	}
+
+	public function shipping_fee_rule()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+			header('Content-Type: application/json; charset=utf-8');
+
+			$user = $this->session->userdata('user');
+			if (!$user) {
+				echo json_encode([
+					"status" => "null_user",
+					"message" => "Người dùng không tồn tại!"
+				], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$list = $this->shipping_rule_model->get_list();
+
+			echo json_encode([
+				"status" => "success",
+				"message" => "lấy quy tắc ship thành công",
+				"data" => $list
+			], JSON_UNESCAPED_UNICODE);
 		}
 	}
 

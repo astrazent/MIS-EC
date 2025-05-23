@@ -220,11 +220,11 @@ async function getDistance(fromCoords, toCoords) {
 
 // đổi đơn vị tiền
 function formatCurrency(number) {
-    if (isNaN(number)) {
-        return '0 VND';
-    }
+	if (isNaN(number)) {
+		return "0 VND";
+	}
 
-    return Number(number).toLocaleString('vi-VN') + ' VND';
+	return Number(number).toLocaleString("vi-VN") + " VND";
 }
 
 wards.addEventListener("change", function () {
@@ -254,27 +254,89 @@ wards.addEventListener("change", function () {
 					return Promise.reject("Không tìm thấy tọa độ đích.");
 				}
 			})
-			.then((result) => {
+			.then(async (result) => {
 				// 1. Hiển thị div với class 'shipping-detail' dưới dạng block
 				document.querySelector(".shipping-detail").style.display = "block";
 				// 2. Thay đổi nội dung của distance và fee
-				const shipfee = Math.round(result.distance / 1000) * 2000
-				const itemprice = document.getElementById('totalPrice').dataset.price;
+				const itemprice = document.getElementById("totalPrice").dataset.price;
+				const shipfee = await getShippingFee(Math.round(result.distance/1000), Number(itemprice));
 				const total = Math.round(Number(shipfee) + Number(itemprice));
-				console.log(total);
-				document.querySelector(".distance").textContent = `${Math.round(result.distance / 1000)} km`;
-				document.querySelector(".fee").textContent = `${formatCurrency(shipfee)}`;
+				document.querySelector(".distance").textContent = `${Math.round(
+					result.distance / 1000
+				)} km`;
+				document.querySelector(".fee").textContent = `${formatCurrency(
+					shipfee
+				)}`;
 
 				// Hiển thị dòng phí ship
 				document.querySelector(".shipping").style.display = "flex";
-				document.getElementById("shippingFee").textContent = `${formatCurrency(shipfee)}`;
-				document.getElementById('totalPrice').textContent = `${formatCurrency(total)}`;
+				document.getElementById("shippingFee").textContent = `${formatCurrency(
+					shipfee
+				)}`;
+				document.getElementById("totalPrice").textContent = `${formatCurrency(
+					total
+				)}`;
 			})
 			.catch((err) => {
 				console.error("Lỗi:", err);
 			});
 	}
 });
+
+async function getShippingFee(distance, totalAmount) {
+    try {
+        const response = await fetch("http://localhost:8080/shipping-fee", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        const text = await response.text();
+        const data = JSON.parse(text);
+
+        if (data.status !== "success") {
+            console.error("Lỗi lấy dữ liệu shipping rules");
+            return null;
+        }
+
+        const rules = data.data;
+        let selectedRule = null;
+
+        for (const rule of rules) {
+            const minDist = parseFloat(rule.min_distance_km);
+            const maxDist = parseFloat(rule.max_distance_km);
+            const minAmount = parseFloat(rule.min_order_amount);
+            const maxAmount = parseFloat(rule.max_order_amount);
+
+            const matchDistance =
+                (isNaN(minDist) || distance >= minDist) &&
+                (isNaN(maxDist) || distance <= maxDist);
+
+            const matchAmount =
+                (isNaN(minAmount) || totalAmount >= minAmount) &&
+                (isNaN(maxAmount) || totalAmount <= maxAmount);
+
+            if (matchDistance && matchAmount) {
+                selectedRule = rule;
+                break;
+            }
+        }
+
+        if (selectedRule) {
+            let fee = parseFloat(selectedRule.shipping_fee);
+            if (selectedRule.unit === "MUL") {
+                fee = fee * distance;
+            }
+            return fee;
+        } else {
+            return null; // hoặc 1 giá trị mặc định như 50000
+        }
+    } catch (error) {
+        console.error("Lỗi fetch:", error);
+        return null;
+    }
+}
 
 // Hiệu ứng hiển thị chi tiết phương thức thanh toán
 function highlightPayment(selectedInput) {
