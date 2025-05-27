@@ -161,10 +161,10 @@ class ProductDescriber:
             url = "https://openrouter.ai/api/v1/chat/completions"
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
-                "HTTP-Referer": "http://localhost:5001",
+                "HTTP-Referer": "http://localhost:5002",
                 "X-Title": "Product Description Generator",
                 "Content-Type": "application/json",
-                "Origin": "http://localhost:5001"  # Thêm Origin header để giúp với CORS
+                "Origin": "http://localhost:5002"  # Thêm Origin header để giúp với CORS
             }
             data = {
                 "model": self.model_name,
@@ -432,10 +432,10 @@ class ProductDescriber:
             url = "https://openrouter.ai/api/v1/chat/completions"
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
-                "HTTP-Referer": "http://localhost:5001",
+                "HTTP-Referer": "http://localhost:5002",
                 "X-Title": "Product Description Generator",
                 "Content-Type": "application/json",
-                "Origin": "http://localhost:5001"  # Thêm Origin header để giúp với CORS
+                "Origin": "http://localhost:5002"  # Thêm Origin header để giúp với CORS
             }
             data = {
                 "model": self.model_name,
@@ -1187,6 +1187,6 @@ def analyze_market():
         
 # Chạy ứng dụng
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)
     
     

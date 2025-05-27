@@ -43,7 +43,7 @@ def test_api_connection():
         url = "https://openrouter.ai/api/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {api_key}",
-            "HTTP-Referer": "http://localhost:5001",
+            "HTTP-Referer": "http://localhost:5002",
             "X-Title": "API Connection Test",
             "Content-Type": "application/json"
         }

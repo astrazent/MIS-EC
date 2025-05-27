@@ -12,13 +12,8 @@ RUN a2enmod rewrite
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
     sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
 
-<<<<<<< HEAD
-# Thêm cấu hình để cho phép sử dụng .htaccess trong thư mục public
-RUN echo '<Directory /var/www/html/webquanao/public>\n    AllowOverride All\n</Directory>' >> /etc/apache2/sites-available/000-default.conf
-=======
 # Thêm cấu hình để cho phép sử dụng .htaccess trong thư mục gốc và public
 RUN echo '<Directory /var/www/html>\n    AllowOverride All\n</Directory>\n<Directory /var/www/html/public>\n    AllowOverride All\n</Directory>' >> /etc/apache2/sites-available/000-default.conf
->>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 
 # Thiết lập thư mục lưu session
 RUN mkdir -p /var/www/html/sessions && \

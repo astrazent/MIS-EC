@@ -15,6 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy toàn bộ mã nguồn vào container
 COPY . .
-EXPOSE 5001
+EXPOSE 5002
 # Chạy ứng dụng Flask
 CMD ["python", "app.py"]

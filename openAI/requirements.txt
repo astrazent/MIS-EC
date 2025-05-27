@@ -11,3 +11,4 @@ google-cloud-vision
 requests
 werkzeug
 flask-cors
+openai

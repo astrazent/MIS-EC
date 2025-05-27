@@ -17,7 +17,7 @@ if (isset($data['panel_title'])) {
 }
 
 // Gọi đến container OpenAI
-$openai_url = 'http://openai:5001/api/market/analyze'; // Sử dụng tên service trong docker-compose
+$openai_url = 'http://openai:5002/api/market/analyze'; // Sử dụng tên service trong docker-compose
 
 $ch = curl_init($openai_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

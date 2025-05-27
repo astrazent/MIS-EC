@@ -58,8 +58,6 @@ services:
             - ./openAI:/app
         env_file:
             - ./openAI/.env
-        networks:
-            - webquanao_network
 
 
 volumes:
