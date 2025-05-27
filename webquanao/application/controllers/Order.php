@@ -10,34 +10,136 @@ class Order extends MY_Controller
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 		$this->config->load('vnpay'); // Load cấu hình VNPAY
+		$this->load->helper('email');
+		$this->load->model('cart_model');
+		$this->load->model('shipping_rule_model');
 	}
 
-	// Helper function to check if the request is AJAX
-	private function input_is_ajax_request() {
-		return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+	public function validate_email($to_mail, $to_name, $subject, $body, $altBody)
+	{
+		if (send_email($to_mail, $to_name, $subject, $body, $altBody)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function index()
 	{
-		$carts = $this->cart->contents();
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			redirect(base_url('/dang-nhap'));
+		}
+		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 		if (empty($carts)) {
 			redirect(base_url('/'));
 			return;
 		}
 
+		$this->data['user'] = $user;
 		$total_amount = 0;
 		foreach ($carts as $value) {
-			$total_amount = $total_amount + $value['subtotal'];
+			$total_amount = $total_amount + ($value->price * $value->qty);
 		}
-		$this->data['total_amount'] = $total_amount;
 
-		// Make sure user data is explicitly set
-		$user = $this->session->userdata('user');
-		$this->data['user'] = $user;
+		$this->data['total_amount'] = $total_amount;
 
 		$this->data['temp'] = 'site/order/index.php';
 		$this->load->view('site/layoutsub', $this->data);
+	}
+
+	public function sending_mail($email, $total_amount, $payment, $formatted_time)
+	{
+		$validation_email = $this->validate_email(
+			$email,
+			$email,
+			'Xác thực Email - Quần áo Ngọc Lan',
+			"
+				<!DOCTYPE html>
+				<html lang='vi'>
+				<head>
+				<meta charset='UTF-8'>
+				<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+				<title>Thông báo thanh toán</title>
+				<style>
+					body {
+					font-family: Arial, sans-serif;
+					background-color: #f4f4f4;
+					margin: 0;
+					padding: 0;
+					}
+					.email-container {
+					width: 100%;
+					max-width: 600px;
+					margin: 0 auto;
+					background-color: #ffffff;
+					padding: 20px;
+					border-radius: 8px;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					}
+					.header {
+					text-align: center;
+					margin-bottom: 20px;
+					}
+					.header h1 {
+					color: #007bff;
+					font-size: 24px;
+					}
+					.content {
+					font-size: 16px;
+					color: #333;
+					line-height: 1.6;
+					}
+					.content p {
+					margin: 10px 0;
+					}
+					.footer {
+					text-align: center;
+					font-size: 14px;
+					color: #777;
+					margin-top: 20px;
+					}
+					.footer a {
+					color: #007bff;
+					text-decoration: none;
+					}
+				</style>
+				</head>
+				<body>
+
+				<div class='email-container'>
+					<div class='header'>
+					<h1>Thông báo thanh toán thành công</h1>
+					</div>
+					<div class='content'>
+					<p>Chào bạn,</p>
+					<p>Chúng tôi xin thông báo rằng bạn đã thanh toán thành công đơn hàng có giá trị <strong>$total_amount VNĐ</strong> với phương thức thanh toán: <strong>$payment</strong> vào lúc: <strong>$formatted_time</strong>.</p>
+					<p>Shop quần áo Ngọc Lan xin chân thành cảm ơn bạn đã lựa chọn và tin tưởng sản phẩm của chúng tôi. Chúng tôi hy vọng bạn sẽ hài lòng với đơn hàng của mình!</p>
+					</div>
+					<div class='footer'>
+					<p>Để biết thêm thông tin, vui lòng truy cập website của chúng tôi: <a href='http://localhost:8080/'>www.quanaongoclan.com</a></p>
+					</div>
+				</div>
+
+				</body>
+				</html>
+				",
+			"
+				Tiêu đề: Xác nhận thay đổi mật khẩu
+
+				Nội dung:
+
+				<p>Xin chào,</p>
+				<p>Chúng tôi rất vui khi thông báo rằng bạn đã hoàn tất thanh toán cho đơn hàng có giá trị <strong>$total_amount</strong>. Đơn hàng của bạn đã được thanh toán thông qua phương thức <strong>$payment</strong> vào lúc <strong>$formatted_time</strong>.</p>
+				<p>Chúng tôi chân thành cảm ơn sự tin tưởng và lựa chọn của bạn. Đội ngũ Ngọc Lan rất mong bạn sẽ hài lòng với sản phẩm của mình và sẽ tiếp tục đồng hành cùng chúng tôi trong những lần mua sắm tiếp theo.</p>
+				<p>Nếu bạn có bất kỳ thắc mắc nào về đơn hàng, vui lòng liên hệ với chúng tôi qua email hoặc điện thoại hỗ trợ.</p>
+				"
+		);
+		if (!$validation_email) {
+			return false;
+		}
+		return true;
 	}
 
 	// Khởi tạo thanh toán
@@ -46,7 +148,17 @@ class Order extends MY_Controller
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Content-Type: application/json;');
 
-			$carts = $this->cart->contents();
+			$user = $this->session->userdata('user');
+			if (!isset($user)) {
+				redirect(base_url('/dang-nhap'));
+			}
+
+			if (!$user) {
+				echo json_encode(["status" => "error", "message" => "Người dùng không tồn tại"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 			if (empty($carts)) {
 				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
@@ -54,7 +166,7 @@ class Order extends MY_Controller
 			}
 			$total_amount = 0;
 			foreach ($carts as $value) {
-				$total_amount = $total_amount + $value['subtotal'];
+				$total_amount = $total_amount + ($value->qty * $value->price);
 			}
 
 			// Nhận dữ liệu JSON từ request
@@ -67,7 +179,6 @@ class Order extends MY_Controller
 			}
 			$this->session->set_userdata('formData', $data);
 
-			date_default_timezone_set('Asia/Ho_Chi_Minh');
 			$vnp_TmnCode = $this->config->item('vnp_TmnCode');
 			$vnp_HashSecret = $this->config->item('vnp_HashSecret');
 			$vnp_Url = $this->config->item('vnp_Url');
@@ -151,14 +262,18 @@ class Order extends MY_Controller
 
 	public function saveOrder()
 	{
-		$carts = $this->cart->contents();
+		$user = $this->session->userdata('user');
+		if (!isset($user)) {
+			redirect(base_url('/dang-nhap'));
+		}
+
+		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 		if (empty($carts)) {
 			log_message('error', "Giỏ hàng trống");
 			return false;
 		}
 
-		$user_id = 0;
 		if ($this->session->userdata('user')) {
 			$user = $this->session->userdata('user');
 			$user_id = $user->id;
@@ -166,7 +281,7 @@ class Order extends MY_Controller
 
 		$total_amount = 0;
 		foreach ($carts as $value) {
-			$total_amount = $total_amount + $value['subtotal'];
+			$total_amount = $total_amount + ($value->qty * $value->price);
 		}
 
 		$formData = $this->session->userdata('formData');
@@ -207,17 +322,21 @@ class Order extends MY_Controller
 			return false;
 		}
 		$data_saved = array();
+		$time = date('Y-m-d H:i:s');
 		$data_saved = array(
 			'user_id' => $user_id, // Nếu chưa đăng nhập, user_id = 0
 			'status' => 1,
 			'user_name' => $formData['name'],
 			'user_email' => $formData['email'],
 			'user_address' => $formData['address'],
+			'user_city' => $formData['city'],
+			'user_district' => $formData['district'],
+			'user_ward' => $formData['ward'],
 			'user_phone' => $formData['phone'],
 			'message' => $formData['message'] ?? '',
 			'amount' => $total_amount,
 			'payment' => $formData['payment'] ?? '',
-			'created' => date('Y-m-d H:i:s')
+			'created' => $time
 		);
 
 		$this->db->trans_start(); // Bắt đầu Transaction
@@ -237,9 +356,9 @@ class Order extends MY_Controller
 			$data_saved = array();
 			$data_saved = array(
 				'transaction_id' => $transaction_id,
-				'product_id' => $items['id'],
-				'qty' => $items['qty'],
-				'amount' => $items['subtotal']
+				'product_id' => $items->product_id,
+				'qty' => $items->qty,
+				'amount' => $items->qty * $items->price
 			);
 			$order_info = $this->order_model->create($data_saved);
 
@@ -250,7 +369,17 @@ class Order extends MY_Controller
 			}
 		}
 
-		$this->cart->destroy();
+		$email = $user->email;
+		$payment = $formData['payment'];
+		$formatted_time = date('d/m/Y H:i:s', strtotime($time));
+
+		if (!$this->sending_mail($email, $total_amount, $payment, $formatted_time)) {
+			$this->db->trans_rollback();
+			echo json_encode(["status" => "error", "message" => "Gửi mail thất bại", "errors" => "Rollback transaction"], JSON_UNESCAPED_UNICODE);
+			return;
+		}
+
+		$this->cart_model->del_rule(['user_id' => $user->id]);
 
 		// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 		$this->db->trans_complete();
@@ -301,7 +430,7 @@ class Order extends MY_Controller
 		// Kiểm tra chữ ký bảo mật
 		if ($checkSum === $secureHash) {
 			if ($inputData['vnp_ResponseCode'] == '00') {
-				if(!$this->saveOrder()){
+				if (!$this->saveOrder()) {
 					$this->data['error_message'] = "Lưu vào DB thất bại.";
 				}
 				$this->data['status'] = "Giao dịch thành công!";
@@ -321,52 +450,32 @@ class Order extends MY_Controller
 	public function complete()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$carts = $this->cart->contents();
+			header('Content-Type: application/json;');
+			$user = $this->session->userdata('user');
+			if (!$user) {
+				echo json_encode(["status" => "null_user", "message" => "Người dùng không tồn tại!"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 			if (empty($carts)) {
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(400);
-					echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
-					return;
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('error', 'Giỏ hàng trống');
-					redirect(base_url('/'));
-					return;
-				}
+				echo json_encode(["status" => "error", "message" => "Giỏ hàng trống"], JSON_UNESCAPED_UNICODE);
+				return;
 			}
 
-			$user_id = 0;
-			if ($this->session->userdata('user')) {
-				$user = $this->session->userdata('user');
-				$user_id = $user->id;
-			}
+			$user = $this->session->userdata('user');
+			$user_id = $user->id;
 
 			$total_amount = 0;
 			foreach ($carts as $value) {
-				$total_amount = $total_amount + $value['subtotal'];
+				$total_amount = $total_amount + ($value->qty * $value->price);
 			}
 
-			// Get data from either JSON or form POST
-			if ($this->input_is_ajax_request()) {
-				// JSON data
-				$data = json_decode(file_get_contents("php://input"), true);
-			} else {
-				// Form POST data
-				$data = $this->input->post();
-			}
-			
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
 			// Kiểm tra nếu không có dữ liệu
 			if (!$data) {
-				if ($this->input_is_ajax_request()) {
-					header('Content-Type: application/json; charset=utf-8');
-					echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
-				} else {
-					$this->session->set_flashdata('error', 'Không nhận được dữ liệu đơn hàng');
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Không nhận được dữ liệu"], JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
@@ -403,30 +512,25 @@ class Order extends MY_Controller
 
 			// Nếu có lỗi, trả về danh sách lỗi
 			if (!empty($errors)) {
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(400);
-					echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('errors', $errors);
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ", "errors" => $errors],  JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
 			$data_saved = array();
+			$time = date('Y-m-d H:i:s');
 			$data_saved = array(
 				'user_id' => $user_id, // Nếu chưa đăng nhập, user_id = 0
 				'user_name' => $data['name'],
 				'user_email' => $data['email'],
 				'user_address' => $data['address'],
+				'user_city' => $data['city'],
+				'user_district' => $data['district'],
+				'user_ward' => $data['ward'],
 				'user_phone' => $data['phone'],
 				'message' => $data['message'] ?? '',
 				'amount' => $total_amount,
 				'payment' => $data['payment'] ?? '',
-				'created' => date('Y-m-d H:i:s')
+				'created' => $time
 			);
 
 			$this->db->trans_start(); // Bắt đầu Transaction
@@ -437,91 +541,106 @@ class Order extends MY_Controller
 			// Kiểm tra nếu không lấy được ID thì rollback
 			if (!$transaction_id) {
 				$this->db->trans_rollback();
-				if ($this->input_is_ajax_request()) {
-					// For AJAX requests
-					header('Content-Type: application/json; charset=utf-8');
-					http_response_code(500);
-					echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
-				} else {
-					// For form submissions
-					$this->session->set_flashdata('error', 'Đặt hàng thất bại. Vui lòng thử lại sau.');
-					redirect(base_url('order'));
-				}
+				echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
 				return;
 			}
 
 			$this->load->model('order_model');
+
+			$total_amount = 0; // Biến để lưu tổng giá trị đơn hàng
 			foreach ($carts as $items) {
 				$data_saved = array();
 				$data_saved = array(
 					'transaction_id' => $transaction_id,
-					'product_id' => $items['id'],
-					'qty' => $items['qty'],
-					'amount' => $items['subtotal']
+					'product_id' => $items->product_id,
+					'qty' => $items->qty,
+					'amount' => $items->qty * $items->price
 				);
 				$order_info = $this->order_model->create($data_saved);
 
+				// Cộng dồn giá trị sản phẩm vào tổng giá trị đơn hàng
+				$total_amount += ($items->qty * $items->price);
+
 				if (!$order_info) {
 					$this->db->trans_rollback();
-					if ($this->input_is_ajax_request()) {
-						// For AJAX requests
-						header('Content-Type: application/json; charset=utf-8');
-						http_response_code(500);
-						echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
-					} else {
-						// For form submissions
-						$this->session->set_flashdata('error', 'Đặt hàng thất bại. Vui lòng thử lại sau.');
-						redirect(base_url('order'));
-					}
+					echo json_encode(["status" => "error", "message" => "Đặt hàng thất bại", "errors" => "Rollback transaction"], JSON_UNESCAPED_UNICODE);
 					return;
 				}
 			}
 
-			$this->cart->destroy();
+			// Gửi mail xác nhận đơn hàng
+			$user = $this->session->userdata('user');
+			if (!isset($user)) {
+				$this->db->trans_rollback();
+				echo json_encode(["status" => "error", "message" => "User không tồn tại", "errors" => "Rollback transaction"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			$email = $user->email;
+			$payment = $data['payment'];
+			$formatted_time = date('d/m/Y H:i:s', strtotime($time));
+
+			if (!$this->sending_mail($email, $total_amount, $payment, $formatted_time)) {
+				$this->db->trans_rollback();
+				echo json_encode(["status" => "error", "message" => "Gửi mail thất bại", "errors" => "Rollback transaction"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$this->cart_model->del_rule(['user_id' => $user->id]);
 
 			// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 			$this->db->trans_complete();
 
-			// Create success message based on payment type
-			$message = "Cảm ơn quý khách đã mua hàng tại NgocLanShop";
-			if($data['payment'] == 'cash'){
-				$message = "Đơn vị giao hàng sẽ giao tới nhà bạn trong thời gian tới";
-			} elseif($data['payment'] == 'vietqr'){
-				$message = "Chúng tôi sẽ kiểm tra thông tin chuyển khoản và chuyển tới nhà bạn trong thời gian tới";
-			} elseif($data['payment'] == 'pos') {
-				$message = "Chúng tôi sẽ mang máy pos và hàng tới nhà bạn trong thời gian tới";
-			}
-			
-			// Respond appropriately based on request type
-			if ($this->input_is_ajax_request()) {
-				// For AJAX requests
-				header('Content-Type: application/json; charset=utf-8');
+			// Trả về JSON phản hồi
+			if ($data['payment'] == 'cash') {
 				echo json_encode([
 					"status" => "success",
-					"message" => $message,
+					"message" =>  "Đơn vị giao hàng sẽ giao tới nhà bạn trong thời gian tới",
+				], JSON_UNESCAPED_UNICODE);
+			} elseif ($data['payment'] == 'vietqr') {
+				echo json_encode([
+					"status" => "success",
+					"message" =>  "Chúng tôi sẽ kiểm tra thông tin chuyển khoản và chuyển tới nhà bạn trong thời gian tới ",
+				], JSON_UNESCAPED_UNICODE);
+			} elseif ($data['payment'] == 'pos') {
+				echo json_encode([
+					"status" => "success",
+					"message" =>  "Chúng tôi sẽ mang máy pos và hàng tới nhà bạn trong thời gian tới",
 				], JSON_UNESCAPED_UNICODE);
 			} else {
-				// For form submissions
-				$this->session->set_flashdata('success', $message);
-				redirect(base_url('/'));
+				echo json_encode([
+					"status" => "success",
+					"message" =>  "Cảm ơn quý khách đã mua hàng tại NgocLanShop",
+				], JSON_UNESCAPED_UNICODE);
 			}
 		}
 	}
 
-	public function sepay(){
+	public function shipping_fee_rule()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+			header('Content-Type: application/json; charset=utf-8');
 
-		redirect(base_url('/'));
+			$user = $this->session->userdata('user');
+			if (!$user) {
+				echo json_encode([
+					"status" => "null_user",
+					"message" => "Người dùng không tồn tại!"
+				], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$list = $this->shipping_rule_model->get_list();
+
+			echo json_encode([
+				"status" => "success",
+				"message" => "lấy quy tắc ship thành công",
+				"data" => $list
+			], JSON_UNESCAPED_UNICODE);
+		}
 	}
 
-	// Handle OPTIONS requests for CORS compatibility
-	public function options()
+	public function sepay()
 	{
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-		header('Access-Control-Allow-Headers: Content-Type');
-		header('Access-Control-Max-Age: 1728000');
-		header('Content-Length: 0');
-		header('Content-Type: text/plain');
-		exit(0);
+		redirect(base_url('/'));
 	}
 }

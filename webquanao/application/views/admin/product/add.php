@@ -76,6 +76,8 @@
 					<label for="inputEmail3" class="col-sm-2 control-label">Chi tiết</label>
 					<div class="col-sm-8">
 				      <textarea class="form-control" rows="3" name="content" id='content'><?php echo set_value('content'); ?></textarea>
+				      <div class="mt-2" id="ai-status"></div>
+				      <button type="button" id="generate-ai-description" class="btn btn-info mt-2">Tạo mô tả AI</button>
 				    </div>
 				  </div>
       				<script>CKEDITOR.replace('content');</script>

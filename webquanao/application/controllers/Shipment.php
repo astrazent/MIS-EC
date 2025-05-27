@@ -358,7 +358,6 @@ class Shipment extends MY_Controller
             } else if ($order->status == 4) {
                 $status_text = 'Đã hủy';
             }
-
             // Parse product details to create detailed product list
             $products = [];
             $product_ids_array = [];
@@ -381,7 +380,6 @@ class Shipment extends MY_Controller
                     }
                 }
             }
-
             // Get recommended products based on current order
             $recommended_products = [];
             if (!empty($product_ids_array)) {
@@ -411,7 +409,6 @@ class Shipment extends MY_Controller
                     }
                 }
             }
-
             // Format the response
             $response = [
                 'status' => 'success',

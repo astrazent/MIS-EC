@@ -88,3 +88,15 @@ $route['api/shipping/webhook'] = 'api/Shipping/webhook';
 
 // Admin shipping routes
 $route['admin/shipping/confirm_delivery/(:any)'] = 'admin/shipping/confirm_delivery/$1';
+//update-delete-infomation-user
+$route['update-info'] = 'user/update_info';
+$route['delete-info'] = 'user/delete_info';
+
+//Read address info file
+$route['api/read-json'] = 'DiaGioiHanhChinhVN';
+
+// Check password
+$route['check-password'] = 'user/checkpassword';
+
+//shipping fee rule
+$route['shipping-fee'] = 'order/shipping_fee_rule';

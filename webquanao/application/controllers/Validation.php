@@ -78,13 +78,33 @@ class Validation extends MY_Controller
             return;
         }
 
+        // Dùng để đánh dấu thời điểm đổi mật khẩu phục vụ changepassword
         $password = $payload['data']['password'];
+        $id = $payload['data']['id'];
+
+        $is_verified = $this->user_model->get_info_rule(['id' => $id], 'is_verified');
+        $is_verified = $is_verified->is_verified;
+        if($is_verified == 1){
+            $this->data['status'] = false;
+            $this->data['message'] = 'already_use';
+            $this->load->view('site/validation/changepassword', $this->data);
+            return;
+        }
+
+        if ($id !== null) {
+            $temp = array(
+                'is_verified' => 1,
+                'date_modified' => date('Y-m-d H:i:s') // Lấy thời gian hiện tại
+            );
+            $this->user_model->update($id, $temp);
+        }
 
         $data = array(
             'password' => md5($password)
         );
 
-        if (!$this->user_model->update($payload['data']['id'], $data)) {
+        // Cập nhật mật khẩu
+        if (!$this->user_model->update($id, $data)) {
             $this->data['status'] = false;
             $this->data['message'] = 'update_fail';
             $this->load->view('site/validation/changepassword', $this->data);

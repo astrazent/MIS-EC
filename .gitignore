@@ -3,3 +3,12 @@ python_AI/app/logs
 python_AI/app/data
 webquanao/application/logs
 webquanao/sessions/*
+webquanao/.env.private
+.todo
+.todo-example
+someUssualBug.txt
+dockerCommonUse.txt
+webquanao/sessionsopenAI/application/config/visionai-455510-509eb91c20be.json
+openAI/application/config/vision-key.json
+# Google Cloud Credentials
+openAI/application/config/vision*.json

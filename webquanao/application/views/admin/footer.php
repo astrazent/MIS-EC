@@ -5,6 +5,10 @@
 	<script src="<?php echo public_url('admin/'); ?>js/easypiechart.js"></script>
 	<script src="<?php echo public_url('admin/'); ?>js/easypiechart-data.js"></script>
 	<script src="<?php echo public_url('admin/'); ?>js/bootstrap-datepicker.js"></script>
+	<!-- Script cho chức năng tạo mô tả AI -->
+	<script src="<?php echo public_url('admin/'); ?>js/product-ai.js"></script>
+	<!-- Script cho chức năng phân tích AI -->
+	<script src="<?php echo public_url('admin/'); ?>js/analysis-ai.js"></script>
 	<script>
 		$(document).ready(function($) {
 			$("#logout").click(function(e){

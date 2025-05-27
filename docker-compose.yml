@@ -46,5 +46,19 @@ services:
         volumes:
             - ./python_AI:/app
 
+    openai:
+        build:
+            context: ./openAI
+            dockerfile: Dockerfile
+        container_name: openai
+        restart: always
+        ports:
+            - "5002:5002"
+        volumes:
+            - ./openAI:/app
+        env_file:
+            - ./openAI/.env
+
+
 volumes:
   mariadb_data:

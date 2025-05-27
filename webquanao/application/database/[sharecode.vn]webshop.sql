@@ -26,6 +26,15 @@ SET GLOBAL default_storage_engine = InnoDB; -- chuyển CSDL về dạng InnoDB 
 --
 -- Table structure for table `admin`
 --
+<<<<<<< HEAD
+DROP TABLE IF EXISTS `admin`; 
+DROP TABLE IF EXISTS `catalog`;     
+DROP TABLE IF EXISTS `order`;       
+DROP TABLE IF EXISTS `transaction`; 
+DROP TABLE IF EXISTS `product`;     
+DROP TABLE IF EXISTS `slider`;      
+DROP TABLE IF EXISTS `user`;        
+=======
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `catalog`;
 DROP TABLE IF EXISTS `order`;
@@ -33,6 +42,8 @@ DROP TABLE IF EXISTS `product`;
 DROP TABLE IF EXISTS `slider`;
 DROP TABLE IF EXISTS `transaction`;
 DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `comments`;
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(11) NOT NULL,
@@ -218,6 +229,12 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `user_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_phone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+<<<<<<< HEAD
+  `user_city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_ward` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+=======
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
   `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payment` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -254,6 +271,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+<<<<<<< HEAD
+  `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+=======
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
   `created` DATETIME NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -267,6 +290,18 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `phone`, `address`, `crea
 (2, 'Trần Thị B', 'tranthib@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0912345678', 'Hồ Chí Minh', '2025-01-07 7:18:54'),
 (3, 'Lê Văn C', 'levanc@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0908765432', 'Đà Nẵng', '2025-08-12 17:08:24');
 
+<<<<<<< HEAD
+=======
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  `rate` TINYINT(1) NOT NULL CHECK (`rate` BETWEEN 0 AND 5),
+  `comment_content` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created` INT(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 --
 -- Indexes for dumped tables
 --
