@@ -8,6 +8,7 @@ class Shipment extends MY_Controller
         parent::__construct();
         $this->load->model('transaction_model');
         $this->load->library('pagination');
+		$this->load->model('product_model');
     }
 
     public function index()
@@ -140,8 +141,22 @@ class Shipment extends MY_Controller
                 $purchased_product_ids = array_unique($purchased_product_ids);
                 
                 // Get popular products excluding what the user has already purchased
-                $this->db->select('product.id, product.name, product.price, product.discount, product.image_link');
-                $this->db->from('product');
+                $this->db->select('product.*', false);
+				$this->db->select('
+					CASE
+						WHEN discount.status = 1 
+							AND product.price >= discount.min_price 
+							AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+							CASE
+								WHEN discount.measure = 0 THEN discount.value
+								WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+								ELSE 0
+							END
+						ELSE 0
+					END AS discount
+				', false);
+				$this->db->from('product');
+				$this->db->join('discount', 'product.discount_id = discount.id', 'left');
                 $this->db->where_not_in('product.id', $purchased_product_ids);
                 $this->db->order_by('product.buyed', 'DESC');
                 $this->db->limit(5);
@@ -168,8 +183,22 @@ class Shipment extends MY_Controller
                 }
             } else {
                 // If no purchase history, just show popular products
-                $this->db->select('product.id, product.name, product.price, product.discount, product.image_link');
-                $this->db->from('product');
+                $this->db->select('product.*', false);
+				$this->db->select('
+					CASE
+						WHEN discount.status = 1 
+							AND product.price >= discount.min_price 
+							AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+							CASE
+								WHEN discount.measure = 0 THEN discount.value
+								WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+								ELSE 0
+							END
+						ELSE 0
+					END AS discount
+				', false);
+				$this->db->from('product');
+				$this->db->join('discount', 'product.discount_id = discount.id', 'left');
                 $this->db->order_by('product.buyed', 'DESC');
                 $this->db->limit(5);
                 
@@ -267,24 +296,37 @@ class Shipment extends MY_Controller
             echo json_encode(['status' => 'error', 'message' => 'User not authenticated']);
             return;
         }
-        
+
         try {
             // Get transaction details
             $this->db->select('
-                transaction.*,
-                GROUP_CONCAT(DISTINCT product.name SEPARATOR ", ") AS product_names,
-                GROUP_CONCAT(DISTINCT product.id SEPARATOR ",") AS product_ids,
-                GROUP_CONCAT(DISTINCT CONCAT(product.id, ":", product.image_link, ":", order.qty, ":", product.price) SEPARATOR "|") AS product_details
-            ');
-            $this->db->from('transaction');
-            $this->db->join('order', 'transaction.id = order.transaction_id', 'left');
-            $this->db->join('product', 'order.product_id = product.id', 'left');
-            $this->db->where('transaction.id', $transaction_id);
-            $this->db->where('transaction.user_email', $user->email); // Security: ensure user owns this order
-            $this->db->group_by('transaction.id');
+				transaction.*,
+				GROUP_CONCAT(DISTINCT product.name SEPARATOR ", ") AS product_names,
+				GROUP_CONCAT(DISTINCT product.id SEPARATOR ",") AS product_ids,
+				GROUP_CONCAT(DISTINCT CONCAT(product.id, ":", product.name, ":", product.image_link, ":", order.qty, ":", product.price, ":", 
+					CASE
+						WHEN discount.status = 1 
+							AND product.price >= discount.min_price 
+							AND NOW() BETWEEN discount.start_date AND discount.end_date THEN
+							CASE
+								WHEN discount.measure = 0 THEN discount.value
+								WHEN discount.measure = 1 THEN product.price * (discount.value / 100)
+								ELSE 0
+							END
+						ELSE 0
+					END
+				, ":", order.status) SEPARATOR "|") AS product_details
+			', false);
+			$this->db->from('transaction');
+			$this->db->join('order', 'transaction.id = order.transaction_id', 'left');
+			$this->db->join('product', 'order.product_id = product.id', 'left');
+			$this->db->join('discount', 'product.discount_id = discount.id', 'left');
+			$this->db->where('transaction.id', $transaction_id);
+			$this->db->where('transaction.user_email', $user->email); // Security: ensure user owns this order
+			$this->db->group_by('transaction.id');
             
             $order = $this->db->get()->row();
-            
+
             if (!$order) {
                 echo json_encode(['status' => 'error', 'message' => 'Order not found']);
                 return;
@@ -316,7 +358,7 @@ class Shipment extends MY_Controller
             } else if ($order->status == 4) {
                 $status_text = 'Đã hủy';
             }
-            
+
             // Parse product details to create detailed product list
             $products = [];
             $product_ids_array = [];
@@ -327,30 +369,31 @@ class Shipment extends MY_Controller
                     if (count($parts) >= 4) {
                         $products[] = [
                             'id' => $parts[0],
-                            'image' => $parts[1],
-                            'quantity' => $parts[2],
-                            'price' => $parts[3],
-                            'subtotal' => $parts[2] * $parts[3]
+							'name' => $parts[1],
+                            'image' => $parts[2],
+                            'quantity' => $parts[3],
+                            'price' => $parts[4],
+							'discount' => $parts[5],
+							'status' => $parts[6],
+                            'subtotal' => $parts[3] * ($parts[4] - $parts[5])
                         ];
                         $product_ids_array[] = $parts[0];
                     }
                 }
             }
-            
+
             // Get recommended products based on current order
             $recommended_products = [];
             if (!empty($product_ids_array)) {
                 // Get popular products excluding what's in the current order
-                $this->db->select('product.id, product.name, product.price, product.discount, product.image_link');
-                $this->db->from('product');
-                $this->db->where_not_in('product.id', $product_ids_array);
-                $this->db->order_by('product.buyed', 'DESC');
-                $this->db->limit(4);
+                $input = array();
+				$input['order'] = array('buyed', 'DESC');
+				$input['limit'] = array('4','0');
+				$input['where_not_in'] = array('id', $product_ids_array);
+				$products_recommended = $this->product_model->get_products_with_discount($input);
                 
-                $query = $this->db->get();
-                
-                if ($query->num_rows() > 0) {
-                    foreach ($query->result() as $row) {
+                if (!empty($products_recommended)) {
+                    foreach ($products_recommended as $row) {
                         $price = $row->price;
                         if ($row->discount > 0) {
                             $price = $row->price - $row->discount;
@@ -368,7 +411,7 @@ class Shipment extends MY_Controller
                     }
                 }
             }
-            
+
             // Format the response
             $response = [
                 'status' => 'success',

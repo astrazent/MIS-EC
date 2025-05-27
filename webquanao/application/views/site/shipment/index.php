@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
     <div class="panel panel-info" style="margin-bottom: 15px">
         <div class="panel-heading">
@@ -132,11 +136,6 @@
                                             <i class="glyphicon glyphicon-remove"></i> Hủy
                                         </a>
                                         <?php endif; ?>
-                                        <?php if($order->status == 3): // Only show review button for completed orders ?>
-                                        <a href="#" class="btn btn-xs btn-success review-order" data-id="<?php echo $order->transaction_id; ?>">
-                                            <i class="glyphicon glyphicon-star"></i> Đánh giá
-                                        </a>
-                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>
@@ -216,6 +215,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h4>
+			</div>
+			<div class="modal-body">
+				<form id="ratingForm">
+					<input type="hidden" id="ratingOrderId" name="order_id">
+					<div class="form-group">
+						<label for="ratingStars">Chọn số sao:</label>
+						<div id="ratingStars" class="raty"></div>
+						<input type="hidden" id="ratingScore" name="score">
+					</div>
+					<div class="form-group">
+						<label for="ratingComment">Bình luận:</label>
+						<textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Bootstrap Modal for Order Details -->
 <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel">
     <div class="modal-dialog" role="document">
@@ -271,9 +298,10 @@
             e.preventDefault();
             
             const orderId = $(this).data("id");
+			console.log("Order ID:", orderId);
             
             // Show loading indicator in modal
-            $("#order-details-content").html('<div class="text-center"><i class="glyphicon glyphicon-refresh"></i> Đang tải dữ liệu...</div>');
+			$("#order-details-content").html('<div class="text-center"><i class="glyphicon glyphicon-refresh"></i> Đang tải dữ liệu...</div>');
             $("#orderDetailsModal").modal("show");
             
             // Fetch order details via AJAX
@@ -461,11 +489,41 @@
                 </div>
                 
                 <div class="order-products-list">
-                    <h5><strong>Danh sách sản phẩm</strong></h5>
-                    <div id="order-products">
-                        <p>${order.products || ''}</p>
-                    </div>
-                </div>
+					<h5><strong>Danh sách sản phẩm</strong></h5>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Sản phẩm</th>
+								<th>Số lượng</th>
+								<th>Tổng giá</th>
+								<th>Thao tác</th>
+							</tr>
+						</thead>
+						<tbody id="order-products">
+							${order.product_details.map(product => `
+								<tr>
+									<td>${product.id}</td>
+									<td>
+										<div class="order-products">
+											<img src="${baseUrl + 'upload/product/' + product.image}" 
+												class="img-thumbnail" alt="Product Image" style="width: 50px; margin-right: 10px;">
+											<div>
+												<div class="product-names">${product.name}</div>
+											</div>
+										</div>
+									</td>
+									<td>${product.quantity}</td>
+									<td>${product.subtotal} VNĐ</td>
+									<td>
+										${product.status == 0
+											? `<button class="btn btn-success btn-sm review-product" data-id="${product.id}"><i class="glyphicon glyphicon-star"></i> Đánh giá</button>` 
+											: `<span class="text-muted">Đã đánh giá</span>`}
+									</td>
+								</tr>`).join('')}
+						</tbody>
+					</table>
+				</div>
                 
                 <div class="order-total">
                     <h4 class="text-right">Tổng cộng: <strong>${order.total_amount || '0'} VNĐ</strong></h4>
@@ -475,7 +533,98 @@
             // Replace the entire content at once
             $("#order-details-content").html(detailsHTML);
             $("#orderDetailsModal .modal-title").text("Chi tiết đơn hàng #" + order.id);
-        }
+
+			// Gắn sự kiện cho nút "Đánh giá"
+			$(".review-product").on("click", function () {
+				const productId = $(this).data("id");
+				const productName = $(this).closest("tr").find(".product-names").text();
+
+				$("#ratingModalLabel").text(`Đánh giá sản phẩm: ${productName}`);
+				$("#ratingForm").data("product-id", productId);
+				$("#ratingForm").data("order-id", order.id);
+
+				$("#orderDetailsModal").modal("hide");
+				$("#ratingModal").modal("show");
+
+				$('#ratingForm').off('submit').on('submit', function (e) {
+					e.preventDefault();
+					const productId = $(this).data("product-id");
+					const orderId = $(this).data("order-id");
+					const score = $('#ratingScore').val();
+					const comment = $('#ratingComment').val();
+					
+					console.log("Submitting rating for product ID:", productId);
+					console.log("Order ID:", orderId);
+					console.log("Rating score:", score);
+					console.log("Comment:", comment);
+
+					if (!score) {
+						alert('Vui lòng chọn số sao!');
+						return;
+					}
+
+					$.ajax({
+						url: '<?php echo base_url('product/submit_rating'); ?>',
+						type: 'POST',
+						data: {
+							id: productId,
+							score: score,
+							comment: comment,
+							order_id: orderId
+						},
+						dataType: 'json',
+						success: function (response) {
+							console.log(response.message);
+							if (response.success) {
+								alert('Cảm ơn bạn đã đánh giá sản phẩm.');
+								$("#ratingModal").modal("hide");
+								
+								const orderId = $("#ratingForm").data("order-id");
+								$.ajax({
+									url: "<?php echo base_url('shipment/get_order_details/') ?>" + orderId,
+									type: "GET",
+									dataType: "json",
+									success: function (response) {
+										if (response && response.status === "success") {
+											const order = response.order;
+											console.log("Updated order data:", order);
+
+											// Cập nhật lại modal "Chi tiết đơn hàng"
+											renderOrderDetails(order);
+										} else {
+											console.error("Không thể làm mới dữ liệu đơn hàng.");
+										}
+									},
+									error: function (xhr, status, error) {
+										console.error("Error refreshing order details:", error);
+									}
+								});
+							} else {
+								alert(response.message);
+							}
+						},
+						error: function (xhr, status, error) {
+							console.error('Status:', status);
+							console.error('Error:', error);
+							console.error('Response:', xhr.responseText);
+							alert('Đã xảy ra lỗi, vui lòng thử lại.');
+						}
+					});
+				});
+			});
+
+			$("#ratingModal").on("hidden.bs.modal", function () {
+				$("#orderDetailsModal").modal("show");
+			});
+
+			$('#ratingStars').raty({
+				score: 0,
+				half: false,
+				click: function (score, evt) {
+					$('#ratingScore').val(score);
+				}
+			});
+		}
     });
 </script>
 
@@ -858,4 +1007,5 @@
             width: 100%;
         }
     }
+
 </style>

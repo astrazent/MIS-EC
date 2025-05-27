@@ -74,7 +74,7 @@ class Cart extends MY_Controller {
 		
 		$id = $this->uri->rsegment(3);
 		$id = intval($id);
-		$product = $this->product_model->get_info($id);
+		$product = $this->product_model->get_product_with_discount($id);
 		$data = array();
 		$qty = 1;
 		$price = $product->price;

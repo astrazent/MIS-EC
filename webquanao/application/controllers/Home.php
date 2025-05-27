@@ -10,25 +10,28 @@ class Home extends MY_Controller { // Home là một Controller kế thừa từ
 		$input['order'] = array('sort_order', 'DESC');
 		$slider = $this->slider_model->get_list($input);
 		$this->data['slider']=$slider;
-
-		
 		
 		$this->load->model('product_model');
 		$input = array();
 		$input['order'] = array('id', 'DESC');
 		$input['limit'] = array('12','0');
-		$new_product = $this->product_model->get_list($input);
+		$new_product = $this->product_model->get_products_with_discount($input);
 		$this->data['new_product']=$new_product;
 
 		$input['order'] = array('buyed', 'DESC');
 		$input['limit'] = array('12','0');
-		$hot_product = $this->product_model->get_list($input);
+		$hot_product = $this->product_model->get_products_with_discount($input);
 		$this->data['hot_product']=$hot_product;
 
 		$input['order'] = array('view', 'DESC');
 		$input['limit'] = array('12','0');
-		$view_product = $this->product_model->get_list($input);
+		$view_product = $this->product_model->get_products_with_discount($input);
 		$this->data['view_product']=$view_product;
+		
+		# in $new_product
+		// echo "<pre>";
+		// print_r($new_product);
+		// echo "</pre>";
 
 		
 		// $url = "http://python_ai:5000/"; // URL API

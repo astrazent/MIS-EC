@@ -83,18 +83,20 @@
 					<h1 style="font-size: 25px;text-transform:uppercase;color: red;font-weight:bold;"><?php $product->name; ?></h1>
 					<p><?php echo $product->content; ?></p>
 					<?php
-					if ($product->discount > 0) {
+					if ($product->discount > 0 || $product->price < $product->origin_price) {
 						$price_new = $product->price - $product->discount;
-					?><p>Giá cũ: <strong><del><?php echo number_format($product->price) ?> VNĐ</del></strong></p>
+					?><p>Giá cũ: <strong><del><?php echo number_format($product->origin_price) ?> VNĐ</del></strong></p>
 						<p>Giá khuyến mại: <span style="font-weight: bold;color: green"><?php echo number_format($price_new); ?> VNĐ</span></p>
 					<?php } else { ?>
-						<p>Giá: <span style="font-weight: bold;color: green"><?php echo number_format($product->price); ?> VNĐ</span></p> <?php
+						<p>Giá: <span style="font-weight: bold;color: green"><?php echo number_format($product->origin_price); ?> VNĐ</span></p> <?php
 																																		}
 																																			?>
 					<p>Số lượt xem: <?php echo $product->view; ?></p>
 					<p>Số lượt đã mua: <?php echo $product->buyed; ?></p>
 					<p> Đánh giá &nbsp;
-						<?php $raty_tb = $product->rate_total / $product->rate_count; ?>
+						<?php 
+							$raty_tb = ($product->rate_count > 0) ? ($product->rate_total / $product->rate_count) : 0;
+						?>
 						<span class='raty_detailt' style='margin:5px' id='<?php echo $product->id; ?>' data-score='<?php echo round($raty_tb, 2); ?>'></span>
 						| Tổng số: <b class='rate_count'><?php echo $product->rate_count; ?></b>
 					</p>
@@ -113,35 +115,6 @@
 					</script>
 
 					<a href="<?php echo base_url('cart/add/' . $product->id); ?>" class="btn btn-info"> Thêm vào giỏ hàng</a>
-					<button class="btn btn-warning" data-toggle="modal" data-target="#ratingModal">Đánh giá</button>
-
-					<!-- Modal đánh giá -->
-					<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<form id="ratingForm">
-										<div class="form-group">
-											<label for="ratingStars">Chọn số sao:</label>
-											<div id="ratingStars" class="raty"></div>
-											<input type="hidden" id="ratingScore" name="score">
-										</div>
-										<div class="form-group">
-											<label for="ratingComment">Bình luận:</label>
-											<textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
-										</div>
-										<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>																													
 
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -226,11 +199,11 @@
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
 								</div>
-								<?php if ($value->discount > 0) {
+								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
-									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
+									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->origin_price); ?> VNĐ</del></p>
 								<?php } else { ?>
-									<p><span class='price text-right'><?php echo number_format($value->price); ?> VNĐ</span></p>
+									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
 								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Số lượt xem"></span> <?php echo $value->view; ?> <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Số lượng đặt mua"><?php echo $value->buyed; ?></p>
 								<a href="<?php echo base_url('cart/add/' . $value->id); ?>"><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></a>
@@ -257,11 +230,11 @@
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
 								</div>
-								<?php if ($value->discount > 0) {
+								<?php if ($value->discount > 0 || $value->price < $value->origin_price) {
 									$new_price = $value->price - $value->discount; ?>
 									<p><span class='price text-right'><?php echo number_format($new_price); ?> VNĐ</span> <del class="product-discount"><?php echo number_format($value->price); ?> VNĐ</del></p>
 								<?php } else { ?>
-									<p><span class='price text-right'><?php echo number_format($value->price); ?> VNĐ</span></p>
+									<p><span class='price text-right'><?php echo number_format($value->origin_price); ?> VNĐ</span></p>
 								<?php	} ?>
 								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Số lượt xem"></span> <?php echo $value->view; ?> <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Số lượng đặt mua"><?php echo $value->buyed; ?></p>
 								<a href="<?php echo base_url('cart/add/' . $value->id); ?>"><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></a>
@@ -275,55 +248,3 @@
 	</div>
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        // Khởi tạo thư viện raty cho modal
-        $('#ratingStars').raty({
-            score: 0, // Điểm mặc định
-            half: false, // Cho phép chọn nửa sao
-            click: function (score, evt) {
-                $('#ratingScore').val(score); // Gán giá trị số sao vào input ẩn
-            }
-        });
-
-        // Xử lý gửi form đánh giá
-        $('#ratingForm').on('submit', function (e) {
-            e.preventDefault(); // Ngăn form reload trang
-            const productId = <?php echo $product->id; ?>;
-            const score = $('#ratingScore').val();
-            const comment = $('#ratingComment').val();
-
-            if (!score) {
-                alert('Vui lòng chọn số sao!');
-                return;
-            }
-
-            $.ajax({
-                url: '<?php echo base_url('product/submit_rating'); ?>',
-                type: 'POST',
-                data: {
-                    id: productId,
-                    score: score,
-                    comment: comment
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response.message);
-                    if (response.success) {
-                        alert('Cảm ơn bạn đã đánh giá sản phẩm.');
-                        location.reload();
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Status:', status);
-                    console.error('Error:', error);
-                    console.error('Response:', xhr.responseText);
-                    alert('Đã xảy ra lỗi, vui lòng thử lại.');
-                }
-            });
-        });
-    });
-</script>
