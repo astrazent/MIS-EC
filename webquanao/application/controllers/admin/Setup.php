@@ -11,37 +11,6 @@ class Setup extends CI_Controller {
     /**
      * Create user_cart table
      */
-    public function create_cart_table() {
-        // Check if user_cart table already exists
-        if ($this->db->table_exists('user_cart')) {
-            echo "Table 'user_cart' already exists.";
-            return;
-        }
-        
-        // Create the table
-        $this->db->query("
-            CREATE TABLE `user_cart` (
-                `id` int(11) NOT NULL AUTO_INCREMENT,
-                `user_id` int(11) NOT NULL,
-                `product_id` int(11) NOT NULL,
-                `rowid` varchar(32) NOT NULL,
-                `name` varchar(255) NOT NULL,
-                `price` decimal(10,2) NOT NULL,
-                `qty` int(11) NOT NULL DEFAULT 1,
-                `options` text DEFAULT NULL,
-                `image_link` varchar(255) DEFAULT NULL,
-                `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                PRIMARY KEY (`id`),
-                KEY `user_id` (`user_id`),
-                KEY `product_id` (`product_id`),
-                KEY `rowid` (`rowid`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-        ");
-        
-        echo "Table 'user_cart' created successfully.";
-    }
-    
     /**
      * Setup shipping tracking
      */
