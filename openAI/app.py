@@ -8,6 +8,10 @@ from flask import Flask, request, jsonify
 import requests
 from werkzeug.utils import secure_filename
 from flask_cors import CORS  # Thêm CORS để giải quyết vấn đề kết nối từ frontend
+from dotenv import load_dotenv
+
+# Tải biến môi trường từ file .env
+load_dotenv()
 
 # Cấu hình logging
 import os
@@ -24,41 +28,250 @@ logging.basicConfig(
 
 # Khởi tạo Flask app
 app = Flask(__name__)
-# Bật CORS cho tất cả các route để giải quyết vấn đề kết nối từ frontend
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Giới hạn kích thước file 16MB
-
-# Đảm bảo thư mục uploads tồn tại
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 class ProductDescriber:
+    model_name = os.environ.get('DEEPSEEK_MODEL', 'deepseek/deepseek-chat-v3-0324:free')
+    api_key = None
+    api_initialized = False
+    vision_client = None
+    vision_api_key = None
+
     def __init__(self):
-        """Khởi tạo các client cho Google Vision và OpenAI"""
-        # Khởi tạo OpenRouter API
+        pass
+
+    def analyze_image(self, image_path):
+        """
+        Phân tích ảnh sản phẩm bằng Google Vision AI
+        Trả về các đặc điểm nhận dạng được từ ảnh
+        """
+        if not self.vision_client:
+            # Chế độ mô phỏng khi không có Vision API
+            logging.info("Đang sử dụng chế độ mô phỏng cho Vision API")
+            # Trả về một số đặc điểm mẫu cho mục đích phát triển
+            return "quần áo, thời trang, chất liệu cao cấp, thiết kế hiện đại, màu sắc tươi sáng"
+
         try:
-            # Sử dụng biến môi trường cho API key
-            self.api_key = os.environ.get('DEEPSEEK_API_KEY')
-            if not self.api_key:
-                logging.warning('DEEPSEEK_API_KEY không được cấu hình trong biến môi trường, sử dụng giá trị mặc định')
-                self.api_key = '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'
+            with open(image_path, 'rb') as img_file:
+                content = img_file.read()
             
-            # Sử dụng biến môi trường để cấu hình mô hình, mặc định là deepseek-chat
-            self.model_name = os.environ.get('DEEPSEEK_MODEL', 'deepseek/deepseek-chat-v3-0324:free')
+            # Tạo request trực tiếp đến Vision API với API key
+            image = vision.Image(content=content)
             
-            logging.info(f'Kết nối đến OpenRouter API')
-            logging.info(f'Sử dụng mô hình: {self.model_name}')
+            # Sử dụng client đã được cấu hình với API key
+            response = self.vision_client.label_detection(image=image)
+            labels = [label.description for label in response.label_annotations]
             
-            # Kiểm tra tính hợp lệ của API key
-            if self._validate_api_key(self.api_key):
-                logging.info('Khởi tạo OpenRouter API thành công')
-                self.api_initialized = True
-            else:
-                logging.error('Khởi tạo OpenRouter API thất bại: API key không hợp lệ')
-                self.api_initialized = False
+            return ", ".join(labels)
         except Exception as e:
-            logging.error(f'Lỗi khởi tạo OpenRouter API: {str(e)}')
-            self.api_initialized = False
+            logging.error(f'Lỗi phân tích ảnh: {str(e)}')
+            # Trả về đặc điểm mẫu nếu có lỗi
+            return "quần áo, thời trang, chất liệu, thiết kế"
+
+    def _validate_api_key(self, api_key):
+        """Kiểm tra tính hợp lệ của OpenRouter API key"""
+        try:
+            import requests
+            headers = {"Authorization": f"Bearer {api_key}"}
+            # Thêm timeout để tránh chờ quá lâu khi mạng không ổn định
+            response = requests.head("https://openrouter.ai/api/v1/auth/key", headers=headers, timeout=10)
+            
+            if response.status_code == 200:
+                logging.info("API key hợp lệ và đang hoạt động")
+                return True
+            else:
+                logging.error(f"API key không hợp lệ hoặc hết hạn. Mã trạng thái: {response.status_code}")
+                if response.text:
+                    logging.error(f"Chi tiết lỗi: {response.text}")
+                return False
+        except requests.exceptions.Timeout:
+            logging.error("Timeout khi kiểm tra API key: Kết nối đến OpenRouter quá chậm hoặc không khả dụng")
+            return False
+        except requests.exceptions.ConnectionError:
+            logging.error("Lỗi kết nối khi kiểm tra API key: Không thể kết nối đến OpenRouter")
+            return False
+        except Exception as e:
+            logging.error(f"Lỗi khi kiểm tra API key: {str(e)}")
+            return False
+            
+    def _validate_vision_api_key(self, api_key):
+        """Kiểm tra tính hợp lệ của Google Vision API key"""
+        try:
+            import requests
+            # Thử gọi một request đơn giản đến Vision API để kiểm tra key
+            url = f"https://vision.googleapis.com/v1/images:annotate?key={api_key}"
+            headers = {"Content-Type": "application/json"}
+            # Tạo một request đơn giản
+            data = {
+                "requests": [{
+                    "image": {"content": ""},
+                    "features": [{"type": "LABEL_DETECTION", "maxResults": 1}]
+                }]
+            }
+            # Thêm timeout để tránh chờ quá lâu
+            response = requests.post(url, headers=headers, json=data, timeout=10)
+            
+            # Kiểm tra response, nếu lỗi là do content trống thì key hợp lệ
+            if response.status_code == 400:
+                error_json = response.json()
+                if 'error' in error_json and 'Invalid image' in str(error_json):
+                    logging.info("Google Vision API key hợp lệ và đang hoạt động")
+                    return True
+                    
+            # Nếu là lỗi xác thực thì key không hợp lệ
+            if response.status_code == 403:
+                logging.error(f"Google Vision API key không hợp lệ hoặc hết hạn. Mã trạng thái: {response.status_code}")
+                if response.text:
+                    logging.error(f"Chi tiết lỗi: {response.text}")
+                return False
+                
+            # Trường hợp khác, giả định key có thể hợp lệ
+            logging.warning(f"Không thể xác định chính xác tính hợp lệ của Google Vision API key. Mã trạng thái: {response.status_code}")
+            return True
+            
+        except requests.exceptions.Timeout:
+            logging.error("Timeout khi kiểm tra Google Vision API key: Kết nối quá chậm hoặc không khả dụng")
+            return False
+        except requests.exceptions.ConnectionError:
+            logging.error("Lỗi kết nối khi kiểm tra Google Vision API key: Không thể kết nối đến Google")
+            return False
+        except Exception as e:
+            logging.error(f"Lỗi khi kiểm tra Google Vision API key: {str(e)}")
+            return False
+            
+    def call_openrouter(self, prompt, temperature=0.7, max_tokens=300):
+        """Gọi API OpenRouter để tạo nội dung"""
+        try:
+            # Kiểm tra kết nối internet trước khi gọi API
+            try:
+                # Kiểm tra kết nối đến Google (trang web đáng tin cậy)
+                logging.info("Kiểm tra kết nối internet trước khi gọi OpenRouter API")
+                requests.head("https://www.google.com", timeout=5)
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Không thể kết nối internet trước khi gọi OpenRouter API: {str(e)}")
+                raise ConnectionError("Không thể kết nối internet. Vui lòng kiểm tra kết nối mạng của bạn.")
+                
+            # Kiểm tra kết nối đến OpenRouter trước khi gọi API
+            try:
+                logging.info("Kiểm tra kết nối đến OpenRouter...")
+                requests.head("https://openrouter.ai", timeout=5)
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Không thể kết nối đến OpenRouter: {str(e)}")
+                raise ConnectionError("Không thể kết nối đến dịch vụ OpenRouter. Có thể do tường lửa hoặc cài đặt mạng.")
+                
+            url = "https://openrouter.ai/api/v1/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "HTTP-Referer": "http://localhost:5001",
+                "X-Title": "Product Description Generator",
+                "Content-Type": "application/json",
+                "Origin": "http://localhost:5001"  # Thêm Origin header để giúp với CORS
+            }
+            data = {
+                "model": self.model_name,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": temperature,
+                "max_tokens": max_tokens
+            }
+            
+            logging.info(f"Gửi request đến OpenRouter API với model: {self.model_name}")
+            # Thêm timeout để tránh chờ quá lâu khi mạng không ổn định
+            response = requests.post(url, headers=headers, json=data, timeout=30)
+            
+            if response.status_code == 200:
+                logging.info("Nhận phản hồi thành công từ OpenRouter API")
+                return response.json()
+            else:
+                error_detail = ""
+                try:
+                    error_json = response.json()
+                    if 'error' in error_json:
+                        if isinstance(error_json['error'], dict) and 'message' in error_json['error']:
+                            error_detail = f" - Chi tiết: {error_json['error']['message']}"
+                        else:
+                            error_detail = f" - Chi tiết: {error_json['error']}"
+                except Exception as parse_error:
+                    logging.error(f"Không thể phân tích phản hồi lỗi: {str(parse_error)}")
+                    error_detail = f" - Nội dung phản hồi: {response.text[:200]}"
+                
+                error_message = f"Lỗi khi gọi OpenRouter API: Mã trạng thái {response.status_code}{error_detail}"
+                logging.error(error_message)
+                
+                if response.status_code == 401 or response.status_code == 403:
+                    raise ValueError("API key không hợp lệ hoặc hết hạn")
+                elif response.status_code == 429:
+                    raise ValueError("Đã vượt quá giới hạn tốc độ (rate limit) của API")
+                elif response.status_code >= 500:
+                    raise ConnectionError("Lỗi máy chủ OpenRouter, vui lòng thử lại sau")
+                else:
+                    raise ValueError(f"Lỗi không xác định: {error_message}")
+        except requests.exceptions.Timeout:
+            error_msg = "Timeout khi gọi OpenRouter API: Kết nối quá chậm hoặc không khả dụng"
+            logging.error(error_msg)
+            raise TimeoutError(error_msg)
+        except requests.exceptions.ConnectionError as conn_error:
+            error_msg = f"Lỗi kết nối khi gọi OpenRouter API: {str(conn_error)}"
+            logging.error(error_msg)
+            # Thêm thông tin chi tiết hơn về lỗi kết nối
+            if "ProxyError" in str(conn_error):
+                error_msg += ". Có thể do cài đặt proxy không chính xác."
+            elif "SSLError" in str(conn_error):
+                error_msg += ". Có thể do vấn đề với chứng chỉ SSL."
+            elif "ConnectionRefusedError" in str(conn_error):
+                error_msg += ". Kết nối bị từ chối, có thể do tường lửa hoặc dịch vụ không khả dụng."
+            logging.error(f"Chi tiết lỗi kết nối: {error_msg}")
+            raise ConnectionError(error_msg)
+        except (ValueError, ConnectionError, TimeoutError) as known_error:
+            # Chuyển tiếp các lỗi đã xử lý
+            raise
+        except Exception as e:
+            error_msg = f"Lỗi không xác định khi gọi OpenRouter API: {str(e)}"
+            logging.error(error_msg)
+            raise RuntimeError(error_msg)
+            
+    def _ensure_ai_client(self):
+        """Đảm bảo OpenRouter API đã được khởi tạo"""
+        if not self.api_initialized:
+            logging.warning("API chưa được khởi tạo, đang thử khởi tạo lại...")
+            try:
+                # Thử lấy API key từ biến môi trường, nếu không có thì dùng giá trị mặc định
+                self.api_key = os.environ.get('DEEPSEEK_API_KEY')
+                logging.info(f"Đang kiểm tra API key: {self.api_key[:10]}...")
+                
+                # Kiểm tra kết nối internet trước khi xác thực API key
+                try:
+                    # Kiểm tra kết nối đến Google (trang web đáng tin cậy)
+                    requests.head("https://www.google.com", timeout=5)
+                except requests.exceptions.RequestException as e:
+                    logging.error(f"Không thể kết nối internet. Vui lòng kiểm tra kết nối mạng: {str(e)}")
+                    return False
+                
+                # Kiểm tra kết nối đến OpenRouter trước khi xác thực API key
+                try:
+                    logging.info("Kiểm tra kết nối đến OpenRouter...")
+                    requests.head("https://openrouter.ai", timeout=5)
+                except requests.exceptions.RequestException as e:
+                    logging.error(f"Không thể kết nối đến OpenRouter: {str(e)}")
+                    # Kiểm tra các vấn đề cụ thể
+                    if "ProxyError" in str(e):
+                        logging.error("Có thể do cài đặt proxy không chính xác.")
+                    elif "SSLError" in str(e):
+                        logging.error("Có thể do vấn đề với chứng chỉ SSL.")
+                    elif "ConnectionRefusedError" in str(e):
+                        logging.error("Kết nối bị từ chối, có thể do tường lửa.")
+                    return False
+                
+                # Kiểm tra tính hợp lệ của API key
+                if self._validate_api_key(self.api_key):
+                    self.api_initialized = True
+                    logging.info("Khởi tạo lại API thành công")
+                    return True
+                else:
+                    logging.error("API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng")
+                    return False
+            except Exception as e:
+                logging.error(f"Không thể khởi tạo lại API: {str(e)}")
+                return False
+        return True
         
         # Khởi tạo Google Vision Client
         try:
@@ -292,7 +505,7 @@ class ProductDescriber:
             logging.warning("API chưa được khởi tạo, đang thử khởi tạo lại...")
             try:
                 # Thử lấy API key từ biến môi trường, nếu không có thì dùng giá trị mặc định
-                self.api_key = os.environ.get('DEEPSEEK_API_KEY', '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')
+                self.api_key = os.environ.get('DEEPSEEK_API_KEY')
                 logging.info(f"Đang kiểm tra API key: {self.api_key[:10]}...")
                 
                 # Kiểm tra kết nối internet trước khi xác thực API key

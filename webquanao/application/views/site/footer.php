@@ -43,7 +43,7 @@
 			<address>
 				<strong> SHOP thời trang Ngọc Lan</strong><br>
 				<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Địa chỉ: Kỳ Sơn - Thủy Nguyên - Hải Phòng<br>
-				<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Điện thoại: 01215345336<br>
+				<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Điện thoại: 0123456789<br>
 				Copyright ©2017 - Design by ---
 			</address>
 		</div>
@@ -55,3 +55,4 @@
 		<div class="clearfix"></div>
 	</div>
 </div>
+		

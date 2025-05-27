@@ -2,6 +2,10 @@ import os
 import requests
 import json
 import logging
+from dotenv import load_dotenv
+
+# Tải biến môi trường từ file .env
+load_dotenv()
 
 # Cấu hình logging
 logging.basicConfig(
@@ -9,8 +13,8 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-# Lấy API key từ biến môi trường hoặc sử dụng giá trị mặc định
-api_key = os.environ.get('DEEPSEEK_API_KEY', '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')
+# Lấy API key từ biến môi trường
+api_key = os.environ.get('DEEPSEEK_API_KEY')
 model_name = os.environ.get('DEEPSEEK_MODEL', 'deepseek/deepseek-chat-v3-0324:free')
 
 def test_api_key_validity():

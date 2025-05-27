@@ -1270,3 +1270,553 @@
 2025-05-09 04:14:24,998 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
 2025-05-09 04:14:42,993 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
 2025-05-09 04:14:42,996 - werkzeug - INFO - 172.18.0.5 - - [09/May/2025 04:14:42] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-17 16:03:43,603 - root - INFO - Kết nối đến OpenRouter API
+2025-05-17 16:03:43,666 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-17 16:03:44,822 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-17 16:03:44,843 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-17 16:03:44,844 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-17 16:03:44,880 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-17 16:03:47,829 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.5:5001
+2025-05-17 16:03:47,846 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-17 16:03:48,083 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 16:04:03,615 - root - INFO - Kết nối đến OpenRouter API
+2025-05-17 16:04:03,648 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-17 16:04:05,023 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-17 16:04:05,113 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-17 16:04:05,293 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-17 16:04:05,398 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-17 16:04:05,956 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 16:04:06,120 - werkzeug - INFO -  * Debugger PIN: 300-871-086
+2025-05-18 04:32:18,600 - root - INFO - Kết nối đến OpenRouter API
+2025-05-18 04:32:18,602 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-18 04:32:19,406 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-18 04:32:19,407 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-18 04:32:19,408 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-18 04:32:19,409 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-18 04:32:19,457 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-18 04:32:19,458 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-18 04:32:19,462 - werkzeug - INFO -  * Restarting with stat
+2025-05-18 04:32:23,039 - root - INFO - Kết nối đến OpenRouter API
+2025-05-18 04:32:23,040 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-18 04:32:23,760 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-18 04:32:23,807 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-18 04:32:23,855 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-18 04:32:23,857 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-18 04:32:23,916 - werkzeug - WARNING -  * Debugger is active!
+2025-05-18 04:32:23,930 - werkzeug - INFO -  * Debugger PIN: 721-260-211
+2025-05-20 15:59:26,962 - root - INFO - Kết nối đến OpenRouter API
+2025-05-20 15:59:26,964 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-20 15:59:27,796 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-20 15:59:27,797 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-20 15:59:27,798 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-20 15:59:27,799 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-20 15:59:27,849 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-20 15:59:27,850 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-20 15:59:27,852 - werkzeug - INFO -  * Restarting with stat
+2025-05-20 15:59:31,301 - root - INFO - Kết nối đến OpenRouter API
+2025-05-20 15:59:31,302 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-20 15:59:32,016 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-20 15:59:32,018 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-20 15:59:32,021 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-20 15:59:32,023 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-20 15:59:32,076 - werkzeug - WARNING -  * Debugger is active!
+2025-05-20 15:59:32,083 - werkzeug - INFO -  * Debugger PIN: 438-397-332
+2025-05-21 10:11:16,913 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 10:11:16,916 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 10:11:18,068 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 10:11:18,069 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 10:11:18,070 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 10:11:18,071 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 10:11:18,148 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-21 10:11:18,150 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-21 10:11:18,156 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 10:11:20,596 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 10:11:20,597 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 10:11:21,793 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 10:11:21,797 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 10:11:21,799 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 10:11:21,800 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 10:11:21,835 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 10:11:21,839 - werkzeug - INFO -  * Debugger PIN: 860-206-345
+2025-05-21 11:03:01,894 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 11:03:01,895 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 11:03:02,661 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:03:02,662 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 11:03:02,664 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 11:03:02,665 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 11:03:02,715 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-21 11:03:02,715 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-21 11:03:02,719 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 11:03:05,566 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 11:03:05,570 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 11:03:06,240 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:03:06,242 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 11:03:06,243 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 11:03:06,244 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 11:03:06,266 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 11:03:06,289 - werkzeug - INFO -  * Debugger PIN: 141-751-416
+2025-05-21 11:09:31,473 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 11:09:31,475 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 11:09:31,615 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 11:09:32,491 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:09:32,492 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 11:09:32,494 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 11:09:32,498 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 11:09:32] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 11:09:38,725 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 11:09:38,726 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 11:09:38,860 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 11:09:39,634 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:09:39,636 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 11:09:39,642 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 11:09:39,652 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 11:09:39] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 11:59:21,660 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 11:59:21,661 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 11:59:22,312 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:59:22,313 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 11:59:22,313 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 11:59:22,315 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 11:59:22,440 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 11:59:22,442 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 11:59:22,584 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 11:59:23,396 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 11:59:23,398 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 11:59:23,403 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 11:59:23,415 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 11:59:23] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 13:00:11,775 - werkzeug - INFO -  * Detected change in '/app/test_api_connection.py', reloading
+2025-05-21 13:00:12,691 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 13:00:21,067 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:00:21,162 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:00:22,052 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:00:22,086 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:00:22,087 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:00:22,112 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:00:22,237 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 13:00:22,239 - werkzeug - INFO -  * Debugger PIN: 141-751-416
+2025-05-21 13:01:13,160 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:01:13,162 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:01:13,295 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:01:14,222 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:01:14,229 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:01:14,231 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:01:14,235 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:01:14] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:01:21,706 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:01:21,709 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:01:21,956 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:01:23,222 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:01:23,255 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:01:23,271 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:01:23,297 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:01:23] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:01:53,100 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:01:53,106 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:01:53,264 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:01:54,201 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:01:54,202 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:01:54,205 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:01:54,207 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:01:54] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:01:59,503 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:01:59,505 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:02:00,099 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:02:00,100 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:02:00,101 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:02:00,103 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:02:00,232 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:02:00,233 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:02:00,369 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:02:01,190 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:02:01,191 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:02:01,195 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:02:01,227 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:02:01] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 13:03:06,130 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-21 13:03:07,117 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 13:03:14,360 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:03:14,361 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:03:15,011 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:15,015 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:03:15,018 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:03:15,022 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:03:15,079 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 13:03:15,086 - werkzeug - INFO -  * Debugger PIN: 141-751-416
+2025-05-21 13:03:18,682 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-21 13:03:19,359 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 13:03:27,826 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:03:27,827 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:03:28,437 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:28,439 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:03:28,441 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:03:28,443 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:03:28,477 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 13:03:28,488 - werkzeug - INFO -  * Debugger PIN: 141-751-416
+2025-05-21 13:03:28,513 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:03:28,515 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:03:29,127 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:29,128 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:03:29,129 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:03:29,131 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:03:29,260 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:03:29,261 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:03:29,403 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:03:30,294 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:30,306 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:03:30,307 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:03:30,311 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:03:30] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 13:03:41,912 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:03:41,961 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:03:42,425 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:03:43,402 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:43,418 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:03:43,420 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:03:43,427 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:03:43] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:03:51,511 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:03:51,512 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:03:51,928 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:51,929 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:03:51,931 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:03:51,934 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:03:52,117 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:03:52,144 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:03:52,347 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:03:53,276 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:03:53,279 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:03:53,282 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:03:53,287 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:03:53] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 13:04:34,200 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:04:34,201 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:04:34,886 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:04:34,973 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:04:35,036 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:04:35,046 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:04:35,318 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:04:35,330 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:04:35,479 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:04:36,545 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:04:36,547 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:04:36,548 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:04:36,551 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:04:36] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 13:05:06,891 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:05:06,910 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:05:07,694 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:05:07,732 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:05:07,740 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:05:07,743 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:05:08,004 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-21 13:05:08,005 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-21 13:05:08,046 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 13:05:15,416 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:05:15,417 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:05:15,886 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:05:15,887 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:05:15,889 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:05:15,892 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:05:15,957 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 13:05:15,983 - werkzeug - INFO -  * Debugger PIN: 177-596-863
+2025-05-21 13:12:56,583 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:12:56,583 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:12:56,715 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:12:57,545 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:12:57,547 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:12:57,549 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:12:57,552 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:12:57] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:13:38,479 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:13:38,480 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:13:38,615 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:13:39,489 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:13:39,490 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:13:39,491 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:13:39,493 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:13:39] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 13:15:58,434 - root - INFO - Kết nối đến OpenRouter API
+2025-05-21 13:15:58,439 - root - INFO - Sử dụng mô hình: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 13:15:59,146 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:15:59,159 - root - ERROR - Khởi tạo OpenRouter API thất bại: API key không hợp lệ
+2025-05-21 13:15:59,164 - root - WARNING - GOOGLE_VISION_API_KEY không được cấu hình trong biến môi trường
+2025-05-21 13:15:59,166 - root - INFO - Sử dụng chế độ không có Vision API
+2025-05-21 13:15:59,319 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 13:15:59,361 - root - INFO - Đang kiểm tra API key: sk-or-v1-c...
+2025-05-21 13:15:59,558 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 13:16:00,489 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-05-21 13:16:00,494 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-05-21 13:16:00,495 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-05-21 13:16:00,497 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 13:16:00] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 16:55:19,603 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-21 16:55:19,621 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-21 16:55:19,653 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 16:55:26,268 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 16:55:26,285 - werkzeug - INFO -  * Debugger PIN: 764-760-241
+2025-05-21 16:55:39,986 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 16:55:40,037 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-21 16:55:40,380 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:55:41,059 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-21 16:55:41,070 - root - INFO - Khởi tạo lại API thành công
+2025-05-21 16:55:41,082 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-21 16:55:41,084 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:55:41,307 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:55:41,567 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:55:42,126 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:42,127 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 1/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:43,130 - root - INFO - Đang gọi OpenRouter API (lần thử 2/3)
+2025-05-21 16:55:43,132 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:55:43,314 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:55:43,620 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:55:43,930 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:43,933 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 2/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:44,936 - root - INFO - Đang gọi OpenRouter API (lần thử 3/3)
+2025-05-21 16:55:44,940 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:55:45,061 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:55:45,278 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:55:45,535 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:45,536 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 3/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:45,538 - root - ERROR - Không thể kết nối đến dịch vụ AI sau 3 lần thử: Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:55:45,877 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 16:55:45] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 16:57:26,046 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-21 16:57:26,047 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:57:26,202 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:26,523 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:57:27,174 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:27,212 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 1/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:28,246 - root - INFO - Đang gọi OpenRouter API (lần thử 2/3)
+2025-05-21 16:57:28,294 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:57:28,598 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:29,053 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:57:29,397 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:29,411 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 2/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:30,415 - root - INFO - Đang gọi OpenRouter API (lần thử 3/3)
+2025-05-21 16:57:30,419 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:57:30,602 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:30,928 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:57:31,197 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:31,202 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 3/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:31,204 - root - ERROR - Không thể kết nối đến dịch vụ AI sau 3 lần thử: Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:31,208 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 16:57:31] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-05-21 16:57:53,723 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 16:57:53,724 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-21 16:57:53,912 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:54,714 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-21 16:57:54,726 - root - INFO - Khởi tạo lại API thành công
+2025-05-21 16:57:54,728 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-21 16:57:54,735 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:57:54,964 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:55,485 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:57:56,111 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:56,112 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 1/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:57:56,113 - root - INFO - Chờ 2 giây trước khi thử lại...
+2025-05-21 16:57:58,129 - root - INFO - Đang thử khởi tạo lại API client...
+2025-05-21 16:57:58,144 - root - INFO - Đang gọi OpenRouter API (lần thử 2/3)
+2025-05-21 16:57:58,155 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:57:58,780 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:57:59,326 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:57:59,957 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:58:00,022 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 2/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:58:00,089 - root - INFO - Chờ 4 giây trước khi thử lại...
+2025-05-21 16:58:04,132 - root - INFO - Đang gọi OpenRouter API (lần thử 3/3)
+2025-05-21 16:58:04,152 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 16:58:04,465 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 16:58:05,027 - root - INFO - Gửi request đến OpenRouter API với model: text-davinci-003
+2025-05-21 16:58:05,611 - root - ERROR - Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:58:05,644 - root - ERROR - Lỗi khi gọi OpenRouter API (lần 3/3): Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:58:05,664 - root - ERROR - Không thể kết nối đến dịch vụ AI sau 3 lần thử: Lỗi không xác định: Lỗi khi gọi OpenRouter API: Mã trạng thái 400 - Chi tiết: text-davinci-003 is not a valid model ID
+2025-05-21 16:58:05,694 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 16:58:05] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-05-21 17:02:21,394 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-21 17:02:22,398 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 17:02:29,781 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 17:02:29,784 - werkzeug - INFO -  * Debugger PIN: 764-760-241
+2025-05-21 17:02:31,367 - werkzeug - INFO -  * Detected change in '/app/app.py', reloading
+2025-05-21 17:02:32,016 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 17:02:45,726 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-21 17:02:45,726 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-21 17:02:45,728 - werkzeug - INFO -  * Restarting with stat
+2025-05-21 17:02:50,049 - werkzeug - WARNING -  * Debugger is active!
+2025-05-21 17:02:50,050 - werkzeug - INFO -  * Debugger PIN: 657-652-639
+2025-05-21 17:03:09,510 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 17:03:09,512 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-21 17:03:09,672 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 17:03:10,440 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-21 17:03:10,442 - root - INFO - Khởi tạo lại API thành công
+2025-05-21 17:03:10,443 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-21 17:03:10,446 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 17:03:10,685 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 17:03:11,227 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 17:03:44,668 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-21 17:03:44,681 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 17:03:44] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-21 17:03:55,718 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-21 17:03:55,719 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-21 17:03:55,863 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 17:03:56,575 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-21 17:03:56,587 - root - INFO - Khởi tạo lại API thành công
+2025-05-21 17:03:56,591 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-21 17:03:56,611 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-21 17:03:56,746 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-21 17:03:56,974 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-21 17:05:06,768 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-21 17:05:06,770 - werkzeug - INFO - 172.18.0.5 - - [21/May/2025 17:05:06] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-22 04:25:49,218 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-22 04:25:49,219 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-22 04:25:49,225 - werkzeug - INFO -  * Restarting with stat
+2025-05-22 04:25:53,062 - werkzeug - WARNING -  * Debugger is active!
+2025-05-22 04:25:53,070 - werkzeug - INFO -  * Debugger PIN: 131-532-972
+2025-05-22 11:29:07,157 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-22 11:29:07,162 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-22 11:29:07,194 - werkzeug - INFO -  * Restarting with stat
+2025-05-22 11:29:13,562 - werkzeug - WARNING -  * Debugger is active!
+2025-05-22 11:29:13,596 - werkzeug - INFO -  * Debugger PIN: 939-207-826
+2025-05-23 07:41:09,400 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-23 07:41:09,402 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-23 07:41:09,407 - werkzeug - INFO -  * Restarting with stat
+2025-05-23 07:41:12,560 - werkzeug - WARNING -  * Debugger is active!
+2025-05-23 07:41:12,566 - werkzeug - INFO -  * Debugger PIN: 530-702-156
+2025-05-24 15:47:15,315 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-24 15:47:15,317 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-24 15:47:15,321 - werkzeug - INFO -  * Restarting with stat
+2025-05-24 15:47:16,913 - werkzeug - WARNING -  * Debugger is active!
+2025-05-24 15:47:16,920 - werkzeug - INFO -  * Debugger PIN: 275-326-366
+2025-05-25 10:37:35,420 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-25 10:37:35,425 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-25 10:37:35,429 - werkzeug - INFO -  * Restarting with stat
+2025-05-25 10:37:37,354 - werkzeug - WARNING -  * Debugger is active!
+2025-05-25 10:37:37,362 - werkzeug - INFO -  * Debugger PIN: 718-578-227
+2025-05-25 15:16:37,881 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.5:5001
+2025-05-25 15:16:37,883 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-25 15:16:37,886 - werkzeug - INFO -  * Restarting with stat
+2025-05-25 15:16:40,351 - werkzeug - WARNING -  * Debugger is active!
+2025-05-25 15:16:40,354 - werkzeug - INFO -  * Debugger PIN: 144-822-529
+2025-05-26 08:03:47,005 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-26 08:03:47,008 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-26 08:03:47,012 - werkzeug - INFO -  * Restarting with stat
+2025-05-26 08:03:50,241 - werkzeug - WARNING -  * Debugger is active!
+2025-05-26 08:03:50,290 - werkzeug - INFO -  * Debugger PIN: 863-005-015
+2025-05-26 08:15:46,777 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-26 08:15:46,780 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-26 08:15:47,006 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:15:48,347 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-26 08:15:48,348 - root - INFO - Khởi tạo lại API thành công
+2025-05-26 08:15:48,349 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-26 08:15:48,350 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-26 08:15:48,539 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:15:48,914 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-26 08:15:53,559 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-26 08:15:53,561 - werkzeug - INFO - 172.18.0.4 - - [26/May/2025 08:15:53] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-26 08:23:12,456 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-26 08:23:12,457 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-26 08:23:12,583 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:23:13,934 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-26 08:23:13,935 - root - INFO - Khởi tạo lại API thành công
+2025-05-26 08:23:13,936 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-26 08:23:13,937 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-26 08:23:14,075 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:23:14,306 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-26 08:24:28,887 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-26 08:24:28,889 - werkzeug - INFO - 172.18.0.4 - - [26/May/2025 08:24:28] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-26 08:33:37,973 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-26 08:33:37,975 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-26 08:33:38,315 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:33:38,737 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-26 08:33:58,837 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-26 08:33:58,840 - werkzeug - INFO - 172.18.0.4 - - [26/May/2025 08:33:58] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-26 08:36:12,082 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-26 08:36:12,087 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-26 08:36:12,259 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-26 08:36:12,476 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-26 08:36:33,242 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-26 08:36:33,244 - werkzeug - INFO - 172.18.0.4 - - [26/May/2025 08:36:33] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-27 05:56:13,576 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-27 05:56:13,581 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 05:56:13,595 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 05:56:16,214 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 05:56:16,229 - werkzeug - INFO -  * Debugger PIN: 137-991-408
+2025-05-27 06:02:45,599 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.2:5001
+2025-05-27 06:02:45,605 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 06:02:45,609 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 06:02:50,398 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 06:02:50,399 - werkzeug - INFO -  * Debugger PIN: 104-060-582
+2025-05-27 06:07:00,333 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.3:5001
+2025-05-27 06:07:00,334 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 06:07:00,337 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 06:07:02,133 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 06:07:02,135 - werkzeug - INFO -  * Debugger PIN: 402-440-945
+2025-05-27 07:09:44,385 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.4:5001
+2025-05-27 07:09:44,387 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 07:09:44,391 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 07:09:46,066 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 07:09:46,069 - werkzeug - INFO -  * Debugger PIN: 828-663-787
+2025-05-27 08:09:02,417 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.2:5001
+2025-05-27 08:09:02,419 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 08:09:02,427 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 08:09:04,555 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 08:09:04,558 - werkzeug - INFO -  * Debugger PIN: 619-077-117
+2025-05-27 08:09:53,239 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-27 08:09:53,239 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-27 08:09:53,431 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-27 08:09:55,084 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-27 08:09:55,088 - root - INFO - Khởi tạo lại API thành công
+2025-05-27 08:09:55,089 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-27 08:09:55,092 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-27 08:09:55,301 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-27 08:09:55,511 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-27 08:10:05,745 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-27 08:10:05,748 - werkzeug - INFO - 172.18.0.5 - - [27/May/2025 08:10:05] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-05-27 12:30:19,221 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.18.0.5:5001
+2025-05-27 12:30:19,222 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-27 12:30:19,228 - werkzeug - INFO -  * Restarting with stat
+2025-05-27 12:30:21,325 - werkzeug - WARNING -  * Debugger is active!
+2025-05-27 12:30:21,346 - werkzeug - INFO -  * Debugger PIN: 725-206-408

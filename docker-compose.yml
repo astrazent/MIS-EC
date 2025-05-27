@@ -31,8 +31,8 @@ services:
             - "5001:5001"
         volumes:
             - ./openAI:/app
-        environment:
-            - DEEPSEEK_API_KEY=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
+        env_file:
+            - ./openAI/.env
         networks:
             - webquanao_network
 
