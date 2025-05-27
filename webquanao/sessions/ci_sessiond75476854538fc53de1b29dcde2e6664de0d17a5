@@ -1,0 +1,30 @@
+__ci_last_regenerate|i:1748248853;session_view|a:5:{i:20;b:1;i:9;b:1;i:27;b:1;i:3;b:1;i:18;b:1;}login|O:8:"stdClass":6:{s:2:"id";s:1:"1";s:4:"name";s:3:"Goo";s:5:"email";s:15:"admin@gmail.com";s:8:"password";s:32:"81dc9bdb52d04dc20036dbd8313ed055";s:5:"level";s:1:"0";s:7:"created";s:10:"2147483647";}user|O:8:"stdClass":12:{s:2:"id";s:1:"1";s:4:"name";s:8:"Hà Bùi";s:5:"email";s:19:"unguyen@example.org";s:8:"password";s:32:"e10adc3949ba59abbe56e057f20f883e";s:5:"phone";s:10:"0463384318";s:7:"address";s:14:"7 Nguyễn Khu";s:4:"city";s:10:"Biên Hòa";s:8:"district";s:8:"Quận 7";s:4:"ward";s:11:"Phường 7";s:7:"created";s:19:"2025-05-16 21:50:33";s:11:"is_verified";s:1:"0";s:13:"date_modified";s:19:"2025-05-16 21:50:33";}search_results|a:3:{i:0;O:8:"stdClass":18:{s:2:"id";s:2:"18";s:10:"catalog_id";s:2:"21";s:4:"name";s:36:"COMBO ĐẦM KÈM ÁO KHOÁC CHOÀNG";s:7:"content";s:387:"<p><strong>TH&Ocirc;NG TIN SẢN PHẨM&nbsp;</strong></p>
+
+<p>- Chất liệu : thun</p>
+
+<p>- Năm sản xuất : 2016</p>
+
+<p>- Xuất xứ : Việt nam ( c&ocirc;ng ty th&aacute;i ho&agrave;ng sx)<br />
+- M&agrave;u sắc : caro&nbsp;</p>
+
+<p>- K&iacute;ch thước : Freesize d&agrave;nh cho mẹ từ 43-55kg - size M từ 13-17kg- L &nbsp;từ 17-22kg<br />
+&nbsp;</p>
+";s:12:"origin_price";s:9:"380000.00";s:5:"price";s:9:"380000.00";s:11:"discount_id";s:1:"2";s:10:"image_link";s:71:"combo-dam-kem-ao-khoac-choang-thoi-trang-th08603-gs195-1m4G3-1SqJve.jpg";s:10:"image_list";s:75:"["combo-dam-kem-ao-khoac-choang-thoi-trang-th08603-gs195-1m4G3-FWKQKq.jpg"]";s:4:"view";s:2:"33";s:5:"buyed";s:1:"1";s:10:"rate_total";s:1:"4";s:10:"rate_count";s:1:"1";s:5:"stock";s:3:"100";s:6:"status";s:1:"1";s:7:"created";s:10:"1493983674";s:8:"discount";s:1:"0";s:10:"similarity";d:30.27172127781884;}i:1;O:8:"stdClass":18:{s:2:"id";s:2:"21";s:10:"catalog_id";s:2:"21";s:4:"name";s:27:"COMBO ĐẦM REN MÙA XUÂN";s:7:"content";s:304:"<p><strong>TH&Ocirc;NG TIN SẢN PHẨM&nbsp;</strong></p>
+
+<p>- Chất liệu : REN</p>
+
+<p>- Năm sản xuất : 2016</p>
+
+<p>- Xuất xứ : Việt nam&nbsp;</p>
+
+<p>- M&agrave;u sắc :đỏ</p>
+
+<p>- K&iacute;ch thước : Freesize từ 43-55k... size M từ 13-17. size L từ 17-25</p>
+";s:12:"origin_price";s:9:"450000.00";s:5:"price";s:9:"450000.00";s:11:"discount_id";s:1:"1";s:10:"image_link";s:66:"combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg";s:10:"image_list";s:70:"["combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-kwPno1.jpg"]";s:4:"view";s:2:"26";s:5:"buyed";s:1:"7";s:10:"rate_total";s:2:"22";s:10:"rate_count";s:1:"5";s:5:"stock";s:3:"100";s:6:"status";s:1:"1";s:7:"created";s:10:"1493983674";s:8:"discount";s:1:"0";s:10:"similarity";d:29.66540404040404;}i:2;O:8:"stdClass":18:{s:2:"id";s:2:"20";s:10:"catalog_id";s:2:"21";s:4:"name";s:31:"COMBO ĐẦM CẶP MẸ VÀ BÉ";s:7:"content";s:641:"<p>Set đ&ocirc;i mẹ v&agrave; b&eacute; gồm :<br />
+&Aacute;o d&agrave;i tay + v&aacute;y yếm cho mẹ c&acirc;n nặng từ 43kg - 53kg<br />
+&Aacute;o d&agrave;i tay + quần yếm cho b&eacute; trai/ b&eacute; g&aacute;i c&acirc;n nặng từ 17kg- 24kg<br />
+M&agrave;u sắc y h&igrave;nh<br />
+Chất cotton cao cấp d&agrave;y mịn đẹp. Bao d&agrave;y .<br />
+Shop ko ship h&agrave;ng để xem hay l&yacute; do ko vừa ko th&iacute;ch ko hợp....<br />
+Tất cả sp đều c&oacute; h&igrave;nh chụp đầy đủ n&ecirc;n kh&aacute;ch vui l&ograve;ng xem kỹ trước khi mua h&agrave;ng b&ecirc;n shop</p>
+";s:12:"origin_price";s:9:"400000.00";s:5:"price";s:9:"400000.00";s:11:"discount_id";s:1:"1";s:10:"image_link";s:64:"combo-dam-cap-me-va-be-1m4G3-epzjq8_simg_d0daf0_800x1200_max.jpg";s:10:"image_list";s:202:"["combo-dam-cap-me-va-be-1m4G3-hKwaQm_simg_d0daf0_800x1200_max.jpg","combo-dam-cap-me-va-be-1m4G3-SxVIlb_simg_d0daf0_800x1200_max.jpg","combo-dam-cap-me-va-be-1m4G3-WqmKco_simg_d0daf0_800x1200_max.jpg"]";s:4:"view";s:1:"2";s:5:"buyed";s:1:"1";s:10:"rate_total";s:1:"4";s:10:"rate_count";s:1:"1";s:5:"stock";s:3:"100";s:6:"status";s:1:"1";s:7:"created";s:10:"1493983674";s:8:"discount";s:1:"0";s:10:"similarity";d:29.33922558922559;}}previous_logged_in|b:1;

@@ -12,8 +12,11 @@ DROP TABLE IF EXISTS `discount`;
 DROP TABLE IF EXISTS `catalog`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `slider`;
+<<<<<<< HEAD
 DROP TABLE IF EXISTS `shipping_tracking`;
 DROP TABLE IF EXISTS `shipping_fee_rules`;
+=======
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -80,12 +83,17 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` VARCHAR(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+<<<<<<< HEAD
   `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` DATETIME NOT NULL,
   `is_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `date_modified` DATETIME DEFAULT NULL,
+=======
+  `created` INT(11) NOT NULL,
+  `is_verified` TINYINT(1) NOT NULL DEFAULT 0,
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -126,9 +134,12 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `user_email` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_phone` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_address` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+<<<<<<< HEAD
   `user_city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_ward` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+=======
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
   `message` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 	`coupon_id` INT(11) DEFAULT NULL,
 	`discount_amount` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
@@ -173,8 +184,14 @@ CREATE TABLE IF NOT EXISTS `slider` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS `cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+=======
+
+CREATE TABLE IF NOT EXISTS `cart` (
+  `id` int(11) NOT NULL,
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `rowid` varchar(32) NOT NULL,
@@ -184,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `options` text DEFAULT NULL,
   `image_link` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+<<<<<<< HEAD
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -217,6 +235,14 @@ INSERT INTO `admin` (`name`, `email`, `password`, `level`, `created`) VALUES
 ('Goo', 'admin@gmail.com', '1bbd886460827015e5d605ed44252251', 0, 2147483647),
 ('Mod đz', 'mod@gmail.com', '1bbd886460827015e5d605ed44252251', 1, 2147483647),
 ('Azura', 'lam@gmail.com', '1bbd886460827015e5d605ed44252251', 0, 1745048390);
+=======
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `admin` (`name`, `email`, `password`, `level`, `created`) VALUES
+('Goo', 'admin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, 2147483647),
+('Mod đz', 'mod@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 2147483647);
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 
 INSERT INTO `catalog` (`name`, `description`, `parent_id`, `sort_order`, `created`) VALUES
 ('Thời trang', '', NULL, 1, '2017-04-22 05:35:21'),
@@ -274,6 +300,7 @@ INSERT INTO `product` (`catalog_id`, `name`, `content`, `origin_price`, `price`,
 (13, 'Quần kaki Nam Lịch Lãm - D36', '<p>Quần kaki nam lịch l&atilde;m</p>\r\n\r\n<p>Chất liệu vải kaki loại 1 d&agrave;y mịn</p>\r\n\r\n<p>C&oacute; đủ size 28,29,30,31,32</p>\r\n\r\n<p>Với 3 t&ocirc;ng m&agrave;u trầm đen,xanh đen rất dễ phối với &aacute;o thun,&aacute;o sơ mi,...tạo phong c&aacute;ch thanh lịch cho c&aacute;c bạn nam khi diện đến c&ocirc;ng sở, đi chơi,du lịch,...</p>\r\n', '169000.00', '169000.00', 1, 'quan-kaki-nam-lich-lam-1m4G3-NvjQo7_simg_d0daf0_800x1200_max.jpg', '["quan-kaki-nam-lich-lam-1m4G3-tyzFof_simg_d0daf0_800x1200_max.png","quan-kaki-nam-lich-lam-1m4G3-uSjiJP_simg_d0daf0_800x1200_max.jpg"]', 16, 1, 18, 4, 100, 1, 1493983674),
 (13, 'QUẦN KAKI THUN JOGGER', '<p>Kiểu d&aacute;ng trẻ trung, t&ocirc;ng m&agrave;u, họa tiết lạ mắt dễ d&agrave;ng mix c&ugrave;ng &aacute;o thun tạo phong c&aacute;ch trẻ trung cho bạn trẻ.</p>\r\n\r\n<p>Thiết kế t&uacute;i 2 b&ecirc;n tiện dụng, bo lưng thun gi&uacute;p bạn thoải m&aacute;i khi vận động.</p>\r\n\r\n<p>Form d&aacute;ng d&agrave;i, chất liệu bố, d&agrave;y dặn, thấm h&uacute;t mồ h&ocirc;i bạn trai c&oacute; thể thoải m&aacute;i hoạt động</p>\r\n\r\n<p>Size : M, L</p>\r\n', '300000.00', '300000.00', 2, 'cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-7ec3c2_simg_d0daf0_800x1200_max.jpg', '["cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-3e0554_simg_d0daf0_800x1200_max.jpg","cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-63841e_simg_d0daf0_800x1200_max.jpg","cu-cai-quan-kaki-thun-jogger-thoi-trang-mau-kem-qg06-1m4G3-fd6df6_simg_d0daf0_800x1200_max.jpg"]', 23, 1, 4, 1, 100, 1, 1493983674);
 
+<<<<<<< HEAD
 
 INSERT INTO `user` -- mật khẩu: 12345678
 (`name`, `email`, `password`, `phone`, `address`, `city`, `district`, `ward`, `created`, `is_verified`, `date_modified`) VALUES
@@ -303,12 +330,95 @@ INSERT INTO `order` (`transaction_id`, `product_id`, `qty`, `amount`, `status`) 
 (1, 6, 1, '200000.00', 0),
 (2, 5, 2, '1440000.00', 1),
 (3, 17, 2, '780000.00', 1);
+=======
+INSERT INTO `user` (`name`, `email`, `password`, `phone`, `address`, `created`, `is_verified`) VALUES
+(1, 'Nguyễn Văn A', 'nguyenvana@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0987654321', 'Hà Nội', 1743750434, 0),
+(2, 'Trần Thị B', 'tranthib@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '0912345678', 'Hồ Chí Minh', 1743750434, 1),
+(3, 'Lê Văn C', 'levanc@gmail.com', '4a8a08f09d37b73795649038408b5f33', '0908765432', 'Đà Nẵng', 1743750434, 0),
+(4, 'Stephanie Matthews', 'jonathanmontoya@elliott.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2501202816', 'North Michael', 1743750434, 0),
+(5, 'Karen Hall', 'marie18@sanchez-davis.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5067144803', 'New Jonathan', 1743750434, 1),
+(6, 'Omar Gomez', 'traviswright@white.org', '7c4a8d09ca3762af61e59520943dc26494f8941b', '9618542818', 'Port Lisaberg', 1743750434, 0),
+(7, 'Jacqueline Carroll', 'palmerdylan@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2200174914', 'Alexisburgh', 1743750434, 1),
+(8, 'Joseph English', 'glenda46@huynh-gibson.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '6723180749', 'Lopezton', 1743750434, 1),
+(9, 'Christopher Haney', 'allenkenneth@leon-smith.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '7169485518', 'East Danielle', 1743750434, 1),
+(10, 'Yvonne Mayer', 'mhenderson@roberts-rivera.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5816556391', 'Alexandrastad', 1743750434, 1),
+(11, 'Jeffrey Davis', 'chelseadavis@whitaker.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3451025878', 'South Kaylashire', 1743750434, 1),
+(12, 'Christian Collins', 'cassandrawolfe@lee-vazquez.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '9031739408', 'Martinmouth', 1743750434, 0),
+(13, 'Claire Sanchez', 'crichardson@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4908353827', 'South Tylerbury', 1743750434, 1),
+(14, 'Lauren Hall', 'jasminekennedy@chandler.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4949037784', 'Lake Annburgh', 1743750434, 1),
+(15, 'Alexis Morales', 'stacyenglish@phillips.org', '7c4a8d09ca3762af61e59520943dc26494f8941b', '1947605911', 'West Crystal', 1743750434, 1),
+(16, 'Eric Owens', 'maureen47@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5807593369', 'Munozside', 1743750434, 0),
+(17, 'Donna Cross', 'kennethcraig@johnson.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3706366610', 'East Mary', 1743750434, 1),
+(18, 'Charles Ruiz', 'morrisonchristopher@williams.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4460699992', 'North Justinmouth', 1743750434, 0),
+(19, 'Ronald Mcdaniel', 'gonzalezsamantha@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '6639153410', 'Longshire', 1743750434, 1),
+(20, 'Kelly Rocha', 'ccurtis@fernandez.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5395888187', 'Lake Darlene', 1743750434, 1),
+(21, 'Andrew Smith', 'wandamaynard@thornton.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5005857924', 'Stanleyburgh', 1743750434, 1),
+(22, 'Deborah Roth', 'melissa67@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0683074156', 'Boonehaven', 1743750434, 0),
+(23, 'Keith Evans', 'erictorres@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3671303360', 'Bobbyview', 1743750434, 1),
+(24, 'Frank White', 'tjones@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '9877351981', 'Sierratown', 1743750434, 1),
+(25, 'Thomas Vaughn', 'murphymelissa@dorsey.net', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2261945984', 'Kennedyside', 1743750434, 0),
+(26, 'Beth Reynolds', 'dixonlisa@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '7485944515', 'Alecton', 1743750434, 1),
+(27, 'Robert Barnes', 'hodgejennifer@bowman.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3749529787', 'Port Robertburgh', 1743750434, 0),
+(28, 'James Hurley', 'kimberly94@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0414078823', 'New Toddhaven', 1743750434, 1),
+(29, 'Caitlin Washington', 'njohns@smith.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5485186432', 'Thompsonborough', 1743750434, 1),
+(30, 'Ashley Burns', 'vnguyen@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2902370359', 'East Danielton', 1743750434, 1),
+(31, 'Tonya Stevenson', 'pflores@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2393373876', 'Port Robertburgh', 1743750434, 1),
+(32, 'Nicole Thomas', 'juliasilva@murray.org', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3835053050', 'West Natashaland', 1743750434, 0),
+(33, 'Christopher Webb', 'angelica46@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '1116556168', 'Port Carolmouth', 1743750434, 1),
+(34, 'Tonya Archer', 'heather52@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2225425524', 'East Denise', 1743750434, 0),
+(35, 'Emily Caldwell', 'justinguerrero@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2369592620', 'Smithfurt', 1743750434, 0),
+(36, 'Jaime Rivera', 'dsanders@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '1524622614', 'East Sheena', 1743750434, 0),
+(37, 'Xavier Stevens', 'kevin35@perez-jackson.net', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5669959394', 'Brandonton', 1743750434, 0),
+(38, 'Brittany Newman MD', 'zjames@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '8396083787', 'Jeffreyshire', 1743750434, 1),
+(39, 'Natalie Castro', 'holdentyler@norton.info', '7c4a8d09ca3762af61e59520943dc26494f8941b', '8028086313', 'South Michaelhaven', 1743750434, 0),
+(40, 'Dylan Chung', 'oliverbrian@rhodes.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0437639556', 'Lake Michaelfurt', 1743750434, 0),
+(41, 'Jason Harris', 'thomasrobert@hotmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5049885844', 'Michaelland', 1743750434, 0),
+(42, 'Katherine Pearson', 'susan76@wells.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5067484728', 'Johnview', 1743750434, 0),
+(43, 'Derrick White', 'acraig@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4757766290', 'Sanchezborough', 1743750434, 0),
+(44, 'James Cunningham', 'samantha47@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4817082637', 'Matthewchester', 1743750434, 0),
+(45, 'Thomas Ross', 'htate@clark.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '3068747683', 'South Lisa', 1743750434, 0),
+(46, 'Debra Mcdowell', 'hlittle@daniels.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0507805472', 'Jonesport', 1743750434, 0),
+(47, 'Sophia Rogers', 'shelbydavis@jimenez.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '7602283196', 'Ericksonmouth', 1743750434, 0),
+(48, 'Kyle Kelley', 'osbornebrian@kelly.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '8349412692', 'Lake Stephanie', 1743750434, 0),
+(49, 'Matthew Black', 'stephensdebra@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '6812690936', 'West Lisa', 1743750434, 1),
+(50, 'Alejandra Mills', 'dylan77@weber.org', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2995133908', 'Kelleyborough', 1743750434, 1),
+(51, 'Jessica Rodriguez', 'melissa46@norman-parker.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '8892702034', 'East Logan', 1743750434, 0),
+(52, 'Victoria Ramirez', 'zflores@williams.biz', '7c4a8d09ca3762af61e59520943dc26494f8941b', '6776587924', 'Rodriguezshire', 1743750434, 1),
+(53, 'Amber Greer', 'dayalan@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '6207077500', 'South Kevin', 1743750434, 1);
+
+INSERT INTO `coupon` (`code`, `description`, `type`, `measure`, `value`, `min_price`, `max_value`, `start_date`, `end_date`, `usage_limit`, `used_count`, `status`, `created`) VALUES
+('DISCOUNT10', 'Giảm giá 10k cho đơn giá trị từ 50k', 1, 1, 10000, 50000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 100, 0, 1, UNIX_TIMESTAMP()),
+('SUMMER20', 'Giảm giá 20% cho đơn hàng từ 100k', 1, 2, 20, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 30, 0, 1, UNIX_TIMESTAMP());
+
+INSERT INTO `transaction` (`status`, `user_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `message`, `amount`, `payment`, `created`) VALUES
+(1, 1, 'An Nhiên', 'annhien@gmail.com', '0166666666', 'Hoàng Mai - Hà Nội', 'Vui lòng trao hàng đến địa chỉ trên...', '350000.00', '', 1493983674),
+(1, 2, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'GUi hang den dia chi tren', '360000.00', '', 1493983674),
+(1, 1, 'Bình Nguyễn', 'binh@gmail.com', '0987654321', 'Hà Nội ', 'Gửi đến địa chỉ trên', '370000.00', '', 1494083674),
+(0, 3, 'Tô Nam', 'tonam@yahoo.com.vn', '098989876', 'Thủy Nguyên - Hải Phòng', 'Ship đến địa chỉ vào sáng ngày 23/5', '469000.00', '', 1494283674),
+(1, 1, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'Ship vào sáng mai.', '70000.00', '', 1494183674),
+(0, 2, 'Linh', 'ling@yahoo.com', '098798787', 'hai Phong', 'ship', '69000.00', '', 1494342674),
+(1, 3, 'Nhi', 'nhi@test.com', '0987654321', 'Long Biên - Hà Nội', 'Gửi hàng đến địa chỉ trên vào ngày mai', '200000.00', '', 1493983674),
+(0, 1, 'VIP User', 'test@gmail.com', '1234567890', 'Hải Phòng', 'Ship free', '450000.00', '', 1493983674),
+(0, 2, 'test', 'test@gmail.com', '1234567890', 'Hải Phòng', 'TESE', '300000.00', '', 1494383674),
+(0, 3, 'Nguyen An', 'khachhang1@gmail.com', '01201212222', 'Thủy Nguyên - Hải Phòng', 'SHIP TO', '169000.00', '', 1494407353);
+
+INSERT INTO `order` (`transaction_id`, `product_id`, `qty`, `amount`, `status`) VALUES
+(3, 12, 1, '360000.00', 0),
+(4, 7, 1, '350000.00', 0),
+(9, 4, 1, '200000.00', 0),
+(10, 17, 1, '450000.00', 0),
+(5, 23, 1, '370000.00', 0),
+(6, 25, 1, '300000.00', 0),
+(8, 10, 1, '69000.00', 0),
+(7, 11, 1, '70000.00', 0);
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76
 
 INSERT INTO `slider` (`name`, `image_link`, `link`, `sort_order`, `created`) VALUES
 ('1', 'slide1.png', 'http://localhost/webshop/phoi-ren-p4', 1, '2017-04-25 15:24:43'),
 ('2', 'slide2.jpg', 'http://localhost/webshop/ao-gia-dinh-ag0560-p16', 4, '2017-04-25 15:36:41'),
 ('3', 'slide3.jpg', 'http://localhost/webshop/phong-cach-phoi-mau-p24', 3, '2017-04-25 15:37:00');
 
+<<<<<<< HEAD
 INSERT INTO `comments` (`id`, `user_id`, `product_id`, `rate`, `comment_content`, `created`) VALUES
 (1, 1, 1, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
 (2, 2, 1, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
@@ -341,3 +451,150 @@ INSERT INTO `shipping_tracking` (`id`, `transaction_id`, `status`, `shipping_fee
 (8, 8, 'delivered', 2, '2025-04-16 14:32:58', '2025-04-16 14:33:04', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
 (9, 9, 'delivered', 1, '2025-04-16 17:00:44', '2025-04-16 17:01:23', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook'),
 (10, 10, 'delivered', 1, '2025-04-16 17:08:30', '2025-04-16 17:09:14', '2025-04-19', 'http://localhost/MIS-EC/webquanao/api/shipping/webhook');
+=======
+INSERT INTO `comments` (`user_id`, `product_id`, `rate`, `comment_content`, `created`) VALUES
+(1, 1, 1, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
+(2, 2, 1, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
+(3, 3, 1, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
+(4, 1, 2, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
+(5, 2, 2, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
+(6, 3, 2, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
+(7, 1, 3, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
+(8, 2, 3, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
+(9, 3, 3, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
+(10, 1, 4, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1493983674),
+(11, 2, 4, 4, 'Chất lượng sản phẩm tốt, giá cả hợp lý.', 1493983674),
+(12, 3, 4, 3, 'Sản phẩm không đẹp lắm.', 1493983674),
+(13, 11, 1, 4, 'Hơi thất vọng vì form áo không đẹp.', 1744959415),
+(14, 5, 1, 5, 'Sẽ mua lại lần nữa, rất đáng tiền.', 1744959415),
+(15, 21, 1, 4, 'Thiết kế đơn giản nhưng tinh tế.', 1744959415),
+(16, 19, 1, 4, 'Chất lượng ổn, giao đúng size đặt.', 1744959415),
+(17, 18, 1, 4, 'Đóng gói cẩn thận, không bị nhăn.', 1744959415),
+(18, 12, 1, 4, 'Rất thích sản phẩm này.', 1744959415),
+(19, 10, 1, 5, 'Sản phẩm không giống hình cho lắm.', 1744959415),
+(20, 38, 1, 5, 'Hơi thất vọng vì form áo không đẹp.', 1744959415),
+(21, 4, 2, 5, 'Sản phẩm như hình, đóng gói kỹ.', 1744959415),
+(22, 52, 2, 4, 'Đường may tỉ mỉ, không bị bung chỉ.', 1744959415),
+(23, 14, 2, 5, 'Giá hợp lý so với chất lượng.', 1744959415),
+(24, 48, 2, 4, 'Mặc rất tôn dáng.', 1744959415),
+(25, 31, 2, 4, 'Size chuẩn, mặc rất vừa.', 1744959415),
+(26, 42, 3, 4, 'Mặc rất tôn dáng.', 1744959415),
+(27, 20, 3, 4, 'Áo rất nhẹ, phù hợp mùa hè.', 1744959415),
+(28, 6, 3, 5, 'Shop phục vụ tốt, sản phẩm chất lượng.', 1744959415),
+(29, 50, 3, 5, 'Màu đẹp, không bị phai.', 1744959415),
+(30, 33, 3, 4, 'Áo đẹp, vải mịn.', 1744959415),
+(31, 6, 4, 5, 'Form vừa vặn, mặc rất thoải mái.', 1744959415),
+(32, 46, 4, 4, 'Đẹp hơn mong đợi, vải mịn mát.', 1744959415),
+(33, 18, 4, 5, 'Sản phẩm như hình, đóng gói kỹ.', 1744959415),
+(34, 44, 5, 5, 'Mua lần 2 vẫn rất ưng.', 1744959415),
+(35, 27, 5, 4, 'Không bị co rút sau khi giặt máy.', 1744959415),
+(36, 14, 5, 4, 'Sản phẩm tốt, đóng gói đẹp.', 1744959415),
+(37, 51, 5, 4, 'Phù hợp để mặc đi chơi, đi làm.', 1744959415),
+(38, 26, 5, 5, 'Mặc rất tôn dáng.', 1744959415),
+(39, 17, 5, 5, 'Giao hàng nhanh, sản phẩm ok.', 1744959415),
+(40, 39, 6, 5, 'Mặc thoáng mát, không bị nóng.', 1744959415),
+(41, 18, 6, 4, 'Đường may tỉ mỉ, không bị bung chỉ.', 1744959415),
+(42, 47, 6, 5, 'Đường may tỉ mỉ, không bị bung chỉ.', 1744959415),
+(43, 24, 6, 5, 'Không bị nhăn sau khi giặt.', 1744959415),
+(44, 7, 6, 5, 'Hơi rộng so với size nhưng đổi trả dễ.', 1744959415),
+(45, 51, 6, 5, 'Mặc lên rất sang, đường may chắc chắn.', 1744959415),
+(46, 6, 6, 4, 'Vừa túi tiền, chất lượng ổn.', 1744959415),
+(47, 49, 6, 5, 'Vừa túi tiền, chất lượng ổn.', 1744959415),
+(48, 31, 7, 5, 'Thiết kế đơn giản nhưng tinh tế.', 1744959415),
+(49, 41, 7, 4, 'Vải hơi mỏng nhưng vẫn ổn.', 1744959415),
+(50, 29, 7, 4, 'Sản phẩm đáng đồng tiền.', 1744959415),
+(51, 27, 7, 4, 'Không thích kiểu dáng lắm.', 1744959415),
+(52, 18, 7, 5, 'Shop làm việc chuyên nghiệp.', 1744959415),
+(53, 12, 7, 4, 'Áo váy mềm mịn, dễ chịu.', 1744959415),
+(54, 36, 7, 5, 'Shop làm việc chuyên nghiệp.', 1744959415),
+(55, 37, 8, 5, 'Áo giữ form tốt, không nhăn.', 1744959415),
+(56, 20, 8, 5, 'Vải hơi mỏng nhưng vẫn ổn.', 1744959415),
+(57, 39, 8, 5, 'Form không đẹp như tưởng tượng.', 1744959415),
+(58, 4, 8, 4, 'Đúng mô tả, giao hàng nhanh.', 1744959415),
+(59, 47, 8, 4, 'Sản phẩm giao thiếu phụ kiện.', 1744959415),
+(60, 11, 8, 5, 'Giao nhầm màu nhưng shop xử lý nhanh.', 1744959415),
+(61, 36, 9, 4, 'Vải không nhăn, rất thích.', 1744959415),
+(62, 10, 9, 5, 'Sản phẩm rất đáng yêu.', 1744959415),
+(63, 44, 9, 4, 'Giá rẻ mà chất lượng ổn.', 1744959415),
+(64, 23, 9, 4, 'Shop làm việc chuyên nghiệp.', 1744959415),
+(65, 35, 10, 4, 'Màu sắc đẹp, form chuẩn.', 1744959415),
+(66, 5, 10, 4, 'Tay áo may hơi ẩu.', 1744959415),
+(67, 11, 10, 4, 'Form vừa vặn, mặc rất thoải mái.', 1744959415),
+(68, 27, 10, 5, 'Áo nhẹ, dễ mặc mùa hè.', 1744959415),
+(69, 23, 10, 4, 'Sản phẩm rất đáng yêu.', 1744959415),
+(70, 12, 11, 5, 'Đường may tỉ mỉ, không bị bung chỉ.', 1744959415),
+(71, 52, 11, 4, 'Rất thích sản phẩm này.', 1744959415),
+(72, 46, 11, 5, 'Màu rất tươi, mặc lên sáng da.', 1744959415),
+(73, 34, 11, 5, 'Đặt size M mà giao size L.', 1744959415),
+(74, 39, 11, 5, 'Kiểu dáng trẻ trung, năng động.', 1744959415),
+(75, 14, 11, 4, 'Sản phẩm không giống hình cho lắm.', 1744959415),
+(76, 20, 11, 4, 'Sản phẩm không được như mong đợi.', 1744959415),
+(77, 41, 12, 4, 'Sản phẩm rất đẹp, chất lượng tốt.', 1744959415),
+(78, 39, 12, 4, 'Áo đẹp, vải mịn.', 1744959415),
+(79, 18, 12, 4, 'Chất lượng ổn, giao đúng size đặt.', 1744959415),
+(80, 6, 13, 4, 'Sản phẩm như hình, đóng gói kỹ.', 1744959415),
+(81, 25, 13, 5, 'Đường may tỉ mỉ, không bị bung chỉ.', 1744959415),
+(82, 8, 13, 4, 'Sản phẩm giao thiếu phụ kiện.', 1744959415),
+(83, 40, 14, 4, 'Áo khá bền, giặt máy không sao.', 1744959415),
+(84, 34, 14, 5, 'Size chuẩn, mặc rất vừa.', 1744959415),
+(85, 19, 14, 5, 'Áo mặc thoải mái, vải thấm hút tốt.', 1744959415),
+(86, 51, 14, 5, 'Không đẹp như tưởng tượng.', 1744959415),
+(87, 30, 14, 4, 'Áo mặc lên form rất đẹp.', 1744959415),
+(88, 16, 14, 4, 'Màu sắc đẹp, form chuẩn.', 1744959415),
+(89, 10, 14, 5, 'Không đẹp như tưởng tượng.', 1744959415),
+(90, 10, 15, 4, 'Không hài lòng lắm, vải hơi nóng.', 1744959415),
+(91, 19, 15, 4, 'Sản phẩm như hình, đóng gói kỹ.', 1744959415),
+(92, 16, 15, 5, 'Rất vừa ý, đúng như mong đợi.', 1744959415),
+(93, 38, 15, 4, 'Đặt size M mà giao size L.', 1744959415),
+(94, 32, 15, 4, 'Chất liệu vải tốt, kiểu dáng đẹp.', 1744959415),
+(95, 38, 16, 4, 'Màu rất tươi, mặc lên sáng da.', 1744959415),
+(96, 4, 16, 4, 'Sản phẩm đúng mô tả, gói hàng cẩn thận.', 1744959415),
+(97, 9, 16, 5, 'Sản phẩm rất đẹp, chất lượng tốt.', 1744959415),
+(98, 19, 16, 5, 'Không thích chất liệu vải lắm.', 1744959415),
+(99, 14, 16, 5, 'Shop đóng gói đẹp, có cả túi đựng.', 1744959415),
+(100, 30, 16, 5, 'Mua lần 2 vẫn rất ưng.', 1744959415),
+(101, 35, 16, 5, 'Vải không nhăn, rất thích.', 1744959415),
+(102, 34, 16, 4, 'Áo hơi ngắn so với hình.', 1744959415),
+(103, 7, 17, 4, 'Vừa túi tiền, chất lượng ổn.', 1744959415),
+(104, 41, 17, 5, 'Màu sắc đẹp, form chuẩn.', 1744959415),
+(105, 51, 17, 4, 'Kiểu dáng hợp trend.', 1744959415),
+(106, 38, 17, 5, 'Giao nhầm màu nhưng shop xử lý nhanh.', 1744959415),
+(107, 14, 18, 4, 'Áo mặc lên form rất đẹp.', 1744959415),
+(108, 7, 18, 4, 'Màu rất tươi, mặc lên sáng da.', 1744959415),
+(109, 36, 18, 4, 'Tay áo may hơi ẩu.', 1744959415),
+(110, 9, 18, 4, 'Kiểu dáng hợp trend.', 1744959415),
+(111, 15, 18, 4, 'Áo mặc lên body đẹp hơn tưởng tượng.', 1744959415),
+(112, 8, 18, 4, 'Dễ phối với quần jeans, chân váy.', 1744959415),
+(113, 42, 18, 5, 'Không thích chất liệu vải lắm.', 1744959415),
+(114, 46, 19, 5, 'Không bị nhăn sau khi giặt.', 1744959415),
+(115, 49, 19, 4, 'Vải dày dặn, mặc vào mùa lạnh ổn.', 1744959415),
+(116, 24, 19, 5, 'Đúng mô tả, giao hàng nhanh.', 1744959415),
+(117, 19, 19, 5, 'Đổi hàng rất dễ, shop hỗ trợ tốt.', 1744959415),
+(118, 4, 20, 4, 'Không quá nổi bật nhưng chất lượng ổn.', 1744959415),
+(119, 33, 20, 4, 'Giao nhầm màu nhưng shop xử lý nhanh.', 1744959415),
+(120, 43, 20, 5, 'Màu hơi khác hình một chút nhưng vẫn đẹp.', 1744959415),
+(121, 8, 21, 5, 'Shop phục vụ tốt, sản phẩm chất lượng.', 1744959415),
+(122, 19, 21, 5, 'Vải mịn, mát, không ngứa.', 1744959415),
+(123, 27, 21, 4, 'Vải dày dặn, mặc vào mùa lạnh ổn.', 1744959415),
+(124, 22, 21, 5, 'Áo khá bền, giặt máy không sao.', 1744959415),
+(125, 14, 21, 4, 'Mặc lên rất sang, đường may chắc chắn.', 1744959415),
+(126, 11, 22, 5, 'Shop đóng gói đẹp, có cả túi đựng.', 1744959415),
+(127, 10, 22, 4, 'Rất thích sản phẩm này.', 1744959415),
+(128, 51, 22, 5, 'Vải đẹp, không bị xù lông khi giặt.', 1744959415),
+(129, 39, 22, 5, 'Giao nhầm màu nhưng shop xử lý nhanh.', 1744959415),
+(130, 13, 22, 5, 'Lần đầu mua mà rất hài lòng.', 1744959415),
+(131, 9, 23, 5, 'Giao hàng nhanh, sản phẩm đúng mô tả.', 1744959415),
+(132, 44, 23, 4, 'Chất vải mềm, mặc thoải mái cả ngày.', 1744959415),
+(133, 31, 23, 4, 'Giao hàng nhanh, sản phẩm ok.', 1744959415),
+(134, 14, 24, 5, 'Đóng gói cẩn thận, không bị nhăn.', 1744959415),
+(135, 51, 24, 4, 'Vải hơi mỏng nhưng vẫn ổn.', 1744959415),
+(136, 32, 24, 4, 'Size chuẩn, chất vải tốt.', 1744959415),
+(137, 39, 24, 4, 'Giá rẻ mà chất lượng ổn.', 1744959415),
+(138, 49, 24, 4, 'Shop phục vụ tốt, sản phẩm chất lượng.', 1744959415);
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `rowid`, `name`, `price`, `qty`, `options`, `image_link`, `created_at`, `updated_at`) VALUES
+(1, 9, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 10:34:06', '2025-04-16 10:34:06'),
+(2, 8, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 15:00:11', '2025-04-16 15:00:11'),
+(3, 9, 7, '8f14e45fceea167a5a36dedd4bea2543', 'Đầm ren tay dài tiểu thư', 350000.00, 1, '', 'Dam_ren_den_tay_dai_tieu_thu_(3).jpg', '2025-04-16 15:02:16', '2025-04-16 15:02:16'),
+(4, 9, 12, 'c20ad4d76fe97759aa27a0c99bff6710', 'Đầm maxi phối ren cao cấp', 360000.00, 1, '', 'dam-maxi-phoi-ren-cao-cap-1m4G3-QXVTv3_simg_d0daf0_800x1200_max.jpg', '2025-04-16 15:02:33', '2025-04-16 15:02:33');
+>>>>>>> 07f5f07ecc3cb82232e4892372fd45eaf4dc5a76

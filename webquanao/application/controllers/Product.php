@@ -542,4 +542,88 @@ class Product extends MY_Controller {
  		$this->load->view('site/layoutsub', $this->data);
 		
  	}
+
+	/**
+	 * Lấy tổng hợp đánh giá sản phẩm từ OpenAI
+	 */
+	public function get_review_summary() {
+		// Kiểm tra yêu cầu AJAX
+		if (!$this->input->is_ajax_request()) {
+			show_error('Không được phép truy cập trực tiếp');
+			return;
+		}
+
+		// Lấy ID sản phẩm từ request
+		$product_id = $this->input->post('product_id');
+		if (!$product_id) {
+			echo json_encode(['success' => false, 'message' => 'Thiếu ID sản phẩm']);
+			exit();
+		}
+
+		// Lấy thông tin sản phẩm
+		$product = $this->product_model->get_info($product_id);
+		if (!$product) {
+			echo json_encode(['success' => false, 'message' => 'Sản phẩm không tồn tại']);
+			exit();
+		}
+
+		// Lấy danh sách bình luận theo sản phẩm
+		$sql = "
+			SELECT comments.*, user.name AS user_name
+			FROM comments
+			LEFT JOIN user ON comments.user_id = user.id
+			WHERE comments.product_id = $product_id
+			ORDER BY comments.created DESC
+		";
+		$comments = $this->comment_model->query($sql);
+
+		if (empty($comments)) {
+			echo json_encode(['success' => false, 'message' => 'Sản phẩm chưa có bình luận nào']);
+			exit();
+		}
+
+		// Chuẩn bị dữ liệu để gửi đến API OpenAI
+		$reviews = [];
+		foreach ($comments as $comment) {
+			$reviews[] = "Đánh giá {$comment->rate}/5 sao: {$comment->comment_content}";
+		}
+
+		$data = [
+			'product_name' => $product->name,
+			'reviews' => $reviews
+		];
+
+		// Gọi API OpenAI để tổng hợp đánh giá
+		$openai_url = 'http://openai:5001/api/product/review-summary';
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $openai_url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+		$response = curl_exec($ch);
+		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		if ($http_code !== 200) {
+			echo json_encode(['success' => false, 'message' => 'Lỗi kết nối đến dịch vụ AI', 'http_code' => $http_code]);
+			exit();
+		}
+
+		$response_data = json_decode($response, true);
+		if (!$response_data || !isset($response_data['data']['summary'])) {
+			echo json_encode(['success' => false, 'message' => 'Dịch vụ AI không trả về kết quả hợp lệ']);
+			exit();
+		}
+
+		// Trả về kết quả tổng hợp
+		echo json_encode([
+			'success' => true, 
+			'summary' => $response_data['data']['summary'],
+			'review_count' => count($reviews)
+		]);
+		exit();
+	}
 }
