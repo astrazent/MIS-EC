@@ -214,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `shipping_tracking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `admin` (`name`, `email`, `password`, `level`, `created`) VALUES
-('Goo', 'admin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, 2147483647),
-('Mod đz', 'mod@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 2147483647),
-('Azura', 'lam@gmail.com', '1c6d6ca22cc31cb79e6e1f5277ef06e0', 0, 1745048390);
+('Goo', 'admin@gmail.com', '1bbd886460827015e5d605ed44252251', 0, 2147483647),
+('Mod đz', 'mod@gmail.com', '1bbd886460827015e5d605ed44252251', 1, 2147483647),
+('Azura', 'lam@gmail.com', '1bbd886460827015e5d605ed44252251', 0, 1745048390);
 
 INSERT INTO `catalog` (`name`, `description`, `parent_id`, `sort_order`, `created`) VALUES
 ('Thời trang', '', NULL, 1, '2017-04-22 05:35:21'),
@@ -277,14 +277,14 @@ INSERT INTO `product` (`catalog_id`, `name`, `content`, `origin_price`, `price`,
 
 INSERT INTO `user` -- mật khẩu: 12345678
 (`name`, `email`, `password`, `phone`, `address`, `city`, `district`, `ward`, `created`, `is_verified`, `date_modified`) VALUES
-('Nguyễn Văn A', 'nguyenvana@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0987654321', 'Hà Nội', 'Hà Nội', 'Ba Đình', 'Kim Mã', NOW(), 1, NOW()),
-('Trần Thị B', 'tranthib@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0912345678', 'Hồ Chí Minh', 'Hồ Chí Minh', 'Quận 1', 'Bến Nghé', NOW(), 0, NULL),
-('Lê Văn C', 'levanc@gmail.com', '25d55ad283aa400af464c76d713c07ad', '0908765432', 'Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Thạch Thang', NOW(), 1, NOW());
+('Nguyễn Văn A', 'nguyenvana@gmail.com', '1bbd886460827015e5d605ed44252251', '0987654321', 'Hà Nội', 'Hà Nội', 'Ba Đình', 'Kim Mã', NOW(), 1, NOW()),
+('Trần Thị B', 'tranthib@gmail.com', '1bbd886460827015e5d605ed44252251', '0912345678', 'Hồ Chí Minh', 'Hồ Chí Minh', 'Quận 1', 'Bến Nghé', NOW(), 0, NULL),
+('Lê Văn C', 'levanc@gmail.com', '1bbd886460827015e5d605ed44252251', '0908765432', 'Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Thạch Thang', NOW(), 1, NOW());
 
 
 INSERT INTO `coupon` (`code`, `description`, `type`, `measure`, `value`, `min_price`, `max_value`, `start_date`, `end_date`, `usage_limit`, `used_count`, `status`, `created`) VALUES
-('DISCOUNT10', 'Giảm giá 10k cho đơn giá trị từ 50k', 1, 1, 10000, 50000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 100, 0, 1, UNIX_TIMESTAMP()),
-('SUMMER20', 'Giảm giá 20% cho đơn hàng từ 100k', 1, 2, 20, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 30, 0, 1, UNIX_TIMESTAMP());
+('DISCOUNT10', 'Giảm giá 10k cho đơn giá trị từ 50k', 1, 0, 10000, 50000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 100, 0, 1, UNIX_TIMESTAMP()),
+('SUMMER20', 'Giảm giá 20% cho đơn hàng từ 100k', 1, 1, 20, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 30, 0, 1, UNIX_TIMESTAMP());
 
 INSERT INTO `transaction` 
 (`status`, `user_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_district`, `user_ward`, `message`, `amount`, `payment`, `created`) VALUES

@@ -247,3 +247,51 @@ ERROR - 2025-05-23 23:38:50 --> Severity: Warning --> Cannot modify header infor
 ERROR - 2025-05-23 23:40:43 --> 404 Page Not Found: Well-known/appspecific
 ERROR - 2025-05-23 23:40:53 --> Query error: Unknown column 'user_city' in 'INSERT INTO' - Invalid query: INSERT INTO `transaction` (`user_id`, `user_name`, `user_email`, `user_address`, `user_city`, `user_district`, `user_ward`, `user_phone`, `message`, `amount`, `payment`, `created`) VALUES ('3', 'Lê Văn C', 'phannguyen2300@gmail.com', 'Đà Nẵng', '01', '002', '00040', '0908765432', '', 590000, 'cash', '2025-05-23 23:40:53')
 >>>>>>> 81855b8ae4f2b7e7fba0bd743554ee13a7298a1d
+ERROR - 2025-05-23 23:48:04 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:05 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:26 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:43 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:43 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:43 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:43 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:43 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'image_link' of non-object /var/www/html/application/views/site/cart/cart_sh.php 20
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'name' of non-object /var/www/html/application/views/site/cart/cart_sh.php 21
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 22
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'qty' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:48:50 --> Severity: Notice --> Trying to get property 'price' of non-object /var/www/html/application/views/site/cart/cart_sh.php 23
+ERROR - 2025-05-23 23:49:35 --> Severity: Notice --> Undefined property: Order::$cart /var/www/html/application/controllers/Order.php 588
+ERROR - 2025-05-23 23:49:35 --> Severity: error --> Exception: Call to a member function destroy() on null /var/www/html/application/controllers/Order.php 588
+ERROR - 2025-05-23 23:49:35 --> Severity: Warning --> Cannot modify header information - headers already sent by (output started at /var/www/html/system/core/Exceptions.php:271) /var/www/html/system/core/Common.php 578
+ERROR - 2025-05-23 23:49:39 --> Severity: Notice --> Undefined property: Order::$cart /var/www/html/application/controllers/Order.php 588
+ERROR - 2025-05-23 23:49:39 --> Severity: error --> Exception: Call to a member function destroy() on null /var/www/html/application/controllers/Order.php 588
+ERROR - 2025-05-23 23:49:39 --> Severity: Warning --> Cannot modify header information - headers already sent by (output started at /var/www/html/system/core/Exceptions.php:271) /var/www/html/system/core/Common.php 578
+ERROR - 2025-05-23 23:56:17 --> Query error: Unknown column 'shipping_info' in 'SET' - Invalid query: UPDATE `transaction` SET `status` = '2', `shipping_info` = 'TRACK-20250523235617-13'
+WHERE `id` = '13'

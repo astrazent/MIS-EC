@@ -34,10 +34,14 @@ class MY_Controller extends CI_Controller
 				$this->data['user'] = $user;
 
 				$this->load->model('cart_model');
-				$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
-				$this->data['carts'] = $carts;
-				$this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
-
+				if (isset($user)) {
+					$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
+					$this->data['carts'] = $carts;
+					$this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
+				} else {
+					$this->data['total_items'] = 0;
+				}
+				
 				// Bật profiler
 				if (ENVIRONMENT == "development") {
 					$this->output->enable_profiler(TRUE); //Log_dev_code

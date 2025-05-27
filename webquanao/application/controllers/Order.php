@@ -585,7 +585,7 @@ class Order extends MY_Controller
 				return;
 			}
 
-			$this->cart->destroy();
+			$this->cart_model->del_rule(['user_id' => $user->id]);
 
 			// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 			$this->db->trans_complete();
