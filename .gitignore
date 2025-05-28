@@ -4,6 +4,7 @@ python_AI/app/data
 webquanao/application/logs
 webquanao/sessions/*
 webquanao/.env.private
+webquanao/logs/*
 .todo
 .todo-example
 someUssualBug.txt

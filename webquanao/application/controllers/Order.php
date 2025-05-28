@@ -13,6 +13,8 @@ class Order extends MY_Controller
 		$this->load->helper('email');
 		$this->load->model('cart_model');
 		$this->load->model('shipping_rule_model');
+		$this->load->model('coupon_model');
+		$this->load->model('user_coupon_model');
 	}
 
 	public function validate_email($to_mail, $to_name, $subject, $body, $altBody)
@@ -30,8 +32,8 @@ class Order extends MY_Controller
 		if (!isset($user)) {
 			redirect(base_url('/dang-nhap'));
 		}
-		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
-
+		// $carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
+		$carts = $this->cart_model->get_cart_with_catalog_id(['cart.user_id' => $user->id]);
 		if (empty($carts)) {
 			redirect(base_url('/'));
 			return;
@@ -43,6 +45,7 @@ class Order extends MY_Controller
 			$total_amount = $total_amount + ($value->price * $value->qty);
 		}
 
+		$this->data['carts_info'] = $carts;
 		$this->data['total_amount'] = $total_amount;
 
 		$this->data['temp'] = 'site/order/index.php';
@@ -270,7 +273,6 @@ class Order extends MY_Controller
 		$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 
 		if (empty($carts)) {
-			log_message('error', "Giỏ hàng trống");
 			return false;
 		}
 
@@ -318,7 +320,6 @@ class Order extends MY_Controller
 
 		// Nếu có lỗi, trả về danh sách lỗi
 		if (!empty($errors)) {
-			log_message('error', "Dữ liệu không hợp lệ");
 			return false;
 		}
 		$data_saved = array();
@@ -334,7 +335,9 @@ class Order extends MY_Controller
 			'user_ward' => $formData['ward'],
 			'user_phone' => $formData['phone'],
 			'message' => $formData['message'] ?? '',
-			'amount' => $total_amount,
+			'shipping_fee' => $formData['shipping_fee'],
+			'discount_amount' => $formData['discount_amount'] ?? 0,
+			'amount' => $total_amount + $formData['shipping_fee'] - $formData['discount_amount'],
 			'payment' => $formData['payment'] ?? '',
 			'created' => $time
 		);
@@ -344,10 +347,17 @@ class Order extends MY_Controller
 		$this->transaction_model->create($data_saved);
 		$transaction_id = $this->db->insert_id();
 
+		if ($formData['coupon_id'] != null) {
+			if (!$this->user_coupon_model->mark_coupon_used($user->id, $formData['coupon_id'])) {
+				$this->db->trans_rollback();
+				echo json_encode(["status" => "error", "message" => "Lưu voucher thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+				return;
+			}
+		}
+
 		// Kiểm tra nếu không lấy được ID thì rollback
 		if (!$transaction_id) {
 			$this->db->trans_rollback();
-			log_message('error', "Đặt hàng thất bại");
 			return false;
 		}
 
@@ -364,7 +374,6 @@ class Order extends MY_Controller
 
 			if (!$order_info) {
 				$this->db->trans_rollback();
-				log_message('error', "Đặt hàng thất bại");
 				return false;
 			}
 		}
@@ -384,8 +393,6 @@ class Order extends MY_Controller
 		// Hoàn tất transaction (tự động commit nếu không có lỗi, rollback nếu có lỗi)
 		$this->db->trans_complete();
 
-		// Trả về phản hồi
-		log_message('error', "Đặt hàng thành công!");
 		return true;
 	}
 
@@ -529,7 +536,9 @@ class Order extends MY_Controller
 				'user_ward' => $data['ward'],
 				'user_phone' => $data['phone'],
 				'message' => $data['message'] ?? '',
-				'amount' => $total_amount,
+				'shipping_fee' => $data['shipping_fee'],
+				'discount_amount' => $data['discount_amount'] ?? 0,
+				'amount' => $total_amount + $data['shipping_fee'] - $data['discount_amount'],
 				'payment' => $data['payment'] ?? '',
 				'created' => $time
 			);
@@ -538,6 +547,14 @@ class Order extends MY_Controller
 			$this->load->model('transaction_model');
 			$this->transaction_model->create($data_saved);
 			$transaction_id = $this->db->insert_id();
+
+			if ($data['coupon_id'] != null) {
+				if (!$this->user_coupon_model->mark_coupon_used($user->id, $data['coupon_id'])) {
+					$this->db->trans_rollback();
+					echo json_encode(["status" => "error", "message" => "Lưu voucher thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+					return;
+				}
+			}
 
 			// Kiểm tra nếu không lấy được ID thì rollback
 			if (!$transaction_id) {
@@ -636,6 +653,72 @@ class Order extends MY_Controller
 				"status" => "success",
 				"message" => "lấy quy tắc ship thành công",
 				"data" => $list
+			], JSON_UNESCAPED_UNICODE);
+		}
+	}
+
+	public function get_voucher()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+			header('Content-Type: application/json; charset=utf-8');
+
+			$user = $this->session->userdata('user');
+			if (!$user) {
+				echo json_encode([
+					"status" => "null_user",
+					"message" => "Người dùng không tồn tại!"
+				], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			$coupon_info = $this->coupon_model->get_coupons_with_user_and_used_total($user->id);
+
+			echo json_encode([
+				"status" => "success",
+				"message" => "Lấy thông tin voucher thành công",
+				"data" => [
+					"coupon_info" => $coupon_info
+				]
+			], JSON_UNESCAPED_UNICODE);
+		}
+	}
+	public function check_gift_code()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			header('Content-Type: application/json; charset=utf-8');
+
+			$user = $this->session->userdata('user');
+			if (!$user) {
+				echo json_encode([
+					"status" => "null_user",
+					"message" => "Người dùng không tồn tại!"
+				], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+
+			// Nhận dữ liệu JSON từ request
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			$info = $this->user_coupon_model->get_coupon_by_gift_code($data['giftCode']);
+			if ($info == null) {
+				echo json_encode([
+					"status" => "error",
+					"message" => "Không tìm thấy voucher"
+				], JSON_UNESCAPED_UNICODE);
+				return;
+			}
+			// if (!$this->user_coupon_model->mark_gift_code_used($user->id, $data['giftCode'])) {
+			// 	echo json_encode([
+			// 		"status" => "error",
+			// 		"message" => "Cập nhật coupon thất bại",
+			// 	], JSON_UNESCAPED_UNICODE);
+			// 	return;
+			// }
+
+			echo json_encode([
+				"status" => "success",
+				"message" => "Lấy thông tin voucher thành công",
+				"data" => $info
 			], JSON_UNESCAPED_UNICODE);
 		}
 	}

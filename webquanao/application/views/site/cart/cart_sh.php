@@ -15,12 +15,13 @@
           </thead>
           <tbody>
             <?php
+            $carts = json_decode(json_encode($carts), true);
             foreach ($carts as $items) {  ?>
               <tr>
-                <td> <img style="width: 40px;border-radius: 30%;" src="<?php echo base_url('upload/product/' . $items->image_link); ?>" alt=""></td>
-                <td><?php echo $items->name; ?></td>
-                <td><?php echo $items->qty; ?></td>
-                <td><?php echo number_format($items->qty * $items->price); ?> VNĐ</td>
+                <td> <img style="width: 40px;border-radius: 30%;" src="<?php echo base_url('upload/product/' . $items['image_link']); ?>" alt=""></td>
+                <td><?php echo $items['name']; ?></td>
+                <td><?php echo $items['qty']; ?></td>
+                <td><?php echo number_format($items['qty'] * $items['price']); ?> VNĐ</td>
               </tr>
             <?php }
             ?>

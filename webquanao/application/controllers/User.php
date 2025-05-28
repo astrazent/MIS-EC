@@ -540,7 +540,6 @@ class User extends MY_Controller
 		if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 			$data = json_decode(file_get_contents("php://input"), true);
 
-			log_message('error', print_r($data, true));
 			if (!isset($data['id'])) {
 				echo json_encode(['status' => 'error', 'message' => 'Thiếu dữ liệu']);
 				return;

@@ -39,9 +39,9 @@ class MY_Controller extends CI_Controller
 					$this->data['carts'] = $carts;
 					$this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
 				} else {
-					$this->data['total_items'] = 0;
+					$this->data['total_items'] = NULL;
 				}
-				
+
 				// Bật profiler
 				if (ENVIRONMENT == "development") {
 					$this->output->enable_profiler(TRUE); //Log_dev_code
