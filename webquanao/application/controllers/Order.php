@@ -449,6 +449,7 @@ class Order extends MY_Controller
 
 	public function complete()
 	{
+		log_message('error', "Đặt hàng thành công!");
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Content-Type: application/json;');
 			$user = $this->session->userdata('user');

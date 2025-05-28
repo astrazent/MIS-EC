@@ -19,11 +19,9 @@ class Transaction extends MY_Controller {
 		$message_fail = $this->session->flashdata('message_fail');
 		$this->data['message_fail'] = $message_fail;
 
-		// Nhận tham số sort & order từ URL
 		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'created';
 		$order = $this->input->get('order') ? $this->input->get('order') : 'desc';
 
-		// Tổng số đơn hàng
 		$total = $this->transaction_model->get_total();
 		$this->data['total'] = $total;
 
@@ -40,15 +38,11 @@ class Transaction extends MY_Controller {
 		$segment = intval($segment);
 
 		$input['limit'] = array($config['per_page'], $segment);
-
-		// Sắp xếp theo cột đã chọn
 		$input['order'] = array($sort, $order);
 		
-		// Lấy danh sách đơn hàng
 		$transaction = $this->transaction_model->get_list($input);
 		$this->data['transaction'] = $transaction;
 
-		// Lưu thông tin sort & order để dùng trong View
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
@@ -115,7 +109,6 @@ class Transaction extends MY_Controller {
 			$this->session->set_flashdata('message_fail', 'Xóa thất bại');
 		}
 		redirect(admin_url('transaction'));
-		
 	}
 	public function accept()
 	{
@@ -131,7 +124,6 @@ class Transaction extends MY_Controller {
 		$id = $this->uri->segment(4);
 		log_message('info', "Starting deliver process for transaction ID: {$id}");
 
-		// Get transaction details
 		$transaction = $this->transaction_model->get_info($id);
 		if (!$transaction) {
 			log_message('error', "Deliver failed: Transaction {$id} not found.");
@@ -140,7 +132,6 @@ class Transaction extends MY_Controller {
 			return;
 		}
 		
-		// Check current status - only allow delivering if status is 1 (confirmed)
 		if ($transaction->status != '1') {
 			log_message('warn', "Deliver failed: Transaction {$id} status is {$transaction->status}, not 1.");
 			$this->session->set_flashdata('message_fail', 'Chỉ có thể vận chuyển đơn hàng đã xác nhận (Trạng thái hiện tại: ' . $transaction->status . ')');
@@ -148,24 +139,19 @@ class Transaction extends MY_Controller {
 			return;
 		}
 
-		// Generate a tracking ID
-		$tracking_id = 'TRACK-' . date('YmdHis') . '-' . $id;
+		// $tracking_id = 'TRACK-' . date('YmdHis') . '-' . $id;
 		
-		// Start database transaction
 		$this->db->trans_start();
 		
-		// Update transaction status to "delivering" (2)
 		$data = array();
 		$data['status'] = '2';
-		$data['shipping_info'] = $tracking_id;
 		$update_success = $this->transaction_model->update($id, $data);
 		
-		// Save tracking information to shipping_tracking table
 		$shipping_data = array(
-			'tracking_id' => $tracking_id,
+			// 'tracking_id' => $tracking_id,
 			'transaction_id' => $transaction->id,
-			'customer_name' => $transaction->user_name,
-			'shipping_address' => $transaction->user_address,
+			// 'customer_name' => $transaction->user_name,
+			// 'shipping_address' => $transaction->user_address,
 			'status' => 'processing',
 			'created_at' => date('Y-m-d H:i:s'),
 			'estimated_delivery' => date('Y-m-d', strtotime('+3 days')),
@@ -174,12 +160,12 @@ class Transaction extends MY_Controller {
 		
 		$this->db->insert('shipping_tracking', $shipping_data);
 		
-		// Complete transaction
 		$this->db->trans_complete();
 
 		if ($update_success && $this->db->trans_status() !== FALSE) {
 			log_message('info', "Transaction {$id} status updated to 2 and tracking info saved successfully.");
-			$this->session->set_flashdata('message_success', 'Đơn hàng đã được chuyển cho đơn vị vận chuyển với mã theo dõi: ' . $tracking_id);
+			// $this->session->set_flashdata('message_success', 'Đơn hàng đã được chuyển cho đơn vị vận chuyển với mã theo dõi: ' . $tracking_id);
+			$this->session->set_flashdata('message_success', 'Đơn hàng đã được chuyển cho đơn vị vận chuyển.');
 		} else {
 			log_message('error', "Failed to update transaction {$id} status in database.");
 			$this->session->set_flashdata('message_fail', 'Không thể cập nhật trạng thái đơn hàng.');
@@ -191,7 +177,6 @@ class Transaction extends MY_Controller {
 	{
 		$id = $this->uri->segment(4);
 		
-		// Get transaction details
 		$transaction = $this->transaction_model->get_info($id);
 		if (!$transaction) {
 			$this->session->set_flashdata('message_fail', 'Đơn hàng không tồn tại');
@@ -199,24 +184,21 @@ class Transaction extends MY_Controller {
 			return;
 		}
 
-		// Start database transaction
 		$this->db->trans_start();
 
-		// Update transaction status
 		$data = array();
 		$data['status'] = '3';
 		$update_success = $this->transaction_model->update($id, $data);
 
-		// Update shipping_tracking status if exists
-		if (!empty($transaction->shipping_info)) {
-			$this->db->where('tracking_id', $transaction->shipping_info);
+        $tracking_record = $this->db->get_where('shipping_tracking', array('transaction_id' => $id))->row();
+		if ($tracking_record) {
+			$this->db->where('transaction_id', $id); // Use transaction_id
 			$this->db->update('shipping_tracking', array(
 				'status' => 'delivered',
 				'updated_at' => date('Y-m-d H:i:s')
 			));
 		}
 
-		// Update product purchase counts
 		$input = array();
 		$input['where'] = array('transaction_id' => $id);
 		$orders = $this->order_model->get_list($input);
@@ -224,13 +206,13 @@ class Transaction extends MY_Controller {
 		foreach ($orders as $value) {
 			$product = $this->product_model->get_info($value->product_id);
 			if ($product) {
-				$data = array();
-				$data['buyed'] = $product->buyed + 1;
-				$this->product_model->update($product->id, $data);
+				// Sửa lỗi nhỏ: nên cộng với số lượng đặt mua (qty) chứ không phải +1
+                $qty_ordered = (int)$value->qty;
+                $new_buyed = $product->buyed + $qty_ordered;
+                $this->product_model->update($product->id, ['buyed' => $new_buyed]);
 			}
 		}
 
-		// Complete transaction
 		$this->db->trans_complete();
 
 		if ($update_success && $this->db->trans_status() !== FALSE) {
