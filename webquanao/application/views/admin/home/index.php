@@ -103,7 +103,6 @@
 														<th>Tên sản phẩm</th>
 														<th>Giá</th>
 														<th>Lượt xem</th>
-														<th>Giảm giá</th>
 														<th>Đã bán</th>
 													</tr>
 												</thead>
@@ -113,7 +112,6 @@
 														<td><?php echo $product->name; ?></td>
 														<td><?php echo number_format($product->price); ?>đ</td>
 														<td><?php echo $product->view; ?></td>
-														<td><?php echo $product->discount_id ? number_format($product->price * $product->discount_id / 100) . 'đ' : 'Không'; ?></td>
 														<td><?php echo $product->sold_count; ?></td>
 													</tr>
 													<?php endforeach; ?>
@@ -136,7 +134,6 @@
 														<th>Tên sản phẩm</th>
 														<th>Giá</th>
 														<th>Lượt xem</th>
-														<th>Giảm giá</th>
 														<th>Đã bán</th>
 													</tr>
 												</thead>
@@ -146,7 +143,6 @@
 														<td><?php echo $product->name; ?></td>
 														<td><?php echo number_format($product->price); ?>đ</td>
 														<td><?php echo $product->view; ?></td>
-														<td><?php echo $product->discount_id ? number_format($product->price * $product->discount_id / 100) . 'đ' : 'Không'; ?></td>
 														<td><?php echo $product->sold_count; ?></td>
 													</tr>
 													<?php endforeach; ?>
@@ -171,7 +167,6 @@
 														<th>Tên sản phẩm</th>
 														<th>Giá</th>
 														<th>Lượt xem</th>
-														<th>Giảm giá</th>
 														<th>Đánh giá</th>
 													</tr>
 												</thead>
@@ -181,7 +176,6 @@
 														<td><?php echo $product->name; ?></td>
 														<td><?php echo number_format($product->price); ?>đ</td>
 														<td><?php echo $product->view; ?></td>
-														<td><?php echo $product->discount_id ? number_format($product->price * $product->discount_id / 100) . 'đ' : 'Không'; ?></td>
 														<td><?php echo number_format($product->avg_rating, 1); ?>/5 (<?php echo $product->rating_count; ?> đánh giá)</td>
 													</tr>
 													<?php endforeach; ?>
@@ -204,7 +198,6 @@
 														<th>Tên sản phẩm</th>
 														<th>Giá</th>
 														<th>Lượt xem</th>
-														<th>Giảm giá</th>
 														<th>Đánh giá</th>
 													</tr>
 												</thead>
@@ -214,7 +207,6 @@
 														<td><?php echo $product->name; ?></td>
 														<td><?php echo number_format($product->price); ?>đ</td>
 														<td><?php echo $product->view; ?></td>
-														<td><?php echo $product->discount_id ? number_format($product->price * $product->discount_id / 100) . 'đ' : 'Không'; ?></td>
 														<td><?php echo number_format($product->avg_rating, 1); ?>/5 (<?php echo $product->rating_count; ?> đánh giá)</td>
 													</tr>
 													<?php endforeach; ?>
@@ -239,7 +231,6 @@
 														<th>Tên sản phẩm</th>
 														<th>Giá</th>
 														<th>Lượt xem</th>
-														<th>Giảm giá</th>
 														<th>Số lần thêm vào giỏ</th>
 													</tr>
 												</thead>
@@ -249,7 +240,6 @@
 														<td><?php echo $product->name; ?></td>
 														<td><?php echo number_format($product->price); ?>đ</td>
 														<td><?php echo $product->view; ?></td>
-														<td><?php echo $product->discount_id ? number_format($product->price * $product->discount_id / 100) . 'đ' : 'Không'; ?></td>
 														<td><?php echo $product->cart_count; ?></td>
 													</tr>
 													<?php endforeach; ?>
