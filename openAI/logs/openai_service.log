@@ -1830,3 +1830,22 @@
 2025-05-27 17:53:22,160 - werkzeug - INFO -  * Debugger PIN: 111-534-333
 2025-05-27 18:16:07,837 - werkzeug - WARNING -  * Debugger is active!
 2025-05-27 18:16:07,844 - werkzeug - INFO -  * Debugger PIN: 111-534-333
+2025-05-28 14:13:32,093 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-05-28 14:13:32,095 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-28 14:13:32,103 - werkzeug - INFO -  * Restarting with stat
+2025-05-28 14:13:34,309 - werkzeug - WARNING -  * Debugger is active!
+2025-05-28 14:13:34,315 - werkzeug - INFO -  * Debugger PIN: 159-932-215
+2025-05-28 14:18:18,745 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-05-28 14:18:18,749 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-05-28 14:18:18,866 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-28 14:18:20,359 - root - INFO - API key hợp lệ và đang hoạt động
+2025-05-28 14:18:20,361 - root - INFO - Khởi tạo lại API thành công
+2025-05-28 14:18:20,362 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-05-28 14:18:20,363 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-05-28 14:18:20,491 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-05-28 14:18:20,739 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-05-28 14:18:40,677 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-05-28 14:18:40,690 - werkzeug - INFO - 172.18.0.5 - - [28/May/2025 14:18:40] "POST /api/market/analyze HTTP/1.1" 200 -
