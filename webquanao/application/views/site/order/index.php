@@ -56,8 +56,49 @@
 		font-weight: bold;
 	}
 
-	.shipping {
+	.shipping, .cart-voucher, .giftcode {
 		display: none;
+	}
+
+	.voucher-card {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.voucher-text {
+		flex: 1;
+	}
+
+	.shipping-icon {
+		width: 42px;
+		height: auto;
+	}
+
+	.sale-icon {
+		width: 42px;
+		height: auto;
+	}
+
+	/* nội dung tooltip */
+	.voucher-tooltip {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-10px);
+		transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+		pointer-events: none; /* Không cho click khi ẩn */
+	}
+
+	/* Khi hiển thị tooltip, thêm class `show` */
+	.voucher-tooltip.show {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		pointer-events: auto;
 	}
 
 	/* Loại bỏ conflict tailwind */
@@ -178,7 +219,7 @@
 
 			<h2 class="text-3xl font-semibold mb-4">Phương thức thanh toán</h2>
 			<div id="payment-error" class="text-red-500 text-xl hidden">Vui lòng chọn phương thức thanh toán</div>
-			<div class="space-y-6">
+			<div class="space-y-6 mb-10">
 				<div class="p-6 border border-gray-300 rounded-lg">
 					<label class="flex items-center space-x-4">
 						<input class="form-radio text-blue-600 w-6 h-6 payment-option" name="payment" type="radio" value="cash" />
@@ -236,6 +277,58 @@
 				</div>
 			</div>
 
+			<h2 class="text-3xl font-semibold mb-4">Quà tặng khách hàng</h2>
+			<div class="space-y-6 mb-10">
+				<!-- Trường chọn voucher -->
+				<div class="p-6 border border-gray-300 rounded-lg">
+					<label class="block text-2xl font-medium mb-4 text-gray-800">Chọn voucher</label>
+					<div id="voucher-slider" class="flex overflow-x-auto space-x-4 pb-2">
+					</div>
+					<div id="tooltip-portal"></div>
+
+					<!-- Voucher đã chọn -->
+					<div id="selected-voucher" class="mt-4 hidden text-lg">
+						<div class="flex items-center justify-between bg-blue-50 p-3 border border-blue-300 rounded-md">
+							<span><span id="selected-voucher-name"></span></span>
+							<button id="remove-selected-voucher" class="text-red-500 hover:underline">Bỏ chọn</button>
+						</div>
+					</div>
+
+					<hr class="my-6">
+
+					<!-- Gift code -->
+					<label class="block text-2xl font-medium mb-4 text-gray-800">Gift Code</label>
+					<div class="flex items-center space-x-4">
+						<input
+							type="text"
+							name="gift_code"
+							id="gift_code"
+							placeholder="Nhập gift code..."
+							class="w-full px-4 py-2 border border-gray-300 rounded-lg text-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+						<button
+							type="button"
+							id="apply-gift"
+							class="px-6 py-5 bg-blue-600 text-white text-xl rounded-lg hover:bg-blue-700 transition whitespace-nowrap">
+							Áp dụng
+						</button>
+						<button
+							type="button"
+							id="cancel-gift"
+							class="px-6 py-5 bg-gray-400 text-white text-xl rounded-lg hover:bg-gray-500 transition hidden">
+							Huỷ
+						</button>
+					</div>
+					<div id="gift-message" class="mt-2 text-2xl text-green-600 hidden"></div>
+
+				</div>
+				<div id="applied-summary" class="mt-6 space-y-4 hidden">
+					<div class="flex items-center justify-between bg-blue-50 p-3 border border-blue-300 rounded-md">
+						<span><strong>Voucher:</strong> <span id="applied-voucher-code"></span></span>
+						<button id="remove-voucher-btn" class="text-red-500 hover:underline">Bỏ chọn</button>
+					</div>
+				</div>
+			</div>
+
 			<div class="mt-10 mb-10 text-3xl font-semibold space-y-4">
 
 				<!-- Thông tin hóa đơn -->
@@ -248,6 +341,18 @@
 				<div class="flex justify-between items-center shipping">
 					<span>Phí vận chuyển:</span>
 					<span class="text-gray-800" id="shippingFee"></span>
+				</div>
+
+				<!-- Voucher -->
+				<div class="flex justify-between items-center cart-voucher">
+					<span>Sau khi áp voucher:</span>
+					<span class="text-red-500" id="cartVoucher"></span>
+				</div>
+
+				<!-- Gift code -->
+				<div class="flex justify-between items-center giftcode">
+					<span>Sau khi áp gift code:</span>
+					<span class="text-gray-800" id="giftcode"></span>
 				</div>
 
 				<!-- Tổng cộng (cuối cùng) -->
@@ -270,8 +375,9 @@
 	</div>
 </div>
 <div id="userInfo" style="display:none;" data-user='<?php echo json_encode($user); ?>'>
-	<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;"></div>
+<div id="cartInfo" style="display:none;" data-cart='<?php echo json_encode($carts_info); ?>'>
+<div id="openroute" data-key='<?php echo getenv('OPENROUTE_SERVICE'); ?>' style="display: none;"></div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 
-	<script src="<?php echo public_url('site/'); ?>js/order.js"></script>
+<script src="<?php echo public_url('site/'); ?>js/order.js"></script>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Shop quần áo Ngọc Lan</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="../js/jquery-3.1.1.js" type="text/javascript"></script>
+	<script src="../js/jquery.jcarousel.pack.js" type="text/javascript"></script>
+	<script src="../js/jquery-func.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		/* Icon mở chatbot */
+		/* Icon mở chatbot */
+		#chatbot-toggle {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			width: 56px;
+			height: 56px;
+			background-color: #6366f1;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			z-index: 9998;
+		}
+
+		#chatbot-toggle img {
+			width: 28px;
+			height: 28px;
+		}
+
+		/* Giao diện chatbot */
+		#chatbot-container {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			width: 340px;
+			max-height: 540px;
+			background: #f9f9fb;
+			border-radius: 16px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			z-index: 9999;
+			transition: all 0.3s ease;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		#chatbot-header {
+			background: linear-gradient(to right, #6366f1, #8b5cf6);
+			color: #ffffff;
+			padding: 12px 16px;
+			text-align: center;
+			font-weight: 600;
+			font-size: 16px;
+			letter-spacing: 0.5px;
+			position: relative;
+		}
+
+		/* Nút đóng X */
+		#chatbot-close {
+			position: absolute;
+			top: 10px;
+			right: 12px;
+			background: transparent;
+			border: none;
+			color: #ffffff;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		#chatbot-messages {
+			flex: 1;
+			padding: 12px 16px;
+			overflow-y: auto;
+			font-size: 14px;
+			scroll-behavior: smooth;
+			background-color: #ffffff;
+
+			display: flex;
+			flex-direction: column;
+		}
+
+
+		.message {
+			margin-bottom: 10px;
+			padding: 8px 12px;
+			border-radius: 16px;
+			word-wrap: break-word;
+			display: inline-block;
+			max-width: 100%;
+			width: auto;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		}
+
+		.user {
+			background-color: #e0f2fe;
+			color: #0284c7;
+			text-align: right;
+			align-self: flex-end;
+			margin-left: auto;
+			border-bottom-right-radius: 0;
+		}
+
+
+
+		.bot {
+			background-color: #ede9fe;
+			color: #7c3aed;
+			text-align: left;
+			align-self: flex-start;
+			margin-right: auto;
+			/* Đẩy sang trái */
+			border-bottom-left-radius: 0;
+		}
+
+
+
+		.bot {
+			background-color: #ede9fe;
+			color: #7c3aed;
+			align-self: flex-start;
+			text-align: left;
+			margin-right: auto;
+		}
+
+		#chatbot-input {
+			display: flex;
+			border-top: 1px solid #e5e7eb;
+			background-color: #f3f4f6;
+			padding: 8px;
+		}
+
+		#chatbot-input input {
+			flex: 1;
+			padding: 10px 12px;
+			border: none;
+			border-radius: 8px;
+			background: #ffffff;
+			outline: none;
+			font-size: 14px;
+			box-shadow: inset 0 0 0 1px #d1d5db;
+			transition: box-shadow 0.2s ease;
+		}
+
+		#chatbot-input input:focus {
+			box-shadow: inset 0 0 0 2px #6366f1;
+		}
+
+		#chatbot-input button {
+			background: #6366f1;
+			color: white;
+			border: none;
+			padding: 0 16px;
+			margin-left: 8px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: 500;
+			transition: background 0.2s ease;
+		}
+
+		#chatbot-input button:hover {
+			background: #4f46e5;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="row" style="margin-top: 3px;height: 125px">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clearpadding">
+				<a href="#"><img src="../upload/logo.png" alt="" class="img-responsive"></a>
+			</div>
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 clearpadding">
+				<a href="#"><img src="../upload/banner.jpg" alt="" class="img-responsive"></a>
+			</div>
+		</div>
+		<div class="row">
+			<nav class="navbar navbar-info re-navbar">
+				<div class="container-fluid re-container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">--- Menu ---</a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse re-navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#"><span class="glyphicon glyphicon-home"
+										aria-hidden="true"></span> HOME<span class="sr-only">(current)</span></a></li>
+							<li><a href="#">Bán chạy</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Thời trang<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Thời trang nam</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Thời trang nữ</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Quần áo gia đình</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Khuyến mại</a></li>
+							<li><a href="#">Liên hệ</a></li>
+							<li><a href="#">Giỏ hàng</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false"> <span
+										class="glyphicon glyphicon-shopping-cart"><span class="badge">2</span></span>
+									Giỏ Hàng<span class="caret"></span></a>
+								<ul class="dropdown-menu" style="width: 350px;">
+									<div class="table-responsive">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th>Ảnh</th>
+													<th>LS</th>
+													<th>Tên <span></span></th>
+													<th>Giá</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td> <img style="width: 40px;border-radius: 30%;"
+															src="../upload/product/somi.png" alt=""></td>
+													<td>1</td>
+													<td>Áo sơ mi nữ</td>
+													<td>180.000 VNĐ</td>
+												</tr>
+											</tbody>
+										</table>
+										<a href="http://localhost/myshop/gio-hang" type="button"
+											class="btn btn-success"> Chi Tiết Giỏ Hàng </a>
+										<a href="http://localhost/myshop/gio-hang/xoa" type="button"
+											class="btn btn-danger pull-right"> Xóa </a>
+									</div>
+								</ul>
+							</li>
+							<li><a href="#">Đăng nhập</a></li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+
+				</div><!-- /.container-fluid -->
+			</nav>
+		</div>
+		<div class="row">
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				</ol>
+
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<img src="../upload/slide1.png" alt="...">
+						<div class="carousel-caption">
+						</div>
+					</div>
+					<div class="item">
+						<img src="../upload/slide2.jpg" alt="...">
+						<div class="carousel-caption">
+						</div>
+					</div>
+					<div class="item">
+						<img src="../upload/slide3.jpg" alt="...">
+						<div class="carousel-caption">
+						</div>
+					</div>
+				</div>
+
+				<!-- Controls -->
+				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center"><img src="../upload/icon/new.gif" alt=""><a href=""
+							class='product_title'>Sản phẩm mới </a><img src="../upload/icon/new.gif" alt=""></h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center"><img src="../upload/icon/hot.gif" alt=""><a href=""
+							class='product_title'>Sản phẩm bán chạy</a><img src="../upload/icon/hot.gif" alt=""></h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+							<div class="product_item">
+								<p><a href="" class="product_name">Áo sơ mi</a></p>
+								<div class="product-image">
+									<a href=""><img src="../upload/product/somi.png" alt="" class=""></a>
+								</div>
+								<p><span class='price text-right'>200.000 VNĐ</span> <del
+										class="product-discount">250.000 VNĐ</del></p>
+								<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"
+										title="Số lượt xem"></span> 190 <span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true" title="Số lượng đặt mua">9</p>
+								<a href=""><button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"
+											aria-hidden="true"></span> Thêm giỏ hàng</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="bank">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
+					<div class="footer-info">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<a href="" title=""><strong>GIỚI THIỆU CÔNG TY</strong></a>
+							<li> <a href="#" title="">Các chính sách</a></li>
+							<li> <a href="#" title="">Câu hỏi thường gặp</a></li>
+							<li> <a href="#" title="">Hệ thống bảo hành</a></li>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<a href="" title=""><strong>TUYỂN DỤNG</strong></a>
+							<li> <a href="#" title="">Tuyển dụng mới nhất</a></li>
+							<li> <a href="#" title="">Hưỡng dẫn mua hàng Online</a></li>
+							<li> <a href="#" title="">Chính sách mua trả góp</a></li>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<a href="" title=""><strong>HỆ THỐNG CỬA HÀNG</strong></a>
+							<li> <a href="#" title="">Kiểm tra hàng chính hãng</a></li>
+							<li> <a href="#" title="">Máy đổi trả</a></li>
+							<li> <a href="#" title="">Hệ thống cửa hàng</a></li>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					<p>Hỗ trợ thanh toán <img src="http://localhost/myshop/public/images/pay.png" alt=""
+							style="padding-left: 25px;"> </p>
+					<div class="fi-left pull-left">
+						<p><small>Tư vẫn miễn phí (24/7)</small></p>
+						<strong>1800 xxxx</strong>
+					</div>
+					<div class="fi-right pull-right">
+						<p><small>Góp ý, phản ánh(8h00 - 22h00)</small></p>
+						<strong>1800 xxxx</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="footer">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+					<address>
+						<strong> SHOP thời trang Ngọc Lan</strong><br>
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Địa chỉ: Hải Hậu Nam Định<br>
+						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Điện thoại: 0123456789<br>
+						Copyright ©2017 - Design by GoS ---
+					</address>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-right">
+					<a href="#"><img src="../upload/icon/facebook.png" alt=""></a>
+					<a href="#"><img src="../upload/icon/twitter.png" alt=""></a>
+					<a href="#"><img src="../upload/icon/google.png" alt=""></a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+
+		<!-- Nút thu nhỏ để mở chatbot -->
+		<div id="chatbot-toggle">
+			<img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="Chat" />
+		</div>
+
+		<!-- Giao diện chatbot -->
+		<div id="chatbot-container" class="">
+			<div id="chatbot-header">
+				Chat bot shop quần
+				<button id="chatbot-close">×</button>
+			</div>
+			<div id="chatbot-messages"></div>
+			<div id="chatbot-input">
+				<input type="text" id="userInput" placeholder="Nhập câu hỏi..." />
+				<button onclick="sendMessage()">Gửi</button>
+			</div>
+		</div>
+
+		<script>
+			const API_KEY = "AIzaSyCL3-Vume3Js1p4ow-fD2Z2bGymC8P2i0c";
+			const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+			const messagesContainer = document.getElementById('chatbot-messages');
+
+			const companyInfo = `
+            trả lời các câu hỏi thực tiễn như thời tiết .khoảng cách từ địa chỉ đến cửa hàng, thời gian mở cửa, địa chỉ, số điện thoại, mạng xã hội, thông tin về sản phẩm, chính sách bảo hành, đổi trả hàng hóa, chính sách vận chuyển và giao hàng.
+			bỏ các dấu * khi trả lời câu hỏi. 
+			
+			thêm gợi ý cho khách hàng khi có từ liên quan đến sản phẩm ví dụ: quần sơ mi nếu không có  gợi ý áo sơ mi.
+		💼 o Ngọc Lan!
+Giới thiệu doanh nghiệp website: Shop quần áo Ngọc Lan
+Shop quần áo Ngọc Lan là điểm đến lý tưởng cho những người đam mê thời trang. Chúng tôi cung cấp đa dạng các sản phẩm thời trang từ áo sơ mi, quần jeans đến phụ kiện thời trang với chất lượng tốt nhất và giá cả hợp lý. Đội ngũ nhân viên nhiệt tình, chuyên nghiệp luôn sẵn sàng tư vấn và phục vụ khách hàng.
+🏠 Địa chỉ: Kỳ Sơn - Thủy Nguyên - Hải Phòng
+🕒 Giờ mở cửa:
+•	Thứ 2 - Thứ 6: 7:00 - 21:00
+•	Cuối tuần: 8:00 - 22:00
+bỏ các dấu * khi trả lời câu hỏi. 
+🌐 Website: https://www.Shopngoclan.com
+📞 Điện thoại: 01215345336
+📱 Mạng xã hội:
+•	Facebook: fb.com/NgọcLanFashion
+•	Zalo: zalo.me/123456789
+•	Instagram: instagram.com/NgọcLanFashion
+•	Twitter: twitter.com/NgọcLanFashion
+🧑‍🍳 Về chúng tôi:
+Chúng tôi tin rằng mỗi sản phẩm sẽ mang lại cho quý khách hàng trải nghiệm mua sắm và sản phẩm ưng ý.
+🎁 Ưu đãi đặc biệt:
+•	Giảm giá 20% cho đơn hàng đầu tiên khi mua qua website hoặc tại cửa hàng.
+•	Miễn phí vận chuyển cho đơn hàng từ 500,000 VNĐ trở lên.
+•	Tặng voucher 50,000 VNĐ cho khách hàng quay lại mua sắm lần thứ hai trong vòng 30 ngày.
+•	Chương trình tích điểm: Tích 1 điểm cho mỗi 100,000 VNĐ chi tiêu, đổi 10 điểm lấy voucher 100,000 VNĐ.
+•	Ưu đãi nhóm: Mua combo gia đình (từ 3 sản phẩm trở lên) giảm thêm 10% trên tổng hóa đơn.
+🚚 Dịch vụ giao hàng:
+•	Phạm vi giao hàng: Toàn quốc.
+•	Thời gian giao hàng:
+o	Nội thành Hải Phòng: 1-2 ngày.
+o	Các tỉnh thành khác: 3-5 ngày.
+•	Phí vận chuyển:
+o	30,000 VNĐ cho đơn hàng dưới 500,000 VNĐ.
+o	Miễn phí cho đơn hàng từ 500,000 VNĐ trở lên.
+•	Chính sách đổi trả: Hỗ trợ đổi trả miễn phí trong vòng 7 ngày nếu sản phẩm lỗi hoặc không đúng mô tả. Khách hàng vui lòng giữ nguyên bao bì và sản phẩm chưa qua sử dụng.
+•	Lưu ý: Không nhận giao hàng để xem hoặc đổi trả với lý do không vừa, không thích, không hợp (đối với một số sản phẩm như combo mẹ và bé). Vui lòng xem kỹ thông tin sản phẩm trước khi đặt hàng.
+1. Áo sơ mi trắng cổ bẻ nam
+•	Chất liệu: Cotton cao cấp
+•	Size: M, L, XL
+•	Giá: 220,000 VNĐ (giá gốc: 280,000 VNĐ)
+•	Lượt xem: 105
+•	Lượt mua: 28
+•	Mô tả: Áo sơ mi trắng cổ bẻ dáng slimfit, phù hợp đi làm, đi học hoặc dự sự kiện trang trọng.
+________________________________________
+2. Áo thun nam basic trơn
+•	Chất liệu: Thun co giãn 4 chiều
+•	Size: M, L, XL, XXL
+•	Giá: 120,000 VNĐ (giá gốc: 180,000 VNĐ)
+•	Lượt xem: 98
+•	Lượt mua: 35
+•	Mô tả: Áo thun trơn năng động, phù hợp mặc thường ngày, đi chơi, ở nhà.
+________________________________________
+3. Quần jeans nam rách gối
+•	Chất liệu: Denim cao cấp
+•	Size: 29, 30, 31, 32, 33
+•	Giá: 350,000 VNĐ (giá gốc: 450,000 VNĐ)
+•	Lượt xem: 123
+•	Lượt mua: 41
+•	Mô tả: Thiết kế rách nhẹ phần gối tạo phong cách trẻ trung, cá tính.
+________________________________________
+4. Áo sơ mi caro tay dài nữ
+•	Chất liệu: Flannel mềm mại
+•	Size: S, M, L
+•	Giá: 195,000 VNĐ (giá gốc: 250,000 VNĐ)
+•	Lượt xem: 89
+•	Lượt mua: 21
+•	Mô tả: Áo sơ mi nữ caro nhẹ nhàng, dễ phối đồ với chân váy hoặc quần jean.
+________________________________________
+5. Váy suông hoa nhí
+•	Chất liệu: Voan mỏng nhẹ
+•	Size: Freesize
+•	Giá: 260,000 VNĐ (giá gốc: 320,000 VNĐ)
+•	Lượt xem: 101
+•	Lượt mua: 29
+•	Mô tả: Thiết kế dáng suông, họa tiết hoa nhí dễ thương, phù hợp mùa hè.
+________________________________________
+6. Quần baggy kaki nữ
+•	Chất liệu: Kaki mềm
+•	Size: S, M, L
+•	Giá: 280,000 VNĐ (giá gốc: 350,000 VNĐ)
+•	Lượt xem: 77
+•	Lượt mua: 17
+•	Mô tả: Phom dáng baggy rộng rãi, phong cách Hàn Quốc, dễ phối đồ.
+________________________________________
+7. Đầm ôm body dự tiệc
+•	Chất liệu: Thun gân co giãn
+•	Size: S, M, L
+•	Giá: 390,000 VNĐ (giá gốc: 490,000 VNĐ)
+•	Lượt xem: 94
+•	Lượt mua: 24
+•	Mô tả: Đầm ôm tôn dáng, thiết kế gợi cảm phù hợp tiệc tối.
+________________________________________
+8. Áo hoodie nam nữ unisex
+•	Chất liệu: Nỉ bông ấm áp
+•	Size: M, L, XL
+•	Giá: 320,000 VNĐ (giá gốc: 420,000 VNĐ)
+•	Lượt xem: 110
+•	Lượt mua: 37
+•	Mô tả: Hoodie đơn giản, trẻ trung, thích hợp đi học, đi chơi mùa lạnh.
+________________________________________
+9. Bộ đồ thể thao nam
+•	Chất liệu: Thun lạnh
+•	Size: M, L, XL
+•	Giá: 290,000 VNĐ (giá gốc: 370,000 VNĐ)
+•	Lượt xem: 87
+•	Lượt mua: 19
+•	Mô tả: Gồm áo thun + quần shorts, thoải mái khi tập luyện thể thao.
+________________________________________
+10. Áo croptop nữ in hình
+•	Chất liệu: Thun co giãn
+•	Size: S, M
+•	Giá: 130,000 VNĐ (giá gốc: 180,000 VNĐ)
+•	Lượt xem: 93
+•	Lượt mua: 22
+•	Mô tả: Croptop trẻ trung, năng động, in hình độc đáo.
+________________________________________
+11. Quần short jean nữ tua rua
+•	Chất liệu: Denim mềm
+•	Size: S, M, L
+•	Giá: 210,000 VNĐ (giá gốc: 270,000 VNĐ)
+•	Lượt xem: 88
+•	Lượt mua: 26
+•	Mô tả: Quần short jean rách nhẹ phần viền, phong cách cá tính.
+________________________________________
+12. Chân váy chữ A lưng cao
+•	Chất liệu: Kaki
+•	Size: S, M, L
+•	Giá: 240,000 VNĐ (giá gốc: 300,000 VNĐ)
+•	Lượt xem: 80
+•	Lượt mua: 18
+•	Mô tả: Thiết kế lưng cao tôn dáng, phù hợp công sở hoặc đi chơi.
+________________________________________
+13. Bộ đôi áo cặp nam nữ
+•	Chất liệu: Thun cotton
+•	Size: M, L, XL
+•	Giá: 320,000 VNĐ (giá gốc: 400,000 VNĐ)
+•	Lượt xem: 75
+•	Lượt mua: 15
+•	Mô tả: Áo thun cặp dành cho các cặp đôi, in hình dễ thương.
+________________________________________
+14. Áo khoác gió chống nắng
+•	Chất liệu: Vải dù nhẹ
+•	Size: M, L, XL
+•	Giá: 280,000 VNĐ (giá gốc: 350,000 VNĐ)
+•	Lượt xem: 90
+•	Lượt mua: 20
+•	Mô tả: Chống nắng, chống bụi hiệu quả, dễ gấp gọn.
+________________________________________
+15. Áo dài truyền thống nữ
+•	Chất liệu: Lụa cao cấp
+•	Size: S, M, L
+•	Giá: 490,000 VNĐ (giá gốc: 650,000 VNĐ)
+•	Lượt xem: 70
+•	Lượt mua: 12
+•	Mô tả: Áo dài truyền thống với hoa văn nhẹ nhàng, thích hợp lễ Tết, chụp ảnh.
+________________________________________
+16. Váy maxi đi biển
+•	Chất liệu: Voan mỏng nhẹ
+•	Size: Freesize
+•	Giá: 310,000 VNĐ (giá gốc: 390,000 VNĐ)
+•	Lượt xem: 84
+•	Lượt mua: 18
+•	Mô tả: Dáng dài bồng bềnh, họa tiết nhiệt đới, phù hợp đi biển.
+________________________________________
+17. Áo khoác jean nam
+•	Chất liệu: Denim dày
+•	Size: M, L, XL
+•	Giá: 430,000 VNĐ (giá gốc: 520,000 VNĐ)
+•	Lượt xem: 92
+•	Lượt mua: 23
+•	Mô tả: Thiết kế cổ điển, mạnh mẽ, phù hợp mọi lứa tuổi.
+________________________________________
+18. Bộ ngủ cotton nữ
+•	Chất liệu: Cotton mềm mại
+•	Size: S, M, L
+•	Giá: 180,000 VNĐ (giá gốc: 250,000 VNĐ)
+•	Lượt xem: 76
+•	Lượt mua: 14
+•	Mô tả: Bộ đồ ngủ thoải mái, dễ thương, nhiều họa tiết.
+________________________________________
+19. Bộ đồ đôi gia đình mùa hè
+•	Chất liệu: Thun lạnh
+•	Size: S, M, L, XL (người lớn & trẻ em)
+•	Giá: 590,000 VNĐ (giá gốc: 700,000 VNĐ)
+•	Lượt xem: 65
+•	Lượt mua: 10
+•	Mô tả: Trang phục đồng bộ dành cho gia đình, mát mẻ, phong cách năng động.
+________________________________________
+20. Đầm ren tay dài tiểu thư
+•	Chất liệu: Ren mềm cao cấp
+•	Size: S, M, L
+•	Giá: 350,000 VNĐ (giá gốc: 450,000 VNĐ)
+•	Màu sắc: Trắng, hồng pastel
+•	Lượt xem: 111
+•	Lượt mua: 21
+•	Mô tả: Thiết kế tay dài với chất liệu ren mềm, kiểu dáng công chúa nhẹ nhàng, phù hợp dự tiệc hoặc đi chơi cuối tuần.
+Gắn nhãn (tag) từng sản phẩm để chatbot dễ phân loại khi người dùng hỏi:
+
+Ví dụ:
+
+Nếu khách hỏi: “Có quần jean cho nam không?” → Trả lời bằng sản phẩm số 3.
+
+Nếu khách hỏi: “Áo sơ mi nữ có không?” → Trả lời bằng sản phẩm số 4.
+
+Nếu khách hỏi: “Mình cần đồ đi biển?” → Gợi ý sản phẩm số 16: Váy maxi đi biển.
+
+🔁 Gợi ý sản phẩm liên quan:
+Nếu người dùng hỏi sản phẩm chưa có, ví dụ: “quần sơ mi”, chatbot sẽ trả lời:
+
+“Hiện tại shop chưa có sản phẩm quần sơ mi, bạn có thể tham khảo áo sơ mi trắng cổ bẻ nam hoặc áo sơ mi caro tay dài nữ.”
+
+		`;
+			async function sendMessage() {
+				const inputField = document.getElementById('userInput');
+				const userText = inputField.value.trim();
+				if (!userText) return;
+
+				appendMessage('user', userText);
+				inputField.value = '';
+
+				try {
+					const response = await fetch(API_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							contents: [
+								{
+									role: "user",
+									parts: [{
+										text: `Thông tin nội bộ:\n${companyInfo}\n\nCâu hỏi: ${userText}`
+									}]
+								}
+							],
+							generationConfig: {
+								temperature: 0.8,
+								topK: 1,
+								topP: 1,
+								maxOutputTokens: 1024
+							}
+						})
+					});
+
+					const data = await response.json();
+					console.log("📦 Kết quả API:", data);
+					const botText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "🤖 Không có phản hồi.";
+					appendMessage('bot', botText);
+				} catch (error) {
+					appendMessage('bot', `⚠️ Lỗi gọi API: ${error.message}`);
+				}
+			}
+			function appendMessage(role, text) {
+				const messageDiv = document.createElement('div');
+				messageDiv.className = `message ${role}`;
+				messageDiv.innerHTML = text.replace(/\n/g, '<br/>');
+				messagesContainer.appendChild(messageDiv);
+				messagesContainer.scrollTop = messagesContainer.scrollHeight;
+			}
+
+			document.getElementById('userInput').addEventListener('keydown', function (e) {
+				if (e.key === 'Enter') sendMessage();
+			});
+
+			window.addEventListener('DOMContentLoaded', () => {
+				appendMessage('bot', "👋 Xin chào! Bạn muốn hỏi gì?");
+			});
+			document.getElementById("chatbot-toggle").addEventListener("click", function () {
+				document.getElementById("chatbot-container").classList.remove("hidden");
+				document.getElementById("chatbot-toggle").classList.add("hidden");
+			});
+
+			document.getElementById("chatbot-close").addEventListener("click", function () {
+				document.getElementById("chatbot-container").classList.add("hidden");
+				document.getElementById("chatbot-toggle").classList.remove("hidden");
+			});
+		</script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

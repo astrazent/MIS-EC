@@ -38,7 +38,7 @@
 										<button class="cart-sum" data-id="<?php echo $items['id']; ?>">+</button>
 									</td>
 									<td><?php echo number_format($items['subtotal']); ?> VNĐ</td>
-									<td><a href="<?php echo base_url('cart/del/' . $items['id']); ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+									<td><a class="del-item" href="#" data-id="<?php echo $items['id']; ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 								</tr>
 							<?php	}
 							?>
@@ -46,7 +46,7 @@
 							<tr>
 								<td colspan="4">Tổng tiền</td>
 								<td style="font-weight: bold;color:green" id="total_price"><?php echo number_format($total_price); ?> VNĐ</td>
-								<td><a style="font-weight: bold;color: red" href="<?php echo base_url('cart/del'); ?>">Xóa toàn bộ</a></td>
+								<td><a style="font-weight: bold;color: red" class="del-all" href="#" data-id="-1">Xóa toàn bộ</a></td>
 							</tr>
 							<tr>
 								<td colspan="6">
@@ -88,13 +88,123 @@
 	}
 
 	document.addEventListener("DOMContentLoaded", function() {
+		//xoá từng dòng
+		document.querySelectorAll('.del-item').forEach(el => {
+			let isLoading = false; // cờ trạng thái riêng cho từng nút
+
+			el.addEventListener('click', function(e) {
+				e.preventDefault(); // Ngăn chặn link chuyển trang
+
+				if (isLoading) {
+					// Đang xử lý request trước, không làm gì nữa
+					return;
+				}
+
+				isLoading = true; // Đánh dấu đang xử lý
+
+				const itemId = this.getAttribute('data-id');
+
+				fetch(`<?php echo base_url('cart/del'); ?>`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-Requested-With': 'XMLHttpRequest'
+						},
+						body: JSON.stringify({
+							id: itemId
+						})
+					})
+					.then(res => res.text())
+					.then(text => {
+						let data;
+						try {
+							data = JSON.parse(text);
+						} catch (e) {
+							console.error('Response không phải JSON:', e);
+							alert('Phản hồi từ server không hợp lệ!');
+							return;
+						}
+
+						if (data.status) {
+							const row = this.closest('tr');
+							const tbody = row.closest('tbody');
+							if (tbody) {
+								const remainingRows = tbody.querySelectorAll('tr');
+								if (remainingRows.length <= 3) {
+									// Nếu không còn hàng nào trong tbody thì reload trang
+									location.reload();
+								} else {
+									if (row) row.remove();
+								}
+							}
+						} else {
+							alert('Xóa không thành công!');
+						}
+					})
+					.catch(err => {
+						console.error(err);
+						alert('Có lỗi xảy ra khi xóa.');
+					})
+					.finally(() => {
+						isLoading = false; // Cho phép bấm lại khi fetch hoàn thành
+					});
+			});
+		});
+		let isLoading2 = false; // cờ trạng thái riêng cho từng nút
+
+		document.querySelector('.del-all').addEventListener('click', function(e) {
+			if (isLoading2) {
+				// Đang xử lý request trước, không làm gì nữa
+				return;
+			}
+
+			isLoading2 = true; // Đánh dấu đang xử lý
+
+			const itemId = this.getAttribute('data-id');
+
+			fetch(`<?php echo base_url('cart/del'); ?>`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					body: JSON.stringify({
+						id: itemId
+					})
+				})
+				.then(res => res.text())
+				.then(text => {
+					let data;
+					try {
+						data = JSON.parse(text);
+					} catch (e) {
+						console.error('Response không phải JSON:', e);
+						alert('Phản hồi từ server không hợp lệ!');
+						return;
+					}
+
+					if (data.status) {
+						location.reload();
+					} else {
+						alert('Xóa không thành công!');
+					}
+				})
+				.catch(err => {
+					console.error(err);
+					alert('Có lỗi xảy ra khi xóa.');
+				})
+				.finally(() => {
+					isLoading2 = false; // Cho phép bấm lại khi fetch hoàn thành
+				});
+		});
+
 		// Ngăn request được gửi đi quá nhiều lần 
 		let controller = new AbortController(); // Khởi tạo 1 controller duy nhất
 		let allow = true;
 		let count = 0; // Biến đếm
 		let server_count = 0;
 
-		let panelTitle = document.querySelector(".title-bar").innerText; 
+		let panelTitle = document.querySelector(".title-bar").innerText;
 		let totalItems = panelTitle.match(/\d+/); // Lấy số đầu tiên trong chuỗi
 		totalItems = totalItems ? parseInt(totalItems[0], 10) : 0; // Chuyển thành số nguyên
 
@@ -123,6 +233,9 @@
 
 				var id = this.getAttribute("data-id");
 				var action = this.classList.contains("cart-sum") ? "sum" : "sub";
+				if (action == "sub" && (parseInt(qtyInput.value) - 1 < 1)) {
+					return;
+				}
 
 				if (action == "sum") {
 					qtyInput.value = parseInt(qtyInput.value) + 1;
@@ -166,7 +279,6 @@
 					})
 					.then(response => response.text()) // Đọc response dưới dạng text trước
 					.then(text => {
-						console.log(text);
 						let data = JSON.parse(text); // Thử parse JSON
 						if (data.status === "success") {
 							allow = true;
