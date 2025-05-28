@@ -30,7 +30,6 @@ if ($message) {
                                 <th>Số ĐT</th>
                                 <th>Địa chỉ</th>
                                 <th>Tổng tiền</th>
-                                <th>Mã vận chuyển</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
@@ -48,7 +47,6 @@ if ($message) {
                                     <td><strong><?php echo $order->user_phone; ?></strong></td>
                                     <td><strong><?php echo $order->user_address; ?></strong></td>
                                     <td><strong><?php echo number_format($order->amount); ?></strong> VNĐ</td>
-                                    <td><strong><?php echo $order->shipping_info; ?></strong></td>
                                     <td>
                                         <a href="<?php echo admin_url('shipping/confirm_delivery/'.$order->id); ?>" 
                                            class="btn btn-success btn-sm" 
@@ -60,7 +58,7 @@ if ($message) {
                             <?php } ?>
                             <?php if (empty($delivering_orders)): ?>
                                 <tr>
-                                    <td colspan="9" class="text-center">Không có đơn hàng nào đang vận chuyển</td>
+                                    <td colspan="8" class="text-center">Không có đơn hàng nào đang vận chuyển</td> <!-- Adjusted colspan from 9 to 8 -->
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -69,4 +67,4 @@ if ($message) {
             </div>
         </div>
     </div>
-</div> 
+</div>

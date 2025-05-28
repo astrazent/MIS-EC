@@ -15,26 +15,23 @@ class Setup extends CI_Controller {
      * Setup shipping tracking
      */
     public function setup_shipping() {
-        // Add shipping_info column to transaction table if it doesn't exist
-        $fields = $this->db->field_data('transaction');
-        $shipping_info_exists = false;
+        // Remove logic for adding 'shipping_info' to 'transaction' table
+        // $fields = $this->db->field_data('transaction');
+        // $shipping_info_exists = false;
         
-        foreach ($fields as $field) {
-            if ($field->name === 'shipping_info') {
-                $shipping_info_exists = true;
-                break;
-            }
-        }
+        // foreach ($fields as $field) {
+        //     if ($field->name === 'shipping_info') {
+        //         $shipping_info_exists = true;
+        //         break;
+        //     }
+        // }
         
-        if (!$shipping_info_exists) {
-            // Add the shipping_info column to transaction table
-            $this->db->query("ALTER TABLE `transaction` ADD COLUMN `shipping_info` VARCHAR(255) NULL DEFAULT NULL AFTER `status`;");
-            echo "Column 'shipping_info' added to transaction table successfully.<br/>";
-        } else {
-            echo "Column 'shipping_info' already exists in transaction table.<br/>";
-        }
-        
-        // Create shipping_tracking table if it doesn't exist
+        // if (!$shipping_info_exists) {
+        //     $this->db->query("ALTER TABLE `transaction` ADD COLUMN `shipping_info` VARCHAR(255) NULL DEFAULT NULL AFTER `status`;");
+        //     echo "Column 'shipping_info' added to transaction table successfully.<br/>";
+        // } else {
+        //     echo "Column 'shipping_info' already exists in transaction table.<br/>";
+        // }
         if (!$this->db->table_exists('shipping_tracking')) {
             // Create shipping_tracking table
             $this->db->query("
@@ -69,7 +66,6 @@ class Setup extends CI_Controller {
     public function test_shipping_api() {
         echo "<h2>Testing Shipping API</h2>";
         
-        // Test various URL formats to determine what works
         $urls_to_test = [
             'lowercase' => site_url('api/shippingprovider/register'),
             'uppercase_first' => site_url('api/ShippingProvider/register'),
@@ -100,7 +96,6 @@ class Setup extends CI_Controller {
         
         echo "</table>";
         
-        // Send a test request to the API
         echo "<h3>Testing API Functionality</h3>";
         
         $test_url = site_url('api/shippingprovider/register');
@@ -135,7 +130,6 @@ class Setup extends CI_Controller {
         
         echo "</div>";
         
-        // Test the webhook endpoint
         echo "<h3>Testing Webhook Endpoint</h3>";
         
         $webhook_url = site_url('api/shipping/webhook');
@@ -162,4 +156,4 @@ class Setup extends CI_Controller {
         echo "<li><a href='" . site_url('admin/setup/test_shipping_api') . "'>Test Shipping API</a></li>";
         echo "</ul>";
     }
-} 
+}

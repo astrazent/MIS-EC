@@ -17,6 +17,12 @@ class Shipping extends MY_Controller {
         $input['order'] = array('created', 'desc');
         
         $delivering_orders = $this->transaction_model->get_list($input);
+        if (!empty($delivering_orders)) {
+            foreach ($delivering_orders as $key => $order) {
+                $tracking_record = $this->db->get_where('shipping_tracking', ['transaction_id' => $order->id])->row();
+                $delivering_orders[$key]->actual_tracking_id = $tracking_record ? $tracking_record->id : 'N/A';
+            }
+        }
         $this->data['delivering_orders'] = $delivering_orders;
         
         // Load view
@@ -42,9 +48,9 @@ class Shipping extends MY_Controller {
             'status' => 3
         ));
 
-        // If there's a shipping tracking ID, update its status
-        if (!empty($transaction->shipping_info)) {
-            $this->db->where('tracking_id', $transaction->shipping_info)
+        $tracking_record = $this->db->get_where('shipping_tracking', array('transaction_id' => $transaction_id))->row();
+        if ($tracking_record) {
+            $this->db->where('transaction_id', $transaction_id) // Use transaction_id to find the record
                      ->update('shipping_tracking', array(
                          'status' => 'delivered',
                          'updated_at' => date('Y-m-d H:i:s')
@@ -80,4 +86,4 @@ class Shipping extends MY_Controller {
 
         redirect(admin_url('shipping'));
     }
-} 
+}

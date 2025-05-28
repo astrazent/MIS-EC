@@ -34,13 +34,36 @@ class MY_Controller extends CI_Controller
 				$this->data['user'] = $user;
 
 				$this->load->model('cart_model');
+				$current_carts_for_header = []; // Khởi tạo là mảng rỗng
+				$current_total_items_for_header = 0; // Khởi tạo là 0
+
 				if (isset($user)) {
-					$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
-					$this->data['carts'] = $carts;
-					$this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
-				} else {
-					$this->data['total_items'] = 0;
+					// Lấy mảng các OBJECT từ model
+					$cart_objects_from_model = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
+					
+					if (!empty($cart_objects_from_model)) {
+						$formatted_cart_for_header = [];
+						foreach ($cart_objects_from_model as $item_obj) { // $item_obj là object
+							// Chuyển đổi thành mảng, tương tự như trong Cart.php -> index()
+							// và cart_sh.php đang mong đợi
+							$formatted_cart_for_header[] = [
+								'id' => $item_obj->product_id, // Hoặc key mà cart_sh.php đang dùng
+								'qty' => $item_obj->qty,
+								'price' => $item_obj->price,
+								'name' => $item_obj->name,
+								'image_link' => $item_obj->image_link,
+								'rowid' => $item_obj->rowid, 
+								// 'subtotal' => $item_obj->price * $item_obj->qty, // Thêm nếu cart_sh.php dùng
+							];
+						}
+						$current_carts_for_header = $formatted_cart_for_header; // Bây giờ là mảng các mảng
+					}
+					$current_total_items_for_header = (int) $this->cart_model->get_sum('qty', ['user_id' => $user->id]);
 				}
+				
+				// Gán dữ liệu đã định dạng cho view
+				$this->data['carts'] = $current_carts_for_header;
+				$this->data['total_items'] = $current_total_items_for_header;
 				
 				// Bật profiler
 				if (ENVIRONMENT == "development") {
