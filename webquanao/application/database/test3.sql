@@ -219,8 +219,8 @@ CREATE TABLE IF NOT EXISTS `shipping_tracking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `admin` (`name`, `email`, `password`, `level`, `created`) VALUES
-('Goo', 'admin@gmail.com', '1bbd886460827015e5d605ed44252251', 0, '2038-01-19 03:14:07'),
-('Mod đz', 'mod@gmail.com', '1bbd886460827015e5d605ed44252251', 1, '2038-01-19 03:14:07'),
+('Goo', 'admin@gmail.com', '1bbd886460827015e5d605ed44252251', 0, '2018-01-19 03:14:07'),
+('Mod đz', 'mod@gmail.com', '1bbd886460827015e5d605ed44252251', 1, '2018-01-19 03:14:07'),
 ('Azura', 'lam@gmail.com', '1bbd886460827015e5d605ed44252251', 0, '2025-06-18 05:59:50'),
 ('Azura', 'phannguyen2300@gmail.com', '1bbd886460827015e5d605ed44252251', 0, '2025-06-18 05:59:50');
 
@@ -402,7 +402,7 @@ INSERT INTO `comments` (`id`, `user_id`, `product_id`, `rate`, `comment_content`
 (3, 3, 1, 3, 'Sản phẩm không đẹp lắm.', 1493983674);
 
 INSERT INTO `cart` (`user_id`, `product_id`, `rowid`, `name`, `price`, `qty`, `options`, `image_link`, `created_at`, `updated_at`) VALUES
-(1, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 10:34:06', '2025-04-16 10:34:06'),
+(1, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBƯO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 10:34:06', '2025-04-16 10:34:06'),
 (2, 23, '37693cfc748049e45d87b8c7d8b9aacd', 'COMBO ĐẦM REN MÙA XUÂN', 370000.00, 1, '', 'combo-dam-ren-mua-xuan-cho-me-va-be-th08602-gs210-1m4G3-g4rMfx.jpg', '2025-04-16 15:00:11', '2025-04-16 15:00:11'),
 (3, 7, '8f14e45fceea167a5a36dedd4bea2543', 'Đầm ren tay dài tiểu thư', 350000.00, 1, '', 'Dam_ren_den_tay_dai_tieu_thu_(3).jpg', '2025-04-16 15:02:16', '2025-04-16 15:02:16'),
 (1, 12, 'c20ad4d76fe97759aa27a0c99bff6710', 'Đầm maxi phối ren cao cấp', 360000.00, 1, '', 'dam-maxi-phoi-ren-cao-cap-1m4G3-QXVTv3_simg_d0daf0_800x1200_max.jpg', '2025-04-16 15:02:33', '2025-04-16 15:02:33');

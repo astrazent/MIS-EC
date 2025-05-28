@@ -128,7 +128,7 @@
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="#" class="btn btn-xs btn-info view-order-details" data-id="<?php echo $order->transaction_id; ?>">
+                                        <a href="#" class="btn btn-xs btn-info view-order-details" data-id="<?php echo $order->transaction_id; ?>" data-status="<?php echo $order->status; ?>">
                                             <i class="glyphicon glyphicon-eye-open"></i> Chi tiết
                                         </a>
                                         <?php if($order->status == 0): // Only show cancel button for pending orders ?>
@@ -298,7 +298,8 @@
             e.preventDefault();
             
             const orderId = $(this).data("id");
-			console.log("Order ID:", orderId);
+			const status = $(this).data("status")
+			// console.log("Order ID:", orderId);
             
             // Show loading indicator in modal
 			$("#order-details-content").html('<div class="text-center"><i class="glyphicon glyphicon-refresh"></i> Đang tải dữ liệu...</div>');

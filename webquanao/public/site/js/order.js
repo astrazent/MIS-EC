@@ -382,79 +382,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Kiểm tra tính hợp lệ của form
 document.addEventListener("DOMContentLoaded", function () {
-	// Add event listener to the form submit
-	const orderForm = document.getElementById("orderForm");
-	if (orderForm) {
-		orderForm.addEventListener("submit", function(event) {
-			let isValid = true;
-			let selectedPayment = document.querySelector('input[name="payment"]:checked');
-			let paymentError = document.getElementById("payment-error");
-			
-			// Only validate payment if it's required
-			if (!selectedPayment) {
-				paymentError.classList.remove("hidden"); // Hiển thị cảnh báo
-				isValid = false;
-			} else {
-				paymentError.classList.add("hidden"); // Ẩn cảnh báo nếu đã chọn
-			}
-			
-			if (!isValid) {
-				event.preventDefault();
-				return false;
-			}
-			
-			// If payment is VNPAY, handle it differently - form should not submit directly
-			if (selectedPayment && selectedPayment.value === "vnpay") {
-				event.preventDefault();
-				
-				// Get the form data
-				const formData = new FormData(orderForm);
-				const formDataObject = {};
-				formData.forEach((value, key) => {
-					formDataObject[key] = value;
-				});
-				
-				// Send to VNPAY endpoint
-				console.log("Sending payment to URL:", paymentEndpoint);
-				
-				fetch(paymentEndpoint, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(formDataObject),
-				})
-				.then((response) => response.json())
-				.then((data) => {
-					if (data.payment_url) {
-						// Redirect to VNPAY
-						window.location.href = data.payment_url;
-					}
-				})
-				.catch((error) => {
-					console.error("Error:", error);
-					Swal.fire({
-						icon: "error",
-						title: "Lỗi!",
-						text: "Không thể kết nối đến cổng thanh toán. Vui lòng thử lại sau.",
-						customClass: {
-							confirmButton: "my-custom-button",
-						},
-						confirmButtonText: "OK",
-					});
-				});
-				
-				return false;
-			}
-			
-			// Continue with normal form submission for other payment methods
-			return true;
-		});
-	}
-	
-	// Continue with the existing document.getElementById("submitBtn") code
-	// (This is needed for browsers that don't support the form submission directly)
-	const submitBtn = document.getElementById("submitBtn");
-	if (submitBtn) {
-		submitBtn.addEventListener("click", function (event) {
+	document
+		.getElementById("submitBtn")
+		.addEventListener("click", function (event) {
 			let isValid = true;
 
 			function showError(input, message) {
@@ -607,20 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					},
 					body: JSON.stringify(formData),
 				})
-					.then((response) => {
-						console.log("Response status:", response.status);
-						// Check if the response status is ok (200-299)
-						if (!response.ok) {
-							if (response.status === 404) {
-								throw new Error("Không tìm thấy URL. Vui lòng kiểm tra lại đường dẫn.");
-							} else if (response.status >= 500) {
-								throw new Error("Lỗi máy chủ. Vui lòng thử lại sau.");
-							} else {
-								throw new Error("Lỗi yêu cầu. Mã trạng thái: " + response.status);
-							}
-						}
-						return response.text();
-					})
+					.then((response) => response.text())
 					.then((text) => {
 						return JSON.parse(text); // Chuyển thành JSON thủ công
 					})
@@ -638,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
 								},
 								confirmButtonText: "OK",
 							}).then(() => {
-								window.location.href = baseUrl;
+								window.location.href = "/";
 							});
 						} else {
 							Swal.fire({
@@ -653,24 +570,15 @@ document.addEventListener("DOMContentLoaded", function () {
 						}
 					})
 					.catch((error) => {
-						console.error("Error:", error);
-						let errorMessage = "Đã có lỗi xảy ra, vui lòng thử lại.";
-						
-						// More specific error messages
-						if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-							errorMessage = "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối internet.";
-						} else if (error.message) {
-							errorMessage = error.message;
-						}
-						
 						Swal.fire({
 							icon: "error",
 							title: "Lỗi!",
 							customClass: {
 								confirmButton: "my-custom-button",
 							},
-							text: errorMessage,
+							text: "Đã có lỗi xảy ra, vui lòng thử lại.",
 						});
+						console.error(error);
 					});
 			} else if (selectedPayment.value == "vnpay") {
 				fetch("http://localhost:8080/vnpay/payment", {
@@ -691,7 +599,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					.catch((error) => console.error("Error:", error));
 			}
 		});
-	}
 });
 
 function getVoucherScore(voucher) {
@@ -816,7 +723,7 @@ function calculateCartTotalByCatalog(cartList, catalogId) {
 
 function addVoucherCalc(card) {
 	// Lấy thông tin voucher
-	let voucher = voucher = JSON.parse(card.getAttribute("data-card"));
+	let voucher = JSON.parse(card.getAttribute("data-card"));
 
 	// Xác định kiểu giảm: Phí ship hay giảm giá hàng
 	// Số tiền giảm hoặc phần trăm giảm
@@ -1350,6 +1257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	async function fetchVouchers() {
 		try {
+
 			const response = await fetch("http://localhost:8080/get-voucher", {
 				method: "GET",
 				headers: { "Content-Type": "application/json" },
