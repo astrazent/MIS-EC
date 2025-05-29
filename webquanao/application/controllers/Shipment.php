@@ -21,7 +21,7 @@ class Shipment extends MY_Controller
             // Cấu hình Pagination
             $config = array();
             $config['base_url'] = base_url('shipment/index');
-            $config['total_rows'] = $this->db->where('transaction.user_email', $user_email)
+            $config['total_rows'] = $this->db->where('transaction.delivery_email', $user_email)
                 ->join('transaction', 'order.transaction_id = transaction.id')
                 ->count_all_results('order');
             $config['per_page'] = 10; // Số đơn hàng trên mỗi trang
@@ -66,14 +66,13 @@ class Shipment extends MY_Controller
             $this->db->from('order');
             $this->db->join('transaction', 'order.transaction_id = transaction.id');
             $this->db->join('product', 'order.product_id = product.id');
-            $this->db->where('transaction.user_email', $user_email);
+            $this->db->where('transaction.delivery_email', $user_email);
             $this->db->group_by('order.product_id, order.transaction_id');
             $this->db->order_by('transaction.created', 'DESC');
             $this->db->limit($config['per_page'], $page);
 
             $orders = $this->db->get()->result();
         }
-
         $this->data['orders'] = $orders;
         $this->data['pagination'] = $this->pagination->create_links(); // Thêm pagination vào data
         $this->data['temp'] = 'site/shipment/index';

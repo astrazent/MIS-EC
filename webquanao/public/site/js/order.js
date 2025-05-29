@@ -85,6 +85,7 @@ function renderCity(data) {
 			}
 		} else {
 			resetShipping();
+			resetVoucherGiftcode();
 		}
 	};
 	district.onchange = function () {
@@ -100,6 +101,7 @@ function renderCity(data) {
 			}
 		} else {
 			resetShipping();
+			resetVoucherGiftcode();
 		}
 	};
 }
@@ -186,6 +188,42 @@ function resetShipping() {
 	document.querySelector(".shipping-detail").style.display = "none";
 	document.querySelector(".shipping").style.display = "none";
 }
+let checkResetGiftcode = false;
+function resetVoucherGiftcode() {
+	if (document.querySelector(".giftcode").style.display == "flex") {
+		voucher_type = JSON.parse(
+			document.querySelector(".giftcode").getAttribute("data-gift-code")
+		).type;
+
+		if (voucher_type == 0) {
+			removeGiftCodeCalc();
+		}
+	}
+
+	voucher_type = null;
+	document.querySelectorAll(".voucher-card").forEach((card) => {
+		if (card.classList.contains("border-blue-500")) {
+			let voucher = JSON.parse(card.getAttribute("data-card"));
+			voucher_type = voucher.type;
+			return;
+		}
+	});
+	if (
+		voucher_type == 0 &&
+		document.querySelector(".cart-voucher").style.display == "flex"
+	) {
+		removeVoucherCalc();
+		document.querySelectorAll(".voucher-card").forEach((card) => {
+			if (card.classList.contains("border-blue-500")) {
+				card.classList.remove("border-blue-500");
+				return;
+			}
+		});
+		// selectedVoucherId = null;
+		document.getElementById("selected-voucher").classList.add("hidden");
+	}
+	checkResetGiftcode = true;
+}
 
 async function getDistance(fromCoords, toCoords) {
 	const url = "https://api.openrouteservice.org/v2/directions/driving-car";
@@ -234,6 +272,7 @@ wards.addEventListener("change", function () {
 
 	if (!cityText || !districtText || !wardText) {
 		resetShipping();
+		resetVoucherGiftcode();
 		return;
 	}
 
@@ -264,7 +303,7 @@ wards.addEventListener("change", function () {
 					Math.round(result.distance / 1000),
 					Number(itemprice)
 				);
-				const total = Math.round(Number(shipfee) + Number(itemprice));
+				let total = Math.round(Number(shipfee) + Number(itemprice));
 				document.querySelector(".distance").textContent = `${Math.round(
 					result.distance / 1000
 				)} km`;
@@ -277,6 +316,12 @@ wards.addEventListener("change", function () {
 				document.getElementById("shippingFee").textContent = `${formatCurrency(
 					shipfee
 				)}`;
+				if(document.querySelector(".cart-voucher").style.display == "flex"){
+					total -= parseVNDString(document.getElementById("cartVoucher").textContent);
+				}
+				if(document.querySelector(".giftcode").style.display == "flex"){
+					total -= parseVNDString(document.getElementById("giftcode").textContent);
+				}
 				document.getElementById("totalPrice").textContent = `${formatCurrency(
 					total
 				)}`;
@@ -491,15 +536,27 @@ document.addEventListener("DOMContentLoaded", function () {
 					document.getElementById("cartVoucher").textContent
 				);
 			}
+			if (document.querySelector(".giftcode").style.display == "flex") {
+				discount_amount = discount_amount + parseVNDString(
+					document.getElementById("giftcode").textContent
+				);
+			}
 			let shipping_fee = 0;
 			if (
-				document.querySelector(".shipping-detail").style.display == "block" ||
+				document.querySelector(".shipping-detail").style.display == "block" &&
 				document.querySelector(".fee").textContent != `Thông báo sau`
 			) {
 				shipping_fee = parseVNDString(
 					document.querySelector(".fee").textContent
 				);
 			}
+			let giftcode_id = null;
+			if (document.querySelector(".giftcode").style.display == "flex") {
+				giftcode_id = JSON.parse(
+					document.querySelector(".giftcode").getAttribute("data-gift-code")
+				).code;
+			}
+
 			let coupon_id = null;
 			document.querySelectorAll(".voucher-card").forEach((card) => {
 				if (card.classList.contains("border-blue-500")) {
@@ -521,6 +578,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				discount_amount: discount_amount,
 				shipping_fee: shipping_fee,
 				coupon_id: coupon_id,
+				giftcode_id: giftcode_id,
 				payment: selectedPayment.value,
 			};
 
@@ -723,7 +781,7 @@ function calculateCartTotalByCatalog(cartList, catalogId) {
 
 function addVoucherCalc(card) {
 	// Lấy thông tin voucher
-	let voucher = voucher = JSON.parse(card.getAttribute("data-card"));
+	let voucher = JSON.parse(card.getAttribute("data-card"));
 
 	// Xác định kiểu giảm: Phí ship hay giảm giá hàng
 	// Số tiền giảm hoặc phần trăm giảm
@@ -763,6 +821,28 @@ function addVoucherCalc(card) {
 			});
 			return false;
 		}
+
+		// Kiểm tra nếu đã áp giftcode freeship thì không được áp giftcode ship tiếp nữa
+		let voucher_type = null;
+		if (document.querySelector(".giftcode").style.display == "flex") {
+			voucher_type = JSON.parse(
+				document.querySelector(".giftcode").getAttribute("data-gift-code")
+			).type;
+		}
+
+		if (voucher_type == 0) {
+			Swal.fire({
+				icon: "warning",
+				title: "Áp mã không thành công",
+				text: "Bạn đã áp mã gift code giảm tiền SHIP rồi",
+				customClass: {
+					confirmButton: "my-custom-button",
+				},
+				confirmButtonText: "OK",
+			});
+			return false;
+		}
+
 		let shippingFeeValue = parseVNDString(
 			document.querySelector(".fee").textContent
 		);
@@ -798,24 +878,57 @@ function addVoucherCalc(card) {
 			return false;
 		}
 
+		const giftCodeInfo = document.querySelector(".giftcode");
+		let discountAmount = 0;
+		if (giftCodeInfo && giftCodeInfo.style.display == "flex") {
+			discountAmount = parseVNDString(
+				document.getElementById("giftcode").textContent
+			);
+		}
+
 		document.getElementById("cartVoucher").textContent =
 			"- " + shippingDiscount;
 		let totalBill =
 			Number(itemprice) +
 			Number(shippingFeeValue) -
+			discountAmount -
 			parseVNDString(shippingDiscount);
+		if (totalBill < 0) {
+			totalBill = 0;
+		}
 		document.getElementById("totalPrice").textContent =
 			formatCurrency(totalBill);
 		document.querySelector(".cart-voucher").style.display = "flex";
 	} else if (voucher.type == 1) {
 		let shippingFeeValue = 0;
 		if (
-			document.querySelector(".shipping-detail").style.display == "block" ||
+			document.querySelector(".shipping-detail").style.display == "block" &&
 			document.querySelector(".fee").textContent != `Thông báo sau`
 		) {
 			shippingFeeValue = parseVNDString(
 				document.querySelector(".fee").textContent
 			);
+		}
+
+		// Kiểm tra nếu đã áp giftcode freeship thì không được áp giftcode ship tiếp nữa
+		let voucher_type = null;
+		if (document.querySelector(".giftcode").style.display == "flex") {
+			voucher_type = JSON.parse(
+				document.querySelector(".giftcode").getAttribute("data-gift-code")
+			).type;
+		}
+
+		if (voucher_type == 1) {
+			Swal.fire({
+				icon: "warning",
+				title: "Áp mã không thành công",
+				text: "Bạn đã áp mã gift code giảm tiền hàng rồi",
+				customClass: {
+					confirmButton: "my-custom-button",
+				},
+				confirmButtonText: "OK",
+			});
+			return false;
 		}
 
 		if (itemprice == null) {
@@ -850,11 +963,24 @@ function addVoucherCalc(card) {
 			});
 			return false;
 		}
+
+		const giftCodeInfo = document.querySelector(".giftcode");
+		let discountAmount = 0;
+		if (giftCodeInfo && giftCodeInfo.style.display == "flex") {
+			discountAmount = parseVNDString(
+				document.getElementById("giftcode").textContent
+			);
+		}
+
 		document.getElementById("cartVoucher").textContent = "- " + itemDiscount;
 		let totalBill =
 			Number(itemprice) +
 			Number(shippingFeeValue) -
+			discountAmount -
 			parseVNDString(itemDiscount);
+		if (totalBill < 0) {
+			totalBill = 0;
+		}
 		document.getElementById("totalPrice").textContent =
 			formatCurrency(totalBill);
 		document.querySelector(".cart-voucher").style.display = "flex";
@@ -867,8 +993,11 @@ function removeVoucherCalc() {
 		return false;
 	}
 	let shippingFeeValue = 0;
+	console.log(
+		document.querySelector(".shipping-detail").style.display == "block"
+	);
 	if (
-		document.querySelector(".shipping-detail").style.display == "block" ||
+		document.querySelector(".shipping-detail").style.display == "block" &&
 		document.querySelector(".fee").textContent != `Thông báo sau`
 	) {
 		shippingFeeValue = parseVNDString(
@@ -884,11 +1013,51 @@ function removeVoucherCalc() {
 	}
 }
 
+function removeGiftCodeCalc() {
+	const itemprice = document.getElementById("totalPrice").dataset.price;
+	if (itemprice == null) {
+		return false;
+	}
+	let shippingFeeValue = 0;
+	if (
+		document.querySelector(".shipping-detail").style.display == "block" &&
+		document.querySelector(".fee").textContent != `Thông báo sau`
+	) {
+		shippingFeeValue = parseVNDString(
+			document.querySelector(".fee").textContent
+		);
+	}
+	let voucherBill = 0;
+	if (document.querySelector(".cart-voucher").style.display == "flex") {
+		voucherBill = parseVNDString(
+			document.getElementById("cartVoucher").textContent
+		);
+	}
+	if (document.querySelector(".giftcode").style.display == "flex") {
+		document.getElementById("giftcode").textContent = "";
+		document.querySelector(".giftcode").style.display = "none";
+		let totalBill = Number(itemprice) + Number(shippingFeeValue) - voucherBill;
+		document.getElementById("totalPrice").textContent =
+			formatCurrency(totalBill);
+	}
+
+	// Reset lại các thành phần
+	document.getElementById("gift_code").value = "";
+	document.getElementById("gift_code").disabled = false;
+	document.getElementById("gift-message").classList.add("hidden");
+	document.getElementById("gift-message").textContent = "";
+	document.getElementById("cancel-gift").classList.add("hidden");
+}
+
 function initVoucherSelection() {
 	let selectedVoucherId = null;
 	// Chọn voucher
 	document.querySelectorAll(".voucher-card").forEach((card) => {
 		card.addEventListener("click", function () {
+			if (checkResetGiftcode) {
+				selectedVoucherId = null;
+				checkResetGiftcode = false;
+			}
 			// Nếu đã chọn voucher khác, huỷ chọn cũ
 			if (selectedVoucherId && selectedVoucherId !== this.dataset.id) {
 				document
@@ -913,6 +1082,7 @@ function initVoucherSelection() {
 						.getElementById("selected-voucher")
 						.classList.contains("hidden")
 				) {
+					selectedVoucherId = null;
 					document.getElementById("selected-voucher").classList.add("hidden");
 				}
 				return;
@@ -1298,6 +1468,213 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	fetchVouchers();
 
+	function addGiftCodeCalc(voucher) {
+		// Xác định kiểu giảm: Phí ship hay giảm giá hàng
+		// Số tiền giảm hoặc phần trăm giảm
+		const valueNum = voucher.value !== null ? parseInt(voucher.value) : null;
+
+		// Áp dụng từ đơn giá tối thiểu nào?
+		const minPriceNum =
+			voucher.min_price !== null ? parseInt(voucher.min_price) : null;
+
+		// Giới hạn giảm tối đa
+		const maxValueNum =
+			voucher.max_value !== null ? parseInt(voucher.max_value) : null;
+
+		// Tổng tiền gốc của đơn hàng
+		const itemprice = document.getElementById("totalPrice").dataset.price;
+
+		// Danh sách cart
+		const carts = document.getElementById("cartInfo");
+		var cartData = JSON.parse(carts.getAttribute("data-cart"));
+
+		// Tổng tiền các sản phẩm thoả mãn ngành hàng trong cart
+		const itemValid = calculateCartTotalByCatalog(cartData, voucher.catalog_id);
+		console.log(voucher.type);
+		if (voucher.type == 0) {
+			if (
+				document.querySelector(".shipping-detail").style.display != "block" ||
+				document.querySelector(".fee").textContent == `Thông báo sau`
+			) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Chưa chọn địa điểm hoặc phí ship sẽ được thông báo sau",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			}
+			// Kiểm tra nếu đã áp voucher freeship thì không được áp voucher ship tiếp nữa
+			let voucher_type = null;
+			document.querySelectorAll(".voucher-card").forEach((card) => {
+				if (card.classList.contains("border-blue-500")) {
+					let voucher = JSON.parse(card.getAttribute("data-card"));
+					voucher_type = voucher.type;
+					return;
+				}
+			});
+			if (voucher_type == 0) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Bạn đã áp mã voucher giảm giá SHIP rồi",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			}
+
+			let shippingFeeValue = parseVNDString(
+				document.querySelector(".fee").textContent
+			);
+			let shippingDiscount = calculateDiscount(
+				itemValid,
+				minPriceNum,
+				maxValueNum,
+				valueNum,
+				shippingFeeValue
+			);
+
+			if (shippingDiscount == -1) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Giỏ hàng không có sản phẩm nào nằm trong ngành hàng được áp mã.",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			} else if (shippingDiscount == -2) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Tổng đơn hàng nhỏ hơn mức tối thiểu cho phép",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			}
+
+			const cartVoucher = document.querySelector(".cart-voucher");
+			let discountAmount = 0;
+			if (cartVoucher && cartVoucher.style.display == "flex") {
+				discountAmount = parseVNDString(
+					document.getElementById("cartVoucher").textContent
+				);
+			}
+			document.getElementById("giftcode").textContent = "- " + shippingDiscount;
+
+			let totalBill =
+				Number(itemprice) +
+				Number(shippingFeeValue) -
+				discountAmount -
+				parseVNDString(shippingDiscount);
+			if (totalBill < 0) {
+				totalBill = 0;
+			}
+			document.getElementById("totalPrice").textContent =
+				formatCurrency(totalBill);
+			document.querySelector(".giftcode").style.display = "flex";
+		} else if (voucher.type == 1) {
+			let shippingFeeValue = 0;
+			if (
+				document.querySelector(".shipping-detail").style.display == "block" &&
+				document.querySelector(".fee").textContent != `Thông báo sau`
+			) {
+				shippingFeeValue = parseVNDString(
+					document.querySelector(".fee").textContent
+				);
+			}
+
+			// Kiểm tra nếu đã áp voucher freeship thì không được áp voucher ship tiếp nữa
+			let voucher_type = null;
+			document.querySelectorAll(".voucher-card").forEach((card) => {
+				if (card.classList.contains("border-blue-500")) {
+					let voucher = JSON.parse(card.getAttribute("data-card"));
+					voucher_type = voucher.type;
+					return;
+				}
+			});
+			if (voucher_type == 1) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Bạn đã áp mã voucher giảm tiền hàng rồi",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			}
+
+			if (itemprice == null) {
+				return false;
+			}
+			let itemDiscount = calculateDiscount(
+				itemValid,
+				minPriceNum,
+				maxValueNum,
+				valueNum
+			);
+			if (itemDiscount == -1) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Giỏ hàng không có sản phẩm nào nằm trong ngành hàng được áp mã.",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			} else if (itemDiscount == -2) {
+				Swal.fire({
+					icon: "warning",
+					title: "Áp mã không thành công",
+					text: "Tổng đơn hàng nhỏ hơn mức tối thiểu cho phép",
+					customClass: {
+						confirmButton: "my-custom-button",
+					},
+					confirmButtonText: "OK",
+				});
+				return false;
+			}
+
+			const cartVoucher = document.querySelector(".cart-voucher");
+			let discountAmount = 0;
+			if (cartVoucher && cartVoucher.style.display == "flex") {
+				discountAmount = parseVNDString(
+					document.getElementById("cartVoucher").textContent
+				);
+			}
+
+			document.getElementById("giftcode").textContent = "- " + itemDiscount;
+			console.log(itemprice, shippingFeeValue, discountAmount, itemDiscount);
+			let totalBill =
+				Number(itemprice) +
+				Number(shippingFeeValue) -
+				discountAmount -
+				parseVNDString(itemDiscount);
+			if (totalBill < 0) {
+				totalBill = 0;
+			}
+			document.getElementById("totalPrice").textContent =
+				formatCurrency(totalBill);
+			document.querySelector(".giftcode").style.display = "flex";
+		}
+		return true;
+	}
+
 	// Áp dụng gift code
 	document
 		.getElementById("apply-gift")
@@ -1323,7 +1700,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 
 			const card = await response.json();
-			console.log(card);
+
+			const giftcode = document.querySelector(".giftcode");
+			giftcode.setAttribute("data-gift-code", JSON.stringify(card.data));
+
+			if (!addGiftCodeCalc(card.data)) {
+				return;
+			}
 
 			// Hiển thị thông báo và nút huỷ
 			document.getElementById(
@@ -1337,11 +1720,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 
 	document.getElementById("cancel-gift").addEventListener("click", function () {
-		// Reset lại các thành phần
-		document.getElementById("gift_code").value = "";
-		document.getElementById("gift_code").disabled = false;
-		document.getElementById("gift-message").classList.add("hidden");
-		document.getElementById("gift-message").textContent = "";
-		document.getElementById("cancel-gift").classList.add("hidden");
+		removeGiftCodeCalc();
 	});
 });

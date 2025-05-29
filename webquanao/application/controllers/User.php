@@ -515,6 +515,17 @@ class User extends MY_Controller
 					'ward' => $data['ward'],
 				);
 				$this->user_model->update($id, $temp);
+
+				// Bước 1: Xóa dữ liệu cũ
+				$this->session->unset_userdata('user');
+				$where = array('email' => $user->email);
+				$user = $this->user_model->get_info_rule($where);
+				if (!$user) {
+					echo json_encode(["status" => "error", "message" => "Thông tin user không hợp lệ"], JSON_UNESCAPED_UNICODE);
+					return;
+				}
+				$this->session->set_userdata('user', $user); //-> cập nhật lại toàn bộ $user
+
 			} else {
 				if (!isset($data['value']) || !isset($data['id']) || trim($data['value']) === '' || trim($data['id']) === '') {
 					echo json_encode(['status' => 'error', 'message' => 'Thông tin trường điền không được để trống']);
@@ -525,6 +536,16 @@ class User extends MY_Controller
 					$row => $data['value']
 				);
 				$this->user_model->update($id, $temp);
+
+				// Bước 1: Xóa dữ liệu cũ
+				$this->session->unset_userdata('user');
+				$where = array('email' => $user->email);
+				$user = $this->user_model->get_info_rule($where);
+				if (!$user) {
+					echo json_encode(["status" => "error", "message" => "Thông tin user không hợp lệ"], JSON_UNESCAPED_UNICODE);
+					return;
+				}
+				$this->session->set_userdata('user', $user); //-> cập nhật lại toàn bộ $user
 			}
 			echo json_encode(['status' => 'success', 'message' => 'Cập nhật thành công']);
 		} else {
@@ -548,15 +569,14 @@ class User extends MY_Controller
 			$where = array(
 				'email' => $user->email
 			);
-			
+
 			$data = array(
 				$data['id'] => ''
 			);
-			
-			if($this->user_model->update_rule($where, $data)){
+
+			if ($this->user_model->update_rule($where, $data)) {
 				echo json_encode(['status' => 'success', 'message' => 'xoá thông tin thành công']);
-			}
-			else {
+			} else {
 				echo json_encode(['status' => 'error', 'message' => 'xoá thông tin thất bại']);
 			}
 		} else {

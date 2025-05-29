@@ -125,13 +125,13 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `status` INT(11) NOT NULL DEFAULT 0,
   `user_id` INT(11) NOT NULL,
-  `user_name` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_email` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_phone` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_address` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_ward` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_name` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL, 
+  `delivery_email` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_phone` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_address` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL, -- địa chỉ giao hàng không phải địa chỉ user
+  `delivery_city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_ward` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `shipping_fee` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
 	`discount_amount` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
@@ -300,37 +300,59 @@ INSERT INTO `user` -- mật khẩu: 111111111
 -- p/s: sum(used_count) where coupon_id = xx: số lần dùng voucher của tất cả user trong hệ thống 
 -- Quy tắc viết mã giảm giá theo form như bên dưới
 INSERT INTO `coupon` 
-(`catalog_id`, `code`, `description`, `type`, `value`, `min_price`, `max_value`, `start_date`, `end_date`, `usage_limit`, `total_quantity`, `status`, `created`)
+(`catalog_id`, `code`, `description`, `type_coupon`, `type`, `value`, `min_price`, `max_value`, `start_date`, `end_date`, `usage_limit`, `total_quantity`, `status`, `created`)
 VALUES
 -- 1A: Miễn phí ship hoàn toàn
-(8, 'FREESHIP0', 'Miễn phí vận chuyển không giới hạn', 0, 0, 0, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 3, NULL, 1, NOW()),
+(NULL, 'FREESHIP0', 'Miễn phí vận chuyển không giới hạn', 0, 0, 0, 0, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 3, NULL, 1, NOW()),
 
 -- 1B: Giảm ship 30K
-(11, 'SHIP30K', 'Giảm 30K phí vận chuyển cho đơn từ 100K', 0, 30000, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 1, 1000, 1, NOW()),
+(NULL, 'SHIP30K', 'Giảm 30K phí vận chuyển cho đơn từ 100K', 0, 0, 30000, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 1, 1000, 1, NOW()),
 
 -- 2A: Giảm 15%
-(2, 'SALE15P', 'Giảm 15% cho đơn từ 120K, tối đa 40K', 1, 15, 120000, 40000, NOW(), DATE_ADD(NOW(), INTERVAL 20 DAY), 2, 500, 1, NOW()),
+(NULL, 'SALE15P', 'Giảm 15% cho đơn từ 120K, tối đa 40K', 0, 1, 15, 120000, 40000, NOW(), DATE_ADD(NOW(), INTERVAL 20 DAY), 2, 500, 1, NOW()),
 
 -- 2B: Giảm trực tiếp 60K
-(10, 'SALE60K', 'Giảm 60K cho đơn từ 250K', 1, 60000, 250000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 25 DAY), 5, 300, 1, NOW()),
+(NULL, 'SALE60K', 'Giảm 60K cho đơn từ 250K', 0, 1, 60000, 250000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 25 DAY), 5, 300, 1, NOW()),
 
 -- 3A: Không cần đơn tối thiểu
-(6, 'SALE5P_ALL', 'Giảm 5% không yêu cầu giá tối thiểu', 1, 5, NULL, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 12 DAY), 3, NULL, 1, NOW()),
+(NULL, 'SALE5P_ALL', 'Giảm 5% không yêu cầu giá tối thiểu', 0, 1, 5, NULL, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 12 DAY), 3, NULL, 1, NOW()),
 
 -- 3B: Có yêu cầu đơn tối thiểu
-(4, 'SALE40K', 'Giảm 40K cho đơn từ 300K', 1, 40000, 300000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 18 DAY), 4, 500, 1, NOW()),
+(NULL, 'SALE40K', 'Giảm 40K cho đơn từ 300K', 0, 1, 40000, 300000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 18 DAY), 4, 500, 1, NOW()),
 
 -- 4A: Không giới hạn tối đa
-(9, 'SALE20P_NO_LIMIT', 'Giảm 20% không giới hạn tối đa', 1, 20, 200000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 5, 200, 1, NOW()),
+(NULL, 'SALE20P_NO_LIMIT', 'Giảm 20% không giới hạn tối đa', 0, 1, 20, 200000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 5, 200, 1, NOW()),
 
 -- 4B: Có giới hạn tối đa
-(1, 'SALE25P_LIMIT', 'Giảm 25% tối đa 75K', 1, 25, 250000, 75000, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 2, 200, 1, NOW()),
+(NULL, 'SALE25P_LIMIT', 'Giảm 25% tối đa 75K', 0, 1, 25, 250000, 75000, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 2, 200, 1, NOW()),
 
 -- 5A: Không phân loại ngành hàng (áp dụng tất cả)
-(NULL, 'ALLCAT10P', 'Giảm 10% cho tất cả ngành hàng', 1, 10, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 20 DAY), 7, NULL, 1, NOW()),
+(NULL, 'ALLCAT10P', 'Giảm 10% cho tất cả ngành hàng', 0, 1, 10, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 20 DAY), 7, NULL, 1, NOW()),
 
 -- 5B: Áp dụng cho catalog cụ thể
-(13, 'CAT13-20K', 'Giảm 20K chỉ áp dụng ngành hàng 13', 1, 20000, 80000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 12, 400, 1, NOW());
+(NULL, 'CAT13-20K', 'Giảm 20K chỉ áp dụng ngành hàng 13', 0, 1, 20000, 80000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 12, 400, 1, NOW()),
+
+-- 6A: Giftcode miễn phí ship
+(NULL, 'GIFTSHIPFREE', 'Giftcode miễn phí ship cho đơn từ 50K', 1, 0, 0, 50000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 1, 100, 1, NOW()),
+
+-- 6B: Giftcode giảm giá 20% (tối đa 50K)
+(NULL, 'GIFT20P50K', 'Giftcode giảm 20% tối đa 50K cho tất cả ngành hàng', 1, 1, 20, 150000, 50000, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 2, 300, 1, NOW()),
+
+-- 6C: Giftcode giảm trực tiếp 100K
+(NULL, 'GIFT100K', 'Giảm trực tiếp 100K cho đơn từ 500K', 1, 1, 100000, 500000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 20 DAY), 1, 150, 1, NOW()),
+
+-- 6D: Giftcode không cần giá tối thiểu
+(NULL, 'GIFT5P', 'Giảm 5% không cần điều kiện giá trị đơn', 1, 1, 5, NULL, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 12 DAY), 3, 1000, 1, NOW()),
+
+-- 6E: Giftcode có giới hạn ngành hàng và giới hạn tối đa
+(NULL, 'GIFT15P_LIMIT', 'Giảm 15% tối đa 30K cho ngành hàng 7', 1, 1, 15, 100000, 30000, NOW(), DATE_ADD(NOW(), INTERVAL 18 DAY), 2, 250, 1, NOW()),
+
+-- 6F: Giftcode áp dụng toàn bộ, không giới hạn ngành hàng
+(NULL, 'GIFT30K_ALL', 'Giảm trực tiếp 30K không giới hạn ngành hàng', 1, 1, 30000, 100000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 25 DAY), 10, 9999, 1, NOW()),
+
+-- 6G: Giftcode giảm ship có giới hạn số lần dùng
+(NULL, 'GIFT15KSHIP', 'Giảm 15K phí ship cho đơn từ 80K', 1, 0, 15000, 80000, NULL, NOW(), DATE_ADD(NOW(), INTERVAL 10 DAY), 2, 500, 1, NOW());
+
 
 INSERT INTO `usercoupon` (`user_id`, `coupon_id`, `used_count`, `used_at`)
 VALUES
@@ -374,7 +396,7 @@ VALUES
 (4, 10, 2, DATE_SUB(NOW(), INTERVAL 7 DAY));
 
 INSERT INTO `transaction` 
-(`status`, `user_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_district`, `user_ward`, `message`, `amount`, `payment`, `created`) VALUES
+(`status`, `user_id`, `delivery_name`, `delivery_email`, `delivery_phone`, `delivery_address`, `delivery_city`, `delivery_district`, `delivery_ward`, `message`, `amount`, `payment`, `created`) VALUES
 (1, 1, 'An Nhiên', 'annhien@gmail.com', '0166666666', 'Hoàng Mai - Hà Nội', 'Hà Nội', 'Hoàng Mai', 'Định Công', 'Vui lòng trao hàng đến địa chỉ trên...', '350000.00', '', '2017-05-05 10:47:54'),
 (1, 2, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'Hải Phòng', 'Ngô Quyền', 'Máy Tơ', 'GUi hang den dia chi tren', '360000.00', '', '2017-05-05 10:47:54'),
 (1, 1, 'Bình Nguyễn', 'binh@gmail.com', '0987654321', 'Hà Nội ', 'Hà Nội', 'Ba Đình', 'Kim Mã', 'Gửi đến địa chỉ trên', '370000.00', '', '2017-05-06 14:54:34'),

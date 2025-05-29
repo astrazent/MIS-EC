@@ -76,6 +76,9 @@
         color: white;
         display: none;
     }
+    .btn-danger, .btn-success {
+        color: #fff !important;
+    }
 
     input[type="text"] {
         padding: 5px;
