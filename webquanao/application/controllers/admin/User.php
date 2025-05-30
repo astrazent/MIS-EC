@@ -69,51 +69,7 @@ class User extends MY_Controller {
 		$this->data['temp']='admin/user/detail';
 		$this->load->view('admin/main',$this->data);
 	}
-	// public function edit()
-	// {
-	// 	$id = $this->uri->segment(4);
-	// 	$user = $this->user_model->get_info($id);
-	// 	if (empty($user)) {
-	// 		$this->session->set_flashdata('message_fail', 'Thành viên không tồn tại');
-	// 		redirect(user_url('user'));
-	// 	}
-	// 	$this->data['user'] = $user;
-	// 	if ($this->input->post()) {
-	// 		$this->form_validation->set_rules('name','Họ tên','required');
-	// 		$this->form_validation->set_rules('email','Tên đăng nhập','valid_email|required');
-	// 		$this->form_validation->set_rules('level','Phân quyền','required');
-	// 		$password = $this->input->post('password');
-	// 		if ($password!='') {
-	// 			$this->form_validation->set_rules('password','Mật khẩu','required');
-	// 			$this->form_validation->set_rules('re_password','Mật khẩu nhập lại','matches[password]');
-	// 		}			
-	// 		if ($this->form_validation->run()) {				
-	// 			$data = array();
-	// 			$data = array(
-	// 				'name' => $this->input->post('name'),
-	// 				'email' => $this->input->post('email'),
-	// 				'level' => $this->input->post('level'),
-	// 				'created' => date('Y-m-d H:i:s')
-	// 				);
-	// 			if ($password!='') {
-	// 				$data['password'] = md5($password);
-	// 			}
-	// 			if ($this->user_model->update($id,$data)) {
-	// 				$this->session->set_flashdata('message_success', 'Thay đổi danh mục thành công');
-	// 			}else{
-	// 				$this->session->set_flashdata('message_fail', 'Thay đổi danh mục thất bại');
-	// 			}
-	// 			redirect(user_url('user'));
-	// 		}
-	// 	}
 
-	// 	$user = $this->user_model->get_list();
-	// 	$this->data['user']= $user;
-
-		
-	// 	$this->data['temp']='user/user/edit';
-	// 	$this->load->view('user/main',$this->data);
-	// }
 	public function accept()
 	{
 		$id = $this->uri->segment(4);
@@ -143,14 +99,14 @@ class User extends MY_Controller {
 		$where = array('id' => $id);
 		if (!$this->user_model->check_exists($where)) {
 			$this->session->set_flashdata('message_fail', 'user không tồn tại');
-			redirect(user_url('user'));
+			redirect(base_url("/dang-nhap"));
 		}
 		if ($this->user_model->delete($id)) {
 			$this->session->set_flashdata('message_success', 'Xóa user thành công');
 		}else{
 			$this->session->set_flashdata('message_fail', 'Xóa user thất bại');
 		}
-		redirect(user_url('user'));
+		redirect(base_url("/dang-nhap"));
 	}
 	public function deldetail()
 	{

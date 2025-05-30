@@ -28,10 +28,33 @@
           </tbody>
         </table>
         <a href="<?php echo base_url('cart'); ?>" type="button" class="btn btn-success"> Chi Tiết Giỏ Hàng </a>
-        <a href="<?php echo base_url('cart/del'); ?>" type="button" class="btn btn-danger pull-right"> Xóa </a>
+        <a href="javascript:void(0);" type="button" id="delete-cart" class="btn btn-danger pull-right"> Xóa </a>
       </div>
     <?php } else { ?>
       <p style="color:red;font-weight: bold;float: right;padding-right: 30px">Không có sản phẩm trong giỏ hàng</p>
     <?php  } ?>
   </ul>
 </li>
+<script>
+  document.getElementById('delete-cart').addEventListener('click', function() {
+    fetch('<?php echo base_url('cart/del'); ?>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+          id: -1
+        }) // -1 đại diện cho "xóa toàn bộ"
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Xóa thành công:', data);
+        // Cập nhật lại giao diện nếu cần
+        location.reload(); // hoặc gọi hàm cập nhật giỏ hàng
+      })
+      .catch(error => {
+        console.error('Lỗi xóa giỏ hàng:', error);
+      });
+  });
+</script>

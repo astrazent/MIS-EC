@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once 'vendor/autoload.php';
 
-<head>
-	<?php $this->load->view('site/head', $this->data); ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo public_url('site/'); ?>css/validation.css">
-</head>
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-<body>
-	<div class="container">
-        <iframe src="<?php echo site_url('kt'); ?>" style="width: 100%; height: auto; border: none;"></iframe>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
-				
-			</div>
-		</div>
-		<?php $this->load->view('site/footer', $this->data); ?>
-	</div>
-	<script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
-</body>
+$client = new Google_Client();
+$client->setClientId(getenv('CLIENT_ID'));
+$client->setClientSecret(getenv('CLIENT_SECRET'));
+$client->setRedirectUri('http://localhost:8080/');
+$client->addScope("email");
+$client->addScope("profile");
+$client->setPrompt('select_account consent'); // <- Dòng này quan trọng để buộc hiện lại yêu cầu đăng nhập
 
-</html>
+// Tạo URL để người dùng đăng nhập Google
+$login_url = $client->createAuthUrl();
+
+echo "<a href='$login_url'>Login with Google</a>";

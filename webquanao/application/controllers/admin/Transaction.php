@@ -148,10 +148,7 @@ class Transaction extends MY_Controller {
 		$update_success = $this->transaction_model->update($id, $data);
 		
 		$shipping_data = array(
-			// 'tracking_id' => $tracking_id,
 			'transaction_id' => $transaction->id,
-			// 'customer_name' => $transaction->user_name,
-			// 'shipping_address' => $transaction->user_address,
 			'status' => 'processing',
 			'created_at' => date('Y-m-d H:i:s'),
 			'estimated_delivery' => date('Y-m-d', strtotime('+3 days')),

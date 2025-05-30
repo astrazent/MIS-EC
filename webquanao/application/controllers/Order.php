@@ -327,17 +327,18 @@ class Order extends MY_Controller
 		$data_saved = array(
 			'user_id' => $user_id, // Nếu chưa đăng nhập, user_id = 0
 			'status' => 1,
-			'user_name' => $formData['name'],
-			'user_email' => $formData['email'],
-			'user_address' => $formData['address'],
-			'user_city' => $formData['city'],
-			'user_district' => $formData['district'],
-			'user_ward' => $formData['ward'],
-			'user_phone' => $formData['phone'],
+			'delivery_name' => $formData['name'],
+			'delivery_email' => $formData['email'],
+			'delivery_address' => $formData['address'],
+			'delivery_city' => $formData['city'],
+			'delivery_district' => $formData['district'],
+			'delivery_ward' => $formData['ward'],
+			'delivery_phone' => $formData['phone'],
 			'message' => $formData['message'] ?? '',
 			'shipping_fee' => $formData['shipping_fee'],
 			'discount_amount' => $formData['discount_amount'] ?? 0,
-			'amount' => $total_amount + $formData['shipping_fee'] - $formData['discount_amount'],
+			'amount' => ($total_amount + $formData['shipping_fee'] - $formData['discount_amount']) < 0 ? 0
+				: ($total_amount + $formData['shipping_fee'] - $formData['discount_amount']),
 			'payment' => $formData['payment'] ?? '',
 			'created' => $time
 		);
@@ -527,17 +528,18 @@ class Order extends MY_Controller
 			$time = date('Y-m-d H:i:s');
 			$data_saved = array(
 				'user_id' => $user_id, // Nếu chưa đăng nhập, user_id = 0
-				'user_name' => $data['name'],
-				'user_email' => $data['email'],
-				'user_address' => $data['address'],
-				'user_city' => $data['city'],
-				'user_district' => $data['district'],
-				'user_ward' => $data['ward'],
-				'user_phone' => $data['phone'],
+				'delivery_name' => $data['name'],
+				'delivery_email' => $data['email'],
+				'delivery_address' => $data['address'],
+				'delivery_city' => $data['city'],
+				'delivery_district' => $data['district'],
+				'delivery_ward' => $data['ward'],
+				'delivery_phone' => $data['phone'],
 				'message' => $data['message'] ?? '',
 				'shipping_fee' => $data['shipping_fee'],
 				'discount_amount' => $data['discount_amount'] ?? 0,
-				'amount' => $total_amount + $data['shipping_fee'] - $data['discount_amount'],
+				'amount' => ($total_amount + $data['shipping_fee'] - $data['discount_amount']) < 0 ? 0
+					: ($total_amount + $data['shipping_fee'] - $data['discount_amount']),
 				'payment' => $data['payment'] ?? '',
 				'created' => $time
 			);
@@ -551,6 +553,14 @@ class Order extends MY_Controller
 				if (!$this->user_coupon_model->mark_coupon_used($user->id, $data['coupon_id'])) {
 					$this->db->trans_rollback();
 					echo json_encode(["status" => "error", "message" => "Lưu voucher thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
+					return;
+				}
+			}
+
+			if ($data['giftcode_id'] != null) {
+				if (!$this->user_coupon_model->mark_gift_code_used($user->id, $data['giftcode_id'])) {
+					$this->db->trans_rollback();
+					echo json_encode(["status" => "error", "message" => "Lưu gift code thất bại", "errors" => "Rollback transaction"],  JSON_UNESCAPED_UNICODE);
 					return;
 				}
 			}

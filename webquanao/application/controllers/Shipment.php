@@ -28,7 +28,7 @@ class Shipment extends MY_Controller
             // Base query for counting total orders
             $this->db->select('COUNT(*) as total')
                 ->from('transaction')
-                ->where('transaction.user_email', $user_email);
+                ->where('transaction.delivery_email', $user_email);
             
             // Apply status filter for counting if not 'all'
             if ($status_filter !== 'all') {
@@ -77,10 +77,10 @@ class Shipment extends MY_Controller
                 transaction.status,
                 transaction.payment,
                 transaction.created,
-                transaction.user_name,
-                transaction.user_email,
-                transaction.user_address,
-                transaction.user_phone,
+                transaction.delivery_name,
+                transaction.delivery_email,
+                transaction.delivery_address,
+                transaction.delivery_phone,
                 transaction.amount as total_amount,
                 GROUP_CONCAT(DISTINCT product.name SEPARATOR ", ") AS product_names,
                 GROUP_CONCAT(DISTINCT product.image_link SEPARATOR "|") AS product_images,
@@ -90,7 +90,7 @@ class Shipment extends MY_Controller
             $this->db->from('transaction');
             $this->db->join('order', 'transaction.id = order.transaction_id', 'left');
             $this->db->join('product', 'order.product_id = product.id', 'left');
-            $this->db->where('transaction.user_email', $user_email);
+            $this->db->where('transaction.delivery_email', $user_email);
             
             // Apply status filter if not 'all'
             if ($status_filter !== 'all') {
@@ -107,7 +107,7 @@ class Shipment extends MY_Controller
             $status_counts = [];
             $this->db->select('status, COUNT(*) as count');
             $this->db->from('transaction');
-            $this->db->where('user_email', $user_email);
+            $this->db->where('delivery_email', $user_email);
             $this->db->group_by('status');
             $status_results = $this->db->get()->result();
             
@@ -226,7 +226,6 @@ class Shipment extends MY_Controller
             
             $this->data['recommended_products'] = $recommended_products;
         }
-
         $this->data['orders'] = $orders;
         $this->data['status_filter'] = $status_filter;
         $this->data['pagination'] = $this->pagination->create_links();
@@ -322,7 +321,7 @@ class Shipment extends MY_Controller
 			$this->db->join('product', 'order.product_id = product.id', 'left');
 			$this->db->join('discount', 'product.discount_id = discount.id', 'left');
 			$this->db->where('transaction.id', $transaction_id);
-			$this->db->where('transaction.user_email', $user->email); // Security: ensure user owns this order
+			$this->db->where('transaction.delivery_email', $user->email); // Security: ensure user owns this order
 			$this->db->group_by('transaction.id');
             
             $order = $this->db->get()->row();
