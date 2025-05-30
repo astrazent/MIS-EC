@@ -118,6 +118,7 @@ class Home extends MY_Controller
 			if (!$inserted) {
 				redirect(base_url("/dang-nhap"));
 			}
+			$this->session->set_userdata('user', $user);
 		} else {
 			$this->session->set_userdata('user', $user);
 		}

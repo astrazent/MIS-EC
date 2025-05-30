@@ -42,10 +42,10 @@ if ($message) {
                                 <tr>
                                     <td style="vertical-align: middle;text-align: center;"><strong><?php echo $stt; ?></strong></td>
                                     <td><strong>#<?php echo $order->id; ?></strong></td>
-                                    <td><strong><?php echo $order->user_name; ?></strong></td>
+                                    <td><strong><?php echo $order->delivery_name; ?></strong></td>
                                     <td><strong><?php echo mdate('%H:%i:%s %d/%m/%Y', strtotime($order->created)); ?></strong></td>
-                                    <td><strong><?php echo $order->user_phone; ?></strong></td>
-                                    <td><strong><?php echo $order->user_address; ?></strong></td>
+                                    <td><strong><?php echo $order->delivery_phone; ?></strong></td>
+                                    <td><strong><?php echo $order->delivery_address; ?></strong></td>
                                     <td><strong><?php echo number_format($order->amount); ?></strong> VNĐ</td>
                                     <td>
                                         <a href="<?php echo admin_url('shipping/confirm_delivery/'.$order->id); ?>" 

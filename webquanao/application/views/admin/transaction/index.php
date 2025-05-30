@@ -18,9 +18,9 @@
                             <tr class="info">
                                 <th class="text-center">STT</th>
                                 <th>
-                                    <a href="?sort=user_name&order=<?php echo ($sort == 'user_name' && $order == 'asc') ? 'desc' : 'asc'; ?>">
+                                    <a href="?sort=delivery_name&order=<?php echo ($sort == 'delivery_name' && $order == 'asc') ? 'desc' : 'asc'; ?>">
                                         Tên khách hàng
-                                        <?php echo ($sort == 'user_name' && $order == 'asc') ? '⏶' : '⏷'; ?>
+                                        <?php echo ($sort == 'delivery_name' && $order == 'asc') ? '⏶' : '⏷'; ?>
                                     </a>
                                 </th>
                                 <th>
@@ -54,9 +54,9 @@
                             ?>
                                 <tr>
                                     <td style="vertical-align: middle;text-align: center;"><strong><?php echo $stt; ?></strong></td>
-                                    <td><strong><?php echo $value->user_name; ?></strong></td>
+                                    <td><strong><?php echo $value->delivery_name; ?></strong></td>
                                     <td><strong><?php echo mdate('%H:%i:%s %d/%m/%Y', strtotime($value->created)); ?></strong></td>
-                                    <td><strong><?php echo $value->user_phone; ?></strong></td>
+                                    <td><strong><?php echo $value->delivery_phone; ?></strong></td>
                                     <td><strong><?php echo number_format($value->amount); ?></strong> VNĐ</td>
                                     <td>
                                         <?php switch ($value->status) {

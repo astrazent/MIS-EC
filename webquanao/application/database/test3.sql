@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
-  MODIFY `password` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  MODIFY `phone` VARCHAR(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  MODIFY `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  MODIFY `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  MODIFY `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  MODIFY `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` VARCHAR(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `district` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ward` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created` DATETIME NOT NULL,
   `is_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `date_modified` DATETIME DEFAULT NULL,
@@ -395,7 +395,7 @@ VALUES
 (4, 9, 3, DATE_SUB(NOW(), INTERVAL 3 DAY)),
 (4, 10, 2, DATE_SUB(NOW(), INTERVAL 7 DAY));
 
-INSERT INTO `transaction` 
+INSERT INTO `transaction`
 (`status`, `user_id`, `delivery_name`, `delivery_email`, `delivery_phone`, `delivery_address`, `delivery_city`, `delivery_district`, `delivery_ward`, `message`, `amount`, `payment`, `created`) VALUES
 (1, 1, 'An Nhiên', 'annhien@gmail.com', '0166666666', 'Hoàng Mai - Hà Nội', 'Hà Nội', 'Hoàng Mai', 'Định Công', 'Vui lòng trao hàng đến địa chỉ trên...', '350000.00', '', '2017-05-05 10:47:54'),
 (1, 2, 'GoO', 'GoO@gmail.com', '01215345336', 'Hải Phòng', 'Hải Phòng', 'Ngô Quyền', 'Máy Tơ', 'GUi hang den dia chi tren', '360000.00', '', '2017-05-05 10:47:54'),
