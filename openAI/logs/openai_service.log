@@ -1849,3 +1849,11 @@
 2025-05-28 14:18:20,739 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
 2025-05-28 14:18:40,677 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
 2025-05-28 14:18:40,690 - werkzeug - INFO - 172.18.0.5 - - [28/May/2025 14:18:40] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-05-30 06:18:35,709 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.3:5002
+2025-05-30 06:18:35,713 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-30 06:18:35,724 - werkzeug - INFO -  * Restarting with stat
+2025-05-30 06:18:37,509 - werkzeug - WARNING -  * Debugger is active!
+2025-05-30 06:18:37,526 - werkzeug - INFO -  * Debugger PIN: 262-505-667

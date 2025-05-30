@@ -298,7 +298,6 @@
             e.preventDefault();
             
             const orderId = $(this).data("id");
-			const status = $(this).data("status")
 			// console.log("Order ID:", orderId);
             
             // Show loading indicator in modal
@@ -517,9 +516,11 @@
 									<td>${product.quantity}</td>
 									<td>${product.subtotal} VNĐ</td>
 									<td>
-										${product.status == 0
-											? `<button class="btn btn-success btn-sm review-product" data-id="${product.id}"><i class="glyphicon glyphicon-star"></i> Đánh giá</button>` 
-											: `<span class="text-muted">Đã đánh giá</span>`}
+										${(parseInt(order.status_code) === 3 && product.status == 0)
+											? `<button class="btn btn-success btn-sm review-product" data-id="${product.id}"><i class="glyphicon glyphicon-star"></i> Đánh giá</button>`
+											: (product.status == 1
+												? `<span class="text-muted">Đã đánh giá</span>`
+												: `<button class="btn btn-secondary btn-sm" disabled><i class="glyphicon glyphicon-star"></i> Đánh giá</button>`)}
 									</td>
 								</tr>`).join('')}
 						</tbody>
