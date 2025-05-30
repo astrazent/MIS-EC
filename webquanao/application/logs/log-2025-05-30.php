@@ -12,3 +12,4 @@ WHERE `transaction`.`user_email` = 'noneprocastination00@gmail.com'
 ERROR - 2025-05-30 13:54:59 --> Query error: Unknown column 'transaction.user_email' in 'WHERE' - Invalid query: SELECT COUNT(*) as total
 FROM `transaction`
 WHERE `transaction`.`user_email` = 'noneprocastination00@gmail.com'
+ERROR - 2025-05-30 14:08:27 --> 404 Page Not Found: Well-known/appspecific
