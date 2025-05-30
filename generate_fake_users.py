@@ -101,8 +101,8 @@ for _ in range(num_users):
 
     sql_transaction = """
         INSERT INTO transaction (
-            status, user_id, user_name, user_email, user_phone, 
-            user_address, user_city, user_district, user_ward,
+            status, user_id, delivery_name, delivery_email, delivery_phone, 
+            delivery_address, delivery_city, delivery_district, delivery_ward,
             message, coupon_id, discount_amount, amount, payment, created
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
