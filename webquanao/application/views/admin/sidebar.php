@@ -12,6 +12,7 @@
 		<li><a href="<?php echo admin_url('transaction'); ?>"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></svg> Đơn đặt hàng</a></li>
 		<li><a href="<?php echo admin_url('user'); ?>"><svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"/></svg> Khách hàng</a></li>
 		<li><a href="<?php echo admin_url('admin'); ?>"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg> Nhân viên</a></li>
+		<li><a href="<?php echo admin_url('occasion'); ?>"><svg class="glyph stroked calendar "><use xlink:href="#stroked-calendar"/></svg> Sự kiện</a></li>
 		
 		<li role="presentation" class="divider"></li>
 		

@@ -5,3 +5,4 @@ tensorflow==2.19.0
 keras==3.9.0
 scikit-learn==1.5.1
 livereload
+Pillow

@@ -34,7 +34,7 @@ class MY_Controller extends CI_Controller
 				$this->data['user'] = $user;
 
 				$this->load->model('cart_model');
-				if(isset($user)){
+				if (isset($user)) {
 					$carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 					$this->data['carts'] = $carts;
 					$this->data['total_items'] = $this->cart_model->get_sum('qty', ['user_id' => $user->id]);

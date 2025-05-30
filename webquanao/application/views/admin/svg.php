@@ -19,6 +19,8 @@
 </symbol><symbol id="stroked-usb-flash-drive" class="glyph-svg stroked" viewBox="0 0 44 44">
     <path d="M30 43H14c-1.1 0-2-.9-2-2V11h20v30c0 1.1-.9 2-2 2zM15 1h14v10H15z" class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10"></path>
     <path class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10" d="M20 4v3h-3M25 4v3h-3"></path>
+</symbol><symbol id="stroked-calendar" viewBox="0 0 24 24">
+    <path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 17H5V8h14v12zM7 10h5v5H7z"></path>
 </symbol><symbol id="stroked-toiler-paper" class="glyph-svg stroked" viewBox="0 0 44 44">
     <path d="M9.9 1H33c3.9 0 7 5.8 7 13s-3.1 13-6.9 13H9.9C6.1 27 3 21.2 3 14S6.1 1 9.9 1z" class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10"></path>
     <ellipse cx="33" cy="14" rx="7" ry="13" class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10"></ellipse>

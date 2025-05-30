@@ -1427,6 +1427,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	async function fetchVouchers() {
 		try {
+
 			const response = await fetch("http://localhost:8080/get-voucher", {
 				method: "GET",
 				headers: { "Content-Type": "application/json" },

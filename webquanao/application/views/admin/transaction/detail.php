@@ -37,7 +37,7 @@
                             </tr>
                             <tr>
                                 <td>Ngày đặt</td>
-                                <td><?php echo mdate("%H:%i:%s %d/%m/%Y", $transaction->created); ?></td>
+                                <td><?php echo date("H:i:s d/m/Y", strtotime($transaction->created)); ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -84,14 +84,18 @@
 
                     </table>
                     <?php if ($transaction->status == '0') { ?>
-                        <a href="<?php echo admin_url('transaction/accept/' . $transaction->id); ?>" class="btn btn-success"> Xác nhận đơn hàng</a> <?php
-                                                                                                                                                } ?>
+                        <a href="<?php echo admin_url('transaction/accept/' . $transaction->id); ?>" class="btn btn-success"> Xác nhận đơn hàng</a> 
+                    <?php } ?>
+                    
                     <?php if ($transaction->status == '1') { ?>
-                        <a href="<?php echo admin_url('transaction/deliver/' . $transaction->id); ?>" class="btn btn-success"> Vận chuyển</a> <?php
-                                                                                                                                        } ?>
-                    <?php if ($transaction->status == '2') { ?>
-                        <a href="<?php echo admin_url('transaction/done/' . $transaction->id); ?>" class="btn btn-success"> Hoàn thành</a> <?php
-                                                                                                                                        } ?>
+                        <a href="<?php echo admin_url('transaction/deliver/' . $transaction->id); ?>" class="btn btn-success"> Vận chuyển</a> 
+                    <?php } ?>
+                    
+                    <?php if ($transaction->status == '4') { ?>
+                        <div class="alert alert-danger">
+                            <strong>Đơn hàng đã hủy!</strong> Đơn hàng này đã bị hủy.
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

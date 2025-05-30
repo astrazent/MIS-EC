@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo public_url('site/'); ?>bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="<?php echo public_url('site/'); ?>css/style.css">
 <script type="text/javascript" src="<?php echo public_url('js/raty/jquery.raty.min.js') ?>"></script>
+<script src="https://messenger.svc.chative.io/static/v1.0/channels/s9e9bba20-9d26-4e8b-ba6c-05defd7bc1c9/messenger.js?mode=livechat" defer="defer"></script>
 <script type="text/javascript">
 	$(function() {
 		$.fn.raty.defaults.path = "<?php echo public_url('js/raty/img'); ?>";
@@ -18,9 +19,11 @@
 		});
 	});
 </script>
+
 <style>
-	.raty img {
-		width: 16px !important;
-		height: 16px !important;
-	}
+		.raty img {
+			width: 16px !important;
+			height: 16px !important;
+		}
+
 </style>

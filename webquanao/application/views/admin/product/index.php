@@ -73,13 +73,13 @@
 										</td>
 										<td style="vertical-align: middle"><strong ><?php echo $value->namecatalog; ?></strong></td>
 										<td style="vertical-align: middle">
-											<?php if($value->discount > 0){
+											<?php if($value->discount > 0 || $value->price < $value->origin_price){
 													$price_new = $value->price - $value->discount;
 													?>
-													<strong><?php echo number_format($price_new); ?> VNĐ</strong><br><del><?php echo number_format($value->price); ?> VNĐ</del>
+													<strong><?php echo number_format($price_new); ?> VNĐ</strong><br><del><?php echo number_format($value->origin_price); ?> VNĐ</del>
 
 												<?php }else{ ?>
-													<strong><?php echo number_format($value->price); ?> VNĐ</strong>
+													<strong><?php echo number_format($value->origin_price); ?> VNĐ</strong>
 												<?php } ?>
 										</td>
 										<td class="list_td aligncenter">
