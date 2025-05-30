@@ -87,13 +87,6 @@ class Shipment extends MY_Controller
                 GROUP_CONCAT(DISTINCT product.id SEPARATOR ",") AS product_ids,
                 SUM(order.qty) AS total_items
             ');
-<<<<<<< HEAD
-            $this->db->from('order');
-            $this->db->join('transaction', 'order.transaction_id = transaction.id');
-            $this->db->join('product', 'order.product_id = product.id');
-            $this->db->where('transaction.delivery_email', $user_email);
-            $this->db->group_by('order.product_id, order.transaction_id');
-=======
             $this->db->from('transaction');
             $this->db->join('order', 'transaction.id = order.transaction_id', 'left');
             $this->db->join('product', 'order.product_id = product.id', 'left');
@@ -105,7 +98,6 @@ class Shipment extends MY_Controller
             }
             
             $this->db->group_by('transaction.id');
->>>>>>> d66faf9058c0d402937e71719b9e40257ff30ead
             $this->db->order_by('transaction.created', 'DESC');
             $this->db->limit($config['per_page'], $page);
 
