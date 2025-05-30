@@ -2,6 +2,7 @@
 
 ## Phiên bản PHP sử dụng 
 - **Phiên bản**: 7.3.16
+- **Nguồn**: https://windows.php.net/downloads/releases/archives/
 
 ## Máy chủ XAMPP
 - **Phiên bản**: 3.3.0
@@ -33,6 +34,21 @@
 - **Vị trí**: `application\third_party\PHPMailer`
 - **Nguồn**: https://github.com/PHPMailer/PHPMailer.git
 - **Cài đặt**: Qua zip file 
+
+- **composer**
+- **Phiên bản**: 2.0
+- **Mô tả**: Thư viện hỗ trợ cài đặt package.
+- **Vị trí**: `system`
+- **Nguồn**: https://getcomposer.org/Composer-Setup.exe
+- **Yêu cầu**: PHP 7.4 trở lên 
+- **Cài đặt**: Qua zip file 
+
+- **google-api-client**
+- **Phiên bản**: 2.0
+- **Mô tả**: Thư viện hỗ trợ đăng nhập bằng google.
+- **Vị trí**: `../../vendor`
+- **Nguồn**: https://github.com/googleapis/google-api-php-client.git
+- **Cài đặt**: Qua composer
 
 
 

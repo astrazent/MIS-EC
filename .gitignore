@@ -1,4 +1,46 @@
-webquanao/.env.private
+/webquanao/.DS_Store
+
+/webquanao/application/cache/*
+/webquanao/!application/cache/index.html
+/webquanao/!application/cache/.htaccess
+
+/webquanao/application/logs/*
+/webquanao/!application/logs/index.html
+/webquanao/!application/logs/.htaccess
+
+/webquanao/user_guide_src/build/*
+/webquanao/user_guide_src/cilexer/build/*
+/webquanao/user_guide_src/cilexer/dist/*
+/webquanao/user_guide_src/cilexer/pycilexer.egg-info/*
+
+# IDE Files
+#-------------------------
+/webquanao/nbproject/
+/webquanao/.idea/*
+
+## Sublime Text cache files
+/webquanao/*.tmlanguage.cache
+/webquanao/*.tmPreferences.cache
+/webquanao/*.stTheme.cache
+/webquanao/*.sublime-workspace
+/webquanao/*.sublime-project
+
+## cofig vscode extension
+/webquanao/.vscode/
+
+## config env variable
+/webquanao/.env.private
+
+##library
+/webquanao/application/third_party/php-jwt/*
+/webquanao/application/third_party/PHPmailer/*
+/webquanao/sessions/*
+/webquanao/application/logs/*
+
+##composer
+/webquanao/vendor/*
+
+## log
 webquanao/logs/*
 .todo
 .todo-example

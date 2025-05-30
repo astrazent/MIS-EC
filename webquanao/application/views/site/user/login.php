@@ -1,3 +1,22 @@
+<?php
+require_once 'vendor/autoload.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+
+$client = new Google_Client();
+$client->setClientId(getenv('CLIENT_ID'));
+$client->setClientSecret(getenv('CLIENT_SECRET'));
+$client->setRedirectUri('http://localhost:8080/');
+$client->addScope("email");
+$client->addScope("profile");
+$client->setPrompt('select_account consent');
+
+// Tạo URL để người dùng đăng nhập Google
+$login_url = $client->createAuthUrl();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,7 +146,36 @@
 		color: rgb(37 99 235 / var(--tw-text-opacity, 1)) !important;
 	}
 
-	/* Loại bỏ conflict tailwind */
+	#google-card {
+		background-color: white !important;
+		/* nền trắng */
+		color: black !important;
+		/* chữ đen */
+		font-size: 16px !important;
+		font-weight: 600 !important;
+		font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+		text-decoration: none !important;
+		line-height: 1.5 !important;
+		letter-spacing: 0.5px !important;
+		padding: 0.5rem 1rem !important;
+		/* tương đương py-2 px-4 */
+		border-radius: 0.375rem !important;
+		/* tương đương rounded-md */
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 0.5rem !important;
+		/* tương đương gap-2 */
+		transition: background-color 0.2s ease !important;
+		border: 1px solid #ccc !important;
+		/* viền nhẹ */
+	}
+
+	#google-card:hover {
+		background-color: #f0f0f0 !important;
+		/* nền hover sáng hơn */
+		color: black !important;
+	}
 </style>
 
 <body>
@@ -152,6 +200,16 @@
 					<input type="password" id="password" name="password"
 						class="w-[400px] p-3 border border-gray-300 rounded text-lg">
 				</div>
+
+				<a
+					href="<?php echo htmlspecialchars($login_url); ?>" id="google-card"
+					class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+					<img
+						src="https://developers.google.com/identity/images/g-logo.png"
+						class="w-7 h-7"
+						alt="Google Logo" />
+					<span>Đăng nhập bằng Google</span>
+				</a>
 
 				<div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
 
