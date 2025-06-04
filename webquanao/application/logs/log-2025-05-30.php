@@ -1,6 +1,53 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-ERROR - 2025-05-30 15:16:44 --> 4/0AUJR-x4umFLsO1LtE8g4AJyxD1_Gp5car-hyW4B7DEoCbonBujCM62hy7GZpQcVjs3v0RA
-ERROR - 2025-05-30 15:16:48 --> 
-ERROR - 2025-05-30 15:19:26 --> 4/0AUJR-x7lvJ-Pl90reGN-Uco0wSdW1gYwYXV6PDKyyUfu0frkdhb-Cvr8dC5jwQJl9FvvZg
-ERROR - 2025-05-30 15:19:29 --> 
+ERROR - 2025-05-30 15:58:29 --> 4/0AUJR-x4NRTl46MhXcHn8fccKXLC-YIncCeQmYtiKoWRRfMDkheEmqSmW-FmEikgt2gvehg
+ERROR - 2025-05-30 15:58:33 --> 
+ERROR - 2025-05-30 16:05:20 --> stdClass Object
+(
+    [id] => 5
+    [name] => Nguyên Phan
+    [email] => noneprocastination00@gmail.com
+    [password] => 
+    [phone] => 
+    [address] => 
+    [city] => 
+    [district] => 
+    [ward] => 
+    [created] => 2025-05-30 16:05:20
+    [is_verified] => 1
+    [date_modified] => 
+)
+
+ERROR - 2025-05-30 16:08:00 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 16:12:31 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 16:12:38 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 16:12:57 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 16:15:24 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 16:55:44 --> 404 Page Not Found: Faviconico/index
+ERROR - 2025-05-30 16:56:15 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:30:30 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:30:35 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:31:17 --> stdClass Object
+(
+    [id] => 5
+    [name] => Nguyên Phan
+    [email] => noneprocastination00@gmail.com
+    [password] => 
+    [phone] => 
+    [address] => 
+    [city] => 
+    [district] => 
+    [ward] => 
+    [created] => 2025-05-30 16:05:20
+    [is_verified] => 1
+    [date_modified] => 
+)
+
+ERROR - 2025-05-30 22:31:19 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:31:24 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:32:34 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:32:36 --> 404 Page Not Found: Faviconico/index
+ERROR - 2025-05-30 22:33:26 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:34:17 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:34:47 --> 404 Page Not Found: Well-known/appspecific
+ERROR - 2025-05-30 22:34:59 --> 404 Page Not Found: Well-known/appspecific
