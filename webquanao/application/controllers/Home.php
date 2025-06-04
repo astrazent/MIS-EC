@@ -45,7 +45,6 @@ class Home extends MY_Controller
 
 		// Lấy code Google trả về sau khi user login thành công
 		$code = $this->input->get('code');
-
 		if ($code) {
 			// Lấy access token từ code
 			$token = $client->fetchAccessTokenWithAuthCode($code);
@@ -79,6 +78,33 @@ class Home extends MY_Controller
 					$this->session->set_userdata('google_email', $google_user->email);
 					$this->session->set_userdata('google_picture', $google_user->picture);
 
+					// Nếu đã login, lấy thông tin user từ session
+					$name = $google_user->name;
+					$email = $google_user->email;
+
+					$where = array('email' => $email);
+					$user = $this->user_model->get_info_rule($where);
+					if (!$user) {
+						$data = [
+							'name' => $name,
+							'email' => $email,
+							'created' => date('Y-m-d H:i:s'),
+							'is_verified' => 1
+						];
+
+						$inserted = $this->user_model->create($data);
+						if (!$inserted) {
+							redirect(base_url("/dang-nhap"));
+						}
+						$where = array('email' => $email);
+						$user = $this->user_model->get_info_rule($where);
+						log_message('error', print_r($user, true));
+						$this->session->set_userdata('user', $user);
+					} else {
+						log_message('error', print_r($user, true));
+						$this->session->set_userdata('user', $user);
+					}
+
 					// Redirect về index để xóa query string code khỏi URL
 					redirect(base_url("/"));
 					return;
@@ -92,35 +118,12 @@ class Home extends MY_Controller
 				show_error('Lỗi lấy access token từ Google.');
 				return;
 			}
-		}
 
-		// Kiểm tra nếu chưa login
-		if (!$this->session->userdata('google_id')) {
-			redirect(base_url("/dang-nhap"));
-			return;
-		}
-
-		// Nếu đã login, lấy thông tin user từ session
-		$name = $this->session->userdata('google_name');
-		$email = $this->session->userdata('google_email');
-
-		$where = array('email' => $email);
-		$user = $this->user_model->get_info_rule($where);
-		if (!$user) {
-			$data = [
-				'name' => $name,
-				'email' => $email,
-				'created' => date('Y-m-d H:i:s'),
-				'is_verified' => 1
-			];
-
-			$inserted = $this->user_model->create($data);
-			if (!$inserted) {
+			// Kiểm tra nếu chưa login
+			if (!$this->session->userdata('google_id')) {
 				redirect(base_url("/dang-nhap"));
+				return;
 			}
-			$this->session->set_userdata('user', $user);
-		} else {
-			$this->session->set_userdata('user', $user);
 		}
 
 		$this->data['temp'] = 'site/home/index.php';

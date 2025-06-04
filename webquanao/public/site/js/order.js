@@ -316,11 +316,15 @@ wards.addEventListener("change", function () {
 				document.getElementById("shippingFee").textContent = `${formatCurrency(
 					shipfee
 				)}`;
-				if(document.querySelector(".cart-voucher").style.display == "flex"){
-					total -= parseVNDString(document.getElementById("cartVoucher").textContent);
+				if (document.querySelector(".cart-voucher").style.display == "flex") {
+					total -= parseVNDString(
+						document.getElementById("cartVoucher").textContent
+					);
 				}
-				if(document.querySelector(".giftcode").style.display == "flex"){
-					total -= parseVNDString(document.getElementById("giftcode").textContent);
+				if (document.querySelector(".giftcode").style.display == "flex") {
+					total -= parseVNDString(
+						document.getElementById("giftcode").textContent
+					);
 				}
 				document.getElementById("totalPrice").textContent = `${formatCurrency(
 					total
@@ -537,9 +541,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				);
 			}
 			if (document.querySelector(".giftcode").style.display == "flex") {
-				discount_amount = discount_amount + parseVNDString(
-					document.getElementById("giftcode").textContent
-				);
+				discount_amount =
+					discount_amount +
+					parseVNDString(document.getElementById("giftcode").textContent);
 			}
 			let shipping_fee = 0;
 			if (
@@ -663,33 +667,36 @@ function getVoucherScore(voucher) {
 	const value = Number(voucher.value ?? 0);
 	const maxValue = Number(voucher.max_value ?? 0);
 	const minPrice = Number(voucher.min_price ?? 0);
-	const measure = Number(voucher.measure); // 0 = VND, 1 = %
-
-	// Ưu tiên miễn phí
-	if (value === 0) return 100;
 
 	let score = 0;
 
-	// Ưu đãi chính
-	if (measure === 1) {
-		// Phần trăm
-		score += value * 2;
+	if (value <= 100) {
+		// Giảm theo phần trăm
+		score += value * 2; // Nhân đôi để làm nổi bật % ưu đãi
 	} else {
-		// Theo tiền (VND)
-		score += value / 1000;
+		// Giảm theo số tiền (VND)
+		score += value / 1000; // Mỗi 1.000đ tương đương 1 điểm
 	}
 
-	// Trừ điểm nếu bị giới hạn max_value
-	if (maxValue > 0 && value > maxValue) {
-		score -= (value - maxValue) / 1000;
-	}
-
-	// Cộng điểm nếu không yêu cầu giá tối thiểu
-	if (!minPrice || minPrice === 0) {
+	// Trừ điểm nếu bị giới hạn giá trị tối đa (max_value)
+	if (maxValue > 0) {
+		// Nếu max_value nhỏ hơn value thì bị giới hạn
+		const limit = Math.max(0, value - maxValue);
+		score -= limit / 1000;
+	} else {
+		// Không có giới hạn => cộng thêm điểm
 		score += 5;
 	}
 
-	return score;
+	// Cộng điểm nếu không yêu cầu giá trị đơn hàng tối thiểu
+	if (minPrice === 0) {
+		score += 5;
+	} else {
+		// Nếu có yêu cầu thì trừ nhẹ tùy theo mức độ
+		score -= minPrice / 100000; // Ví dụ: 100.000đ => -1 điểm
+	}
+
+	return Math.round(score * 100) / 100; // Làm tròn 2 chữ số thập phân
 }
 
 function sortVouchersByPriority(voucherList, type = 0) {
@@ -721,10 +728,6 @@ function calculateDiscount(
 	shippingFeeValue = null
 ) {
 	// Nếu miễn phí hoàn toàn (valueNum == 0), giảm toàn bộ shippingFeeValue nếu có, hoặc orderTotal
-	if (valueNum == 0) {
-		const baseAmount = shippingFeeValue != null ? shippingFeeValue : orderTotal;
-		return formatCurrency(baseAmount);
-	}
 	if (orderTotal == 0) {
 		return -1;
 	}
@@ -732,7 +735,7 @@ function calculateDiscount(
 	// 1. Kiểm tra điều kiện tối thiểu
 	if (minValueNum != null && minValueNum > 0) {
 		const minThreshold =
-			minValueNum < 100 ? (orderTotal * minValueNum) / 100 : minValueNum;
+			minValueNum <= 100 ? (orderTotal * minValueNum) / 100 : minValueNum;
 
 		if (orderTotal < minThreshold) {
 			return -2; // Không đủ điều kiện
@@ -745,13 +748,13 @@ function calculateDiscount(
 	// 3. Tính mức giảm
 	let discount = 0;
 	if (valueNum != null) {
-		discount = valueNum < 100 ? (baseAmount * valueNum) / 100 : valueNum;
+		discount = valueNum <= 100 ? (baseAmount * valueNum) / 100 : valueNum;
 	}
 
 	// 4. Giới hạn giảm tối đa nếu có
 	if (maxValueNum != null && maxValueNum > 0) {
 		const maxAllowed =
-			maxValueNum < 100 ? (baseAmount * maxValueNum) / 100 : maxValueNum;
+			maxValueNum <= 100 ? (baseAmount * maxValueNum) / 100 : maxValueNum;
 
 		discount = Math.min(discount, maxAllowed);
 	}
@@ -1179,9 +1182,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			const valueNum = Number(voucher.value);
 			if (valueNum < 0) {
 				valueText = [-1, "Giá trị không hợp lệ"];
-			} else if (valueNum === 0) {
+			} else if (valueNum == 100) {
 				valueText = [0, "Miễn phí"];
-			} else if (valueNum <= 100) {
+			} else if (valueNum < 100) {
 				valueText = [1, `Giảm ${valueNum}%`];
 			} else {
 				valueText = [2, `Giảm ${valueNum.toLocaleString("vi-VN")}đ`];
@@ -1191,7 +1194,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			const valueNum = Number(voucher.value);
 			if (valueNum < 0) {
 				valueText = [-1, "Giá trị không hợp lệ"];
-			} else if (valueNum <= 100) {
+			} else if (valueNum == 100) {
+				valueText = [0, "Miễn phí"];
+			} else if (valueNum < 100) {
 				valueText = [1, `Giảm ${valueNum}%`];
 			} else {
 				valueText = [2, `Giảm ${valueNum.toLocaleString("vi-VN")}đ`];
@@ -1427,7 +1432,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	async function fetchVouchers() {
 		try {
-
 			const response = await fetch("http://localhost:8080/get-voucher", {
 				method: "GET",
 				headers: { "Content-Type": "application/json" },
