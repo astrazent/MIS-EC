@@ -1870,3 +1870,59 @@
 2025-05-30 08:08:14,097 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
 2025-05-30 08:08:22,807 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
 2025-05-30 08:08:22,821 - werkzeug - INFO - 172.18.0.5 - - [30/May/2025 08:08:22] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-06-03 14:26:05,223 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.5:5002
+2025-06-03 14:26:05,226 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-03 14:26:05,229 - werkzeug - INFO -  * Restarting with stat
+2025-06-03 14:26:07,995 - werkzeug - WARNING -  * Debugger is active!
+2025-06-03 14:26:08,000 - werkzeug - INFO -  * Debugger PIN: 168-966-652
+2025-06-04 04:07:07,302 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.3:5002
+2025-06-04 04:07:07,303 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 04:07:07,305 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 04:07:08,736 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 04:07:08,740 - werkzeug - INFO -  * Debugger PIN: 125-314-181
+2025-06-04 10:25:58,524 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.3:5002
+2025-06-04 10:25:58,525 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 10:25:58,528 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 10:26:00,145 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 10:26:00,149 - werkzeug - INFO -  * Debugger PIN: 810-860-482
+2025-06-04 16:07:31,641 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-04 16:07:31,642 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 16:07:31,644 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 16:07:35,094 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 16:07:35,159 - werkzeug - INFO -  * Debugger PIN: 132-398-461
+2025-06-04 16:23:21,094 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-04 16:23:21,095 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 16:23:21,097 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 16:23:23,034 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 16:23:23,119 - werkzeug - INFO -  * Debugger PIN: 970-933-208
+2025-06-04 16:29:38,142 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-04 16:29:38,143 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 16:29:38,145 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 16:29:39,753 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 16:29:39,757 - werkzeug - INFO -  * Debugger PIN: 375-342-896
+2025-06-04 16:43:38,996 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.3:5002
+2025-06-04 16:43:38,997 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-04 16:43:39,003 - werkzeug - INFO -  * Restarting with stat
+2025-06-04 16:43:40,211 - werkzeug - WARNING -  * Debugger is active!
+2025-06-04 16:43:40,213 - werkzeug - INFO -  * Debugger PIN: 105-968-881

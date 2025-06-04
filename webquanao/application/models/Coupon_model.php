@@ -38,4 +38,18 @@ class Coupon_model extends MY_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+	public function get_coupons_with_catalog($input = [])
+	{
+		$this->db->select('c.*, catalog.name as catalog_name');
+		$this->db->from($this->table . ' c');
+		$this->db->join('catalog', 'catalog.id = c.catalog_id', 'left');
+
+		if (isset($input['order']) && is_array($input['order'])) {
+            $this->db->order_by($input['order'][0], $input['order'][1]);
+        }
+
+		$query = $this->db->get();
+		return $query->result();
+	}
 }

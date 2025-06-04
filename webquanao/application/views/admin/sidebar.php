@@ -13,6 +13,7 @@
 		<li><a href="<?php echo admin_url('user'); ?>"><svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"/></svg> Khách hàng</a></li>
 		<li><a href="<?php echo admin_url('admin'); ?>"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg> Nhân viên</a></li>
 		<li><a href="<?php echo admin_url('occasion'); ?>"><svg class="glyph stroked calendar "><use xlink:href="#stroked-calendar"/></svg> Sự kiện</a></li>
+		<li><a href="<?php echo admin_url('coupon'); ?>"><svg class="glyph stroked tag"><use xlink:href="#stroked-tag"/></svg> Mã giảm giá</a></li>
 		
 		<li role="presentation" class="divider"></li>
 		

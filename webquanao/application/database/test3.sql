@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `coupon` ( -- liên kết một nhiều với catalog
   `max_value` INT(11) DEFAULT NULL,
   `start_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `end_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `usage_limit` INT(11) NOT NULL DEFAULT 0,
+  `usage_limit` INT(11) DEFAULT NULL,
   `total_quantity` INT(11) DEFAULT NULL,
   `status` TINYINT(1) NOT NULL DEFAULT 0,
   `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
