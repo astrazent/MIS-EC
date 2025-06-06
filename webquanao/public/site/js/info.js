@@ -566,11 +566,11 @@ function editContent(button, id) {
 		}
 
 		var contentDiv = document.getElementById(id);
-		var currentText;
-		currentText = document
-			.getElementById("address")
-			.innerText.split(",")[0]
-			.trim();
+		var currentText = "";
+		const addressEl = document.getElementById("address");
+		if (addressEl.textContent.trim() != "(Trống)") {
+			currentText = addressEl.textContent.split(",")[0].trim();
+		}
 		history4 = document.getElementById("address").innerText.trim();
 		var inputField = document.createElement("input");
 		inputField.type = "text";

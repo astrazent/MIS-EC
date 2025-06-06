@@ -771,10 +771,16 @@ function calculateCartTotalByCatalog(cartList, catalogId) {
 	cartList.forEach((item) => {
 		const itemCatalogId =
 			item.catalog_id != null ? parseInt(item.catalog_id) : null;
+		const itemParentId =
+			item.parent_id != null ? parseInt(item.parent_id) : null;
 		const price = parseFloat(item.price || 0);
 		const qty = parseInt(item.qty || 1);
 
-		if (catalogId == null || itemCatalogId === parseInt(catalogId)) {
+		if (
+			catalogId == null ||
+			itemCatalogId == parseInt(catalogId) ||
+			itemParentId == parseInt(catalogId)
+		) {
 			total += price * qty;
 		}
 	});
@@ -996,9 +1002,6 @@ function removeVoucherCalc() {
 		return false;
 	}
 	let shippingFeeValue = 0;
-	console.log(
-		document.querySelector(".shipping-detail").style.display == "block"
-	);
 	if (
 		document.querySelector(".shipping-detail").style.display == "block" &&
 		document.querySelector(".fee").textContent != `Thông báo sau`
@@ -1495,7 +1498,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		// Tổng tiền các sản phẩm thoả mãn ngành hàng trong cart
 		const itemValid = calculateCartTotalByCatalog(cartData, voucher.catalog_id);
-		console.log(voucher.type);
 		if (voucher.type == 0) {
 			if (
 				document.querySelector(".shipping-detail").style.display != "block" ||
@@ -1664,7 +1666,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 
 			document.getElementById("giftcode").textContent = "- " + itemDiscount;
-			console.log(itemprice, shippingFeeValue, discountAmount, itemDiscount);
 			let totalBill =
 				Number(itemprice) +
 				Number(shippingFeeValue) -
