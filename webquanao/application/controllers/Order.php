@@ -32,7 +32,6 @@ class Order extends MY_Controller
 		if (!isset($user)) {
 			redirect(base_url('/dang-nhap'));
 		}
-		// $carts = $this->cart_model->get_list(['where' => ['user_id' => $user->id]]);
 		$carts = $this->cart_model->get_cart_with_catalog_id(['cart.user_id' => $user->id]);
 		if (empty($carts)) {
 			redirect(base_url('/'));

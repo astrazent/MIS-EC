@@ -125,9 +125,10 @@ class Cart_model extends MY_Model
 
     public function get_cart_with_catalog_id($where = array())
     {
-        $this->db->select('cart.*, product.catalog_id');
+        $this->db->select('cart.*, product.catalog_id, catalog.parent_id');
         $this->db->from('cart');
         $this->db->join('product', 'product.id = cart.product_id', 'left');
+        $this->db->join('catalog', 'catalog.id = product.catalog_id', 'left'); // JOIN thêm bảng catalog
 
         if (!empty($where)) {
             $this->db->where($where);
