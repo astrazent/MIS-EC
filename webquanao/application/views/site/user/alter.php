@@ -10,6 +10,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer>
     </script>
 
+
     <style>
         .g-recaptcha>div:first-child {
             margin: 10px auto 20px auto;
