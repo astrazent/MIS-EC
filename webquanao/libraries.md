@@ -50,6 +50,13 @@
 - **Nguồn**: https://github.com/googleapis/google-api-php-client.git
 - **Cài đặt**: Qua composer
 
+- **google-analytics-data**
+- **Phiên bản**: 0.9.0
+- **Mô tả**: Thư viện hỗ trợ phân tích và thống kê lưu lượng truy cập bằng google.
+- **Vị trí**: `../../vendor`
+- **Nguồn**: không có
+- **Cài đặt**: Qua composer
+- **Lệnh**: `composer require google/analytics-data:^0.9.0 --with-all-dependencies`
 
 
 

@@ -1,9 +1,9 @@
 # Sử dụng image HTTPD chính thức
 FROM php:7.3-apache
 
-# Cài đặt các thư viện cần thiết
+# Cài đặt các thư viện cần thiết và extension PHP (mysqli, pdo, pdo_mysql, bcmath)
 RUN apt-get update && apt-get install -y \
-    && docker-php-ext-install mysqli pdo pdo_mysql
+    && docker-php-ext-install mysqli pdo pdo_mysql bcmath
 
 # Kích hoạt mod_rewrite cho Apache
 RUN a2enmod rewrite
@@ -24,9 +24,6 @@ RUN mkdir -p /var/www/html/sessions && \
 RUN mkdir -p /usr/local/apache2/htdocs/upload && \
     chown -R www-data:www-data /usr/local/apache2/htdocs/upload && \
     chmod -R 755 /usr/local/apache2/htdocs/upload
-
-# Cấu hình PHP để sử dụng thư mục session tùy chỉnh
-# RUN echo "session.save_path = \"/var/www/html/sessions\"" > /usr/local/etc/php/conf.d/session.ini
 
 # Khởi động Apache
 CMD ["apache2-foreground"]

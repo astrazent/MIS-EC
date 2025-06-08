@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "local-incline-462201-f2",
+  "private_key_id": "f6e24ab818f07fc354afcbb82a360360ed116ed8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCjeRbCfZigsRQ/\nwDdw1ppgYI3x+rgleMYDgKKsnqSm3IIoFSBetWFwppqC89pptQycLMmkQpDrLQOA\nQA6dt2cpYowDWdk4vL+pswSPRfy/taKy9FaRb7xLagsXGoQ+IPTr2ivX5rokVl8a\nZKnuMeySRR9BmdA29xgscf2WleFt7x5900AHdyOo0kXCXTkajLgsS2xwKAm1yKsK\nYavMiYs6BF2AH0gYeYstaMqt/UjrYhPBqKXjhyI8tvTP0nj2Z0+25bdwUuwj21ru\nc8NVSy2dUub0uJkdPvbuIMKq8x0YUbn6UFt6ZzYAfRNwRVHdGU8mUjX3JbOdMh+k\nBFUcl90lAgMBAAECggEABvgFW4gy0VLgi/ExS9r83MlGSSpeNEwS65j4a7HIT3a3\nXmcRfggZyHgfE8sPz2bQ9qLFe9OnTZHvLsX2+YvqgW36jbVZrcdaHQK32eBqwcTH\n/qdXk2lMgSMwUtf7YDypGZmE5KDTjvNW/Y83W/ipNE5vDS218x892r3cniad5BZL\n6MR/ELJQHJn78bO9ejsWdGicBC9BwPVrXPImJ4na+41JeaFsdBSO2xkGf6Ev/xVT\nzNlyJf0V2CerP5WY08kmk2peGiuAjK5p5/rz+CzM9Utmk1m7HL2RANvIzah69XhU\nWDn72Etr0gNefAqXE1m619G751IR/isCjTGuPTE6AQKBgQDNyOuvjYdoVd4UhD86\nIUYQRDrEwDIajCN3fvf1RztTgRkuqV1sVzM9z1lg1WSCWKD/LOQZMdJIBoklRrTz\nzhRpNcSIkNKNaNDxNfr82QBGoVYRX0zmFlIfXAN3+D5u/4/kOMCiO2NaezDL/vEp\nYzkBA4vc9qln38dhU3ZNr3IcJQKBgQDLXQJV8+CJ5bTXTj4UqYlMy7MXjm3x8/MG\n8r2HwbwgWY11N/SwuAi/au4NGhhvj4hjG4DCMnDkqoCjXKCujf1gSlb/wZ7RKQAg\niGyvSpLZuEFTHAsf01IlzKe3FjiOVggOXP9eYmfkXnmi5eQZRVgQS82JFmsKZqCh\n680bfWJtAQKBgGPnnIyhEFEWBvg88Bk/mC1DgqiMioaa7IkSCj15NJMoxNoDfYig\nmQ70AHdjgiVJ8/eOirq0lltDWQfQ2P7YWM5vPRfz/1SJw46nX0+r5ldj8k4Cz2mR\nApOY71IqId1vkyMAbn0UifqefiU7g0dNlZopZ5iB4+K7IKfehjvW5nZFAoGAMoU7\npFC+smM/ZtGIOKfZdRuRtUNr6tS4xjwde5FUhBDbRIiPICvH+I2+78BQ274jmsNl\nXFkdlKEK7gp/3H1nubkeHdFi/AEch/h8T5vOGYpdqCDqXpCn8r4B2EkL6chTngXa\nZv85YhFaVG6aGPESLJI4UFsiYmYWd8NVpAOlJQECgYEAixKVsePQWDJUcPS5RPMz\nSoV31xsZ99C6J2myhJKcrzX2OIETnwnO62p38cYLh0ONBE3ZSv8qUdvb0De8g+zb\nW6Xzq2QKRaGVPw/dU3kTHOMc+b1XbXivPKfl7953c1Df2/EKojT58+wVpwi2pURd\ne7rORL0d/DYhzzMA+afYXGg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ngoclanshop@local-incline-462201-f2.iam.gserviceaccount.com",
+  "client_id": "112951830902328595351",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ngoclanshop%40local-incline-462201-f2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,19 +1,15 @@
-<?php
-require_once 'vendor/autoload.php';
+<h3>📊 Thống kê 7 ngày qua:</h3>
+<ul>
+    <li>Người dùng đang hoạt động: <?= $data['activeUsers'] ?? 'N/A' ?></li>
+    <li>Người dùng mới: <?= $data['newUsers'] ?? 'N/A' ?></li>
+    <li>Số phiên truy cập: <?= $data['sessions'] ?? 'N/A' ?></li>
+    <li>Phiên có tương tác: <?= $data['engagedSessions'] ?? 'N/A' ?></li>
+    <li>Tỷ lệ thoát: <?= isset($data['bounceRate']) ? number_format($data['bounceRate'], 2) . '%' : 'N/A' ?></li>
+    <li>Thời lượng trung bình mỗi phiên: <?= isset($data['averageSessionDuration']) ? round($data['averageSessionDuration'], 2) . 's' : 'N/A' ?></li>
+</ul>
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-$client = new Google_Client();
-$client->setClientId(getenv('CLIENT_ID'));
-$client->setClientSecret(getenv('CLIENT_SECRET'));
-$client->setRedirectUri('http://localhost:8080/');
-$client->addScope("email");
-$client->addScope("profile");
-$client->setPrompt('select_account consent'); // <- Dòng này quan trọng để buộc hiện lại yêu cầu đăng nhập
-
-// Tạo URL để người dùng đăng nhập Google
-$login_url = $client->createAuthUrl();
-
-echo "<a href='$login_url'>Login with Google</a>";
+<h3>📅 Tổng người dùng trong tháng <?= date('m/Y') ?>:</h3>
+<ul>
+    <li>Tổng người dùng: <?= $dataMonth['totalUsers'] ?? 'N/A' ?></li>
+    <li>Người dùng mới: <?= $dataMonth['newUsers'] ?? 'N/A' ?></li>
+</ul>
