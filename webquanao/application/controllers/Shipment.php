@@ -18,7 +18,7 @@ class Shipment extends MY_Controller
         $status_filter = $this->input->get('status');
         
         // If status is not provided or invalid, set default to 'all'
-        if ($status_filter === null || !in_array($status_filter, ['0', '1', '2', '3'])) {
+        if ($status_filter === null || !in_array($status_filter, ['0', '1', '2', '3', '4'])) {
             $status_filter = 'all';
         }
 
@@ -116,7 +116,7 @@ class Shipment extends MY_Controller
             }
             
             // Make sure all statuses have a count
-            for($i = 0; $i <= 3; $i++) {
+            for($i = 0; $i <= 4; $i++) {
                 if(!isset($status_counts[$i])) {
                     $status_counts[$i] = 0;
                 }
