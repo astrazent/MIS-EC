@@ -373,12 +373,14 @@
 
 			</div>
 
-			<button class="w-full text-white text-3xl font-medium py-3 rounded-lg transition duration-300"
-				style="background-color: rgb(61, 177, 212);" id="submitBtn"
-				onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
-				onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
-				Hoàn tất đơn hàng
+			<button type="button" id="submitBtn"
+				class="w-full bg-white text-black border border-black 
+		hover:bg-black hover:text-white 
+		font-medium uppercase tracking-wide py-3 px-6 transition-all duration-300 ease-in-out 
+		rounded mt-4 text-lg">
+				<i class="fas fa-check-circle me-2"></i>Hoàn tất đơn hàng
 			</button>
+
 		</div>
 	</div>
 </div>

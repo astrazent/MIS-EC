@@ -51,6 +51,14 @@
                         <?php endif; ?>
                     </a>
                 </li>
+				<li role="presentation" class="<?php echo ($status_filter == '4') ? 'active' : ''; ?>">
+					<a href="<?php echo base_url('shipment?status=4'); ?>">
+						<i class="glyphicon glyphicon-remove"></i> Đã hủy
+						<?php if(isset($status_counts[4]) && $status_counts[4] > 0): ?>
+							<span class="badge badge-danger"><?php echo $status_counts[4]; ?></span>
+						<?php endif; ?>
+					</a>
+				</li>
             </ul>
         </div>
         
@@ -114,7 +122,9 @@
                                         echo "<span class='label label-info'>Đang vận chuyển</span>";
                                     } else if ($order->status == 3) {
                                         echo "<span class='label label-success'>Hoàn thành</span>";
-                                    }
+                                    } else if ($order->status == 4) {
+										echo "<span class='label label-danger'>Đã hủy</span>";
+									}
                                     ?>
                                 </td>
                                 <td>
@@ -166,7 +176,10 @@
                         } else if ($status_filter == '3') {
                             $icon_class = 'glyphicon-check';
                             $status_text = 'hoàn thành';
-                        }
+                        } else if ($status_filter == '4') {
+							$icon_class = 'glyphicon-remove';
+							$status_text = 'đã hủy';
+						}
                         ?>
                         <i class="glyphicon <?php echo $icon_class; ?>"></i>
                     </div>
@@ -636,16 +649,26 @@
     }
     
     .status-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-x: auto;
         margin: 15px 15px 0;
     }
     
     .status-tabs .nav-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
         border-bottom: 2px solid #ddd;
     }
     
     .status-tabs .nav-tabs>li {
+		flex: 1;
+    	text-align: center;
         margin-bottom: -2px;
-    }
+		margin-left: -3px;
+		margin-right: -3px;
+	}
     
     .status-tabs .nav-tabs>li>a {
         font-weight: 500;
@@ -653,6 +676,9 @@
         padding: 10px 15px;
         border-radius: 4px 4px 0 0;
         transition: all 0.3s ease;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
     }
     
     .status-tabs .nav-tabs>li>a:hover {
@@ -699,9 +725,12 @@
         background-color: #5cb85c;
     }
     
+	.badge-danger {
+		background-color: #d9534f;
+	}
+
     .nav-tabs>li.active>a .badge {
-        background-color: #fff;
-        color: #337ab7;
+        color: #fff;
         font-weight: bold;
     }
     
@@ -886,7 +915,7 @@
     
     .action-buttons {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 5px;
         justify-content: flex-start;
         align-items: center;

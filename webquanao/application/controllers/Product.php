@@ -8,7 +8,7 @@ class Product extends MY_Controller {
 		$this->load->model('product_model');
 		$this->load->model('catalog_model');
 		$this->load->model('comment_model');
- 		$this->load->model('user_model');
+		$this->load->model('user_model');
 		$this->load->model('discount_model');
 		$this->load->model('order_model');
 	}

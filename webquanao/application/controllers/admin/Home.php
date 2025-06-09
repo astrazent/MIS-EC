@@ -132,7 +132,7 @@ class Home extends MY_Controller
 
 		//Thêm chức năng thống kê lưu lượng truy cập
 		$KEY_FILE_PATH = APPPATH . 'third_party/ga4-key.json'; 
-		$property_id = getenv('GA4_PROPERTY'); 
+		$property_id = '492315679'; 
 
 		$client = new BetaAnalyticsDataClient([
 			'credentials' => $KEY_FILE_PATH

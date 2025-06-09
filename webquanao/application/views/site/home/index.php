@@ -51,7 +51,7 @@ $product_categories = [
                                 <?php } ?>
                                 <p>
                                     <span class="glyphicon glyphicon-eye-open"></span> <?php echo $value->view; ?>
-                                    <span class="glyphicon glyphicon-star-empty"></span> <?php echo $value->buyed; ?>
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> <?php echo $value->buyed; ?>
                                 </p>
                                 <a href="<?php echo base_url('cart/add/'.$value->id); ?>">
                                     <button class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"></span> Thêm giỏ hàng</button>

@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 8px; height: 110px">
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 clearpadding">
         <a href="<?php echo base_url(); ?>">
-            <img src="<?php echo base_url(); ?>upload/logo.png" alt="Logo" class="img-responsive">
+            <img src="<?php echo base_url(); ?>upload/logo.png" alt="Logo" class="img-responsive" style="height: 100px;">
         </a>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearpadding text-center search-container">
@@ -30,14 +30,8 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 clearpadding banner-container">
-        <a href="#">
-            <img style="max-height: 110px; width: 100%" src="<?php echo base_url(); ?>upload/banner.jpg" alt="Banner" class="img-responsive">
-        </a>
-    </div>
 </div>
 <div class="row">
-    <nav class="navbar navbar-info re-navbar">
 
         <script src="https://messenger.svc.chative.io/static/v1.0/channels/s7c2f6627-df19-44a5-ad33-10205f74d146/messenger.js?mode=livechat" defer="defer"></script>
 
@@ -138,5 +132,4 @@
                 });
             }
         </script>
-    </nav>
 </div>
