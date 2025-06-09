@@ -1,8 +1,6 @@
 .zoomPad{
 	position:relative;
-
 	float:left;
-  
 	z-index:99;
 	cursor:crosshair;
 }
@@ -29,8 +27,8 @@
    position:absolute;
    top:0px;
    left:0px;
-    * width:100px;
-    * height:49px;
+   width:100px;
+   height:49px;
 }
 
 
@@ -115,23 +113,3 @@
   position:absolute;
   display:block;
 }
-
-ul#thumblist{display:block;}
-ul#thumblist li{float:left;margin-right:2px;list-style:none;}
-ul#thumblist li a{display:block;border:1px solid #CCC;}
-ul#thumblist li a.zoomThumbActive{
-    border:1px solid red;
-}
-ul#thumblist li a img
-{
-	width:50px;height:50px;
-}
-.jqzoom{
-
-	text-decoration:none;
-	/*float:left;*/
-}
-/*********************************************************
-/ When clicking on thumbs jqzoom will add the class
-/ "zoomThumbActive" on the anchor selected
-/*********************************************************/

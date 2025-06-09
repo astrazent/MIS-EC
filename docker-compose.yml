@@ -1,18 +1,18 @@
 services:
     mariadb:
-        image: mariadb:latest
-        container_name: mariadb_container
-        restart: always
-        environment:
+      image: mariadb:latest
+      container_name: mariadb_container
+      restart: always
+      environment:
         - MYSQL_ROOT_PASSWORD=123456
         - MYSQL_DATABASE=webquanao
-    ports:
+      ports:
         - "3307:3306"
-    volumes:
+      volumes:
         - mariadb_data:/var/lib/mysql
-    expose:
+      expose:
         - "3306" # Chỉ sử dụng trong nội bộ Docker
-    healthcheck:
+      healthcheck:
         test: ["CMD", "mysqladmin", "-uroot", "-p123456", "ping", "-h", "localhost"]
         interval: 10s
         retries: 5
@@ -61,4 +61,4 @@ services:
 
 
 volumes:
-    mariadb_data:
+  mariadb_data:

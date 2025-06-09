@@ -2,188 +2,141 @@
 <html lang="en">
 
 <head>
+	<!-- ÁP DỤNG <head> TỪ FILE 1: Sử dụng Bootstrap 5 và các script/style cần thiết -->
 	<?php $this->load->view('site/head', $this->data); ?>
-	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-	<!-- tích hợp reCAPTCHA -->
-	<script src="https://www.google.com/recaptcha/api.js" async defer>
-	</script>
-
-	<style>
-		.g-recaptcha>div:first-child {
-			margin: 10px auto 20px auto;
-		}
-
-		.g-recaptcha {
-			transform: scale(0.75);
-			/* thu nhỏ 85% */
-		}
-
-		.my-custom-button {
-			background-color: #31B0D5 !important;
-			/* Màu cam đỏ */
-			color: white !important;
-			/* Chữ màu trắng */
-			border-radius: 5px !important;
-			/* Bo góc */
-			padding: 10px 20px !important;
-			font-size: 16px !important;
-		}
-
-		.swal2-timer-progress-bar {
-			height: 6px;
-			/* Chiều cao của thanh tiến trình */
-			background-color: #007bff;
-			/* Màu sắc của thanh tiến trình */
-			border-radius: 3px;
-			/* Bo tròn góc thanh tiến trình */
-			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-			/* Thêm bóng cho thanh tiến trình */
-		}
-
-		.custom-toast {
-			width: 90% !important;
-			max-width: none !important;
-			font-size: 1.1rem !important;
-			padding: 1rem 1.5rem !important;
-			left: 50% !important;
-			transform: translateX(-50%) !important;
-		}
-
-		.swal2-success-toast {
-			background-color: #d4edda !important;
-			color: #155724 !important;
-			border: 1px solid #c3e6cb;
-		}
-
-		.swal2-error-toast {
-			background-color: #f8d7da !important;
-			color: #721c24 !important;
-			border: 1px solid #f5c6cb;
-		}
-
-		/* Loại bỏ conflict tailwind */
-		.collapse {
-			visibility: unset !important;
-		}
-
-		a {
-			color: #337ab7 !important;
-			text-decoration: none !important;
-		}
-
-		a:hover {
-			text-decoration: none !important;
-		}
-
-		.navbar-info .navbar-nav>.active>a,
-		.navbar-info .navbar-nav>.active>a:hover,
-		.navbar-info .navbar-nav>.active>a:focus {
-			color: #fff !important;
-			background-color: #4c66a4 !important;
-		}
-
-		.navbar-info .navbar-nav>li>a:hover,
-		.navbar-info .navbar-nav>li>a:focus {
-			color: #fff !important;
-			background-color: #337ab7 !important;
-			border-top-left-radius: 4px !important;
-			border-top-right-radius: 4px !important;
-		}
-
-		a.product_title:hover {
-			color: #337ab7 !important;
-		}
-
-		.dropdown-menu>li>a {
-			color: #333 !important;
-		}
-
-		@media (min-width: 1200px) {
-			.container {
-				width: 1170px !important;
-			}
-		}
-
-		/* custom cho đăng ký | đổi mật khẩu */
-		a:hover,
-		a:focus {
-			color: #23527c !important;
-			text-decoration: underline !important;
-		}
-
-		.text-blue-600 a {
-			--tw-text-opacity: 1 !important;
-			color: rgb(37 99 235 / var(--tw-text-opacity, 1)) !important;
-		}
-
-
-		/* Loại bỏ conflict tailwind */
-	</style>
-	<!-- tích hợp reCAPTCHA -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script> <!-- Giả sử cần axios cho forgot.js -->
+	<!-- reCAPTCHA integration -->
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Thêm Font Awesome để hiển thị icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body>
-	<div class="container">
-		<?php $this->load->view('site/header', $this->data); ?>
+	<!-- ÁP DỤNG CẤU TRÚC BODY TỪ FILE 1 -->
 
-		<div class="col-12 clearpaddingr">
-			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url(); ?>#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
-				<li class="active">Quên mật khẩu</li>
-			</ol>
-			<div class="flex flex-col items-center">
-				<div class="mb-10 mt-[70px]">
-					<label class="block text-gray-700 mb-4 text-2xl" for="email">Email</label>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						class="w-[400px] p-3 border border-gray-300 rounded text-lg"
-						<?php if (isset($auto_fill) && $auto_fill !== ''): ?>
-						value="<?= htmlspecialchars($auto_fill, ENT_QUOTES, 'UTF-8') ?>" readonly
-						<?php endif; ?>>
-				</div>
-				<form>
-					<div class="mb-10">
-						<label class="block text-gray-700 mb-4 text-2xl" for="password">Mật khẩu mới</label>
-						<input type="password" id="password" name="password"
-							class="w-[400px] p-3 border border-gray-300 rounded text-lg">
-					</div>
-					<div class="mb-10">
-						<label class="block text-gray-700 mb-4 text-2xl" for="password">Nhập lại mật khẩu mới</label>
-						<input type="password" id="repassword" name="repassword"
-							class="w-[400px] p-3 border border-gray-300 rounded text-lg">
-					</div>
-				</form>
-				<div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
-
-				<button id="submitBtn"
-					class="w-[400px] text-white text-2xl font-semibold py-3 rounded-lg transition mb-10 duration-300"
-					style="background-color: rgb(61, 177, 212);"
-					onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
-					onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
-					Đổi mật khẩu
-				</button>
-
-				<?php if (!isset($auto_fill)): ?>
-					<div class="text-center text-2xl text-blue-600 space-x-4 mb-[100px]">
-						<a href="/dang-ky" class="hover:underline">Đăng ký</a>
-						<span>|</span>
-						<a href="/dang-nhap" class="hover:underline">Đăng nhập</a>
-					</div>
-				<?php else: ?>
-					<div class="text-center text-2xl text-green-600 space-x-4 mb-[75px]">
-					</div>
-				<?php endif; ?>
+	<!-- Announcement Bar (Tùy chọn) -->
+	<div class="announcement-bar">
+		<div class="container">
+			<div class="announcement-content">
+				<p>Free shipping on all orders over 500.000 VNĐ</p>
 			</div>
 		</div>
-		<div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
-		<?php $this->load->view('site/footer', $this->data); ?>
 	</div>
+	
+	<!-- Header -->
+	<?php $this->load->view('site/header', $this->data); ?>
+
+	<!-- Main Content -->
+	<div class="container py-4">
+		<!-- Breadcrumb -->
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Quên mật khẩu</li>
+			</ol>
+		</nav>
+
+		<!-- Forgot Password Form Section -->
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card login-card">
+					<div class="card-header">
+						<h3 class="card-title">Đặt lại mật khẩu</h3>
+					</div>
+					<div class="card-body">
+						<!-- FORM GIỮ NGUYÊN LOGIC -->
+						<form id="forgotPasswordForm" class="needs-validation" novalidate>
+							<div class="row justify-content-center">
+								<!-- Email -->
+								<div class="col-md-8 mb-4">
+									<label for="email" class="form-label">Email</label>
+									<div class="input-group">
+										<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+										<!-- ID, name, và logic PHP cho auto_fill được giữ nguyên -->
+										<input type="email" class="form-control" id="email" name="email" required
+											<?php if (isset($auto_fill) && $auto_fill !== ''): ?>
+												value="<?= htmlspecialchars($auto_fill, ENT_QUOTES, 'UTF-8') ?>" readonly
+											<?php else: ?>
+												placeholder="Nhập email đã đăng ký"
+											<?php endif; ?>>
+									</div>
+									<div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+								</div>
+							</div>
+							
+							<!-- Mật khẩu mới -->
+							<div class="row justify-content-center">
+								<div class="col-md-8 mb-4">
+									<label for="password" class="form-label">Mật khẩu mới</label>
+									<div class="input-group">
+										<span class="input-group-text"><i class="fas fa-lock"></i></span>
+										<!-- ID và name được giữ nguyên -->
+										<input type="password" class="form-control" id="password" name="password" required>
+									</div>
+									<div class="invalid-feedback">Vui lòng nhập mật khẩu mới.</div>
+								</div>
+							</div>
+							
+							<!-- Nhập lại mật khẩu mới -->
+							<div class="row justify-content-center">
+								<div class="col-md-8 mb-4">
+									<label for="repassword" class="form-label">Nhập lại mật khẩu mới</label>
+									<div class="input-group">
+										<span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+										<!-- ID và name được giữ nguyên -->
+										<input type="password" class="form-control" id="repassword" name="repassword" required>
+									</div>
+									<div class="invalid-feedback">Vui lòng xác nhận mật khẩu.</div>
+								</div>
+							</div>
+
+							<!-- reCAPTCHA (giữ nguyên) -->
+							<div class="mb-4 d-flex justify-content-center">
+								<div class="g-recaptcha" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
+							</div>
+							
+							<!-- Nút Đổi mật khẩu (giữ nguyên id="submitBtn") -->
+							<div class="d-grid gap-2 col-md-8 mx-auto">
+								<button type="button" id="submitBtn" class="btn btn-primary btn-lg">
+									<i class="fas fa-key me-2"></i> Đổi mật khẩu
+								</button>
+							</div>
+							
+							<!-- Các link điều hướng (giữ nguyên logic PHP) -->
+							<div class="text-center mt-4">
+								<?php if (!isset($auto_fill)): ?>
+								<div class="row justify-content-center">
+									<div class="col-md-8 d-flex justify-content-between">
+										<p><a href="<?php echo base_url('dang-ky'); ?>" class="fw-bold">Đăng ký</a></p>
+										<p><a href="<?php echo base_url('dang-nhap'); ?>" class="fw-bold">Đăng nhập</a></p>
+									</div>
+								</div>
+								<?php endif; ?>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Thẻ hiddenData (giữ nguyên) -->
+	<div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
+
+	<!-- Footer -->
+	<?php $this->load->view('site/footer', $this->data); ?>
+
+	<!-- Back to Top Button -->
+	<a href="#" class="back-to-top">
+		<i class="fas fa-chevron-up"></i>
+	</a>
+
+	<!-- SCRIPT -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="<?php echo base_url(); ?>public/site/js/modern-script.js"></script>
+	<!-- GIỮ LẠI SCRIPT forgot.js vì nó chứa logic cho form này -->
 	<script src="<?php echo public_url('site/'); ?>js/forgot.js"></script>
-	<script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
