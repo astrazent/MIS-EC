@@ -18,10 +18,6 @@
 						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 re-padding">
 							<div class="product_item">
 								<p class="product_name"><a href="<?php echo base_url($name . '-p' . $value->id); ?>"><?php echo $value->name; ?></a></p>
-								<!-- Nếu có thuộc tính similarity thì in ra -->
-								<?php if (isset($value->similarity)) { ?>
-									<p class="product-similarity">Tìm kiếm gần giống: <?php echo number_format($value->similarity, 2); ?>%</p>
-								<?php } ?>
 								
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>
