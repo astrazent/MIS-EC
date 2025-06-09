@@ -1,27 +1,34 @@
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
-    <div class="panel panel-info" style="margin-bottom: 15px">
-        <div class="panel-heading">
-            <h3 class="panel-title">Danh sách đơn hàng</h3>
+<div class="shipment-container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Đơn hàng của tôi</li>
+        </ol>
+    </nav>
+    
+    <div class="section-title">
+        <h2>Đơn hàng của tôi</h2>
         </div>
         
         <!-- Status Tabs Navigation -->
-        <div class="status-tabs">
+    <div class="order-status-tabs">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="<?php echo ($status_filter == 'all') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('shipment'); ?>">
-                        <i class="glyphicon glyphicon-list"></i> Tất cả
+                    <i class="fas fa-list"></i> Tất cả
                         <?php if(isset($total_orders) && $total_orders > 0): ?>
-                            <span class="badge badge-all"><?php echo $total_orders; ?></span>
+                        <span class="badge"><?php echo $total_orders; ?></span>
                         <?php endif; ?>
                     </a>
                 </li>
                 <li role="presentation" class="<?php echo ($status_filter == '0') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('shipment?status=0'); ?>">
-                        <i class="glyphicon glyphicon-time"></i> Chờ xác nhận
+                    <i class="fas fa-clock"></i> Chờ xác nhận
                         <?php if(isset($status_counts[0]) && $status_counts[0] > 0): ?>
                             <span class="badge badge-pending"><?php echo $status_counts[0]; ?></span>
                         <?php endif; ?>
@@ -29,7 +36,7 @@
                 </li>
                 <li role="presentation" class="<?php echo ($status_filter == '1') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('shipment?status=1'); ?>">
-                        <i class="glyphicon glyphicon-ok"></i> Đã xác nhận
+                    <i class="fas fa-check"></i> Đã xác nhận
                         <?php if(isset($status_counts[1]) && $status_counts[1] > 0): ?>
                             <span class="badge badge-confirmed"><?php echo $status_counts[1]; ?></span>
                         <?php endif; ?>
@@ -37,7 +44,7 @@
                 </li>
                 <li role="presentation" class="<?php echo ($status_filter == '2') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('shipment?status=2'); ?>">
-                        <i class="glyphicon glyphicon-send"></i> Đang vận chuyển
+                    <i class="fas fa-shipping-fast"></i> Đang vận chuyển
                         <?php if(isset($status_counts[2]) && $status_counts[2] > 0): ?>
                             <span class="badge badge-shipping"><?php echo $status_counts[2]; ?></span>
                         <?php endif; ?>
@@ -45,7 +52,7 @@
                 </li>
                 <li role="presentation" class="<?php echo ($status_filter == '3') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('shipment?status=3'); ?>">
-                        <i class="glyphicon glyphicon-check"></i> Hoàn thành
+                    <i class="fas fa-check-circle"></i> Hoàn thành
                         <?php if(isset($status_counts[3]) && $status_counts[3] > 0): ?>
                             <span class="badge badge-completed"><?php echo $status_counts[3]; ?></span>
                         <?php endif; ?>
@@ -62,9 +69,11 @@
             </ul>
         </div>
         
-        <div class="panel-body">
+    <!-- Orders List -->
+    <div class="orders-container">
             <?php if (!empty($orders)) { ?>
-                <table class="table table-hover">
+            <div class="table-responsive">
+                <table class="table order-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -85,66 +94,64 @@
                             <tr>
                                 <td>#<?php echo $order->transaction_id; ?></td>
                                 <td>
-                                    <div class="order-products">
+                                    <div class="order-product-info">
                                         <?php if(!empty($first_image)): ?>
+                                        <div class="order-product-image">
                                         <img src="<?php echo base_url('upload/product/' . $first_image); ?>" 
-                                            class="img-thumbnail" alt="Product Image" style="width: 50px; margin-right: 10px;">
+                                                alt="Product Image">
+                                        </div>
                                         <?php endif; ?>
-                                        <div>
+                                        <div class="order-product-details">
                                             <div class="product-names"><?php echo $order->product_names; ?></div>
                                             <div class="product-count">Số lượng: <?php echo $order->total_items; ?></div>
                                         </div>
                                     </div>
                                 </td>
-                                <td><?php echo number_format($order->total_amount); ?> VNĐ</td>
+                                <td class="order-price"><?php echo number_format($order->total_amount); ?> VNĐ</td>
                                 <td>
                                     <?php
                                     if ($order->payment == 'cash') {
-                                        echo "<span class='label label-info'>Tiền mặt khi nhận hàng</span>";
+                                        echo "<span class='payment-badge payment-cash'>Tiền mặt</span>";
                                     } else if ($order->payment == 'vnpay') {
-                                        echo "<span class='label label-success'>VNPAY</span>";
+                                        echo "<span class='payment-badge payment-vnpay'>VNPAY</span>";
                                     } else if ($order->payment == 'vietqr') {
-                                        echo "<span class='label label-primary'>Chuyển khoản</span>";
+                                        echo "<span class='payment-badge payment-transfer'>Chuyển khoản</span>";
                                     } else if ($order->payment == 'pos') {
-                                        echo "<span class='label label-warning'>Quẹt thẻ POS</span>";
+                                        echo "<span class='payment-badge payment-pos'>POS</span>";
                                     } else {
-                                        echo "<span class='label label-default'>Chưa xác định</span>";
+                                        echo "<span class='payment-badge'>Khác</span>";
                                     }
                                     ?>
                                 </td>
                                 <td>
                                     <?php
                                     if ($order->status == 0) {
-                                        echo "<span class='label label-warning'>Chờ xác nhận</span>";
+                                        echo "<span class='status-badge status-pending'>Chờ xác nhận</span>";
                                     } else if ($order->status == 1) {
-                                        echo "<span class='label label-primary'>Đã xác nhận</span>";
+                                        echo "<span class='status-badge status-confirmed'>Đã xác nhận</span>";
                                     } else if ($order->status == 2) {
-                                        echo "<span class='label label-info'>Đang vận chuyển</span>";
+                                        echo "<span class='status-badge status-shipping'>Đang vận chuyển</span>";
                                     } else if ($order->status == 3) {
-                                        echo "<span class='label label-success'>Hoàn thành</span>";
-                                    } else if ($order->status == 4) {
-										echo "<span class='label label-danger'>Đã hủy</span>";
-									}
+                                        echo "<span class='status-badge status-completed'>Hoàn thành</span>";
+                                    }
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    // Check if $order->created is numeric (timestamp)
+                                    // Format the date
                                     $timestamp = is_numeric($order->created) ? $order->created : strtotime($order->created);
-
-                                    // If valid timestamp, format it, otherwise display an error or default message
                                     echo ($timestamp !== false) ? date('d/m/Y H:i', $timestamp) : 'Invalid Date';
                                     ?>
                                 </td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn btn-xs btn-info view-order-details" data-id="<?php echo $order->transaction_id; ?>" data-status="<?php echo $order->status; ?>">
-                                            <i class="glyphicon glyphicon-eye-open"></i> Chi tiết
-                                        </a>
+                                    <div class="order-actions">
+                                        <button class="btn btn-outline-primary btn-sm view-order-details btn-text-xs" data-id="<?php echo $order->transaction_id; ?>">
+                                            <i class="fas fa-eye"></i> Chi tiết
+                                        </button>
                                         <?php if($order->status == 0): // Only show cancel button for pending orders ?>
-                                        <a href="#" class="btn btn-xs btn-danger cancel-order" data-id="<?php echo $order->transaction_id; ?>">
-                                            <i class="glyphicon glyphicon-remove"></i> Hủy
-                                        </a>
+                                        <button class="btn btn-outline-danger btn-sm cancel-order btn-text-xs" data-id="<?php echo $order->transaction_id; ?>">
+                                            <i class="fas fa-times"></i> Hủy
+                                        </button>
                                         <?php endif; ?>
                                     </div>
                                 </td>
@@ -152,149 +159,173 @@
                         <?php } ?>
                     </tbody>
                 </table>
+            </div>
                 
-                <div class="text-center">
+            <div class="pagination-wrapper">
                     <?php echo $pagination; ?>
                 </div>
                 
             <?php } else { ?>
-                <div class="empty-state text-center">
-                    <div class="empty-state-icon">
+            <div class="empty-orders">
+                <div class="empty-orders-icon">
                         <?php 
-                        $icon_class = 'glyphicon-shopping-cart';
+                    $icon_class = 'fa-shopping-cart';
                         $status_text = '';
                         
                         if ($status_filter == '0') {
-                            $icon_class = 'glyphicon-time';
+                        $icon_class = 'fa-clock';
                             $status_text = 'chờ xác nhận';
                         } else if ($status_filter == '1') {
-                            $icon_class = 'glyphicon-ok';
+                        $icon_class = 'fa-check';
                             $status_text = 'đã xác nhận';
                         } else if ($status_filter == '2') {
-                            $icon_class = 'glyphicon-send';
+                        $icon_class = 'fa-shipping-fast';
                             $status_text = 'đang vận chuyển';
                         } else if ($status_filter == '3') {
-                            $icon_class = 'glyphicon-check';
+                        $icon_class = 'fa-check-circle';
                             $status_text = 'hoàn thành';
                         } else if ($status_filter == '4') {
 							$icon_class = 'glyphicon-remove';
 							$status_text = 'đã hủy';
 						}
                         ?>
-                        <i class="glyphicon <?php echo $icon_class; ?>"></i>
+                    <i class="fas <?php echo $icon_class; ?>"></i>
                     </div>
-                    <h4 class="text-muted">Không có đơn hàng nào<?php echo ($status_filter != 'all') ? ' ' . $status_text : ''; ?>!</h4>
+                <h4>Không có đơn hàng nào<?php echo ($status_filter != 'all') ? ' ' . $status_text : ''; ?>!</h4>
                     <p>Bạn chưa có đơn hàng nào<?php echo ($status_filter != 'all') ? ' ' . $status_text : ''; ?>.</p>
                     <a href="<?php echo base_url(); ?>" class="btn btn-primary">Tiếp tục mua sắm</a>
                 </div>
             <?php } ?>
-
-            <!-- Add the recommended products section here -->
-            <div class="panel panel-info" style="margin-top: 20px;">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Có thể bạn cũng thích</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="recommended-products-container row">
+
+    <!-- Recommended Products Section -->
                         <?php if (isset($recommended_products) && !empty($recommended_products)) : ?>
+    <div class="recommended-products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Có thể bạn cũng thích</h2>
+                <a href="<?php echo base_url('moi'); ?>" class="view-all">Xem tất cả</a>
+            </div>
+            
+            <div class="row">
                             <?php foreach ($recommended_products as $product) : ?>
-                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                    <div class="recommended-product">
-                                        <a href="<?php echo $product['url']; ?>" class="product-image">
+                    <div class="col-6 col-md-3">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="<?php echo $product['url']; ?>">
                                             <img src="<?php echo base_url('upload/product/' . $product['image']); ?>" alt="<?php echo $product['name']; ?>">
                                         </a>
-                                        <h5><a href="<?php echo $product['url']; ?>"><?php echo $product['name']; ?></a></h5>
-                                        <p class="price">
+                                <div class="product-actions">
+                                    <button type="button" class="quick-view" data-id="<?php echo $product['id']; ?>">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button" class="add-to-wishlist">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                    <button type="button" class="add-to-cart" data-id="<?php echo $product['id']; ?>">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">
+                                    <a href="<?php echo $product['url']; ?>"><?php echo $product['name']; ?></a>
+                                </h3>
+                                <div class="product-price">
                                             <span class="current-price"><?php echo number_format($product['price']); ?> VNĐ</span>
                                             <?php if ($product['discount'] > 0) : ?>
-                                                <br><del class="original-price"><?php echo number_format($product['original_price']); ?> VNĐ</del>
+                                        <span class="old-price"><?php echo number_format($product['original_price']); ?> VNĐ</span>
                                             <?php endif; ?>
-                                        </p>
-                                        <a href="<?php echo base_url('cart/add/' . $product['id']); ?>" class="btn btn-primary btn-add-cart">
-                                            <i class="glyphicon glyphicon-shopping-cart"></i> Thêm vào giỏ
-                                        </a>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <div class="col-xs-12">
-                                <p class="text-center text-muted">Không có sản phẩm đề xuất.</p>
                             </div>
-                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailsModalLabel">Chi tiết đơn hàng #<span id="order-id"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="order-details-content">
+                    <div class="text-center"><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</div>
+                </div>
+                
+                <!-- These elements will be populated by JavaScript -->
+                <div id="order-details-container" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="order-info-card">
+                                <h5>Thông tin người nhận</h5>
+                                <ul class="order-info-list">
+                                    <li><span>Họ tên:</span> <span id="customer-name"></span></li>
+                                    <li><span>Email:</span> <span id="customer-email"></span></li>
+                                    <li><span>Điện thoại:</span> <span id="customer-phone"></span></li>
+                                    <li><span>Địa chỉ:</span> <span id="customer-address"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="order-info-card">
+                                <h5>Thông tin đơn hàng</h5>
+                                <ul class="order-info-list">
+                                    <li><span>Mã đơn hàng:</span> #<span id="order-number"></span></li>
+                                    <li><span>Ngày đặt:</span> <span id="order-date"></span></li>
+                                    <li><span>Trạng thái:</span> <span id="order-status"></span></li>
+                                    <li><span>Thanh toán:</span> <span id="order-payment"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-products-detail">
+                        <h5>Danh sách sản phẩm</h5>
+                        <div id="order-products" class="order-products-table"></div>
+                    </div>
+                    
+                    <div class="order-total">
+                        <h4>Tổng cộng: <span id="order-total"></span> VNĐ</h4>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Rating Modal -->
 <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h4>
-			</div>
-			<div class="modal-body">
-				<form id="ratingForm">
-					<input type="hidden" id="ratingOrderId" name="order_id">
-					<div class="form-group">
-						<label for="ratingStars">Chọn số sao:</label>
-						<div id="ratingStars" class="raty"></div>
-						<input type="hidden" id="ratingScore" name="score">
-					</div>
-					<div class="form-group">
-						<label for="ratingComment">Bình luận:</label>
-						<textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Bootstrap Modal for Order Details -->
-<div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="orderDetailsModalLabel">Chi tiết đơn hàng #<span id="order-id"></span></h4>
+                <h5 class="modal-title" id="ratingModalLabel">Đánh giá sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="order-details-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5><strong>Thông tin người nhận</strong></h5>
-                            <p><strong>Họ tên:</strong> <span id="customer-name"></span></p>
-                            <p><strong>Email:</strong> <span id="customer-email"></span></p>
-                            <p><strong>Điện thoại:</strong> <span id="customer-phone"></span></p>
-                            <p><strong>Địa chỉ:</strong> <span id="customer-address"></span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5><strong>Thông tin đơn hàng</strong></h5>
-                            <p><strong>Mã đơn hàng:</strong> #<span id="order-number"></span></p>
-                            <p><strong>Ngày đặt:</strong> <span id="order-date"></span></p>
-                            <p><strong>Trạng thái:</strong> <span id="order-status"></span></p>
-                            <p><strong>Thanh toán:</strong> <span id="order-payment"></span></p>
-                        </div>
+                <form id="ratingForm">
+                    <input type="hidden" id="ratingOrderId" name="order_id">
+                    <div class="mb-3">
+                        <label for="ratingStars" class="form-label">Chọn số sao:</label>
+                        <div id="ratingStars" class="raty"></div>
+                        <input type="hidden" id="ratingScore" name="score">
                     </div>
-                    
-                    <div class="order-products-list">
-                        <h5><strong>Danh sách sản phẩm</strong></h5>
-                        <div id="order-products"></div>
+                    <div class="mb-3">
+                        <label for="ratingComment" class="form-label">Bình luận:</label>
+                        <textarea class="form-control" id="ratingComment" name="comment" rows="3" required></textarea>
                     </div>
-                    
-                    <div class="order-total">
-                        <h4 class="text-right">Tổng cộng: <strong><span id="order-total"></span> VNĐ</strong></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
             </div>
         </div>
     </div>

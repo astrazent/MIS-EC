@@ -1312,11 +1312,11 @@ document.addEventListener("DOMContentLoaded", function () {
 								? ""
 								: `
 							<div class="voucher-text">
-								${valueText[1] ? `<p class="text-lg font-semibold">${valueText[1]}</p>` : ""}
-								${targetText[1] ? `<p class="text-sm text-gray-800">${targetText[1]}</p>` : ""}
+								${valueText[1] ? `<p class="text-sm font-semibold">${valueText[1]}</p>` : ""}
+								${targetText[1] ? `<p class="text-xs text-gray-800">${targetText[1]}</p>` : ""}
 								${
 									expiryText[1]
-										? `<p class="text-sm ${expiryClass}">HSD: ${expiryText[1]}</p>`
+										? `<p class="text-xs ${expiryClass}">HSD: ${expiryText[1]}</p>`
 										: ""
 								}
 							</div>

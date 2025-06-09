@@ -10,7 +10,6 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer>
     </script>
 
-
     <style>
         .g-recaptcha>div:first-child {
             margin: 10px auto 20px auto;
@@ -118,8 +117,8 @@
 
         <div class="col-12 clearpaddingr">
             <ol class="breadcrumb">
-                <li><a href="<?php echo base_url(); ?>#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
-                <li class="active">Đổi mật khẩu</li>
+                <li><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="active">Thông tin tài khoản</li>
             </ol>
 
             <div class="flex flex-col items-center">
