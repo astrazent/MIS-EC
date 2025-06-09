@@ -319,7 +319,7 @@ document
 									customClass: {
 										confirmButton: "my-custom-button",
 									},
-									confirmButtonText: "OK",
+									confirmButtonText: "Về trang chủ",
 									showConfirmButton: true,
 									timer: countdown * 1000,
 									timerProgressBar: true,
@@ -335,8 +335,10 @@ document
 									if (result.isConfirmed) {
 										// Chờ thêm 3 giây nữa sau khi popup đóng
 										setTimeout(() => {
-											window.location.href = "/dang-nhap";
+											window.location.href = "/";
 										}, 3000);
+									} else {
+										window.location.href = "/dang-nhap";
 									}
 								});
 							}

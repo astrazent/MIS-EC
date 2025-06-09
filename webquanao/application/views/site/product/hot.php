@@ -16,7 +16,7 @@
 						$name = strtolower($name);
 					?>
 						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 re-padding">
-							<div class="product_item">
+							<div class="product_card">
 								<p class="product_name"><a href="<?php echo base_url($name . '-p' . $value->id); ?>"><?php echo $value->name; ?></a></p>
 								<div class="product-image">
 									<a href="<?php echo base_url($name . '-p' . $value->id); ?>"><img src="<?php echo base_url(); ?>upload/product/<?php echo $value->image_link; ?>" alt="" class=""></a>

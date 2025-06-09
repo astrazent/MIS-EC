@@ -626,4 +626,222 @@ class Product extends MY_Controller {
 		]);
 		exit();
 	}
+		public function men()
+	{
+		// Lấy tất cả danh mục con của thời trang nam (parent_id = 7)
+		$input_cat = array();
+		$input_cat['where'] = array('parent_id' => 7);
+		$catalog_child = $this->catalog_model->get_list($input_cat);
+		
+		$input = array();
+		if (!empty($catalog_child)) {
+			$cat_list_id = array();
+			foreach ($catalog_child as $value) {
+				$cat_list_id[] = $value->id;
+			}
+			$input['where_in'] = array('catalog_id' => $cat_list_id);
+		} else {
+			// Nếu không có danh mục con, hiển thị thông báo không có sản phẩm
+			$this->data['product_list'] = array();
+			$this->data['total'] = 0;
+			$this->data['temp'] = 'site/product/new';
+			$this->load->view('site/layoutsub', $this->data);
+			return;
+		}
+		
+		$this->load->library('pagination');
+		$config = array();
+		$base_url = base_url('thoi-trang-nam-c7');
+		$total = $this->product_model->get_total($input);
+		$per = 8;
+		$uri = 3;
+		
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total;
+		$config['per_page'] = $per;
+		$config['uri_segment'] = $uri;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['first_link'] = '&laquo;';
+		$config['last_link'] = '&raquo;';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['next_link'] = '&gt;';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['prev_link'] = '&lt;';
+		$config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+		$config['cur_tag_close'] = '</span></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['num_links'] = 3;
+		$config['attributes'] = array('class' => 'page-link');
+		$this->pagination->initialize($config);
+		
+		$segment = $this->uri->segment(3);
+		$segment = intval($segment);
+		
+		if ($segment > 0) {
+			$segment = ($segment - 1) * $config['per_page'];
+		}
+		
+		$input['limit'] = array($config['per_page'], $segment);
+		$product_list = $this->product_model->get_products_with_discount($input);
+		
+		$this->data['product_list'] = $product_list;
+		$this->data['total'] = $total;
+		$this->data['temp'] = 'site/product/new';
+		$this->load->view('site/layoutsub', $this->data);
+	}
+	
+	public function women()
+	{
+		// Lấy tất cả danh mục con của thời trang nữ (parent_id = 8)
+		$input_cat = array();
+		$input_cat['where'] = array('parent_id' => 8);
+		$catalog_child = $this->catalog_model->get_list($input_cat);
+		
+		$input = array();
+		if (!empty($catalog_child)) {
+			$cat_list_id = array();
+			foreach ($catalog_child as $value) {
+				$cat_list_id[] = $value->id;
+			}
+			$input['where_in'] = array('catalog_id' => $cat_list_id);
+		} else {
+			// Nếu không có danh mục con, hiển thị thông báo không có sản phẩm
+			$this->data['product_list'] = array();
+			$this->data['total'] = 0;
+			$this->data['temp'] = 'site/product/new';
+			$this->load->view('site/layoutsub', $this->data);
+			return;
+		}
+		
+		$this->load->library('pagination');
+		$config = array();
+		$base_url = base_url('thoi-trang-nu-c8');
+		$total = $this->product_model->get_total($input);
+		$per = 8;
+		$uri = 3;
+		
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total;
+		$config['per_page'] = $per;
+		$config['uri_segment'] = $uri;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['first_link'] = '&laquo;';
+		$config['last_link'] = '&raquo;';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['next_link'] = '&gt;';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['prev_link'] = '&lt;';
+		$config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+		$config['cur_tag_close'] = '</span></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['num_links'] = 3;
+		$config['attributes'] = array('class' => 'page-link');
+		$this->pagination->initialize($config);
+		
+		$segment = $this->uri->segment(3);
+		$segment = intval($segment);
+		
+		if ($segment > 0) {
+			$segment = ($segment - 1) * $config['per_page'];
+		}
+		
+		$input['limit'] = array($config['per_page'], $segment);
+		$product_list = $this->product_model->get_products_with_discount($input);
+		
+		$this->data['product_list'] = $product_list;
+		$this->data['total'] = $total;
+		$this->data['temp'] = 'site/product/new';
+		$this->load->view('site/layoutsub', $this->data);
+	}
+	
+	public function family()
+	{
+		// Lấy tất cả danh mục con của quần áo gia đình (parent_id = 9)
+		$input_cat = array();
+		$input_cat['where'] = array('parent_id' => 9);
+		$catalog_child = $this->catalog_model->get_list($input_cat);
+		
+		$input = array();
+		if (!empty($catalog_child)) {
+			$cat_list_id = array();
+			foreach ($catalog_child as $value) {
+				$cat_list_id[] = $value->id;
+			}
+			$input['where_in'] = array('catalog_id' => $cat_list_id);
+		} else {
+			// Nếu không có danh mục con, hiển thị thông báo không có sản phẩm
+			$this->data['product_list'] = array();
+			$this->data['total'] = 0;
+			$this->data['temp'] = 'site/product/new';
+			$this->load->view('site/layoutsub', $this->data);
+			return;
+		}
+		
+		$this->load->library('pagination');
+		$config = array();
+		$base_url = base_url('quan-ao-gia-dinh-c9');
+		$total = $this->product_model->get_total($input);
+		$per = 8;
+		$uri = 3;
+		
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total;
+		$config['per_page'] = $per;
+		$config['uri_segment'] = $uri;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['first_link'] = '&laquo;';
+		$config['last_link'] = '&raquo;';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['next_link'] = '&gt;';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['prev_link'] = '&lt;';
+		$config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+		$config['cur_tag_close'] = '</span></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['num_links'] = 3;
+		$config['attributes'] = array('class' => 'page-link');
+		$this->pagination->initialize($config);
+		
+		$segment = $this->uri->segment(3);
+		$segment = intval($segment);
+		
+		if ($segment > 0) {
+			$segment = ($segment - 1) * $config['per_page'];
+		}
+		
+		$input['limit'] = array($config['per_page'], $segment);
+		$product_list = $this->product_model->get_products_with_discount($input);
+		
+		$this->data['product_list'] = $product_list;
+		$this->data['total'] = $total;
+		$this->data['temp'] = 'site/product/new';
+		$this->load->view('site/layoutsub', $this->data);
+	}
 }
