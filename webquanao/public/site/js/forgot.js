@@ -224,7 +224,7 @@ document
 										icon: "success",
 										title: "Đổi mật khẩu thành công",
 										html: `
-										<p><strong>Chuyển hướng về trang chủ sau <span id="countdown-timer">${remaining}</span> giây...</strong></p>
+										<p><strong>Chuyển hướng về đăng nhập sau <span id="countdown-timer">${remaining}</span> giây...</strong></p>
 									`,
 										customClass: {
 											confirmButton: "my-custom-button",
@@ -247,7 +247,7 @@ document
 											// Chờ thêm 3 giây nữa sau khi popup đóng
 											window.location.href = "/";
 										} else {
-											window.location.href = "/";
+											window.location.href = "/dang-nhap";
 										}
 									});
 								} else {
