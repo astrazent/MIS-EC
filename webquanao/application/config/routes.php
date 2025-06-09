@@ -103,3 +103,7 @@ $route['check-password'] = 'user/checkpassword';
 
 //shipping fee rule
 $route['shipping-fee'] = 'order/shipping_fee_rule';
+
+//Voucher
+$route['get-voucher'] = 'order/get_voucher';
+$route['check-gift-code'] = 'order/check_gift_code';
