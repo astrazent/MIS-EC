@@ -18,6 +18,18 @@
 <!-- Ratings Plugin -->
 <script type="text/javascript" src="<?php echo public_url('js/raty/jquery.raty.min.js') ?>"></script>
 <script src="https://messenger.svc.chative.io/static/v1.0/channels/s9e9bba20-9d26-4e8b-ba6c-05defd7bc1c9/messenger.js?mode=livechat" defer="defer"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPG3ZQV73K"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+
+	gtag('config', 'G-QPG3ZQV73K');
+</script>
 <script type="text/javascript">
 	$(function() {
 		$.fn.raty.defaults.path = "<?php echo public_url('js/raty/img'); ?>";
@@ -35,4 +47,4 @@
 		width: 16px !important;
 		height: 16px !important;
 	}
-</style> 
+</style>

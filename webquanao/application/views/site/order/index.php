@@ -1,6 +1,13 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang thanh toán',
+		'page_path': '/order'
+	});
+</script>
+
 <style>
 	.my-custom-button {
 		background-color: #31B0D5;

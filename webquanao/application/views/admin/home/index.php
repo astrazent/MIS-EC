@@ -32,6 +32,12 @@
 		color: #333;
 	}
 </style>
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang chủ quản trị',
+		'page_path': '/admin'
+	});
+</script>
 <div class="row">
 	<ol class="breadcrumb">
 		<li><a href="#"><svg class="glyph stroked home">
@@ -122,12 +128,26 @@
 				<!-- 🔼 Thêm thống kê 7 ngày qua -->
 				<h3>📊 Thống kê lưu lượng truy cập trong 7 ngày qua:</h3>
 				<ul class="stats-list">
-					<li><strong>Người dùng đang hoạt động:</strong> <?= $data['activeUsers'] ?? 'N/A' ?></li>
-					<li><strong>Người dùng mới:</strong> <?= $data['newUsers'] ?? 'N/A' ?></li>
-					<li><strong>Số phiên truy cập:</strong> <?= $data['sessions'] ?? 'N/A' ?></li>
-					<li><strong>Phiên có tương tác:</strong> <?= $data['engagedSessions'] ?? 'N/A' ?></li>
-					<li><strong>Tỷ lệ thoát:</strong> <?= isset($data['bounceRate']) ? number_format($data['bounceRate'], 2) . '%' : 'N/A' ?></li>
-					<li><strong>Thời lượng trung bình mỗi phiên:</strong> <?= isset($data['averageSessionDuration']) ? round($data['averageSessionDuration'], 2) . 's' : 'N/A' ?></li>
+					<li><strong>Tổng số người dùng đã hoạt động:</strong> <?= $data['activeUsers'] ?? 'N/A' ?></li>
+					<li><strong>Tổng số người dùng mới:</strong> <?= $data['newUsers'] ?? 'N/A' ?></li>
+					<li><strong>Tổng số phiên truy cập:</strong> <?= $data['sessions'] ?? 'N/A' ?></li>
+					<li><strong>Tổng số phiên có tương tác:</strong> <?= $data['engagedSessions'] ?? 'N/A' ?></li>
+					<li><strong>Tỷ lệ thoát trang:</strong> <?= isset($data['bounceRate']) ? number_format($data['bounceRate'], 2) . '%' : 'N/A' ?></li>
+					<li><strong>Thời lượng trung bình mỗi phiên:</strong>
+						<?php
+						if (isset($data['averageSessionDuration'])) {
+							$totalSeconds = round($data['averageSessionDuration']);
+							$hours = floor($totalSeconds / 3600);
+							$minutes = floor(($totalSeconds % 3600) / 60);
+							$seconds = $totalSeconds % 60;
+
+							// Hiển thị theo định dạng hh:mm:ss
+							printf("%02dh %02dm %02ds", $hours, $minutes, $seconds);
+						} else {
+							echo 'N/A';
+						}
+						?>
+					</li>
 				</ul>
 
 				<!-- 🔽 Biểu đồ + legend -->

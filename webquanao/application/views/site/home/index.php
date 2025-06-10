@@ -1,13 +1,21 @@
-<?php 
+<?php
 // Kiểm tra nếu tồn tại tiêu đề "Sản phẩm mới" hoặc tương tự
 $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản phẩm mới';
 ?>
+
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang chủ',
+		'page_path': '/'
+	});
+</script>
 
 <style>
     .product-list-title {
         margin-bottom: 30px;
         text-align: center;
     }
+
     .product-list-title span {
         font-size: 28px;
         font-weight: 600;
@@ -15,6 +23,7 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         padding-bottom: 10px;
         display: inline-block;
     }
+
     .product-list-title span:after {
         content: '';
         position: absolute;
@@ -25,14 +34,14 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         left: 50%;
         transform: translateX(-50%);
     }
-    
+
     /* Slider styles */
     .hero-slider {
         position: relative;
         height: 500px;
         overflow: hidden;
     }
-    
+
     .hero-slide {
         width: 100%;
         height: 500px;
@@ -45,11 +54,11 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         right: 0;
         bottom: 0;
     }
-    
+
     .hero-slide.active {
         display: block;
     }
-    
+
     .hero-content {
         position: relative;
         text-align: left;
@@ -58,18 +67,18 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         padding: 100px 0;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
-    
+
     .hero-content h1 {
         font-size: 48px;
         font-weight: 700;
         margin-bottom: 20px;
     }
-    
+
     .hero-content p {
         font-size: 18px;
         margin-bottom: 30px;
     }
-    
+
     .slider-navigation {
         position: absolute;
         bottom: 20px;
@@ -79,7 +88,7 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         gap: 10px;
         z-index: 100;
     }
-    
+
     .slider-dot {
         width: 12px;
         height: 12px;
@@ -87,11 +96,11 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         background-color: rgba(255, 255, 255, 0.5);
         cursor: pointer;
     }
-    
+
     .slider-dot.active {
         background-color: #fff;
     }
-    
+
     .slider-control {
         position: absolute;
         top: 50%;
@@ -109,11 +118,11 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
         align-items: center;
         justify-content: center;
     }
-    
+
     .slider-prev {
         left: 20px;
     }
-    
+
     .slider-next {
         right: 20px;
     }

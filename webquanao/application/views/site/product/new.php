@@ -1,3 +1,30 @@
+<script>
+    // Get the current URL
+    const currentUrl = window.location.pathname;
+    let pageTitle = '';
+    let pagePath = '';
+
+    // Determine page title and path based on the URL
+    if (currentUrl.includes('/thoi-trang-nam-c7')) {
+        pageTitle = 'Thời trang nam';
+        pagePath = '/thoi-trang-nam-c7';
+    } else if (currentUrl.includes('/thoi-trang-nu-c8')) {
+        pageTitle = 'Thời trang nữ';
+        pagePath = '/thoi-trang-nu-c8';
+    } else if (currentUrl.includes('/quan-ao-gia-dinh-c9')) {
+        pageTitle = 'Quần áo gia đình';
+        pagePath = '/quan-ao-gia-dinh-c9';
+    } else {
+        pageTitle = 'Sản phẩm mới nhất';
+        pagePath = '/moi'; // Assuming '/moi' is the path for "Sản phẩm mới nhất"
+    }
+
+    // Configure gtag with the determined page title and path
+    gtag('config', 'G-QPG3ZQV73K', {
+        'page_title': pageTitle,
+        'page_path': pagePath
+    });
+</script>
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
 		<ol class="breadcrumb">
