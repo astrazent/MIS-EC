@@ -32,6 +32,12 @@
 		color: #333;
 	}
 </style>
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang chủ quản trị',
+		'page_path': '/admin'
+	});
+</script>
 <div class="row">
 	<ol class="breadcrumb">
 		<li><a href="#"><svg class="glyph stroked home">
