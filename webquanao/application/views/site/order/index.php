@@ -363,7 +363,6 @@
 				rounded mt-4 text-lg">
 				<i class="fas fa-check-circle me-2"></i>Hoàn tất đơn hàng
 			</button>
-
 		</div>
 	</div>
 </div>

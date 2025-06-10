@@ -95,7 +95,7 @@
 						<div class="text-center py-5">
 							<img src="<?php echo base_url('upload/cart-empty.png') ?>" alt="Empty Cart" class="mb-4" style="max-width: 150px;">
 							<h4 class="text-muted mb-4">Không có sản phẩm trong giỏ hàng</h4>
-							<a href="<?php echo base_url('product/hot'); ?>" class="btn btn-primary">
+							<a href="<?php echo base_url('/'); ?>" class="btn btn-primary">
 								<i class="fas fa-shopping-cart me-2"></i>Mua sắm ngay
 							</a>
 						</div>

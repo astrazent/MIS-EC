@@ -58,14 +58,6 @@
                         <?php endif; ?>
                     </a>
                 </li>
-				<li role="presentation" class="<?php echo ($status_filter == '4') ? 'active' : ''; ?>">
-					<a href="<?php echo base_url('shipment?status=4'); ?>">
-						<i class="glyphicon glyphicon-remove"></i> Đã hủy
-						<?php if(isset($status_counts[4]) && $status_counts[4] > 0): ?>
-							<span class="badge badge-danger"><?php echo $status_counts[4]; ?></span>
-						<?php endif; ?>
-					</a>
-				</li>
             </ul>
         </div>
         
