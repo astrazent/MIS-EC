@@ -12,12 +12,15 @@
 <script src="<?php echo public_url('admin/'); ?>js/lumino.glyphs.js"></script>
 <script src="<?php echo public_url(); ?>js/ckeditor/ckeditor.js"></script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPG3ZQV73K"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
+	window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+
+	gtag('config', 'G-QPG3ZQV73K');
 </script>

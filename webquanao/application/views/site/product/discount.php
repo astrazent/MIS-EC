@@ -1,3 +1,9 @@
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang khuyến mại',
+		'page_path': '/khuyen-mai'
+	});
+</script>
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
 		<ol class="breadcrumb">
