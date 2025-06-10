@@ -230,7 +230,7 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
             <div class="col-6 col-md-3">
                 <div class="product-item">
                     <?php if(isset($row->discount) && $row->discount > 0): ?>
-                    <div class="product-badge sale">-<?php echo $row->discount; ?>%</div>
+                    <div class="product-badge sale">Sale</div>
                     <?php else: ?>
                     <div class="product-badge new">New</div>
                     <?php endif; ?>
@@ -246,17 +246,16 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sản ph�
                             <a href="<?php echo base_url($product_url.'-p'.$row->id); ?>"><?php echo $row->name; ?></a>
                         </h3>
                         
-                        <div class="product-item-price">
-                            <?php if(isset($row->discount) && $row->discount > 0): ?>
-                                <?php $price = isset($row->price) ? $row->price : 0; ?>
-                                <?php $discount = isset($row->discount) ? $row->discount : 0; ?>
-                                <?php $price_new = $price - ($price * $discount / 100); ?>
-                                <?php echo number_format($price_new); ?> VNĐ
-                                <del><?php echo number_format($price); ?> VNĐ</del>
-                            <?php else: ?>
-                                <?php echo number_format(isset($row->price) ? $row->price : 0); ?> VNĐ
-                            <?php endif; ?>
-                        </div>
+                        <div class="product-price">
+							<?php if ($row->discount > 0 || $row->price < $row->origin_price): 
+								$new_price = $row->price - $row->discount; 
+							?>
+								<span class="current-price"><?php echo number_format($new_price); ?> VNĐ</span>
+								<span class="old-price"><?php echo number_format($row->price); ?> VNĐ</span>
+							<?php else: ?>
+								<span class="current-price"><?php echo number_format($row->origin_price); ?> VNĐ</span>
+							<?php endif; ?>
+						</div>
                         
                         <div class="product-item-actions">
                             <a href="<?php echo base_url('cart/add/'.$row->id); ?>" class="btn btn-primary add-to-cart-btn">

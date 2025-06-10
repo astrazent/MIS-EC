@@ -23,7 +23,7 @@
 					<div class="col-md-4 col-sm-6">
 						<div class="product-card">
 							<?php if ($value->discount > 0): ?>
-								<div class="product-badge sale">-<?php echo $value->discount; ?>%</div>
+								<div class="product-badge sale">Sale</div>
 							<?php endif; ?>
 							
 							<div class="product-image">
