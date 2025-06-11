@@ -1,7 +1,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-raty/2.7.1/jquery.raty.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang đơn hàng của tôi',
+		'page_path': '/shipment'
+	});
+</script>
 <div class="shipment-container">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -176,7 +181,10 @@
                         } else if ($status_filter == '3') {
                         $icon_class = 'fa-check-circle';
                             $status_text = 'hoàn thành';
-                        }
+                        } else if ($status_filter == '4') {
+							$icon_class = 'glyphicon-remove';
+							$status_text = 'đã hủy';
+						}
                         ?>
                     <i class="fas <?php echo $icon_class; ?>"></i>
                     </div>
@@ -669,16 +677,26 @@
     }
     
     .status-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-x: auto;
         margin: 15px 15px 0;
     }
     
     .status-tabs .nav-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
         border-bottom: 2px solid #ddd;
     }
     
     .status-tabs .nav-tabs>li {
+		flex: 1;
+    	text-align: center;
         margin-bottom: -2px;
-    }
+		margin-left: -3px;
+		margin-right: -3px;
+	}
     
     .status-tabs .nav-tabs>li>a {
         font-weight: 500;
@@ -686,6 +704,9 @@
         padding: 10px 15px;
         border-radius: 4px 4px 0 0;
         transition: all 0.3s ease;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
     }
     
     .status-tabs .nav-tabs>li>a:hover {
@@ -732,9 +753,12 @@
         background-color: #5cb85c;
     }
     
+	.badge-danger {
+		background-color: #d9534f;
+	}
+
     .nav-tabs>li.active>a .badge {
-        background-color: #fff;
-        color: #337ab7;
+        color: #fff;
         font-weight: bold;
     }
     
@@ -919,7 +943,7 @@
     
     .action-buttons {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 5px;
         justify-content: flex-start;
         align-items: center;

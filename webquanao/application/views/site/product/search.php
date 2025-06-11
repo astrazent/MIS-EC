@@ -46,12 +46,12 @@
 										</div>
 									<?php } ?>
 									<?php if (isset($value->similarity)): ?>
-									<div class="similarity-score mb-2">
+									<!-- <div class="similarity-score mb-2">
 										<div class="progress">
 											<div class="progress-bar" role="progressbar" style="width: <?php echo $value->similarity; ?>%;" aria-valuenow="<?php echo $value->similarity; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 										<small class="text-muted">Độ tương đồng: <?php echo number_format($value->similarity, 2); ?>%</small>
-									</div>
+									</div> -->
 								<?php endif; ?>
 									<div class="product-meta">
 										<span class="view-count"><i class="fas fa-eye" aria-hidden="true" title="Số lượt xem"></i> <?php echo $value->view; ?></span>

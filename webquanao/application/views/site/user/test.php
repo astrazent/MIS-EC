@@ -1,4 +1,4 @@
-<h3>📊 Thống kê 7 ngày qua:</h3>
+<!-- <h3>📊 Thống kê 7 ngày qua:</h3>
 <ul>
     <li>Người dùng đang hoạt động: <?= $data['activeUsers'] ?? 'N/A' ?></li>
     <li>Người dùng mới: <?= $data['newUsers'] ?? 'N/A' ?></li>
@@ -12,4 +12,4 @@
 <ul>
     <li>Tổng người dùng: <?= $dataMonth['totalUsers'] ?? 'N/A' ?></li>
     <li>Người dùng mới: <?= $dataMonth['newUsers'] ?? 'N/A' ?></li>
-</ul>
+</ul> -->
