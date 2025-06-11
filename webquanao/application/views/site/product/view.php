@@ -101,23 +101,24 @@
 				$('.raty_detailt').raty({
 					score: function() { return $(this).attr('data-score'); },
 					half: true,
-					click: function(score, evt) {
-						var rate_count = $('.rate_count');
-						var rate_count_total = rate_count.text();
-						$.ajax({
-							url: '<?php echo base_url('product/raty'); ?>',
-							type: 'POST',
-							data: { 'id': '<?php echo $product->id; ?>', 'score': score },
-							dataType: 'json',
-							success: function(data) {
-								if (data.complete) {
-									var total = parseInt(rate_count_total) + 1;
-									rate_count.html(parseInt(total));
-								}
-								alert(data.msg);
-							}
-						});
-					}
+					readOnly: true
+					// click: function(score, evt) {
+					// 	var rate_count = $('.rate_count');
+					// 	var rate_count_total = rate_count.text();
+					// 	$.ajax({
+					// 		url: '<?php echo base_url('product/raty'); ?>',
+					// 		type: 'POST',
+					// 		data: { 'id': '<?php echo $product->id; ?>', 'score': score },
+					// 		dataType: 'json',
+					// 		success: function(data) {
+					// 			if (data.complete) {
+					// 				var total = parseInt(rate_count_total) + 1;
+					// 				rate_count.html(parseInt(total));
+					// 			}
+					// 			alert(data.msg);
+					// 		}
+					// 	});
+					// }
 				});
 			});
 		</script>
