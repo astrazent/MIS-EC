@@ -1,5 +1,21 @@
+<style>
+/* Ensure footer spans full width */
+.site-footer {
+    width: 100%;
+    background-color: #202327;
+    color: #fff;
+    padding: 50px 0 20px;
+    margin-top: 30px;
+}
+.site-footer .container-fluid {
+    max-width: 1400px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+}
+</style>
 <footer class="site-footer">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="footer-top">
 			<div class="row">
 				<div class="col-md-3 col-sm-6">
