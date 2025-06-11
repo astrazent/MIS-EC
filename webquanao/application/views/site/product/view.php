@@ -5,97 +5,74 @@
 	});
 </script>
 
-<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
-		<style>
-			/* Kiểu cho phần tổng hợp đánh giá AI */
-			.ai-summary-container {
-				padding: 15px;
-				background-color: #f9f9f9;
-				border-radius: 5px;
-				margin-bottom: 15px;
-			}
-			.ai-summary-content {
-				white-space: pre-line;
-				line-height: 1.6;
-			}
-			.ai-summary-header {
-				display: flex;
-				align-items: center;
-				margin-bottom: 10px;
-			}
-			.ai-summary-header i {
-				margin-right: 8px;
-				color: #3498db;
-			}
-			.ai-summary-section {
-				margin-bottom: 10px;
-			}
-			.ai-summary-section h4 {
-				font-weight: bold;
-				margin-top: 15px;
-				margin-bottom: 8px;
-			}
-			/* Hiệu ứng quay cho biểu tượng loading */
-			@keyframes spin {
-				0% { transform: rotate(0deg); }
-				100% { transform: rotate(360deg); }
-			}
-			/* Kiểu cho danh sách trong tổng hợp */
-			.ai-summary-content li {
-				margin-bottom: 5px;
-			}
-			/* Fix for JQZoom */
-			.zoomPup, .zoomWindow, .zoomPreload { display: block !important; }
-			.zoomWrapper { position: relative; display: inline-block; }
-			.zoomWrapperImage { display: block; position: relative; overflow: hidden; z-index: 110; }
-			.zoomWrapperImage img { display: block; max-width: none !important; }
-			.main-image { position: relative; width: 100%; min-height: 300px; }
-			.main-image a { display: inline-block; }
-			.main-image img { max-width: 100%; height: auto; }
-			/* Fix for hover-off issue */
-			.zoomPup, .zoomWindow { opacity: 0; visibility: hidden; transition: opacity 0.2s ease; }
-			.jqZoomPup.visible, .zoomWindow.visible { opacity: 1; visibility: visible; }
-			.img-thumbnail { width: 60px; height: 60px; object-fit: cover; } /* Cải thiện thumbnail */
-		</style>
-		
-		<!-- SỬA 1: Đổi sang Breadcrumb hiện đại hơn -->
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
-			<li class="breadcrumb-item"><a href="<?php echo base_url('product/catalog/' . $catalog_product->id); ?>"><?php echo $catalog_product->name; ?></a></li>
-			<li class="breadcrumb-item active" aria-current="page"><?php echo $product->name; ?></li>
-		</ol>
+<style>
+	/* Kiểu cho phần tổng hợp đánh giá AI */
+	.ai-summary-container {
+		padding: 15px;
+		background-color: #f9f9f9;
+		border-radius: 5px;
+		margin-bottom: 15px;
+	}
+	.ai-summary-content {
+		white-space: pre-line;
+		line-height: 1.6;
+	}
+	.ai-summary-header {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.ai-summary-header i {
+		margin-right: 8px;
+		color: #3498db;
+	}
+	.ai-summary-section {
+		margin-bottom: 10px;
+	}
+	.ai-summary-section h4 {
+		font-weight: bold;
+		margin-top: 15px;
+		margin-bottom: 8px;
+	}
+	/* Hiệu ứng quay cho biểu tượng loading */
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	/* Kiểu cho danh sách trong tổng hợp */
+	.ai-summary-content li {
+		margin-bottom: 5px;
+	}
+	/* Fix for JQZoom */
+	.zoomPup, .zoomWindow, .zoomPreload { display: block !important; }
+	.zoomWrapper { position: relative; display: inline-block; }
+	.zoomWrapperImage { display: block; position: relative; overflow: hidden; z-index: 110; }
+	.zoomWrapperImage img { display: block; max-width: none !important; }
+	.main-image { position: relative; width: 100%; min-height: 300px; }
+	.main-image a { display: inline-block; }
+	.main-image img { max-width: 100%; height: auto; }
+	/* Fix for hover-off issue */
+	.zoomPup, .zoomWindow { opacity: 0; visibility: hidden; transition: opacity 0.2s ease; }
+	.jqZoomPup.visible, .zoomWindow.visible { opacity: 1; visibility: visible; }
+	.img-thumbnail { width: 60px; height: 60px; object-fit: cover; } /* Cải thiện thumbnail */
+</style>
 
-		<!-- SỬA 2: Bổ sung các file JS còn thiếu để sửa lỗi -->
-		<!-- 1. Tải thư viện jQuery chính -->
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- SỬA 1: Đổi sang Breadcrumb hiện đại hơn -->
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo base_url('product/catalog/' . $catalog_product->id); ?>"><?php echo $catalog_product->name; ?></a></li>
+	<li class="breadcrumb-item active" aria-current="page"><?php echo $product->name; ?></li>
+</ol>
 
-		<!-- 2. Tải jQuery Migrate (để vá lỗi cho jqZoom cũ) -->
-		<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-		
-		<!-- 3. Tải plugin Raty (cho đánh giá sao) -->
-		<script src="<?php echo public_url('js/raty/jquery.raty.js'); ?>"></script> <!-- Đảm bảo đường dẫn này đúng -->
+<!-- SỬA 2: Bổ sung các file JS còn thiếu để sửa lỗi -->
+<!-- 1. Tải thư viện jQuery chính -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-		<!-- 4. Tải plugin jqZoom -->
-		<script src="<?php echo public_url('js'); ?>/jqzoom_ev/js/jquery.jqzoom-core.js" type="text/javascript"></script>
-		<link rel="stylesheet" href="<?php echo public_url('js'); ?>/jqzoom_ev/css/jquery.jqzoom.css" type="text/css">
-		
-		<script type="text/javascript">
-			$(document).ready(function() {
-				// Khởi tạo JqZoom
-				var zoomOptions = {
-					zoomType: 'standard', lens: true, preloadImages: true, alwaysOn: false,
-					zoomWidth: 400, zoomHeight: 400, xOffset: 10, yOffset: 0,
-					position: 'right', title: false, hideEffect: 'fadeout', fadeoutSpeed: 200
-				};
-				$('.jqzoom').jqzoom(zoomOptions);
+<!-- 2. Tải jQuery Migrate (để vá lỗi cho jqZoom cũ) -->
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
-				$('.jqzoom').on('mouseenter', function() {
-					setTimeout(function() { $('.zoomPup, .zoomWindow').addClass('visible'); }, 100);
-				});
-				$('.jqzoom').on('mouseleave', function() {
-					$('.zoomPup, .zoomWindow').removeClass('visible');
-				});
+<!-- 3. Tải plugin Raty (cho đánh giá sao) -->
+<script src="<?php echo public_url('js/raty/jquery.raty.js'); ?>"></script> <!-- Đảm bảo đường dẫn này đúng -->
 
 				// Khởi tạo Raty (đánh giá sao)
 				$('.raty_detailt').raty({
@@ -120,10 +97,13 @@
 					// 	});
 					// }
 				});
-			});
-		</script>
-		
-		<!-- SỬA 3: Sử dụng cấu trúc HTML hiện đại của bạn bè để hiển thị chi tiết sản phẩm -->
+			}
+		});
+	});
+</script>
+
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
 		<div class="col-12">
 			<div class="card product-detail-card mb-5">
 				<div class="card-body p-4">
@@ -445,3 +425,8 @@
         }
     });
 </script>
+</div>
+</div>
+<!-- Make sure we close all divs that we opened in the layout -->
+</div>
+</div>

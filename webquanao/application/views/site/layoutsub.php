@@ -39,7 +39,8 @@
 		</div>
 	</div>
 	
-	<!-- Footer -->
+	<!-- Footer - Outside of container to ensure full width -->
+	</div><!-- Close any extra container divs that might be causing the issue -->
 	<?php $this->load->view('site/footer',$this->data); ?>
 
     <!-- Back to Top Button -->
