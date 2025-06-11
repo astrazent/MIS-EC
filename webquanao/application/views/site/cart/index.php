@@ -1,3 +1,9 @@
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang giỏ hàng',
+		'page_path': '/cart'
+	});
+</script>
 <div class="container">
 	<div class="row">
 		<!-- Breadcrumb section -->
@@ -17,7 +23,7 @@
 					<?php echo $message; ?>
 				</div>
 			<?php } ?>
-			
+
 			<?php if ($total_items > 0) { ?>
 				<div class="card mb-5">
 					<div class="card-header bg-light">
@@ -75,7 +81,7 @@
 								</tfoot>
 							</table>
 						</div>
-						
+
 						<div class="d-flex justify-content-between align-items-center mt-4">
 							<a href="<?php echo base_url('product/hot'); ?>" class="btn btn-primary">
 								<i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
@@ -95,7 +101,7 @@
 						<div class="text-center py-5">
 							<img src="<?php echo base_url('upload/cart-empty.png') ?>" alt="Empty Cart" class="mb-4" style="max-width: 150px;">
 							<h4 class="text-muted mb-4">Không có sản phẩm trong giỏ hàng</h4>
-							<a href="<?php echo base_url('product/hot'); ?>" class="btn btn-primary">
+							<a href="<?php echo base_url('/'); ?>" class="btn btn-primary">
 								<i class="fas fa-shopping-cart me-2"></i>Mua sắm ngay
 							</a>
 						</div>
@@ -194,12 +200,12 @@
 					});
 			});
 		});
-		
+
 		let isLoading2 = false; // cờ trạng thái riêng cho từng nút
 
 		document.querySelector('.del-all').addEventListener('click', function(e) {
 			e.preventDefault();
-			
+
 			if (isLoading2) {
 				// Đang xử lý request trước, không làm gì nữa
 				return;
@@ -352,7 +358,7 @@
 	.quantity-control .btn {
 		border-radius: 0.25rem;
 	}
-	
+
 	.quantity-control .form-control {
 		border-radius: 0.25rem;
 	}

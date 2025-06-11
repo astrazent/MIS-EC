@@ -4,7 +4,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang thông tin tài khoản',
+		'page_path': '/user'
+	});
+</script>
 <?php $user = $this->data['user_info']; ?>
 
 <!-- THAY ĐỔI 1: Áp dụng toàn bộ khối <style> từ file 1 -->

@@ -268,11 +268,11 @@ class User extends MY_Controller
 			}
 
 			// Kiểm tra recaptcha
-			// $captcha = $data['recaptcha'];
-			// if (!$this->verify_library->verify_recaptcha($captcha)) {
-			// 	echo json_encode(["status" => "error", "message" => "xác thực recaptcha thất bại"], JSON_UNESCAPED_UNICODE);
-			// 	return;
-			// }
+			$captcha = $data['recaptcha'];
+			if (!$this->verify_library->verify_recaptcha($captcha)) {
+				echo json_encode(["status" => "error", "message" => "xác thực recaptcha thất bại"], JSON_UNESCAPED_UNICODE);
+				return;
+			}
 
 			//Kiểm tra tài khoản và mật khẩu
 			$email = $data['email'];

@@ -23,7 +23,7 @@
 					<div class="col-md-4 col-sm-6">
 						<div class="product-card">
 							<?php if ($value->discount > 0): ?>
-								<div class="product-badge sale">-<?php echo $value->discount; ?>%</div>
+								<div class="product-badge sale">Sale</div>
 							<?php endif; ?>
 							
 							<div class="product-image">
@@ -64,14 +64,68 @@
 			</div>
 			
 			<!-- Pagination -->
-			<div class="catalog-pagination">
-				<?php echo $this->pagination->create_links(); ?>
-				<?php if(!$this->pagination->create_links()): ?>
-					<ul class="pagination">
-						<li class="page-item active"><span class="page-link">1</span></li>
-					</ul>
+			<?php if(isset($total) && $total > 8): ?>
+			<div class="catalog-pagination my-4 text-center">
+				<?php 
+				$pagination_links = isset($this->pagination) ? $this->pagination->create_links() : '';
+				if (!empty($pagination_links)): ?>
+					<div class="pagination-container">
+						<?php echo $pagination_links; ?>
+					</div>
+				<?php else: ?>
+					<nav aria-label="Phân trang">
+						<ul class="pagination justify-content-center">
+							<li class="page-item active">
+								<span class="page-link">1</span>
+							</li>
+						</ul>
+					</nav>
 				<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			
+			<style>
+				/* Cải thiện hiển thị phân trang */
+				.pagination {
+					display: flex;
+					justify-content: center;
+					margin: 20px 0;
+				}
+				.pagination > li {
+					margin: 0 5px;
+					display: inline-block;
+				}
+				.pagination > li > a, 
+				.pagination > li > span {
+					border-radius: 0;
+					color: #333;
+					padding: 10px 15px;
+					border: 1px solid #ddd;
+					text-decoration: none;
+					display: inline-block;
+					min-width: 40px;
+					text-align: center;
+					font-weight: 500;
+					background-color: #fff;
+				}
+				.pagination > li.active > a, 
+				.pagination > li.active > span {
+					background-color: black;
+					border-color: black;
+					color: white;
+				}
+				.pagination > li > a:hover,
+				.pagination > li > span:hover {
+					background-color: #f5f5f5;
+					color: #333;
+					border-color: #ddd;
+				}
+				/* Style cho nút Next (>) */
+				.pagination > li:last-child > a,
+				.pagination > li:last-child > span {
+					font-weight: bold;
+				}
+			</style>
 			
 		<?php else: ?>
 			<div class="empty-products text-center py-5">

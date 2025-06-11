@@ -629,11 +629,11 @@ img {
 
 .product-actions {
     position: absolute;
-    bottom: -50px;
-    left: 0;
+    /* bottom: -50px; */
+    /* left: 0; */
     width: 100%;
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     background-color: rgba(255, 255, 255, 0.9);
     padding: 10px 0;
     transition: all 0.3s ease;

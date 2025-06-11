@@ -3,6 +3,7 @@ FROM php:7.3-apache
 
 # Cài đặt các thư viện cần thiết và extension PHP (mysqli, pdo, pdo_mysql, bcmath)
 RUN apt-get update && apt-get install -y \
+    libzip-dev unzip \
     && docker-php-ext-install mysqli pdo pdo_mysql bcmath
 
 # Kích hoạt mod_rewrite cho Apache

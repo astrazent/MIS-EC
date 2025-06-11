@@ -49,6 +49,7 @@
 - **Vị trí**: `../../vendor`
 - **Nguồn**: https://github.com/googleapis/google-api-php-client.git
 - **Cài đặt**: Qua composer
+- **Lệnh**: `composer require google/apiclient`
 
 - **google-analytics-data**
 - **Phiên bản**: 0.9.0
