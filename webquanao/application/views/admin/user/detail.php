@@ -15,19 +15,19 @@
 					  <tbody>
 					  	<tr>
 					  		<td style="width: 100px">Họ và tên</td>
-					  		<td><?php echo $transaction->user_name; ?></td>
+					  		<td><?php echo $transaction->delivery_name; ?></td>
 					  	</tr>
 					  	<tr>
 					  		<td>Email</td>
-					  		<td><?php echo $transaction->user_email; ?></td>
+					  		<td><?php echo $transaction->delivery_email; ?></td>
 					  	</tr>
 					  	<tr>
 					  		<td>Số điện thoại</td>
-					  		<td><?php echo $transaction->user_phone; ?></td>
+					  		<td><?php echo $transaction->delivery_phone; ?></td>
 					  	</tr>
 					  	<tr>
 					  		<td>Địa chỉ</td>
-					  		<td><?php echo $transaction->user_address; ?></td>
+					  		<td><?php echo $transaction->delivery_address; ?></td>
 					  	</tr>
 					  	<tr>
 					  		<td>Tin nhắn</td>
@@ -35,7 +35,7 @@
 					  	</tr>
 					  	<tr>
 					  		<td>Ngày đặt</td>
-					  		<td><?php echo mdate("%H:%i:%s %d/%m/%Y",$transaction->created); ?></td>
+					  		<td><?php echo $transaction->created; ?></td>
 					  	</tr>
 					  </tbody>
 					</table>
