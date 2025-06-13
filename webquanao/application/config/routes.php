@@ -54,6 +54,9 @@ $route['dang-nhap'] = 'user/login';
 $route['dang-ky'] = 'user/register';
 $route['ban-chay'] = 'product/hot';
 $route['moi'] = 'product/news';
+$route['thoi-trang-nam-c7'] = 'product/men';
+$route['thoi-trang-nu-c8'] = 'product/women';
+$route['quan-ao-gia-dinh-c9'] = 'product/family';
 $route['khuyen-mai'] = 'product/discount';
 $route['(:any)-c(:num)'] = 'product/catalog/$2';
 $route['(:any)-p(:num)'] = 'product/view/$2';
@@ -100,7 +103,6 @@ $route['check-password'] = 'user/checkpassword';
 
 //shipping fee rule
 $route['shipping-fee'] = 'order/shipping_fee_rule';
-
 //Voucher
 $route['get-voucher'] = 'order/get_voucher';
 $route['check-gift-code'] = 'order/check_gift_code';

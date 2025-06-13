@@ -7,27 +7,41 @@
 		print_r($str);
 		die;
 	}
-	function pagination($base_url='',$total='',$per='',$uri='')
-	{
-		$config = array();
-		$config['base_url']    = $base_url;
-		$config['total_rows']  = $total;
-		$config['per_page']    = $per;
-		$config['uri_segment'] = $uri;
-		$config['full_tag_open']   = "<nav aria-label='Page navigation' class='text-right'><ul class='pagination'>";
-		$config['full_tag_close'] = "</ul></nav>";
-		$config['cur_tag_open']   = "<li class='active'><a href='#'>";
-		$config['cur_tag_close'] = "</a></li>";
-		$config['next_link']   = "&raquo;";
-		$config['next_tag_open']   = "<li><span aria-hidden='true'>";
-		$config['next_tag_close'] = "</span></li>";
-		$config['prev_link']   = "&laquo;";
-		$config['prev_tag_open']   = "<li><span aria-hidden='true'>";
-		$config['prev_tag_close'] = "</span></li>";
-		$config['num_tag_open']   = "<li>";
-		$config['num_tag_close'] = "</li>";
-		return $config;
-	}
+// Trong file common_helper.php
+function pagination($base_url = '', $total = '', $per = '', $uri = '')
+{
+    if ($total <= $per) {
+        return FALSE;
+    }
+
+    $config = array();
+    $config['base_url']    = $base_url;
+    $config['total_rows']  = $total;
+    $config['per_page']    = $per;
+    $config['uri_segment'] = $uri;
+    $config['use_page_numbers'] = TRUE;
+
+    // Đơn giản hóa: Luôn hiển thị 2 link ở mỗi bên trang hiện tại
+    $config['num_links'] = 2;
+
+    $config['full_tag_open']   = "<ul class='pagination'>";
+    $config['full_tag_close'] = "</ul>";
+    $config['first_link'] = FALSE;
+    $config['last_link'] = FALSE;
+    $config['cur_tag_open']   = "<li class='active'><span>"; // Xóa class page-link ở đây
+    $config['cur_tag_close'] = "</span></li>";
+    $config['next_link']   = ">";
+    $config['next_tag_open']   = "<li class='page-item'>";
+    $config['next_tag_close'] = "</li>";
+    $config['prev_link']   = "<";
+    $config['prev_tag_open']   = "<li class='page-item'>";
+    $config['prev_tag_close'] = "</li>";
+    $config['num_tag_open']   = "<li class='page-item'>";
+    $config['num_tag_close'] = "</li>";
+    $config['attributes'] = array('class' => 'page-link');
+
+    return $config;
+}
 	function covert_vi_to_en($str)
 	{
 	   if(!$str) return false;

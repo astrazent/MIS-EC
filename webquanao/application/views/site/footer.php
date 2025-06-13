@@ -1,57 +1,80 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="bank">
-		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
-			<div class="footer-info">
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<a href="" title=""><strong>VỀ CHÚNG TÔI</strong></a>
-					<li> <a href="#" title="">Giới thiệu về shop</a></li>
-					<li> <a href="#" title="">Các mức chế tài vi phạm</a></li>
-					<li> <a href="#" title="">Quy chế hoạt động</a></li>
+<style>
+/* Ensure footer spans full width */
+.site-footer {
+    width: 100%;
+    background-color: #202327;
+    color: #fff;
+    padding: 50px 0 20px;
+    margin-top: 30px;
+}
+.site-footer .container-fluid {
+    max-width: 1400px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+}
+</style>
+<footer class="site-footer">
+	<div class="container-fluid">
+		<div class="footer-top">
+			<div class="row">
+				<div class="col-md-3 col-sm-6">
+					<div class="footer-widget">
+						<h4 class="widget-title">Giới thiệu</h4>
+						<p>Ngọc Lan là thương hiệu thời trang hiện đại cung cấp quần áo và phụ kiện chất lượng cao cho nam và nữ.</p>
+						<div class="social-links">
+							<a href="#"><i class="fab fa-facebook-f"></i></a>
+							<a href="#"><i class="fab fa-instagram"></i></a>
+							<a href="#"><i class="fab fa-twitter"></i></a>
+							<a href="#"><i class="fab fa-pinterest-p"></i></a>
+						</div>
+					</div>
 				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<a href="" title=""><strong>DÀNH CHO NGƯỜI MUA</strong></a>
-					<li> <a href="#" title="">Bảo vệ người mua</a></li>
-					<li> <a href="#" title="">Quy định đối với người mua</a></li>
-					<li> <a href="#" title="">Câu hỏi thường gặp</a></li>
-					<li> <a href="#" title="">Hưỡng dẫn mua hàng Online</a></li>
-
+				<div class="col-md-3 col-sm-6">
+					<div class="footer-widget">
+						<h4 class="widget-title">Liên kết khác</h4>
+						<ul class="footer-menu">
+							<li><a href="#">Giới thiệu</a></li>
+							<li><a href="#">Câu hỏi thường gặp</a></li>
+							<li><a href="#">Đổi trả & Hoàn tiền</a></li>
+							<li><a href="#">Liên hệ với chúng tôi</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<a href="" title=""><strong>DÀNH CHO NGƯỜI BÁN</strong></a>
-					<li> <a href="#" title="">Mở shop trên Sendo</a></li>
-					<li> <a href="#" title="">Quy định đối với người bán</a></li>
-					<li> <a href="#" title="">Chính sách bán hàng</a></li>
+				<div class="col-md-3 col-sm-6">
+					<div class="footer-widget">
+						<h4 class="widget-title">Danh mục</h4>
+						<ul class="footer-menu">
+							<li><a href="<?php echo base_url('thoi-trang-nu-c8'); ?>">Nữ</a></li>
+							<li><a href="<?php echo base_url('thoi-trang-nam-c7'); ?>">Nam</a></li>
+							<li><a href="<?php echo base_url('quan-ao-gia-dinh-c9'); ?>">Gia đình</a></li>
+							<li><a href="<?php echo base_url('khuyen-mai'); ?>">Khuyến mãi</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="footer-widget">
+						<h4 class="widget-title">Thông tin liên hệ</h4>
+						<ul class="contact-info">
+							<li><i class="fas fa-map-marker-alt"></i> Kỳ Sơn - Thủy Nguyên - Hải Phòng</li>
+							<li><i class="fas fa-phone"></i> 01215345336</li>
+							<li><i class="fas fa-envelope"></i> info@ngoclan.com</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<!-- <p>Hỗ trợ thanh toán <img src="http://localhost/myshop/public/images/pay.png" alt="" style="padding-left: 25px;"> </p> -->
-			<div class="fi-left pull-left">
-				<p><small>Tư vẫn miễn phí (24/7)</small></p>
-				<strong>1800 3333</strong>
-			</div>
-			<div class="fi-right pull-right">
-				<p><small>Góp ý, phản ánh(8h00 - 22h00)</small></p>
-				<strong>1800 3333</strong>
+		<div class="footer-bottom">
+			<div class="row">
+				<div class="col-md-6">
+					<p class="copyright">© <?php echo date('Y'); ?> Ngọc Lan.</p>
+				</div>
+				<!-- <div class="col-md-6">
+					<div class="payment-methods">
+						<img src="<?php echo base_url('public/site/images/payment-methods.png'); ?>" alt="Phương thức thanh toán" class="img-fluid">
+					</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row" id="footer">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-			<address>
-				<strong> SHOP thời trang Ngọc Lan</strong><br>
-				<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Địa chỉ: Kỳ Sơn - Thủy Nguyên - Hải Phòng<br>
-				<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Điện thoại: 01215345336<br>
-				Copyright ©2017 - Design by ---
-			</address>
-		</div>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-right">
-			<a href="#"><img src="<?php echo base_url(); ?>upload/icon/facebook.png" alt=""></a>
-			<a href="#"><img src="<?php echo base_url(); ?>upload/icon/twitter.png" alt=""></a>
-			<a href="#"><img src="<?php echo base_url(); ?>upload/icon/google.png" alt=""></a>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-</div>
+</footer> 

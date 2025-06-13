@@ -1,83 +1,133 @@
-<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
-		<ol class="breadcrumb">
-			<li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
-			<li class="active">Chi tiết giỏ hàng</li>
-		</ol>
-		<?php if (isset($message) && !empty($message)) { ?>
-			<h4 style="color:red;margin-top: 20px"><?php echo $message; ?></h4>
-		<?php }
-		if ($total_items > 0) { ?>
-			<div class="panel panel-info " style="margin-bottom: 15px">
-				<div class="panel-heading">
-					<h3 class="panel-title title-bar">GIỎ HÀNG ( <?php echo $total_items; ?> sản phẩm )</h3>
-				</div>
-				<div class="panel-body">
-					<table class="table table-hover">
-						<thead>
-							<th>STT</th>
-							<th>Tên sản phẩm</th>
-							<th>Hình ảnh</th>
-							<th>Số lượng</th>
-							<th>Thành tiền</th>
-							<th>Xóa</th>
-						</thead>
-						<tbody>
-							<?php
-							$i = 0;
-							$total_price = 0;
-							foreach ($carts as $items) {
-								$total_price = $total_price + $items['subtotal']; ?>
-								<tr>
-									<td><?php echo $i = $i + 1 ?></td>
-									<td><?php echo $items['name']; ?></td>
-									<td><img src="<?php echo base_url('upload/product/' . $items['image_link']); ?>" class="img-thumbnail" alt="" style="width: 50px;"></td>
-									<td>
-										<button class="cart-sub" data-id="<?php echo $items['id']; ?>">-</button>
-										<input type="text" class="qty-input" value="<?php echo $items['qty']; ?>" style="width: 30px;text-align: center;" readonly>
-										<button class="cart-sum" data-id="<?php echo $items['id']; ?>">+</button>
-									</td>
-									<td><?php echo number_format($items['subtotal']); ?> VNĐ</td>
-									<td><a class="del-item" href="#" data-id="<?php echo $items['id']; ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-								</tr>
-							<?php	}
-							?>
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang giỏ hàng',
+		'page_path': '/cart'
+	});
+</script>
+<div class="container">
+	<div class="row">
+		<!-- Breadcrumb section -->
+		<div class="col-12 mb-4">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb bg-transparent p-0">
+					<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i> Trang chủ</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Chi tiết giỏ hàng</li>
+				</ol>
+			</nav>
+		</div>
 
-							<tr>
-								<td colspan="4">Tổng tiền</td>
-								<td style="font-weight: bold;color:green" id="total_price"><?php echo number_format($total_price); ?> VNĐ</td>
-								<td><a style="font-weight: bold;color: red" class="del-all" href="#" data-id="-1">Xóa toàn bộ</a></td>
-							</tr>
-							<tr>
-								<td colspan="6">
-									<a onclick="checkLoginBeforeOrder()" class="btn btn-success" style="cursor:pointer">Đặt mua</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+		<!-- Cart Content -->
+		<div class="col-12">
+			<?php if (isset($message) && !empty($message)) { ?>
+				<div class="alert alert-danger" role="alert">
+					<?php echo $message; ?>
+				</div>
+			<?php } ?>
 
-				</div>
-			</div>
-		<?php } else { ?>
-			<div class="panel panel-info " style="margin-bottom: 15px">
-				<div class="panel-heading">
-					<h3 class="panel-title">GIỎ HÀNG ( 0 sản phẩm )</h3>
-				</div>
-				<div class="panel-body">
-					<div class="text-center">
-						<img src="<?php echo base_url('upload/cart-empty.png') ?>" alt="">
-						<h4 style="color:red">Không có sản phẩm trong giỏ hàng</h4>
-						<a href="<?php echo base_url('product/hot'); ?>" class="btn btn-success">Mua sắm</a>
+			<?php if ($total_items > 0) { ?>
+				<div class="card mb-5">
+					<div class="card-header bg-light">
+						<h3 class="card-title title-bar mb-0">GIỎ HÀNG ( <?php echo $total_items; ?> sản phẩm )</h3>
 					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead class="table-light">
+									<tr>
+										<th scope="col">STT</th>
+										<th scope="col">Tên sản phẩm</th>
+										<th scope="col">Hình ảnh</th>
+										<th scope="col">Số lượng</th>
+										<th scope="col">Thành tiền</th>
+										<th scope="col">Xóa</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$i = 0;
+									$total_price = 0;
+									foreach ($carts as $items) {
+										$total_price = $total_price + $items['subtotal']; ?>
+										<tr>
+											<td><?php echo $i = $i + 1 ?></td>
+											<td class="fw-medium"><?php echo $items['name']; ?></td>
+											<td><img src="<?php echo base_url('upload/product/' . $items['image_link']); ?>" class="img-thumbnail" alt="<?php echo $items['name']; ?>" style="width: 80px;"></td>
+											<td>
+												<div class="quantity-control d-flex align-items-center">
+													<button class="btn btn-sm btn-outline-secondary cart-sub" data-id="<?php echo $items['id']; ?>">-</button>
+													<input type="text" class="qty-input form-control form-control-sm mx-2" value="<?php echo $items['qty']; ?>" style="width: 50px;text-align: center;" readonly>
+													<button class="btn btn-sm btn-outline-secondary cart-sum" data-id="<?php echo $items['id']; ?>">+</button>
+												</div>
+											</td>
+											<td class="fw-bold"><?php echo number_format($items['subtotal']); ?> VNĐ</td>
+											<td>
+												<a class="del-item btn btn-sm btn-danger" href="#" data-id="<?php echo $items['id']; ?>">
+													<i class="fas fa-trash-alt"></i>
+												</a>
+											</td>
+										</tr>
+									<?php } ?>
+								</tbody>
+								<tfoot class="table-light">
+									<tr>
+										<td colspan="4" class="fw-bold text-end">Tổng tiền:</td>
+										<td class="fw-bold text-success" id="total_price"><?php echo number_format($total_price); ?> VNĐ</td>
+										<td>
+											<a class="del-all btn btn-sm btn-outline-danger" href="#" data-id="-1">
+												<i class="fas fa-trash-alt me-1"></i> Xóa tất cả
+											</a>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
 
+						<div class="d-flex justify-content-between align-items-center mt-4">
+							<a href="<?php echo base_url('product/hot'); ?>" class="btn btn-primary">
+								<i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+							</a>
+							<button onclick="checkLoginBeforeOrder()" class="btn btn-primary">
+								<i class="fas fa-shopping-basket me-2"></i>Thanh toán
+							</button>
+						</div>
+					</div>
 				</div>
+			<?php } else { ?>
+				<div class="card empty-cart-card mb-5">
+					<div class="card-header bg-light">
+						<h3 class="card-title mb-0">GIỎ HÀNG ( 0 sản phẩm )</h3>
+					</div>
+					<div class="card-body">
+						<div class="text-center py-5">
+							<img src="<?php echo base_url('upload/cart-empty.png') ?>" alt="Empty Cart" class="mb-4" style="max-width: 150px;">
+							<h4 class="text-muted mb-4">Không có sản phẩm trong giỏ hàng</h4>
+							<a href="<?php echo base_url('/'); ?>" class="btn btn-primary">
+								<i class="fas fa-shopping-cart me-2"></i>Mua sắm ngay
+							</a>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Thông báo</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-
-		<?php }
-		?>
-
-
-
+			<div class="modal-body">
+				<p>Bạn cần đăng nhập để đặt hàng</p>
+			</div>
+			<div class="modal-footer">
+				<a href="<?php echo base_url('dang-nhap'); ?>" class="btn btn-primary">Đăng nhập</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -150,9 +200,12 @@
 					});
 			});
 		});
+
 		let isLoading2 = false; // cờ trạng thái riêng cho từng nút
 
 		document.querySelector('.del-all').addEventListener('click', function(e) {
+			e.preventDefault();
+
 			if (isLoading2) {
 				// Đang xử lý request trước, không làm gì nữa
 				return;
@@ -217,9 +270,6 @@
 
 				let row = this.closest('tr'); // Lấy dòng <tr> chứa nút được bấm
 				let subtotalTd = row.querySelector('td:nth-child(5)'); // Lấy cột subtotal
-
-
-
 				current_price = extractNumber(subtotalTd.textContent.trim());
 				unit_price = current_price / parseInt(qtyInput.value);
 
@@ -294,37 +344,7 @@
 			});
 		});
 	});
-</script>
-<style>
-	.cart-sum,
-	.cart-sub {
-		padding: 2px 8px;
-		margin: 0 3px;
-		cursor: pointer;
-	}
-</style>
 
-<!-- Thêm modal thông báo đăng nhập -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Thông báo</h4>
-			</div>
-			<div class="modal-body">
-				<p>Bạn cần đăng nhập để đặt hàng</p>
-			</div>
-			<div class="modal-footer">
-				<a href="<?php echo base_url('dang-nhap'); ?>" class="btn btn-primary">Đăng nhập</a>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Thêm script kiểm tra đăng nhập -->
-<script>
 	function checkLoginBeforeOrder() {
 		<?php if (!$this->session->userdata('user')): ?>
 			$('#loginModal').modal('show');
@@ -333,3 +353,13 @@
 		<?php endif; ?>
 	}
 </script>
+
+<style>
+	.quantity-control .btn {
+		border-radius: 0.25rem;
+	}
+
+	.quantity-control .form-control {
+		border-radius: 0.25rem;
+	}
+</style>

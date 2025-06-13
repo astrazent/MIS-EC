@@ -34,23 +34,29 @@
 								?>
 								<tr>
 									<td style="vertical-align: middle;text-align: center;"><strong><?php echo $stt; ?></strong></td>
-									<td><strong><?php echo $value->user_name; ?></strong></td>
+									<td><strong><?php echo $value->delivery_name; ?></strong></td>
 									<td><strong><?php echo $value->created; ?></strong></td>
-									<td><strong><?php echo $value->user_phone; ?></strong></td>
+									<td><strong><?php echo $value->delivery_phone; ?></strong></td>
 									<td><strong><?php echo number_format($value->amount); ?></strong> VNĐ</td>
 									<td>
-										<?php switch ($value->status) {
-											case '0':
-												echo "<p style='color:red'>Đang chờ </p>";
-												break;
-											case '1':
-												echo "<p style='color:green'>Đã xác nhận</p>";
-												break;
-											default:
-												echo 'Đang chờ';
-												break;
-										} ?>
-									</td>
+                                        <?php switch ($value->status) {
+                                            case '0':
+                                                echo "<p style='color:red'><i class='fa fa-clock'></i> Đang chờ</p>";
+                                                break;
+                                            case '1':
+                                                echo "<p style='color:orange'><i class='fa fa-check-circle'></i> Đã xác nhận</p>";
+                                                break;
+                                            case '2':
+                                                echo "<p style='color:blue'><i class='fa fa-truck'></i> Đang vận chuyển</p>";
+                                                break;
+                                            case '3':
+                                                echo "<p style='color:green'><i class='fa fa-check'></i> Hoàn thành</p>";
+                                                break;
+                                            default:
+                                                echo "<p><i class='fa fa-question-circle'></i> Không xác định</p>";
+                                                break;
+                                        } ?>
+                                    </td>
 									<td class="list_td aligncenter">
 							            <a href="<?php echo admin_url('user/detail/'.$value->id); ?>" title="Chi tiết"><span class="glyphicon glyphicon-list-alt"></span></a>&nbsp;&nbsp;&nbsp;
 							            <a href="<?php echo admin_url('user/deldetail/'.$value->id); ?>" title="Xóa"> <span class="glyphicon glyphicon-remove" onclick=" return confirm('Bạn chắc chắn muốn xóa')"></span> </a>

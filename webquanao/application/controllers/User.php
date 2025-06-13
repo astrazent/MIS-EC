@@ -7,6 +7,7 @@ class User extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->load->model('discount_model');
 		$this->load->library('form_validation');
 		$this->load->library('verify_library');
 		$this->load->helper('form');
@@ -292,6 +293,9 @@ class User extends MY_Controller
 			echo json_encode(["status" => "success", "message" => "Đăng nhập thành công"], JSON_UNESCAPED_UNICODE);
 			return;
 		}
+
+		$discount = $this->discount_model->get_list();
+		$this->data['discount'] = $discount;
 
 		$this->load->view('site/user/login');
 	}

@@ -4,8 +4,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"> </script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script>
+	gtag('config', 'G-QPG3ZQV73K', {
+		'page_title': 'Trang thông tin tài khoản',
+		'page_path': '/user'
+	});
+</script>
 <?php $user = $this->data['user_info']; ?>
+
+<!-- THAY ĐỔI 1: Áp dụng toàn bộ khối <style> từ file 1 -->
 <style>
     h2 {
         text-align: center;
@@ -76,9 +83,6 @@
         color: white;
         display: none;
     }
-    .btn-danger, .btn-success {
-        color: #fff !important;
-    }
 
     input[type="text"] {
         padding: 5px;
@@ -109,8 +113,8 @@
     .changepassword {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #007bff;
-        /* Màu xanh dương */
+        background-color: #222;
+        /* Màu đen thay vì xanh dương */
         color: white;
         border: none;
         border-radius: 8px;
@@ -119,6 +123,12 @@
         cursor: pointer;
         margin-top: 30px;
         transition: background-color 0.3s ease;
+    }
+
+    .changepassword:hover {
+        background-color: transparent;
+        color: #222;
+        border: 1px solid #222;
     }
 
     .address-edit {
@@ -156,11 +166,12 @@
     }
 
     a {
-        color: #337ab7 !important;
+        color: #222 !important;
         text-decoration: none !important;
     }
 
     a:hover {
+        color: #000 !important;
         text-decoration: none !important;
     }
 
@@ -168,23 +179,31 @@
     .navbar-info .navbar-nav>.active>a:hover,
     .navbar-info .navbar-nav>.active>a:focus {
         color: #fff !important;
-        background-color: #4c66a4 !important;
+        background-color: #222 !important;
     }
 
     .navbar-info .navbar-nav>li>a:hover,
     .navbar-info .navbar-nav>li>a:focus {
         color: #fff !important;
-        background-color: #337ab7 !important;
+        background-color: #222 !important;
         border-top-left-radius: 4px !important;
         border-top-right-radius: 4px !important;
     }
 
     a.product_title:hover {
-        color: #337ab7 !important;
+        color: #222 !important;
     }
 
     .dropdown-menu>li>a {
         color: #333 !important;
+    }
+
+    .breadcrumb a {
+        color: #222 !important;
+    }
+
+    .breadcrumb a:hover {
+        color: #000 !important;
     }
 
     @media (min-width: 1200px) {
@@ -195,12 +214,16 @@
 
     /* Loại bỏ conflict tailwind */
 </style>
+
 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 clearpaddingr">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding">
+        <!-- THAY ĐỔI 2: Đồng bộ breadcrumb (icon và href) từ file 1 -->
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url(); ?>#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
+            <li><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
             <li class="active">Thông tin tài khoản</li>
         </ol>
+
+        <!-- PHẦN NỘI DUNG VÀ LOGIC GIỮ NGUYÊN HOÀN TOÀN TỪ FILE 2 -->
         <div class="col-md-6 sm-container clearpadding">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -266,22 +289,17 @@
                         <div class="label">Địa Chỉ:</div>
                         <div class="content" id="address">
                             <?php
-                            // Tạo một mảng chứa tất cả các giá trị
                             $values = [
                                 $user->address,
                                 $user->ward,
                                 $user->district,
                                 $user->city
                             ];
-                            // Loại bỏ các giá trị trống
                             $filteredValues = array_filter($values, function ($value) {
-                                return !empty(trim($value)); // Kiểm tra nếu phần tử không rỗng
+                                return !empty(trim($value));
                             });
 
-                            // Kết hợp lại với dấu phẩy
                             $cleanAddress = empty($filteredValues) ? '(Trống)' : implode(", ", $filteredValues);
-
-                            // Hiển thị kết quả
                             echo $cleanAddress;
                             ?>
                         </div>
@@ -331,4 +349,5 @@
         </div>
     </div>
 </div>
+<!-- SCRIPT LOGIC GIỮ NGUYÊN -->
 <script src="<?php echo public_url('site/'); ?>js/info.js"></script>

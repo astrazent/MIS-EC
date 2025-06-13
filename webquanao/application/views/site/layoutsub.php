@@ -3,32 +3,75 @@
 <head>
 	<?php $this->load->view('site/head',$this->data); ?>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPG3ZQV73K"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-
-	gtag('config', 'G-QPG3ZQV73K');
-</script>
 <body>
-	<div class="container">
-		<?php $this->load->view('site/header',$this->data); ?>
+	<!-- Announcement Bar -->
+	<div class="announcement-bar">
+		<div class="container">
+			<div class="announcement-content">
+				<p>Miễn phí vận chuyển Cho đơn hàng trên 500.000 VNĐ</p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Header -->
+	<?php $this->load->view('site/header',$this->data); ?>
+
+	<!-- Main Content Container -->
+	<div class="container py-4">
+		<!-- Breadcrumb and Messages -->
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearpadding" style="margin-top: 15px;">
+			<div class="col-12 mb-3">
 				<?php $this->load->view('admin/message.php'); ?>
+			</div>
+		</div>
+		
+		<!-- Main Content Row -->
+		<div class="row">
+			<!-- Sidebar Column -->
+			<div class="col-md-3">
 				<?php $this->load->view('site/sidebar',$this->data); ?>
+			</div>
+			
+			<!-- Content Column -->
+			<div class="col-md-9">
 				<?php $this->load->view($temp,$this->data); ?>
 			</div>
 		</div>
-		<?php $this->load->view('site/footer',$this->data); ?>
 	</div>
-    <script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
+	
+	<!-- Footer - Outside of container to ensure full width -->
+	</div><!-- Close any extra container divs that might be causing the issue -->
+	<?php $this->load->view('site/footer',$this->data); ?>
 
-	<!-- custom js -->
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="<?php echo base_url(); ?>public/site/js/modern-script.js"></script>
+    
+    <script>
+        // User dropdown toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const userToggle = document.querySelector('.user-toggle');
+            if (userToggle) {
+                userToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dropdownMenu = this.nextElementSibling;
+                    dropdownMenu.classList.toggle('show');
+                    
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function closeDropdown(event) {
+                        if (!event.target.closest('.user-dropdown')) {
+                            dropdownMenu.classList.remove('show');
+                            document.removeEventListener('click', closeDropdown);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+// LOGIC TỪ FILE 2 - GIỮ NGUYÊN
 require_once 'vendor/autoload.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -21,218 +22,137 @@ $login_url = $client->createAuthUrl();
 <html lang="en">
 
 <head>
+	<!-- THAY ĐỔI 1: Áp dụng toàn bộ <head> từ File 1 để có Bootstrap 5 và các script cần thiết -->
 	<?php $this->load->view('site/head', $this->data); ?>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	<!-- reCAPTCHA integration -->
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-
-<!-- tích hợp reCAPTCHA -->
-<script src="https://www.google.com/recaptcha/api.js" async defer>
-</script>
-<!-- tích hợp reCAPTCHA -->
-
-<style>
-	.login-links {
-		font-size: 22px;
-		color: #3498db;
-	}
-
-	.login-links .link {
-		text-decoration: none;
-		color: #3498db;
-		transition: color 0.3s, text-decoration 0.3s;
-		font-weight: 500;
-	}
-
-	.login-links .link:hover {
-		color: #217dbb;
-		text-decoration: underline;
-	}
-
-	.g-recaptcha>div:first-child {
-		margin: 10px auto 20px auto;
-	}
-
-	.g-recaptcha {
-		transform: scale(0.75);
-		/* thu nhỏ 85% */
-	}
-
-	.my-custom-button {
-		background-color: #31B0D5 !important;
-		/* Màu cam đỏ */
-		color: white !important;
-		/* Chữ màu trắng */
-		border-radius: 5px !important;
-		/* Bo góc */
-		padding: 10px 20px !important;
-		font-size: 16px !important;
-	}
-
-	.custom-toast {
-		width: 90% !important;
-		max-width: none !important;
-		font-size: 1.1rem !important;
-		padding: 1rem 1.5rem !important;
-		left: 50% !important;
-		transform: translateX(-50%) !important;
-	}
-
-	.swal2-success-toast {
-		background-color: #d4edda !important;
-		color: #155724 !important;
-		border: 1px solid #c3e6cb;
-	}
-
-	.swal2-error-toast {
-		background-color: #f8d7da !important;
-		color: #721c24 !important;
-		border: 1px solid #f5c6cb;
-	}
-
-	/* Loại bỏ conflict tailwind */
-	.collapse {
-		visibility: unset !important;
-	}
-
-	a {
-		color: #337ab7 !important;
-		text-decoration: none !important;
-	}
-
-	a:hover {
-		text-decoration: none !important;
-	}
-
-	.navbar-info .navbar-nav>.active>a,
-	.navbar-info .navbar-nav>.active>a:hover,
-	.navbar-info .navbar-nav>.active>a:focus {
-		color: #fff !important;
-		background-color: #4c66a4 !important;
-	}
-
-	.navbar-info .navbar-nav>li>a:hover,
-	.navbar-info .navbar-nav>li>a:focus {
-		color: #fff !important;
-		background-color: #337ab7 !important;
-		border-top-left-radius: 4px !important;
-		border-top-right-radius: 4px !important;
-	}
-
-	a.product_title:hover {
-		color: #337ab7 !important;
-	}
-
-	.dropdown-menu>li>a {
-		color: #333 !important;
-	}
-
-	@media (min-width: 1200px) {
-		.container {
-			width: 1170px !important;
-		}
-	}
-
-	/* custom cho đăng ký | đổi mật khẩu */
-	a:hover,
-	a:focus {
-		color: #23527c !important;
-		text-decoration: underline !important;
-	}
-
-	.text-blue-600 a {
-		--tw-text-opacity: 1 !important;
-		color: rgb(37 99 235 / var(--tw-text-opacity, 1)) !important;
-	}
-
-	#google-card {
-		background-color: white !important;
-		/* nền trắng */
-		color: black !important;
-		/* chữ đen */
-		font-size: 16px !important;
-		font-weight: 600 !important;
-		font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-		text-decoration: none !important;
-		line-height: 1.5 !important;
-		letter-spacing: 0.5px !important;
-		padding: 0.5rem 1rem !important;
-		/* tương đương py-2 px-4 */
-		border-radius: 0.375rem !important;
-		/* tương đương rounded-md */
-		display: flex !important;
-		align-items: center !important;
-		justify-content: center !important;
-		gap: 0.5rem !important;
-		/* tương đương gap-2 */
-		transition: background-color 0.2s ease !important;
-		border: 1px solid #ccc !important;
-		/* viền nhẹ */
-	}
-
-	#google-card:hover {
-		background-color: #f0f0f0 !important;
-		/* nền hover sáng hơn */
-		color: black !important;
-	}
-</style>
 
 <body>
-	<div class="container">
-		<?php $this->load->view('site/header', $this->data); ?>
+	<!-- THAY ĐỔI 2: Áp dụng toàn bộ cấu trúc body của File 1 -->
 
-		<div class="col-12 clearpaddingr">
+	<!-- Announcement Bar -->
+	<div class="announcement-bar">
+		<div class="container">
+			<div class="announcement-content">
+				<p><?php
+					$descriptions = [];
+
+					foreach ($this->data['discount'] as $item) {
+						$descriptions[] = $item->description;
+					}
+
+					$result = implode(' - ', $descriptions);
+
+					echo $result;
+					?></p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Header -->
+	<?php $this->load->view('site/header', $this->data); ?>
+
+	<!-- Main Content -->
+	<div class="container py-4">
+		<!-- Breadcrumb -->
+		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url(); ?>#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
-				<li class="active">Đăng nhập</li>
+				<li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="fas fa-home"></i> Trang chủ</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Đăng nhập</li>
 			</ol>
+		</nav>
 
-			<div class="flex flex-col items-center">
-				<div class="mb-10 mt-[70px]">
-					<label class="block text-gray-700 mb-4 text-2xl" for="name">Email</label>
-					<input type="email" id="email" name="email"
-						class="w-[400px] p-3 border border-gray-300 rounded text-lg">
-				</div>
+		<!-- Login Form Section -->
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card login-card">
+					<div class="card-header">
+						<h3 class="card-title">Đăng nhập tài khoản</h3>
+					</div>
+					<div class="card-body">
+						<!-- Form vẫn giữ nguyên các ID để script login.js hoạt động -->
+						<form id="loginForm" class="needs-validation" novalidate>
+							<div class="row justify-content-center">
+								<div class="col-md-8 mb-4">
+									<label for="email" class="form-label">Email</label>
+									<div class="input-group">
+										<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+										<!-- ID và name giữ nguyên từ logic của File 2 -->
+										<input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
+									</div>
+									<div class="invalid-feedback">Vui lòng nhập email hợp lệ</div>
+								</div>
+							</div>
 
-				<div class="mb-10">
-					<label class="block text-gray-700 mb-4 text-2xl" for="password">Mật khẩu</label>
-					<input type="password" id="password" name="password"
-						class="w-[400px] p-3 border border-gray-300 rounded text-lg">
-				</div>
+							<div class="row justify-content-center">
+								<div class="col-md-8 mb-4">
+									<label for="password" class="form-label">Mật khẩu</label>
+									<div class="input-group">
+										<span class="input-group-text"><i class="fas fa-lock"></i></span>
+										<!-- ID và name giữ nguyên từ logic của File 2 -->
+										<input type="password" class="form-control" id="password" name="password" required>
+									</div>
+									<div class="invalid-feedback">Vui lòng nhập mật khẩu</div>
+								</div>
+							</div>
 
-				<a
-					href="<?php echo htmlspecialchars($login_url); ?>" id="google-card"
-					class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
-					<img
-						src="https://developers.google.com/identity/images/g-logo.png"
-						class="w-7 h-7"
-						alt="Google Logo" />
-					<span>Đăng nhập bằng Google</span>
-				</a>
+							<div class="mb-4 d-flex justify-content-center">
+								<!-- reCAPTCHA giữ nguyên -->
+								<div class="g-recaptcha" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
+							</div>
 
-				<div class="g-recaptcha form-group" style="margin: 0;" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
+							<div class="d-grid gap-2 col-md-8 mx-auto">
+								<!-- Nút Đăng nhập giữ nguyên ID -->
+								<button type="button" id="submitBtn" class="btn btn-primary btn-lg">
+									<i class="fas fa-sign-in-alt me-2"></i> Đăng nhập
+								</button>
+							</div>
 
-				<button id="submitBtn"
-					class="w-[400px] text-white text-2xl font-semibold py-3 rounded-lg transition mb-10 duration-300"
-					style="background-color: rgb(61, 177, 212);"
-					onmouseover="this.style.backgroundColor='rgb(39, 147, 180)'"
-					onmouseout="this.style.backgroundColor='rgb(61, 177, 212)'">
-					Đăng nhập
-				</button>
+							<!-- THAY ĐỔI 3: Tích hợp nút Đăng nhập Google vào giao diện mới -->
+							<div class="text-center my-3">
+								<small class="text-muted">HOẶC</small>
+							</div>
 
-				<div class="text-center text-2xl text-blue-600 space-x-4 mb-[100px]">
-					<a href="/dang-ky" class="hover:underline">Đăng ký</a>
-					<span>|</span>
-					<a href="/quen-mat-khau" class="hover:underline">Quên mật khẩu?</a>
+							<div class="d-grid gap-2 col-md-8 mx-auto">
+								<a href="<?php echo htmlspecialchars($login_url); ?>" class="btn btn-light border d-flex align-items-center justify-content-center">
+									<img src="https://developers.google.com/identity/images/g-logo.png" style="height: 20px; margin-right: 10px;" alt="Google Logo" />
+									<span>Đăng nhập bằng Google</span>
+								</a>
+							</div>
+
+							<div class="text-center mt-4">
+								<div class="row justify-content-center">
+									<div class="col-md-8 d-flex justify-content-between">
+										<p><a href="<?php echo base_url('dang-ky'); ?>" class="fw-bold">Đăng ký</a></p>
+										<p><a href="<?php echo base_url('quen-mat-khau'); ?>" class="fw-bold">Quên mật khẩu?</a></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<?php $this->load->view('site/footer', $this->data); ?>
 	</div>
+
+	<div id="hiddenData" data-expire="<?php echo getenv('JWT_EXPIRE'); ?>" style="display: none"></div>
+
+	<!-- Footer -->
+	<?php $this->load->view('site/footer', $this->data); ?>
+
+	<!-- Back to Top Button -->
+	<a href="#" class="back-to-top">
+		<i class="fas fa-chevron-up"></i>
+	</a>
+
+	<!-- THAY ĐỔI 4: Sử dụng các script từ File 1 và giữ lại script logic của File 2 -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="<?php echo base_url(); ?>public/site/js/modern-script.js"></script>
+	<!-- Giữ lại script login.js vì nó chứa logic cho form này -->
 	<script src="<?php echo public_url('site/'); ?>js/login.js"></script>
-	<script src="<?php echo public_url('site/'); ?>bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
