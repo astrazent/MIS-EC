@@ -8,6 +8,7 @@ class Home extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->load->model('discount_model');
 	}
 
 	public function index() //Khi người dùng truy cập trang chủ (http://yourdomain.com/), hệ thống sẽ gọi Controller mặc định được cấu hình trong routes.php:
@@ -125,6 +126,9 @@ class Home extends MY_Controller
 				return;
 			}
 		}
+
+		$discount = $this->discount_model->get_list();
+		$this->data['discount'] = $discount;
 
 		$this->data['temp'] = 'site/home/index.php';
 		$this->load->view('site/layout', $this->data);

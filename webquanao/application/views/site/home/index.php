@@ -127,7 +127,6 @@ $new_product_title = isset($new_product_title) ? $new_product_title : 'Sáº£n phá
         right: 20px;
     }
 </style>
-
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-slider">

@@ -37,11 +37,21 @@ $login_url = $client->createAuthUrl();
 	<div class="announcement-bar">
 		<div class="container">
 			<div class="announcement-content">
-				<p>Free shipping on all orders over 500.000 VNĐ</p>
+				<p><?php
+					$descriptions = [];
+
+					foreach ($this->data['discount'] as $item) {
+						$descriptions[] = $item->description;
+					}
+
+					$result = implode(' - ', $descriptions);
+
+					echo $result;
+					?></p>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Header -->
 	<?php $this->load->view('site/header', $this->data); ?>
 
@@ -76,7 +86,7 @@ $login_url = $client->createAuthUrl();
 									<div class="invalid-feedback">Vui lòng nhập email hợp lệ</div>
 								</div>
 							</div>
-							
+
 							<div class="row justify-content-center">
 								<div class="col-md-8 mb-4">
 									<label for="password" class="form-label">Mật khẩu</label>
@@ -88,12 +98,12 @@ $login_url = $client->createAuthUrl();
 									<div class="invalid-feedback">Vui lòng nhập mật khẩu</div>
 								</div>
 							</div>
-							
+
 							<div class="mb-4 d-flex justify-content-center">
 								<!-- reCAPTCHA giữ nguyên -->
 								<div class="g-recaptcha" data-sitekey="6LcKdPUqAAAAAGv-BwfXyqkrqpTuVEUCQLGwbG6Z" data-callback="onCaptchaSuccess"></div>
 							</div>
-							
+
 							<div class="d-grid gap-2 col-md-8 mx-auto">
 								<!-- Nút Đăng nhập giữ nguyên ID -->
 								<button type="button" id="submitBtn" class="btn btn-primary btn-lg">
@@ -112,7 +122,7 @@ $login_url = $client->createAuthUrl();
 									<span>Đăng nhập bằng Google</span>
 								</a>
 							</div>
-							
+
 							<div class="text-center mt-4">
 								<div class="row justify-content-center">
 									<div class="col-md-8 d-flex justify-content-between">

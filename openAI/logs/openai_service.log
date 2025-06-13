@@ -1966,3 +1966,56 @@
 2025-06-11 14:50:54,703 - werkzeug - INFO -  * Restarting with stat
 2025-06-11 14:50:56,734 - werkzeug - WARNING -  * Debugger is active!
 2025-06-11 14:50:56,752 - werkzeug - INFO -  * Debugger PIN: 301-071-053
+2025-06-13 14:27:18,137 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.5:5002
+2025-06-13 14:27:18,140 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 14:27:18,142 - werkzeug - INFO -  * Restarting with stat
+2025-06-13 14:27:19,225 - werkzeug - WARNING -  * Debugger is active!
+2025-06-13 14:27:19,227 - werkzeug - INFO -  * Debugger PIN: 140-403-206
+2025-06-13 14:40:11,571 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:40:11,573 - root - ERROR - Không thể khởi tạo lại API: 'NoneType' object is not subscriptable
+2025-06-13 14:40:11,574 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-06-13 14:40:11,578 - werkzeug - INFO - 172.18.0.4 - - [13/Jun/2025 14:40:11] "[35m[1mPOST /api/market/analyze HTTP/1.1[0m" 500 -
+2025-06-13 14:40:40,980 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.5:5002
+2025-06-13 14:40:40,982 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 14:40:40,985 - werkzeug - INFO -  * Restarting with stat
+2025-06-13 14:40:42,166 - werkzeug - WARNING -  * Debugger is active!
+2025-06-13 14:40:42,167 - werkzeug - INFO -  * Debugger PIN: 107-589-548
+2025-06-13 14:40:43,082 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:40:43,084 - root - INFO - Đang kiểm tra API key: sk-or-v1-f...
+2025-06-13 14:40:43,207 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:40:44,955 - root - INFO - API key hợp lệ và đang hoạt động
+2025-06-13 14:40:44,957 - root - INFO - Khởi tạo lại API thành công
+2025-06-13 14:40:44,958 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-06-13 14:40:44,960 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-06-13 14:40:45,082 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:40:45,398 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-06-13 14:41:21,519 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-06-13 14:41:21,529 - werkzeug - INFO - 172.18.0.4 - - [13/Jun/2025 14:41:21] "POST /api/market/analyze HTTP/1.1" 200 -
+2025-06-13 14:51:51,370 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:51:51,371 - root - INFO - Đang kiểm tra API key: sk-or-v1-f...
+2025-06-13 14:51:51,617 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:51:53,824 - root - INFO - API key hợp lệ và đang hoạt động
+2025-06-13 14:51:53,829 - root - INFO - Khởi tạo lại API thành công
+2025-06-13 14:51:53,831 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-06-13 14:51:53,832 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-06-13 14:51:53,956 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:51:54,211 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-06-13 14:51:59,213 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-06-13 14:51:59,215 - werkzeug - INFO - 172.18.0.4 - - [13/Jun/2025 14:51:59] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-06-13 14:52:58,076 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:52:58,078 - root - INFO - Đang kiểm tra API key: sk-or-v1-f...
+2025-06-13 14:52:58,204 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:53:00,237 - root - INFO - API key hợp lệ và đang hoạt động
+2025-06-13 14:53:00,239 - root - INFO - Khởi tạo lại API thành công
+2025-06-13 14:53:00,240 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-06-13 14:53:00,241 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-06-13 14:53:00,372 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:53:00,683 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-06-13 14:53:37,500 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-06-13 14:53:37,504 - werkzeug - INFO - 172.18.0.4 - - [13/Jun/2025 14:53:37] "POST /api/market/analyze HTTP/1.1" 200 -
