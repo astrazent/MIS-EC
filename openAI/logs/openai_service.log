@@ -1966,3 +1966,52 @@
 2025-06-11 14:50:54,703 - werkzeug - INFO -  * Restarting with stat
 2025-06-11 14:50:56,734 - werkzeug - WARNING -  * Debugger is active!
 2025-06-11 14:50:56,752 - werkzeug - INFO -  * Debugger PIN: 301-071-053
+2025-06-13 14:33:25,120 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-13 14:33:25,121 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 14:33:25,124 - werkzeug - INFO -  * Restarting with stat
+2025-06-13 14:33:27,228 - werkzeug - WARNING -  * Debugger is active!
+2025-06-13 14:33:27,235 - werkzeug - INFO -  * Debugger PIN: 864-141-108
+2025-06-13 14:34:03,403 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:34:03,406 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-06-13 14:34:03,668 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:34:04,572 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-06-13 14:34:04,573 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-06-13 14:34:04,574 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-06-13 14:34:04,580 - werkzeug - INFO - 172.18.0.5 - - [13/Jun/2025 14:34:04] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-06-13 14:34:10,922 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 14:34:10,923 - root - INFO - Đang kiểm tra API key: sk-or-v1-8...
+2025-06-13 14:34:11,038 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 14:34:12,274 - root - ERROR - API key không hợp lệ hoặc hết hạn. Mã trạng thái: 401
+2025-06-13 14:34:12,275 - root - ERROR - API key không hợp lệ hoặc dịch vụ OpenRouter không khả dụng
+2025-06-13 14:34:12,275 - root - ERROR - Không thể kết nối đến dịch vụ AI: API không thể khởi tạo
+2025-06-13 14:34:12,276 - werkzeug - INFO - 172.18.0.5 - - [13/Jun/2025 14:34:12] "[35m[1mPOST /api/product/review-summary HTTP/1.1[0m" 503 -
+2025-06-13 15:12:13,914 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-13 15:12:13,916 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 15:12:13,917 - werkzeug - INFO -  * Restarting with stat
+2025-06-13 15:12:17,882 - werkzeug - WARNING -  * Debugger is active!
+2025-06-13 15:12:17,891 - werkzeug - INFO -  * Debugger PIN: 137-213-115
+2025-06-13 15:12:22,298 - root - WARNING - API chưa được khởi tạo, đang thử khởi tạo lại...
+2025-06-13 15:12:22,299 - root - INFO - Đang kiểm tra API key: sk-or-v1-f...
+2025-06-13 15:12:22,531 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 15:12:23,886 - root - INFO - API key hợp lệ và đang hoạt động
+2025-06-13 15:12:23,887 - root - INFO - Khởi tạo lại API thành công
+2025-06-13 15:12:23,887 - root - INFO - Đang gọi OpenRouter API (lần thử 1/3)
+2025-06-13 15:12:23,888 - root - INFO - Kiểm tra kết nối internet trước khi gọi OpenRouter API
+2025-06-13 15:12:23,998 - root - INFO - Kiểm tra kết nối đến OpenRouter...
+2025-06-13 15:12:24,221 - root - INFO - Gửi request đến OpenRouter API với model: deepseek/deepseek-chat-v3-0324:free
+2025-06-13 15:12:27,418 - root - INFO - Nhận phản hồi thành công từ OpenRouter API
+2025-06-13 15:12:27,430 - werkzeug - INFO - 172.18.0.5 - - [13/Jun/2025 15:12:27] "POST /api/product/review-summary HTTP/1.1" 200 -
+2025-06-14 03:52:29,833 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.18.0.4:5002
+2025-06-14 03:52:29,834 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-14 03:52:29,836 - werkzeug - INFO -  * Restarting with stat
+2025-06-14 03:52:31,514 - werkzeug - WARNING -  * Debugger is active!
+2025-06-14 03:52:31,518 - werkzeug - INFO -  * Debugger PIN: 167-836-192

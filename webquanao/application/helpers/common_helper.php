@@ -11,8 +11,14 @@
 function pagination($base_url = '', $total = '', $per = '', $uri = '')
 {
     if ($total <= $per) {
-        return FALSE;
-    }
+		// Vẫn trả về mảng phân trang tối thiểu để tránh lỗi
+		return array(
+			'base_url'    => $base_url,
+			'total_rows'  => $total,
+			'per_page'    => $per,
+			'uri_segment' => $uri,
+		);
+	}
 
     $config = array();
     $config['base_url']    = $base_url;
